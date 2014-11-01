@@ -12,18 +12,19 @@ global.moment = moment;
 if ( action === '--compile') {
   harp.compile( __dirname, outputPath, function(err) {
       if (err) {
-          JSON.stringify(err, null, 2);
+          console.log(JSON.stringify(err, null, 2));
           process.exit(1);
       }
-
-      process.exit(0);
+      console.log('done');
   });
 } else {
   harp.server( __dirname, { port: process.env.PORT || 9000 }, function(err) {
       if (err) {
-          JSON.stringify(err, null, 2);
+          console.log(JSON.stringify(err, null, 2));
           process.exit(1);
       }
+
+      console.log('Running on http://localhost:9000');
   });
 }
 
