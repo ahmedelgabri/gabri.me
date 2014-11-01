@@ -1,0 +1,266 @@
+/*==============================
+ *=== group LAYOUT
+ *===============================*/
+.l-wrapper
+  margin-left: auto
+  margin-right: auto
+  padding: 0 5%
+  max-width: 62.5em
+  width: 90%
+
+// GRID
+
+[class*="mod-"]
+  margin-bottom: 5%
+
+.row [class*="mod-"]:last-child
+  margin-right: 0
+
+/*==============================
+ *=== group HEADER
+ *===============================*/
+header
+  background: white
+  padding: 1em 0
+  text-align: center
+  margin-bottom: 4em
+  a
+    color: #686868
+
+#logo
+  font-family: para
+  fontSize(16)
+  a
+    display: block
+  span
+    display: block
+    fontSize(12)
+    color: #A29F9F
+
+.menu
+  padding: 0
+  margin: 0 0 0 -1em
+  li
+    display: inline-block
+    *display: inline
+    *zoom: 1
+    margin: 0 0 1em 1em
+    width: 43%
+  a
+    display: block
+    padding: 0.8571428571428571em
+    background: #e9e9e9
+    text-transform: uppercase
+    fontSize(14)
+    border-radius: 3px
+    line-height: normal
+
+.menu a:hover,
+.current_page_item > a,
+.single-portfolio #menu-item-545 > a,
+.single-post .current_page_parent > a
+  text-decoration: none
+  color: white
+  background: linkColor
+
+/*==============================
+ *=== group HOME
+ *===============================*/
+.index .intro
+  margin-bottom: 3.3125em
+  text-align: center
+  h2
+    margin-bottom: 0
+
+/*==============================
+ *=== group ABOUT
+ *===============================*/
+.about-me-image
+  border: 1px solid #fff
+  box-shadow: 0 0 0 1px bgcolor
+  display: block
+  margin-bottom: veritcalspace
+
+/*==============================
+ *=== group PORTFOLIO SINGLE
+ *===============================*/
+.portfolio-single,
+.navigation,
+.blog,
+.archive,
+.search,
+.comment-text,
+.author
+  text-align: center
+
+/*==============================
+ *=== group CONTACT
+ *===============================*/
+.wpcf7
+  padding: 3% !important
+  border-radius: 5px
+  background: white url(img/form-bg.png)
+  border: 1px solid #141718
+  box-shadow: 0, 1px, 2px, 0, 0.75
+  form
+    padding: 3%
+    background: white
+    border: 1px solid #f1f1f1
+    border-radius: 5px
+    margin: 0
+  p:last-of-type
+    margin-bottom: 0
+  label
+    offscreen
+
+.work-status
+  position: relative
+  padding-left: 1.25em
+  line-height: 1
+  &:before
+    content: ""
+    display: block
+    position: absolute
+    left: 0
+    top: 0
+    width: 0.7em
+    height: 0.7em
+    border-radius: 50%
+    border: 1px solid #07be5d
+    box-shadow: 0, 1px 1px, 0.75
+    background: #51e6a5
+    background: linear-gradient(top, #51e6a5 0%, #08bb43 100%)
+
+.work-status.busy:before
+  border: 1px solid #c10d19
+  background: #e7526d
+  background: linear-gradient(top, #e7526d 0%, #bc0812 100%)
+
+/*==============================
+ *=== group BLOG
+ *===============================*/
+.author
+  display: block
+  margin-bottom: 1.5em
+  color: #41484c
+
+.twitter-tweet-rendered
+  margin-bottom: veritcalspace !important
+  blockquote
+    float: none !important
+    margin: 0 !important
+    clear: none !important
+    max-width: none !important
+
+.blog-post
+  .twitter-tweet-rendered.tw-align-center,
+  .twitter-tweet-rendered,
+  .twt-border
+    width: 100% !important
+    min-width: 100% !important
+  li
+    margin-bottom: veritcalspace - 0.5em
+
+.post-actions
+  text-align: center
+  margin-bottom: veritcalspace
+
+.comments-title
+  padding: .4em
+  border-top: 1px dotted #41484C
+  border-bottom: 1px dotted #41484C
+
+.commentlist
+  padding: 0
+  .comments-title
+    border-top: none
+    margin-top: -.2em
+
+.commentlist,
+.children
+  list-style: none
+
+.single-comment
+  padding: 1em
+  margin-bottom: 1em
+  border-bottom: 1px dotted #41484C
+
+.comment-author
+  overflow: hidden
+  .avatar,
+  .comment-meta
+    vertical-align: top
+  .avatar
+    border-radius: 50%
+    display: inline-block
+  .comment-meta
+    margin-left: 1em
+    display: inline-block
+    a
+      display: block
+    > a
+      font-size: 0.6875em
+      color: #41484C
+
+.bypostauthor
+  .avatar,
+  .comment-meta
+    float: right
+  .comment-meta
+    margin-right: 1em
+
+.children
+  padding-left: 5%
+  .single-comment
+    border-left: 1px dotted #41484C
+
+.cancel-comment-reply
+  float: right
+  a
+    color: error
+
+/*==============================
+ *=== group FOOTER
+ *===============================*/
+footer
+  padding: 0.625em 0
+  border-top: 1px solid #323638
+  small,
+  a,
+  .social a:visited
+    color: #7D8A90
+  small
+    float: left
+  .social
+    float: right
+
+.social
+  margin: 0
+  padding: 0
+  list-style: none
+  li
+    display: inline-block
+    margin: 0 5px
+  a
+    display: block
+    &:hover
+      text-decoration: none
+      color: linkColorHover
+
+  .twitter
+    a:hover
+        color: #00A0D1
+  .dribbble
+    a:hover
+        color: #EA4C89
+
+  .github
+    a:hover
+        color: #fff
+
+  .linkedin
+    a:hover
+        color: #069
+  .facebook
+    a:hover
+        color: #3B5998

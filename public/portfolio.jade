@@ -1,0 +1,12 @@
+portfolio = public.portfolio._data
+data = partial('_partials/data-loop', { collection: portfolio })
+
+block content
+  h2 #{public._data[current.path[0]].title}
+  ul.m-grid.cf
+    each item in data
+      li.mod-third
+        a(href='/portfolio/'+item.slug+'.html')
+              figure.face.thumb
+                  img(src='/assets/img/content/'+item.thumb, class="attachment-portfolio-thumb wp-post-image")
+              h3.back #{item.title}

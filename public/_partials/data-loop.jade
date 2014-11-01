@@ -1,0 +1,11 @@
+- return Object.keys( collection ).map(function( single ){
+-     var item = collection[single];
+-     item.slug = single;
+-     return item;
+- }).sort(function( a, b ){
+-   if ( !a.date ) return 0;
+-   a = +new Date( a.date );
+-   b = +new Date( b.date );
+-   return a - b;
+- }).reverse();
+

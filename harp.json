@@ -1,0 +1,19 @@
+{
+    "globals": {
+        "site_url": "http://gabri.me",
+        "author": "Ahmed El Gabri",
+        "site_title": "Front-End developer",
+        "description": "Portfolio of Ahmed El Gabri a Web designer & Front end developer based in Cairo , Egypt. Creating handcrafted web designs using the latest technologies.",
+        "email": "ahmed@gabri.me",
+        "social": {
+            "Twitter": "http://twitter.com/ahmedelgabri",
+            "Facebook": "https://www.facebook.com/gabri.me",
+            "Dribbble": "http://dribbble.com/ahmedelgabri",
+            "Github": "https://github.com/ahmedelgabri",
+            "LinkedIn": "http://linkedin.com/in/ahmedelgabri"
+        },
+        "google-analytics": "UA-10517764-2",
+        "disqus": "gabrime",
+        "twitter_id": "1512909779"
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "gabri-me-redesign": {
+        "title": "Gabri.me redesign",
+        "date" : "2010-03-24 14:50",
+        "tags" : ["(x)HTML/CSS", "Design", "HTML5", "personal"],
+        "demo" : null
+    },
+    "css3-gradients-coffee-cup": {
+        "title": "CSS3 Gradients Coffee cup",
+        "date": "2010-03-24 15:00",
+        "tags": ["Border-radius", "CSS Gradients", "CSS3"],
+        "demo": {
+            "link": "http://www.gabri.me/demo/Coffee%20with%20CSS3%20Gradients/",
+            "download": ""
+        }
+    },
+    "free-xhtmlcss-template": {
+        "title": "Free xHTML/CSS Template",
+        "date": "2010-04-05 13:14",
+        "tags": ["CSS", "Freebies", "xHTML"],
+        "demo": {
+            "link": "http://www.gabri.me/demo/AGD/",
+            "download": ""
+        }
+    },
+    "hey-facebook-shift-enter-is-better": {
+        "title": "Hey! Facebook, Shift + Enter is better",
+        "date": "2011-03-16 19:41",
+        "tags": ["UI", "UX"],
+        "demo": null
+    },
+    "facelift": {
+        "title": "Facelift",
+        "date": "2012-06-19 20:45",
+        "tags": ["(x)HTML/CSS", "Design"],
+        "demo": null
+    },
+    "vodafone-egypt-user-experience": {
+        "title": "Vodafone Egypt & User Experience",
+        "date": "2012-06-30 19:05",
+        "demo": null
+    },
+    "custom-colors-in-your-zsh-prompt": {
+        "title": "Custom colors in your ZSH prompt",
+        "date": "2013-01-24 07:53",
+        "tags": ["commandline", "Zsh", "shell"],
+        "demo": null
+    },
+    "quick-tip-virtualbox-localhost": {
+        "title": "Quick tip: VirtualBox & localhost",
+        "date": "2013-04-19 12:13",
+        "tags": null,
+        "demo": null
+    },
+    "the-right-way-to-store-sublimetext-2-settings": {
+        "title": "The right way to store SublimeText 2 settings",
+        "date": "2013-04-27 15:00",
+        "tags": null,
+        "demo": null
+    },
+    "sass-mixin-for-auto-numbering-with-css": {
+        "title": "Sass mixin for auto-numbering with CSS",
+        "date": "2013-05-25 10:26",
+        "tags": ["Sass"],
+        "demo": null
+    },
+    "global-scope-namespacing-css": {
+        "title": "Global scope, namespacing & CSS",
+        "date": "2013-08-06 09:30",
+        "tags": ["CSS", "Front-end"],
+        "demo": null
+    },
+    "no-more-hosts-file-with-dnsmasq": {
+        "title": "No more hosts file with dnsmasq",
+        "date": "2013-09-27 08:39",
+        "tags": null,
+        "demo": null
+    },
+    "making-the-default-gulp-task-useful": {
+        "title": "Making the default gulp task useful",
+        "date": "2014-07-26 16:30",
+        "tags": null,
+        "demo": null
+    },
+    "weekly-links-v-1": {
+        "title": "Weekly links v.1",
+        "date": "2014-10-04 19:00",
+        "tags": null,
+        "demo": null
+    },
+    "weekly-links-v-2": {
+        "title": "Weekly links v.2",
+        "date": "2014-10-11 19:00",
+        "tags": null,
+        "demo": null
+    },
+    "weekly-links-v-3": {
+        "title": "Weekly links v.3",
+        "date": "2014-10-19 19:00",
+        "tags": null,
+        "demo": null
+    },
+    "weekly-links-v-4": {
+        "title": "Weekly links v.4",
+        "date": "2014-10-25 19:00",
+        "tags": null,
+        "demo": null
+    }
+
+
+}

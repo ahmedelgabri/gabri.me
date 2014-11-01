@@ -1,0 +1,162 @@
+//==============================
+//=== RESET
+//===============================
+body, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, s,
+small, strong, sub, sup,
+b, u, i,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, section, summary,
+time, mark
+  margin: 0
+  padding: 0
+  border: 0
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary, main
+  display: block
+
+audio,
+canvas,
+video,
+figure
+  display: inline-block
+  *display: inline
+  *zoom: 1
+
+\::-moz-selection
+  text-shadow: none
+  background: #FF0
+  color: black
+
+\::selection
+  text-shadow: none
+  background: #FF0
+  color: black
+
+\::selection:window-inactive
+  text-shadow: none
+  background: #747575
+  color: black
+
+image::-moz-selection
+  background: transparent
+
+image::selection
+  background: transparent
+
+svg:not(:root)
+  overflow: hidden
+
+//==============================
+//=== BASE
+//===============================
+html, body
+  min-height: 100%
+
+html
+  -webkit-overflow-scrolling: touch
+  -ms-touch-action: double-tap-zoom
+  -webkit-text-size-adjust: 100%
+  -ms-text-size-adjust: 100%
+  font-size: 62.5%
+  //10px this is used for easily calculating rems.
+
+@-webkit-keyframes fade
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+
+@-moz-keyframes fade
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+
+@-keyframes fade
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+
+body
+  fontSize()
+  line-height: lineheight
+  font-family: para
+  background: bgcolor url(img/bg.jpg)
+  color: textcolor
+  text-rendering: optimizeLegibility
+
+a
+  -webkit-tap-highlight-color: tabcolor
+  color: linkColor
+  text-decoration: none
+  transition: all 0.2s linear
+  color: linkColorHover
+  &:hover
+    text-decoration: underline
+  &:focus
+    outline: thin dotted
+
+// ACCESSABILITY NAV
+
+.access
+  list-style: none
+  margin: 0
+  position: relative
+  z-index: 1
+
+.access li
+  height: 0
+
+.access a
+  background: #FFC
+  border: 2px solid #DDD
+  display: block
+  padding: 10px
+  position: absolute
+  left: -9999em
+  top: 0
+
+.access a:hover,
+.access a:focus
+  color: #333
+  left: 0
+
+// CLASSES
+
+.offscreen
+  border: 0
+  clip: rect(0 0 0 0)
+  height: 1px
+  margin: -1px
+  overflow: hidden
+  padding: 0
+  position: absolute
+  width: 1px
+
+.ir
+  font: 0/0 a
+  text-shadow: none
+  color: transparent
+
+.cf:before,
+.cf:after
+  content: ""
+  display: table
+
+.cf:after
+  clear: both
+
+// For IE 6/7 (trigger hasLayout)
+.cf
+  zoom: 1

@@ -1,0 +1,15 @@
+{
+  "name": "gabri.me",
+  "version": "1.0.0",
+  "description": "Some guy on the web",
+  "main": "compile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ahmed El Gabri <ahmed@gabri.me>",
+  "license": "MIT",
+  "devDependencies": {
+    "harp": "^0.14.0",
+    "moment": "^2.8.3"
+  }
+}

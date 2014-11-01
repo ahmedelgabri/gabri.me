@@ -1,0 +1,96 @@
+include excerpt
+
+meta(charset="utf-8")
+meta(http-equiv="X-UA-Compatible", content="IE=edge")
+if(current.source === 'index' && current.path[0] === 'index')
+  title #{author} | #{site_title}
+else
+  if current.source !== 'index' && current.path.length !== 2
+    title= public._data[current.path[0]].title + " | " + author
+  else
+    title #{site_title} | #{author}
+
+meta(name="viewport", content="width=device-width")
+meta(name="description",content=description)
+
+link(rel="canonical", href= (current.source === current.path[1]) ? "#{site_url}/#{current.path[0]}/#{current.source}.html" : (current.source === 'index') ? site_url : "#{site_url}/#{current.path[0]}.html"))
+link(rel="dns-prefetch", href="//platform.twitter.com")
+link(rel="dns-prefetch", href="//www.google-analytics.com")
+link(rel="dns-prefetch", href="//p.twitter.com")
+link(rel="dns-prefetch", href="//cdn.api.twitter.com")
+link(rel="dns-prefetch", href="//use.typekit.net")
+
+meta(name="viewport", content="initial-scale=1, width=device-width")
+link(rel="stylesheet",href="/assets/css/style.css")
+link(type="text/plain",rel="author",href="https://plus.google.com/101787568188227600845/")
+link(type="text/plain",rel="author",href="humans.txt")
+
+
+script(src="//use.typekit.net/ylt4jzt.js")
+script.
+  try{Typekit.load();}catch(e){}
+
+link(rel="shortcut icon",href="/assets/img/style/icons/favicon.png")
+meta(name="application-name", content="Gabri.me")
+link(name="msapplication-TileImage",href="/assets/img/style/ms-logo.png")
+link(name="msapplication-TileColor",content="#1f2325")
+
+link(rel="apple-touch-icon-precomposed", sizes="114x114", href="/assets/img/style/icons/apple-touch-icon-114x114-precomposed.png")
+link(rel="apple-touch-icon-precomposed", sizes="72x72", href="/assets/img/style/icons/apple-touch-icon-72x72-precomposed.png")
+link(rel="apple-touch-icon-precomposed", href="/assets/img/style/icons/apple-touch-icon-57x57-precomposed.png")
+link(rel="logo", type="image/svg", href="/assets/img/style/logo.svg")
+meta(name="apple-mobile-web-app-title", content="Gabri.me")
+link(rel="author", href="https://plus.google.com/101787568188227600845/posts")
+
+//- G+
+meta(itemprop="name", content= (current.source === 'index') ? "#{author} | #{site_title}" : (title) ? title : "#{public._data[current.path[0]].title} | #{author}" )
+meta(itemprop="description", content= (current.path.length >= 2 && current.path[0] === 'blog') ? excerpt(partial(current.source)) : "#{author} | #{site_title}" )
+meta(itemprop="image", content= (current.source === 'index' || !thumb) ? "/assets/img/style/fb-image.png" : "/assets/img/content/#{thumb}")
+
+//- FB Open Graph meta tags
+meta(property="og:title", content= (current.source === 'index') ? "#{author} | #{site_title}" : (title) ? title : "#{public._data[current.path[0]].title} | #{author}" )
+meta(property="og:description", content= (current.path.length >= 2 && current.path[0] === 'blog') ? excerpt(partial(current.source)) : "#{author} | #{site_title}" )
+
+meta(property="og:url", content= (current.source === current.path[1]) ? "#{site_url}/#{current.path[0]}/#{current.source}.html" : (current.source === 'index') ? site_url : "#{site_url}/#{current.path[0]}.html")
+meta(property="og:image", content= (current.source === 'index' || !thumb) ? "/assets/img/style/fb-image.png" : "/assets/img/content/#{thumb}")
+meta(property="og:type", content=(current.path.length >= 2 && current.path[0] === 'blog') ? "article" : "website")
+
+//- Twitter Cards
+meta(property="twitter:account_id", content="#{twitter_id}")
+meta(name="twitter:card", content="summary")
+meta(name="twitter:creator", content="@AhmedElGabri")
+meta(name="twitter:url", content= (current.source === current.path[1]) ? "#{site_url}/#{current.path[0]}/#{current.source}.html" : (current.source === 'index') ? site_url : "#{site_url}/#{current.path[0]}.html")
+meta(name="twitter:title", content= (current.source === 'index') ? "#{author} | #{site_title}" : (title) ? title : "#{public._data[current.path[0]].title} | #{author}" )
+meta(name="twitter:image", content="/assets/img/style/logo.svg")
+meta(name="twitter:domain", content= site_url)
+
+script(src="/assets/js/libs/modernizr.js")
+<!--[if lt IE 9]>
+script(src="//ajax.googleapis.com/ajax/libs/mootools/1.4.1/mootools-yui-compressed.js")
+script(src="/assets/js/libs/selectivizr.js")
+script(src="/assets/js/libs/respond.min.js")
+<![endif]-->
+
+| <!--[if gt IE 9 ]>
+|   <script>
+|     if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+|       var msViewportStyle = document.createElement("style");
+|       msViewportStyle.appendChild(
+|         document.createTextNode(
+|           "@-ms-viewport{width:auto!important}"
+|         )
+|       );
+|       document.getElementsByTagName("head")[0].
+|         appendChild(msViewportStyle);
+|     }
+|   </script>
+| <![endif]-->
+
+script.
+  (function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2}})(document,window.mixpanel||[]);
+  mixpanel.init("d0a1020b70627a9353581534474e4e59");
+  mixpanel.track_links('#resume', "Clicked!", {
+      platform: navigator.platform,
+      agent: navigator.userAgent,
+      app: navigator.appName
+  });

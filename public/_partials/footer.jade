@@ -1,0 +1,10 @@
+footer(role="contentinfo")
+  div.l-wrapper.cf
+    year = new Date().getFullYear()
+    small ©#{year} Ahmed El Gabri
+
+    ul.social
+      sites = Object.keys(social)
+      each site in sites
+        li(class="#{site.toLowerCase()}")
+          a(href="#{social[site]}", rel="me", target="_blank") #{site}

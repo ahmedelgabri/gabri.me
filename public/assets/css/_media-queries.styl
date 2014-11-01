@@ -1,0 +1,154 @@
+/*==============================
+ *=== group MEDIA QUERIES
+ *===============================*/
+@-webkit-viewport
+  width: device-width
+
+
+@-moz-viewport
+  width: device-width
+
+
+@-ms-viewport
+  width: device-width
+
+
+@-o-viewport
+  width: device-width
+
+
+@viewport
+  width: device-width
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2)
+  // retina display
+
+@media only screen and (max-width: 20em)
+  // 320px
+
+@media only screen and (min-width: 30em)
+  // 480px
+
+@media only screen and (min-width: 37.5em)
+  // 600px
+  header
+    padding: 2.25em 0
+  .menu
+    margin: 0
+  [role="navigation"]
+    li
+      margin: 0 0 0 .25em
+      width: auto
+  [class*="mod-"]
+    float: left
+    margin-right: 1.9%
+    margin-bottom: 1.9%
+  .centered
+    margin-right: auto
+    margin-left: auto
+    float: none
+  .mod-1
+    columns(1)
+  .mod-third
+    columns(2)
+  .mod-3
+    columns(3)
+  .mod-2thirds
+    columns(4)
+  .mod-5
+    columns(5)
+  .mod-full
+    columns(6)
+    float: none
+    margin-right: auto
+    margin-left: auto
+    max-width: 62.5em
+  .navigation a:hover span
+    top: -150%
+  .comment-author
+    line-height: 4
+    position: relative
+    .comment-meta
+      > a
+        position: absolute
+        right: 0.625em
+        top: 0.5625em
+  .bypostauthor
+    .comment-meta
+      > a
+        left: 0.625em
+        right: auto
+
+@media only screen and (min-width: 40em)
+  // 640px
+
+@media only screen and (min-width: 48em)
+  // 768px
+  header
+    text-align: left
+  #logo
+    float: left
+    min-width: 21.875em
+    margin: 0
+    a
+      overflow: hidden
+    .logo-img
+      float: left
+      margin-right: 0.625em
+      width: 5.1875em
+      height: 2.1875em
+    div
+      float: left
+      line-height: 1.3
+  [role="navigation"]
+    float: right
+  .blog-post blockquote
+    float: left
+    clear: left
+    margin-left: -27%
+    margin-right: 2em
+    max-width: 14em
+  .no-touch.csstransforms3d
+    .m-grid
+      li
+        position: relative
+        perspective: 1000
+        &:hover a
+          transform: rotateY(180deg)
+      a
+        transform-style: preserve-3d
+        transition: all 1.0s linear
+        height: 12.5em
+      .face
+        position: absolute
+        top: 0
+        right: 0
+        left: 0
+        bottom: 0
+        backface-visibility: hidden
+      .back
+        transform: rotateY(180deg)
+        line-height: 10em
+        background-color: bgcolor
+        backface-visibility: hidden
+        border: 1px solid linkColor
+        box-shadow: 0 0 10px linkColor
+        z-index: 1
+
+@media only screen and (min-width: 64em)
+  // 1024px
+  header
+    position: fixed
+    top: 0
+    right: 0
+    left: 0
+    z-index: 10
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5)
+    margin: 0
+    background: rgba(255, 255, 255, 0.97)
+  main
+    margin-top: 10.4375em
+
+@media only screen and (min-width: 75em)
+  // 1200px

@@ -1,0 +1,194 @@
+/*==============================
+ *=== TYPOGRAPHY
+ *===============================*/
+em,
+i,
+cite,
+q
+  font-style: italic
+
+small
+  font-size: 90%
+
+strong,
+th,
+b
+  font-weight: bold
+
+abbr[title],
+dfn[title]
+  border-bottom: 1px dotted
+  cursor: help
+
+sub,
+sup
+  font-size: 75%
+  line-height: 0
+  position: relative
+
+sup
+  top: -0.5em
+
+sub
+  bottom: -0.25em
+
+pre, code, kbd, samp
+  font-family: monospace
+  -webkit-font-smoothing: subpixel-antialiased
+
+pre,
+.comment_body code
+  white-space: pre
+  white-space: pre-wrap
+  word-wrap: break-word
+  padding: 1em
+  overflow: auto
+  margin-bottom: veritcalspace
+  background: #fef8c4
+  border: 1px solid #090D0F
+  color: #090D0F
+  fontSize(14)
+  border-radius: 3px
+
+.comment_body code
+  display: block
+
+code
+  line-height: 1
+  padding: .2em
+  background: #fef8c4
+  color: #090D0F
+  border-radius: 2px
+
+ins
+  insert
+
+mark
+  mark
+
+del,
+s
+  text-decoration: line-through
+
+p,
+ol,
+ul,
+dl,
+table,
+blockquote
+  margin-bottom: veritcalspace
+
+q
+  quotes: "‘" "’" "“" "”"
+
+q:before
+  content: "‘"
+  content: open-quote
+
+q:after
+  content: "’"
+  content: close-quote
+
+q q:before
+  content: "“"
+  content: open-quote
+
+q q:after
+  content: "”"
+  content: close-quote
+
+blockquote,
+blockquote,
+blockquote p
+  quotes: "“" "”"
+  fontSize(24)
+  color: #60757f
+  font-style: italic
+
+blockquote p:before
+  content: "“"
+  content: open-quote
+
+blockquote p:after
+  content: ""
+  content: no-close-quote
+
+blockquote p:last-of-type:after
+  content: "”"
+  content: close-quote
+
+blockquote
+  margin-left: -.5em
+  padding-left: .5em
+
+.source
+  display: block
+  text-indent: 0
+  margin-top: -Xpx
+  margin-top: -Xrem
+
+.source:before
+  content: "—"
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6
+  font-family: headings
+  text-transform: uppercase
+  font-weight: normal
+  color: white
+  clear: both
+
+h1,
+.h1
+  headers(28)
+
+h2,
+.h2
+  headers(50)
+
+h2
+  text-align: center
+  margin-bottom: 1.066666666666667em
+  line-height: 1
+  clear: both
+
+h3,
+.h3
+  headers(30)
+
+h4,
+.h4
+  headers(28)
+
+h5,
+.h5,
+h6,
+.h6
+  headers(22)
+
+h5
+
+h6
+
+p
+  -ms-hyphens: auto
+  -webkit-hyphens: auto
+  -moz-hyphens: auto
+  hyphens: auto
+  word-wrap: break-word
+  fontSize
+  color: textcolor
+
+.secondary-text
+  p, li
+    fontSize(14)
+    color: sectextcolor
+
+hr
+  display: block
+  height: 1px
+  border: 0
+  border-top: 1px solid #cccccc
+  // change border colour to suit your needs
+  margin: 1em 0
+  padding: 0

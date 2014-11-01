@@ -1,0 +1,23 @@
+- var p = Object.keys(public.portfolio._data).map(function( k ){
+-     var item = public.portfolio._data[k];
+-     item.slug = k;
+-     return item;
+- }).sort(function(a, b){
+-   if (!a.date) return 0;
+-   a = +new Date(a.date);
+-   b = +new Date(b.date);
+-   return b-a;
+- });
+
+div.mod-2thirds.centered.intro.secondary-text
+  h2 I Build stuff on the web.
+  p Clear. Fast. Usable. Responsive.
+
+ul.m-grid.cf
+  each item, i in p
+    - if ( i > 5 ) return;
+    li.mod-third
+      a(href='portfolio/' + item.slug+'.html')
+        figure.face.thumb
+          img(src='assets/img/content/'+item.thumb, class="attachment-portfolio-thumb wp-post-image")
+        h3.back= item.title

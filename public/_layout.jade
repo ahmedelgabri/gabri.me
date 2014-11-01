@@ -1,0 +1,17 @@
+doctype html
+html(lang="en", itemscope, itemtype="http://schema.org/Article")
+    include _partials/head
+    block head
+  body(class="#{current.source}")
+    include _partials/header
+
+    main(class="cf l-wrapper #{  current.path[0] === 'portfolio' && current.source !== 'index' ? 'portfolio-single' : '' }")
+      if environment === 'development'
+        pre= current.source
+        pre= JSON.stringify(current)
+      block content
+        != yield
+
+
+    include _partials/footer
+    include _partials/scripts

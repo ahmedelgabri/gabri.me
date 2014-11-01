@@ -1,0 +1,29 @@
+posts = []
+blogs = public.blog
+for post, slug in blogs._data
+  if post.date && (environment == "production" && post.published!==false) || (environment == "development")
+    - post.slug = slug
+    - posts.push(blogs._data[slug])
+
+//- Iterate over the posts array
+each post, i in posts.sort(function(a,b){ a = new Date(a.date); b = new Date(b.date); return b<a?-1:b>a?1:0; }).reverse()
+  //- post slug is the old object key that matched the file name,
+  //- Like "a-post" for example
+  //- Match it against the current page
+  if post.slug == current.source
+      //- Previous is one before this array item
+      //- Next is one after
+      //- Variables make it easy to template
+      - prev = posts[i - 1]
+      - next = posts[i + 1]
+
+      nav.navigation.mod-3.centered.cf
+        if next
+          div.new
+            a(href="#{next.slug}.html", title="Next post: #{next.title}") ◀
+
+        a(class="up", href="/blog.html", title="Back to Archive") Archive
+
+        if prev
+          div.old
+            a(href="#{prev.slug}.html", title="Previous post: #{prev.title}") ▶

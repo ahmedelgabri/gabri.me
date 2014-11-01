@@ -1,0 +1,57 @@
+block content
+  h2 About Me
+  div.mod-2thirds.content-text.centered
+
+    :markdown
+      <img src="/assets/img/content/1383052_10153290852240582_1830211551_n-e1386884443552.jpg" alt="1383052_10153290852240582_1830211551_n" class="aligncenter size-full wp-image-942 about-me-image " />
+
+      I'm Ahmed El Gabri you can call me "Gabri", I'm a Web designer/Front-end developer with 4 years of experience in the field. I like to create Clear, Usable, Fast &amp; Responsive websites/apps. Currently working as a Software Engineer at <a href="http://dubai.dubizzle.com">dubizzle</a>
+
+      My knowledge &amp; skills spans a wide range of topics, Web design, Front-end development, SEO, Responsive Web Design, Performance Optimization, Social Media.
+
+      This is my <a title="Portfolio" href="/portfolio/">portfolio</a> "note to self: I need to write more"
+
+    aside(role="complementary", class="secondary-text row")
+      div(id="text-2" class="widget widget_text mod-third")
+        h4 My Services
+        div.textwidget
+          ul
+            for service in public._data['about'].services
+              li= service
+
+
+
+
+      div(id="text-3", class="widget widget_text mod-third")
+        h4 What I’m not
+        div.textwidget
+          ul
+            li I'm not a logo designer.
+            li I'm not a Print designer.
+            li I don't do flash..
+
+
+
+
+      div#recent-posts-3.widget.widget_recent_entries.mod-third
+        h4 The Blog
+        posts = public.blog._data
+        data = partial('_partials/data-loop', { collection: posts })
+        ul
+          each post, i in data
+            - if ( i > 4 ) return
+            li
+              a(href='blog/'+post.slug+'.html') #{post.title}
+
+
+
+
+
+    h4 about the site
+    p.
+      This site is
+      a(href="http://www.alistapart.com/articles/responsive-web-design/") Responisve
+      http://www.lukew.com/ff/entry.asp?933" Mobile-first
+      wordpress.org/" Wordpress"Content Managment System CMS
+      SublimeText
+

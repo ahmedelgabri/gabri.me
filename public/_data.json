@@ -1,0 +1,33 @@
+{
+  "feed": {
+    "layout": false
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "date": "2010-03-24 00:43:00",
+    "published": true
+  },
+  "about": {
+    "title": "About",
+    "date": "2010-03-23 18:20:00",
+    "services": [
+        "Responsive Web Design",
+        "Front-End Developing",
+        "WordPress Theming",
+        "Web Designing",
+        "Social Media Integration",
+        "E-Mail Newsletters"
+    ],
+    "published": true
+  },
+  "blog": {
+      "title": "Blog",
+      "date": "2010-03-24 14:50",
+      "published": true
+  },
+  "contact": {
+    "title": "Contact",
+    "date": "2010-03-24 00:47:00",
+    "published": true
+  }
+}
