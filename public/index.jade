@@ -1,20 +1,12 @@
-- var p = Object.keys(public.portfolio._data).map(function( k ){
--     var item = public.portfolio._data[k];
--     item.slug = k;
--     return item;
-- }).sort(function(a, b){
--   if (!a.date) return 0;
--   a = +new Date(a.date);
--   b = +new Date(b.date);
--   return b-a;
-- });
+posts = public.portfolio._data
+data = partial('_partials/data-loop', { collection: posts })
 
 div.mod-2thirds.centered.intro.secondary-text
   h2 I Build stuff on the web.
   p Clear. Fast. Usable. Responsive.
 
 ul.m-grid.cf
-  each item, i in p
+  each item, i in data
     - if ( i > 5 ) return;
     li.mod-third
       a(href='portfolio/' + item.slug+'.html')
