@@ -1,5 +1,7 @@
 Last week I changed my mobile phone plan then after a couple of days I found that my 3G connection is not working anymore. So I went to a Vodafone office to see what's wrong, the surprise was that since I changed my plan Vodafone actually **deleted my previous profile** and created a new one with the new plan! And this disabled my iPhone internet plan that I was using so that's why the 3G was not working not only this but the customer service representative dialed a wrong code to activate my internet plan again which costed me to pay 75 pounds that I shouldn't have paid in the first place, nice!
 
+<!-- more -->
+
 So today I woke up and wanted to check my mobile phone balance and stuff, cause I have changed my plane recently. So I headed to [http://www.vodafone.com.eg](http://www.vodafone.com.eg/) to log in &amp; check my line. But I the surprise that I was faced by this beautiful message whenever I tried to log in!
 
 <div class="wp-caption">

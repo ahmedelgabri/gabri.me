@@ -1,5 +1,7 @@
 I have been using <a href="http://gulpjs.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://gulpjs.com']);">gulp</a> for a couple of months now &#038; I like how simple it is compared to Grunt also that I'm actually writing code not configurations &#038; it's easier to understand.
 
+<!-- more -->
+
 When I was converting the project I'm working on now from Grunt to Gulp I had this idea, why not make the default task as TOC to list all available tasks? instead of using it for a real task. How many times you cloned/forked/collaborated on a project &#038; had to open `Gruntfile.js` or `Gulpfile.js` to check which task you should run or open `README.md` to check this?
 
 So I decided to make the default task as TOC of all the tasks available in the `Gulpfile.js` and this is what I came up with.

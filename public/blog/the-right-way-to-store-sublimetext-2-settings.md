@@ -2,6 +2,8 @@ Most articles I read on the web on this tells you to copy `Packages`, `Pristine 
 
 So, you might ask what about my installed packages, themes, user configs, etc... The answer is, everything is stored inside the ` Packages/User` folder, Yes even your packages. [Sublime Package Control](http://wbond.net/sublime_packages/package_control) installed packages information is stored inside a file called
 
+<!-- more -->
+
 `Package Control.sublime-settings` which resides inside ` Packages/User` & each time you open Sublimetext 2 Package control checks this file to be able to update the packages.
 
 So here is the trick, on a clean installation, package control will find the file but it won't find the packages installed. Then it will install them for you _Just give it some time_. I have personally tested this on 2 machines & it worked.
