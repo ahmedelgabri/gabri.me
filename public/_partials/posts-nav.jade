@@ -20,10 +20,10 @@ each post, i in posts.sort(function(a,b){ a = new Date(a.date); b = new Date(b.d
       nav.navigation.mod-3.centered.cf
         if next
           div.new
-            a(href="#{next.slug}.html", title="Next post: #{next.title}") ◀
+            a(href="#{next.slug}", title="Next post: #{next.title}") ◀
 
-        a(class="up", href="/blog.html", title="Back to Archive") Archive
+        a(class="up", href="/blog/", title="Back to Archive") Archive
 
         if prev
           div.old
-            a(href="#{prev.slug}.html", title="Previous post: #{prev.title}") ▶
+            a(href="#{prev.slug}", title="Previous post: #{prev.title}") ▶
