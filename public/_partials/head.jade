@@ -6,13 +6,13 @@ meta(http-equiv="X-UA-Compatible", content="IE=edge")
 //- && current.source !== 'about' is an ugly hack
 //- cause title gets passed to it About but I dunno why not in Blog or Portfolio?
 //- Maybe cause they have children?
-title #{(current.source === 'index' && current.path[0] === 'index') ? author + ' | ' + site_title : (title && current.source !== 'about') ? title : capitalize(current.source) + ' | ' + author }
+title #{(current.source === 'index' && current.path[0] === 'index') ? author + ' | ' + site_title : (title) ? title + ' | ' + author : capitalize(current.path[0]) + ' | ' + author }
 
 meta(name="viewport", content="width=device-width")
 meta(name="description",content=description)
 link(rel="alternate" type="application/rss+xml" title="Ahmed El Gabri | Feed" href="#{site_url}/feed.xml")
 
-link(rel="canonical", href="#{site_url}/#{current.path.join('/')}.html")
+link(rel="canonical", href=(current.source === 'index' && current.path[0] === 'index') ? "#{site_url}" : "#{site_url}/#{current.path.join('/')}.html")
 link(rel="dns-prefetch", href="//platform.twitter.com")
 link(rel="dns-prefetch", href="//www.google-analytics.com")
 link(rel="dns-prefetch", href="//p.twitter.com")
@@ -38,15 +38,15 @@ meta(name="apple-mobile-web-app-title", content="Gabri.me")
 link(rel="author", href="https://plus.google.com/101787568188227600845/posts")
 
 //- G+
-meta(itemprop="name", content= (current.source === 'index' && current.path[0] === 'index') ? "#{author} | #{site_title}" : (title && current.source !== 'about') ? "#{title}" : "#{capitalize(current.source)} | #{author}" )
+meta(itemprop="name", content= (current.source === 'index' && current.path[0] === 'index') ? "#{author} | #{site_title}" : (title) ? "#{title} | #{author}" : "#{capitalize(current.path[0])} | #{author}" )
 meta(itemprop="description", content= (current.path.length >= 2 && current.path[0] === 'blog') ? excerpt(partial(current.source)) : "#{author} | #{site_title}" )
 meta(itemprop="image", content= (current.source === 'index' && current.path[0] === 'index' || !thumb) ? "/assets/img/style/fb-image.png" : "/assets/img/content/#{thumb}")
 
 //- FB Open Graph meta tags
-meta(property="og:title", content= (current.source === 'index' && current.path[0] === 'index') ? "#{author} | #{site_title}" : (title && current.source !== 'about') ? "#{title}" : "#{capitalize(current.source)} | #{author}" )
+meta(property="og:title", content= (current.source === 'index' && current.path[0] === 'index') ? "#{author} | #{site_title}" : (title) ? "#{title} | #{author}" : "#{capitalize(current.path[0])} | #{author}" )
 meta(property="og:description", content= (current.path.length >= 2 && current.path[0] === 'blog') ? excerpt(partial(current.source)) : "#{author} | #{site_title}" )
 
-meta(property="og:url", content="#{site_url}/#{current.path.join('/')}.html")
+meta(property="og:url", content= (current.source === 'index' && current.path[0] === 'index') ? "#{site_url}" : "#{site_url}/#{current.path.join('/')}.html")
 meta(property="og:image", content= (current.source === 'index'&& current.path[0] === 'index' || !thumb) ? "/assets/img/style/fb-image.png" : "/assets/img/content/#{thumb}")
 meta(property="og:type", content=(current.path.length >= 2 && current.path[0] === 'blog') ? "article" : "website")
 
@@ -54,8 +54,9 @@ meta(property="og:type", content=(current.path.length >= 2 && current.path[0] ==
 meta(property="twitter:account_id", content="#{twitter_id}")
 meta(name="twitter:card", content="summary")
 meta(name="twitter:creator", content="@AhmedElGabri")
-meta(name="twitter:url", content="#{site_url}/#{current.path.join('/')}.html")
-meta(name="twitter:title", content= (current.source === 'index' && current.path[0] === 'index') ? "#{author} | #{site_title}" : (title && current.source !== 'about') ? "#{title}" : "#{capitalize(current.source)} | #{author}" )
+meta(name="twitter:url", content= (current.source === 'index' && current.path[0] === 'index') ? "#{site_url}" : "#{site_url}/#{current.path.join('/')}.html")
+
+meta(name="twitter:title", content= (current.source === 'index' && current.path[0] === 'index') ? "#{author} | #{site_title}" : (title) ? "#{title} | #{author}" : "#{capitalize(current.path[0])} | #{author}" )
 meta(name="twitter:image", content="/assets/img/style/logo.svg")
 meta(name="twitter:domain", content="#{site_url}")
 
