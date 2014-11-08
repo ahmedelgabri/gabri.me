@@ -9,7 +9,10 @@
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "devDependencies": {
+    "glob": "^4.0.6",
     "harp": "^0.14.0",
-    "moment": "^2.8.3"
+    "moment": "^2.8.3",
+    "router-stupid": "^0.7.0",
+    "st": "^0.5.2"
   }
 }
