@@ -1,9 +1,9 @@
 posts = public.blog._data
-data = partial('_partials/data-loop', { collection: posts })
+data = partial('../_partials/data-loop', { collection: posts })
 
 block content
   h2 #{public._data[current.path[0]].title}
   div.centered.blog
     each item in data
       h3
-        a(href='/blog/'+item.slug+'.html') #{item.title}
+        a(href='/blog/'+item.slug) #{item.title}
