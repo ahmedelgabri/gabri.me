@@ -29,3 +29,5 @@ The CSS is very easy , to make complete circles just assign a border-radius whic
 Then we get to the interesting part gradients i personally like [Mozilla's declaration](https://developer.mozilla.org/en/CSS/-moz-linear-gradient) over the [Webkit](http://developer.apple.com/safari/library/documentation/InternetWeb/Conceptual/SafariVisualEffectsProgGuide/Gradients/Gradients.html) one cause it's more easy for me to remember and work with ( BTW , how can you make an ellipse Gradient for webkit ? ). I'll be glad to hear any feedback.
 
 _Update:_ Today after Opera released it's latest [beta](http://www.opera.com/browser/next/) they now supports CSS3 gradients so i've updated the demo & the downloaded files
+
+<a class="jsbin-embed" href="http://jsbin.com/nateta/1/embed?output">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>
