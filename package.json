@@ -8,9 +8,10 @@
     "start": "node_modules/.bin/harp start",
     "build": "node server.js compile"
   },
+  "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "glob": "^4.0.6",
     "harp": "^0.14.0",
     "moment": "^2.8.3",
