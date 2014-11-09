@@ -89,7 +89,7 @@ I'll be using this technique in all of my upcoming projects &amp; let's see, but
 YouTube is doing the same.
 
 <a href="/assets/img/content/youtube.png">
-    <img src="/assets/img/content/youtube-660x226.png" alt="youtube" class="aligncenter size-medium wp-image-937" />
+    <img src="/assets/img/content/youtube.png" alt="youtube" class="aligncenter size-medium wp-image-937" />
 </a>
 
 #### Useful links
