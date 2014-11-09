@@ -2,9 +2,11 @@
   "name": "gabri.me",
   "version": "1.0.0",
   "description": "Some guy on the web",
-  "main": "compile.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/harp compile",
+    "start": "node_modules/.bin/harp start",
+    "build": "node server.js compile"
   },
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
