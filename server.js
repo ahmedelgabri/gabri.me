@@ -46,7 +46,7 @@ route.all(/^\/([0-9]{4})\/([0-9]{2})\/([a-z0-9\-].*?)(\/)?$/, function (req, res
 });
 
 // Handling w/o trailing slash for parent pages
-route.all(/^\/(blog|about|portfolio)(\/)?$/, function(req, res, next){
+route.all(/^\/(blog|about|portfolio|cv)(\/)?$/, function(req, res, next){
 
   if(req.params[2] !== '/'){
     res.writeHead(302, { 'location': req.params[1] + '/' });

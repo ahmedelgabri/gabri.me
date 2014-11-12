@@ -1,0 +1,62 @@
+doctype html
+html.no-js(lang="en")
+  head
+    script.
+      (function() {
+        var config = {
+          kitId: 'atp6voj',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
+
+    meta(charset="UTF-8")
+    title Ahmed El Gabri CV
+    <!--[if gt IE 8]><!-->
+    link(rel="stylesheet", href="css/main.css")
+    <!--<![endif]-->
+    <!--[if lte IE 8]>
+    link(rel="stylesheet", href="css/ie.css")
+    <![endif]-->
+    meta(name="viewport", content="initial-scale=1, width=device-width")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    <!--[if IEMobile]>
+    meta(name="HandheldFriendly", content="true")
+    <![endif]-->
+
+
+    meta(name="apple-mobile-web-app-title", content="Ahmed El Gabri C.V.")
+    link(rel="shortcut icon", href="/assets/img/style/icons/favicon.png")
+
+    link(rel="dns-prefetch", href="//www.google-analytics.com")
+    link(rel="dns-prefetch", href="//ajax.googleapis.com")
+
+
+    script.
+      if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+        var msViewportStyle = document.createElement("style");
+          msViewportStyle.appendChild(document.createTextNode("@-ms-viewport{width:auto!important}"));
+            document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+        }
+  body
+
+    <!--[if lte IE 8]>
+    .ie.bl-alert.bl-alert--info.h-inline-center
+      p.h-flat-bottom If your primary browser is IE8 or below, then I'm sorry but you are not the place I'm looking for.
+    <![endif]-->
+
+    .bl-wrapper
+      != yield
+
+
+
+        if environment === 'production'
+          script.
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-10517764-5', 'gabri.me');
+            ga('send', 'pageview');
+
