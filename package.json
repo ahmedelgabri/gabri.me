@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node_modules/.bin/harp compile",
     "start": "node_modules/.bin/harp start",
-    "build": "node server.js compile"
+    "build": "node server.js compile",
+    "run": "node server.js"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
@@ -17,5 +18,8 @@
     "moment": "^2.8.3",
     "router-stupid": "^0.7.0",
     "st": "^0.5.2"
+  },
+  "engines":{
+    "node": "0.10.x"
   }
 }
