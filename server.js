@@ -11,7 +11,9 @@ var harp       = require('harp');
 var router     = require('router-stupid');
 var route      = router();
 var moment     = require('moment');
-var pkg        = require('./package');
+var blogs      = require('./public/blog/_data.json');
+var works      = require('./public/work/_data.json');
+var pkg        = require('./package.json');
 var outputPath = __dirname + '/www';
 var port       = process.env.PORT || 9999;
 var htmlFiles  = [];
@@ -34,7 +36,7 @@ route.all(/^\/([0-9]{4})\/([0-9]{2})\/([a-z0-9\-].*?)(\/)?$/, function (req, res
 
   if (post && post.date) {
     if (params[4] === '/') {
-      res.writeHead(302, { 'location': '/blog/' + req.params[3] });
+      res.writeHead(302, { 'location': '/blog/' + params[3] });
       res.end();
       return;
     }
@@ -45,8 +47,28 @@ route.all(/^\/([0-9]{4})\/([0-9]{2})\/([a-z0-9\-].*?)(\/)?$/, function (req, res
   next();
 });
 
+// Handling the change in URLs rom portfolio to work.
+route.all(/^\/portfolio(\/)?$/, function(req, res, next){
+  res.writeHead(302, { 'location': '/work/' });
+  res.end();
+  return;
+});
+
+// Handling old portfolio URLs
+route.all(/^\/portfolio\/([a-z0-9\-].*?)(\/)?$/, function (req, res, next) {
+  var params = req.params;
+  var work = works[params[1]];
+
+  if (work && work.date) {
+      res.writeHead(302, { 'location': '/work/' + params[1] });
+      res.end();
+      return;
+  }
+  next();
+});
+
 // Handling w/o trailing slash for parent pages
-route.all(/^\/(blog|about|portfolio|cv)(\/)?$/, function(req, res, next){
+route.all(/^\/(blog|about|cv)(\/)?$/, function(req, res, next){
 
   if(req.params[2] !== '/'){
     res.writeHead(302, { 'location': req.params[1] + '/' });
@@ -57,6 +79,7 @@ route.all(/^\/(blog|about|portfolio|cv)(\/)?$/, function(req, res, next){
   req.url = req.params[0];
   next();
 });
+
 
 var server = function (root) {
   // manually glob all the .html files so that we can navigate
