@@ -5,9 +5,9 @@ env:
 - NODE_ENV=production
 before_script:
 - npm install
-- npm build
+- npm run build
 script:
-- npm server
+- npm run server
 deploy:
   provider: heroku
   strategy: git

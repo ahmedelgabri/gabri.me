@@ -7,7 +7,7 @@
     "test": "node_modules/.bin/harp compile",
     "build": "node server.js compile",
     "server": "node server.js",
-    "start": "npm build && npm server"
+    "start": "npm run build && npm run server"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
