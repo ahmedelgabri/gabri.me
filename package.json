@@ -5,10 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "node_modules/.bin/harp compile",
-    "start": "node_modules/.bin/harp start",
     "build": "node server.js compile",
     "server": "node server.js",
-    "run": "npm build && npm server"
+    "start": "npm build && npm server"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
