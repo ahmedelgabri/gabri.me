@@ -7,8 +7,7 @@ before_script:
 - npm install
 - npm build
 script:
-- npm test
-- npm build
+- npm server
 deploy:
   provider: heroku
   strategy: git
