@@ -1,9 +1,9 @@
 posts = []
-portfolio = public.portfolio
-for post, slug in portfolio._data
+work = public.work
+for post, slug in work._data
   if post.date && (environment == "production" && post.published!==false) || (environment == "development")
     - post.slug = slug
-    - posts.push(portfolio._data[slug])
+    - posts.push(work._data[slug])
 
 //- Iterate over the posts array
 each post, i in posts.sort(function(a,b){ a = new Date(a.date); b = new Date(b.date); return b<a?-1:b>a?1:0; }).reverse()
@@ -22,7 +22,7 @@ each post, i in posts.sort(function(a,b){ a = new Date(a.date); b = new Date(b.d
           div.new
             a(href="#{next.slug}", title="Next: #{next.title}") ◀
 
-        a(class="up", href="/portfolio/", title="Back to Portfolio") Portfolio
+        a(class="up", href="/work/", title="Back to work") work
 
         if prev
           div.old

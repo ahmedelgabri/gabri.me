@@ -1,4 +1,4 @@
-posts = public.portfolio._data
+posts = public.work._data
 data = partial('_partials/data-loop', { collection: posts })
 
 div.mod-2thirds.centered.intro.secondary-text
@@ -9,7 +9,7 @@ ul.m-grid.cf
   each item, i in data
     - if ( i > 5 ) return;
     li.mod-third
-      a(href='portfolio/' + item.slug)
+      a(href='work/' + item.slug)
         figure.face.thumb
           img(src='assets/img/content/'+item.thumb, class="attachment-portfolio-thumb wp-post-image")
         h3.back= item.title

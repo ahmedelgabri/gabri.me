@@ -1,8 +1,8 @@
 extends ../_layout
 
 block content
-  if current.path[0] === 'portfolio' && current.source !== 'index'
-    include ../_partials/portfolio-nav
+  if current.path[0] === 'work' && current.source !== 'index'
+    include ../_partials/work-nav
     div.mod-2thirds.centered.text-content
       h2 #{title}
 

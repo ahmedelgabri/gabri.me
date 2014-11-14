@@ -5,7 +5,7 @@ html(lang="en")
   body(class="#{current.source}")
     include _partials/header
 
-    main(class="cf l-wrapper #{  current.path[0] === 'portfolio' && current.source !== 'index' ? 'portfolio-single' : '' }")
+    main(class="cf l-wrapper #{  current.path[0] === 'work' && current.source !== 'index' ? 'portfolio-single' : '' }")
       if environment === 'development'
         pre= current.source
         pre= JSON.stringify(current)
