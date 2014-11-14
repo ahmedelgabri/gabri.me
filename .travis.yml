@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- '0.10'
+env:
+- NODE_ENV=production
+before_script:
+- npm install
+- npm build
+script:
+- npm run
+deploy:
+  provider: heroku
+  api_key:
+    secure: WE7Ds+oyxZEpf07AlV+ceSbDizU5RYYjDXAsz07IJbDO3EdmU73bdMAKKRssN1jQn8XdvB6yvr6iHRh+3PHoGLv/mIh6xsKNDB9zflrOCtKhb+ZvYan2+tUBlEJ8zFziHDjRfRTDg6lD7VbXlEOPmdrP6n0KQadIqQOu5/X5kWc=
+  app: gabrime
+  on:
+    repo: ahmedelgabri/gabri.me
