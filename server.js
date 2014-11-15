@@ -113,7 +113,6 @@ function run() {
       if (htmlFiles.indexOf(req.url + '.html') !== -1) {
         // then we requested /foo/bar and we know there's a
         // generated file that matches
-        console.log(req.url);
         req.url += '.html';
       }
 
