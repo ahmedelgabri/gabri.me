@@ -1,6 +1,6 @@
 {
     "globals": {
-        "site_url": "http://gabri.me",
+        "site_url": "//gabri.me",
         "author": "Ahmed El Gabri",
         "site_title": "Front-End developer",
         "description": "Portfolio of Ahmed El Gabri a Web designer & Front end developer based in Cairo , Egypt. Creating handcrafted web designs using the latest technologies.",
