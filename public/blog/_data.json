@@ -4,14 +4,16 @@
         "published": true,
         "date" : "2010-03-24 14:50",
         "tags" : ["(x)HTML/CSS", "Design", "HTML5", "personal"],
-        "demo" : null
+        "demo" : null,
+        "disqus_id": "420 http://gabri.me/?p=420"
     },
     "css3-gradients-coffee-cup": {
         "title": "CSS3 Gradients Coffee cup",
         "published": true,
         "date": "2010-03-24 15:00",
         "tags": ["Border-radius", "CSS Gradients", "CSS3"],
-        "demo": null
+        "demo": null,
+        "disqus_id": "370 http://localhost/Gabri.me/?p=370"
     },
     "free-xhtmlcss-template": {
         "title": "Free xHTML/CSS Template",
@@ -20,27 +22,31 @@
         "tags": ["CSS", "Freebies", "xHTML"],
         "demo": {
             "download": ""
-        }
+        },
+        "disqus_id": "479 http://gabri.me/?p=479"
     },
     "hey-facebook-shift-enter-is-better": {
         "title": "Hey! Facebook, Shift + Enter is better",
         "published": true,
         "date": "2011-03-16 19:41",
         "tags": ["UI", "UX"],
-        "demo": null
+        "demo": null,
+        "disqus_id": "611 http://gabri.me/?p=611"
     },
     "facelift": {
         "title": "Facelift",
         "published": true,
         "date": "2012-06-19 20:45",
         "tags": ["(x)HTML/CSS", "Design"],
-        "demo": null
+        "demo": null,
+        "disqus_id": "829 /vault/?p=829"
     },
     "vodafone-egypt-user-experience": {
         "title": "Vodafone Egypt & User Experience",
         "published": true,
         "date": "2012-06-30 19:05",
-        "demo": null
+        "demo": null,
+        "disqus_id": "851 /?p=851"
     },
     "custom-colors-in-your-zsh-prompt": {
         "title": "Custom colors in your ZSH prompt",
