@@ -24,7 +24,7 @@ var mount;
 global.moment = moment;
 
 // handling feed URL for feedburner
-route.all('/feed/', function(req, res, next){
+route.all(/^\/feed(\/)?$/, function(req, res, next){
   res.writeHead(302, { 'location': '/feed.xml' });
   res.end();
   return;
