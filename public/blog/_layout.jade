@@ -24,9 +24,10 @@ block content
         //- TODO: disqus_identifier solution is dirty, do it properly.
         script.
           var disqus_shortname = '#{disqus}';
-          var disqus_identifier = '#{disqus_id}';
-          if ( disqus_identifier === '') {
-            disqus_identifier = 'http:#{site_url}/#{current.path.join('/')}/';
+          var disqus_title = '#{title}';
+          var oldID = '#{disqus_id}';
+          if ( oldID !== '') {
+            var disqus_identifier = '#{disqus_id}';
           }
           var disqus_url = 'http:#{site_url}/#{current.path.join('/')}/';
           (function() {

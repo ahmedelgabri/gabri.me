@@ -95,7 +95,8 @@
         "published": true,
         "date": "2014-07-26 16:30",
         "tags": null,
-        "demo": null
+        "demo": null,
+        "disqus_id": "http://gabri.me/blog/making-the-default-gulp-task-useful/"
     },
     "weekly-links-v-1": {
         "title": "Weekly links v.1",
