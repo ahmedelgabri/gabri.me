@@ -10,7 +10,7 @@ rss(version='2.0'
   xmlns:sy='http://purl.org/rss/1.0/modules/syndication/'
   xmlns:slash='http://purl.org/rss/1.0/modules/slash/')
   channel
-    title #{ site_title }
+    title #{author} | #{ site_title }
     atom:link(href="#{ site_url }/feed.xml" rel="self" type="application/rss+xml")
     link #{ site_url }
     description #{ description }
@@ -23,7 +23,7 @@ rss(version='2.0'
       item
         title #{ post.title }
         guid(isPermaLink="false")= post.slug
-        link #{site_url}/blog/#{ post.slug }.html
+        link #{site_url}/blog/#{ post.slug }/
         pubDate #{ moment(post.date).format('ddd, DD MMM YYYY H:mm:ss +0000') }
         description <![CDATA[!{ partial('blog/'+post.slug) }]]>
         content:encoded <![CDATA[!{ partial('blog/'+post.slug) }]]>
