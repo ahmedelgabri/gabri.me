@@ -13,6 +13,6 @@ header(role="banner")
             if item.title
               li(class="menu-item #{ current.path[0] === slug ? 'current_page_item' : '' }")
                 if slug === 'contact'
-                  a(title="#{item.title}  Me", href="mailto:#{email}?subject=Yo!&body=Hey there,") #{item.title}
+                  a(title="#{item.title}  Me", href="mailto:#{email}") #{item.title}
                 else
                   a(title="#{item.title} Page", href="/"+slug+'/') #{item.title}
