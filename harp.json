@@ -1,6 +1,6 @@
 {
     "globals": {
-        "site_url": "//gabri.me",
+        "site_url": "http://gabri.me",
         "author": "Ahmed El Gabri",
         "site_title": "Front-End Developer",
         "description": "Ahmed El Gabri is a Front-End Developer who creates handcrafted webapps/sites using the latest technologies.",
