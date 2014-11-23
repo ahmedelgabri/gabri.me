@@ -82,6 +82,15 @@ route.all(/^\/(blog|about|cv)(\/)?$/, function(req, res, next){
   next();
 });
 
+route.all('/{blog}?/{post}/', function (req, res, next) {
+  var post = blogs[req.params.post];
+  if (post) {
+    res.writeHead(302, { 'location': '/blog/'+ req.params.post });
+    res.end();
+    return;
+  }
+  next();
+});
 
 var server = function (root) {
   // manually glob all the .html files so that we can navigate
