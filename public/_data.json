@@ -2,6 +2,9 @@
   "feed": {
     "layout": false
   },
+  "sitemap": {
+    "layout": false
+  },
   "work": {
     "title": "Work",
     "date": "2010-03-24 00:43:00",
