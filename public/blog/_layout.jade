@@ -6,7 +6,7 @@ block content
     div(itemscope, itemtype="http://schema.org/Article")
       h2.h2 #{title}
 
-      small.author by <em>#{author}</em> on <em>#{moment(date).format('D MMMM YYYY')}</em>
+      small.author by <em itemprop="author">#{author}</em> on <em itemprop="datePublished">#{moment(date).format('D MMMM YYYY')}</em>
 
       .blog-post.mod-2thirds.centered
           != yield
