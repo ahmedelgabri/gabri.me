@@ -82,6 +82,21 @@ route.all(/^\/(blog|about|cv)(\/)?$/, function(req, res, next){
   next();
 });
 
+
+if (process.env.NODE_ENV !== 'production') {
+  route.all(/^\/(drafts)(\/)?$/, function(req, res, next){
+
+    if(req.params[2] !== '/'){
+      res.writeHead(302, { 'location': req.params[1] + '/' });
+      res.end();
+      return;
+    }
+
+    req.url = req.params[0];
+    next();
+  });
+}
+
 route.all('/{blog}?/{post}/', function (req, res, next) {
   var post = blogs[req.params.post];
   if (post) {
