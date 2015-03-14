@@ -9,41 +9,6 @@ block content
 
       My knowledge &amp; skills spans a wide range of topics, Web design, Front-end development, SEO, Responsive Web Design, Performance Optimization, Social Media.
 
-    aside(role="complementary", class="secondary-text row")
-      div(id="text-2" class="widget widget_text mod-third")
-        h4 My Services
-        div.textwidget
-          ul
-            for service in public._data['about'].services
-              li= service
-
-
-
-
-      div(id="text-3", class="widget widget_text mod-third")
-        h4 What I’m not
-        div.textwidget
-          ul
-            li I'm not a logo designer.
-            li I'm not a Print designer.
-            li I don't do flash..
-
-
-
-
-      div#recent-posts-3.widget.widget_recent_entries.mod-third
-        h4 The Blog
-        posts = public.blog._data
-        data = partial('../_partials/data-loop', { collection: posts })
-        ul
-          each post, i in data
-            - if ( i > 4 ) return
-            li
-              a(href='/blog/'+post.slug) #{post.title}
-
-
-
-
 
     h4 About the site
     p
