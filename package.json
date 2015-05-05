@@ -4,9 +4,9 @@
   "description": "Some guy on the web",
   "main": "server.js",
   "scripts": {
-    "test": "node_modules/.bin/harp compile",
+    "test": "harp compile",
     "build": "node server.js compile",
-    "server": "node server.js",
+    "server": "nodemon -w ./public -e js,jade,styl ./server.js",
     "start": "npm run build && npm run server"
   },
   "private": true,
@@ -14,12 +14,15 @@
   "license": "MIT",
   "dependencies": {
     "glob": "^4.0.6",
-    "harp": "^0.14.0",
+    "harp": "^0.17.0",
     "moment": "^2.8.3",
     "router-stupid": "^0.7.0",
     "st": "^0.5.2"
   },
-  "engines":{
+  "engines": {
     "node": "0.10.x"
+  },
+  "devDependencies": {
+    "nodemon": "^1.3.7"
   }
 }
