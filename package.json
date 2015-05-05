@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "harp compile",
-    "build": "node server.js compile",
-    "server": "nodemon -w ./public -e js,jade,styl ./server.js",
+    "build": "node ./server.js compile",
+    "server": "node ./server.js",
+    "watch": "nodemon -w ./public -e js,jade,styl ./server.js",
     "start": "npm run build && npm run server"
   },
   "private": true,
