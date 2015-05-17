@@ -20,7 +20,6 @@
  *=== group HEADER
  *===============================*/
 header
-  background: white
   padding: 1em 0
   text-align: center
   margin-bottom: 4em
@@ -31,6 +30,8 @@ header
   font-family: para
   text-transform: uppercase
   fontSize(16)
+  svg
+    fill: textColor
   a
     display: block
   span
@@ -43,17 +44,15 @@ header
   margin: 0 0 0 -1em
   li
     display: inline-block
-    *display: inline
-    *zoom: 1
     margin: 0 0 1em 1em
     width: 43%
   a
     display: block
     padding: 0.8571428571428571em
-    background: #e9e9e9
     text-transform: uppercase
     fontSize(14)
     border-radius: 3px
+    border: 1px solid #686868;
     line-height: normal
 
 .menu a:hover,
@@ -62,7 +61,7 @@ header
 .single-post .current_page_parent > a
   text-decoration: none
   color: white
-  background: linkColor
+  border-color: linkColor
 
 /*==============================
  *=== group HOME
@@ -143,7 +142,7 @@ header
 .author
   display: block
   margin-bottom: 1.5em
-  color: #41484c
+  color: #52504E
 
 .twitter-tweet-rendered
   margin-bottom: veritcalspace !important
@@ -229,7 +228,7 @@ footer
   small,
   a,
   .social a:visited
-    color: #7D8A90
+    color: #81766f
   small
     float: left
   .social
