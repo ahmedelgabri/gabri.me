@@ -7,11 +7,11 @@
     "test": "harp compile",
     "build": "node ./server.js compile",
     "server": "node ./server.js",
-    "watch": "nodemon -w ./public -e js,jade,styl ./server.js",
-    "start": "npm run build && npm run watch",
+    "watch": "nodemon -w ./public -e js,jade,styl,md ./server.js",
+    "dev": "npm run build && npm run watch",
+    "start": "npm run build && npm run server",
     "clean": "rm -rf www/",
-    "predeploy": "npm run clean && npm run build",
-    "deploy": "surge -p ./www -d gabrime.surge.sh"
+    "predeploy": "npm run clean && npm run build"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
