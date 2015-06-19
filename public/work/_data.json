@@ -108,7 +108,7 @@
         "roles": ["Front-end development", "Design"],
         "thumb": "ez-daaf-th.jpg",
         "imgs": ["ez-daaf.jpg"],
-        "url": "http://ez-daaf.org/",
+        "url": null,
         "foor": null,
         "date": "2012-05-28 19:17:00",
         "published": true
