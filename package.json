@@ -17,16 +17,14 @@
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
-    "glob": "^4.0.6",
-    "harp": "^0.17.0",
-    "moment": "^2.8.3",
+    "glob": "^5.0.14",
+    "harp": "^0.19.0",
+    "jstransformer-marked": "^1.0.1",
+    "moment": "^2.10.6",
     "router-stupid": "^0.7.0",
-    "st": "^0.5.2"
-  },
-  "engines": {
-    "node": "0.12.x"
+    "st": "^0.5.5"
   },
   "devDependencies": {
-    "nodemon": "^1.3.7"
+    "nodemon": "^1.5.1"
   }
 }
