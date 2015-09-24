@@ -13,4 +13,4 @@ before_script:
 
 script:
 - npm run build
-- percy snapshot www/
+- percy snapshot www/ --snapshot_limit 5
