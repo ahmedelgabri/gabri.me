@@ -9,6 +9,8 @@ env:
 
 before_script:
 - npm install
+- gem install percy-cli
 
 script:
 - npm run build
+- percy snapshot www/
