@@ -1,4 +1,10 @@
+script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js")
 script(src="/assets/js/scripts.js")
+script.
+  hljs.configure({
+    tabReplace: '  '
+  })
+  hljs.initHighlightingOnLoad();
 if environment === 'production'
   script.
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
