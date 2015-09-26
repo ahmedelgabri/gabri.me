@@ -20,16 +20,6 @@
 @viewport
   width: device-width
 
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2)
-  // retina display
-
-@media only screen and (max-width: 20em)
-  // 320px
-
-@media only screen and (min-width: 30em)
-  // 480px
-
 @media only screen and (min-width: 37.5em)
   // 600px
   header
@@ -66,19 +56,6 @@
     max-width: 62.5em
   .navigation a:hover span
     top: -150%
-  .comment-author
-    line-height: 4
-    position: relative
-    .comment-meta
-      > a
-        position: absolute
-        right: 0.625em
-        top: 0.5625em
-  .bypostauthor
-    .comment-meta
-      > a
-        left: 0.625em
-        right: auto
 
 @media only screen and (min-width: 40em)
   // 640px
@@ -109,31 +86,6 @@
     margin-left: -27%
     margin-right: 2em
     max-width: 14em
-  .no-touch.csstransforms3d
-    .m-grid
-      li
-        position: relative
-        perspective: 1000
-        &:hover a
-          transform: rotateY(180deg)
-      a
-        transform-style: preserve-3d
-        transition: all 1.0s linear
-        height: 12.5em
-      .face
-        position: absolute
-        top: 0
-        right: 0
-        left: 0
-        bottom: 0
-        backface-visibility: hidden
-      .back
-        transform: rotateY(180deg)
-        line-height: 10em
-        background-color: bgcolor
-        backface-visibility: hidden
-        border: 1px solid linkColor
-        z-index: 1
 
 @media only screen and (min-width: 64em)
   // 1024px

@@ -38,10 +38,7 @@
     &:hover
       text-decoration: none
       img
-        border-color: linkColor
-        -webkit-box-shadow: 0 0 10px linkColor
-        -moz-box-shadow: 0 0 10px linkColor
-        box-shadow: 0 0 10px linkColor
+        box-shadow: 0 0 0 2px linkColor
       h3
         color: linkColor
     h3
@@ -54,18 +51,16 @@
 
 .thumb
   img
-    border: 1px solid #090D0F
+    box-shadow: 0 0 0 2px rgba(textcolor, .3)
     transition: all 0.2s ease-in-out
 
 .navigation
   float: none
   margin-bottom: 1.5em
   a
-    color: #81766F
     &:hover
       text-decoration: none
   .up
-    font-family: headings
     text-transform: uppercase
     fontSize(28)
     display: inline-block
