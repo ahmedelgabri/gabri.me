@@ -5,5 +5,5 @@ block content
   h2 #{public._data[current.path[0]].title}
   div.centered.blog
     each item in data
-      h3
+      p
         a(href='/blog/'+item.slug) #{item.title}
