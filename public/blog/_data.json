@@ -1,178 +1,185 @@
 {
-    "gabri-me-redesign": {
-        "title": "Gabri.me redesign",
-        "published": true,
-        "date" : "2010-03-24 14:50",
-        "tags" : ["(x)HTML/CSS", "Design", "HTML5", "personal"],
-        "demo" : null,
-        "disqus_id": "420 http://gabri.me/?p=420"
+  "gabri-me-redesign": {
+    "title": "Gabri.me redesign",
+    "published": true,
+    "date" : "2010-03-24 14:50",
+    "tags" : ["(x)HTML/CSS", "Design", "HTML5", "personal"],
+    "demo" : null,
+    "disqus_id": "420 http://gabri.me/?p=420"
+  },
+  "css3-gradients-coffee-cup": {
+    "title": "CSS3 Gradients Coffee cup",
+    "published": true,
+    "date": "2010-03-24 15:00",
+    "tags": ["Border-radius", "CSS Gradients", "CSS3"],
+    "demo": null,
+    "disqus_id": "370 http://localhost/Gabri.me/?p=370"
+  },
+  "free-xhtmlcss-template": {
+    "title": "Free xHTML/CSS Template",
+    "published": false,
+    "date": "2010-04-05 13:14",
+    "tags": ["CSS", "Freebies", "xHTML"],
+    "demo": {
+      "download": ""
     },
-    "css3-gradients-coffee-cup": {
-        "title": "CSS3 Gradients Coffee cup",
-        "published": true,
-        "date": "2010-03-24 15:00",
-        "tags": ["Border-radius", "CSS Gradients", "CSS3"],
-        "demo": null,
-        "disqus_id": "370 http://localhost/Gabri.me/?p=370"
-    },
-    "free-xhtmlcss-template": {
-        "title": "Free xHTML/CSS Template",
-        "published": false,
-        "date": "2010-04-05 13:14",
-        "tags": ["CSS", "Freebies", "xHTML"],
-        "demo": {
-            "download": ""
-        },
-        "disqus_id": "479 http://gabri.me/?p=479"
-    },
-    "hey-facebook-shift-enter-is-better": {
-        "title": "Hey! Facebook, Shift + Enter is better",
-        "published": true,
-        "date": "2011-03-16 19:41",
-        "tags": ["UI", "UX"],
-        "demo": null,
-        "disqus_id": "611 http://gabri.me/?p=611"
-    },
-    "facelift": {
-        "title": "Facelift",
-        "published": true,
-        "date": "2012-06-19 20:45",
-        "tags": ["(x)HTML/CSS", "Design"],
-        "demo": null,
-        "disqus_id": "829 /vault/?p=829"
-    },
-    "vodafone-egypt-user-experience": {
-        "title": "Vodafone Egypt & User Experience",
-        "published": true,
-        "date": "2012-06-30 19:05",
-        "demo": null,
-        "disqus_id": "851 /?p=851"
-    },
-    "custom-colors-in-your-zsh-prompt": {
-        "title": "Custom colors in your ZSH prompt",
-        "published": true,
-        "date": "2013-01-24 07:53",
-        "tags": ["commandline", "Zsh", "shell"],
-        "demo": null
-    },
-    "quick-tip-virtualbox-localhost": {
-        "title": "Quick tip: VirtualBox & localhost",
-        "published": true,
-        "date": "2013-04-19 12:13",
-        "tags": null,
-        "demo": null
-    },
-    "the-right-way-to-store-sublimetext-2-settings": {
-        "title": "The right way to store SublimeText 2 settings",
-        "published": true,
-        "date": "2013-04-27 15:00",
-        "tags": null,
-        "demo": null
-    },
-    "sass-mixin-for-auto-numbering-with-css": {
-        "title": "Sass mixin for auto-numbering with CSS",
-        "published": true,
-        "date": "2013-05-25 10:26",
-        "tags": ["Sass"],
-        "demo": null
-    },
-    "global-scope-namespacing-css": {
-        "title": "Global scope, namespacing & CSS",
-        "published": true,
-        "date": "2013-08-06 09:30",
-        "tags": ["CSS", "Front-end"],
-        "demo": null
-    },
-    "no-more-hosts-file-with-dnsmasq": {
-        "title": "No more hosts file with dnsmasq",
-        "published": true,
-        "date": "2013-09-27 08:39",
-        "tags": null,
-        "demo": null
-    },
-    "making-the-default-gulp-task-useful": {
-        "title": "Making the default gulp task useful",
-        "published": true,
-        "date": "2014-07-26 16:30",
-        "tags": null,
-        "demo": null,
-        "disqus_id": "http://gabri.me/blog/making-the-default-gulp-task-useful/"
-    },
-    "weekly-links-v-1": {
-        "title": "Weekly links v.1",
-        "published": true,
-        "date": "2014-10-04 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-2": {
-        "title": "Weekly links v.2",
-        "published": true,
-        "date": "2014-10-11 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-3": {
-        "title": "Weekly links v.3",
-        "published": true,
-        "date": "2014-10-19 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-4": {
-        "title": "Weekly links v.4",
-        "published": true,
-        "date": "2014-10-25 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-5": {
-        "title": "Weekly links v.5",
-        "published": true,
-        "date": "2014-11-01 21:05",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-6": {
-        "title": "Weekly links v.6",
-        "published": true,
-        "date": "2014-11-08 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-7": {
-        "title": "Weekly links v.7",
-        "published": true,
-        "date": "2014-11-15 18:51",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-8": {
-        "title": "Weekly links v.8",
-        "published": true,
-        "date": "2014-11-22 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-9": {
-        "title": "Weekly links v.9",
-        "published": true,
-        "date": "2014-11-29 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-10": {
-        "title": "Weekly links v.10",
-        "published": true,
-        "date": "2014-12-06 19:00",
-        "tags": null,
-        "demo": null
-    },
-    "weekly-links-v-11": {
-        "title": "Weekly links v.11",
-        "published": true,
-        "date": "2014-12-20 19:00",
-        "tags": null,
-        "demo": null
-    }
+    "disqus_id": "479 http://gabri.me/?p=479"
+  },
+  "hey-facebook-shift-enter-is-better": {
+    "title": "Hey! Facebook, Shift + Enter is better",
+    "published": true,
+    "date": "2011-03-16 19:41",
+    "tags": ["UI", "UX"],
+    "demo": null,
+    "disqus_id": "611 http://gabri.me/?p=611"
+  },
+  "facelift": {
+    "title": "Facelift",
+    "published": true,
+    "date": "2012-06-19 20:45",
+    "tags": ["(x)HTML/CSS", "Design"],
+    "demo": null,
+    "disqus_id": "829 /vault/?p=829"
+  },
+  "vodafone-egypt-user-experience": {
+    "title": "Vodafone Egypt & User Experience",
+    "published": true,
+    "date": "2012-06-30 19:05",
+    "demo": null,
+    "disqus_id": "851 /?p=851"
+  },
+  "custom-colors-in-your-zsh-prompt": {
+    "title": "Custom colors in your ZSH prompt",
+    "published": true,
+    "date": "2013-01-24 07:53",
+    "tags": ["commandline", "Zsh", "shell"],
+    "demo": null
+  },
+  "quick-tip-virtualbox-localhost": {
+    "title": "Quick tip: VirtualBox & localhost",
+    "published": true,
+    "date": "2013-04-19 12:13",
+    "tags": null,
+    "demo": null
+  },
+  "the-right-way-to-store-sublimetext-2-settings": {
+    "title": "The right way to store SublimeText 2 settings",
+    "published": true,
+    "date": "2013-04-27 15:00",
+    "tags": null,
+    "demo": null
+  },
+  "sass-mixin-for-auto-numbering-with-css": {
+    "title": "Sass mixin for auto-numbering with CSS",
+    "published": true,
+    "date": "2013-05-25 10:26",
+    "tags": ["Sass"],
+    "demo": null
+  },
+  "global-scope-namespacing-css": {
+    "title": "Global scope, namespacing & CSS",
+    "published": true,
+    "date": "2013-08-06 09:30",
+    "tags": ["CSS", "Front-end"],
+    "demo": null
+  },
+  "no-more-hosts-file-with-dnsmasq": {
+    "title": "No more hosts file with dnsmasq",
+    "published": true,
+    "date": "2013-09-27 08:39",
+    "tags": null,
+    "demo": null
+  },
+  "making-the-default-gulp-task-useful": {
+    "title": "Making the default gulp task useful",
+    "published": true,
+    "date": "2014-07-26 16:30",
+    "tags": null,
+    "demo": null,
+    "disqus_id": "http://gabri.me/blog/making-the-default-gulp-task-useful/"
+  },
+  "weekly-links-v-1": {
+    "title": "Weekly links v.1",
+    "published": true,
+    "date": "2014-10-04 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-2": {
+    "title": "Weekly links v.2",
+    "published": true,
+    "date": "2014-10-11 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-3": {
+    "title": "Weekly links v.3",
+    "published": true,
+    "date": "2014-10-19 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-4": {
+    "title": "Weekly links v.4",
+    "published": true,
+    "date": "2014-10-25 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-5": {
+    "title": "Weekly links v.5",
+    "published": true,
+    "date": "2014-11-01 21:05",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-6": {
+    "title": "Weekly links v.6",
+    "published": true,
+    "date": "2014-11-08 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-7": {
+    "title": "Weekly links v.7",
+    "published": true,
+    "date": "2014-11-15 18:51",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-8": {
+    "title": "Weekly links v.8",
+    "published": true,
+    "date": "2014-11-22 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-9": {
+    "title": "Weekly links v.9",
+    "published": true,
+    "date": "2014-11-29 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-10": {
+    "title": "Weekly links v.10",
+    "published": true,
+    "date": "2014-12-06 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "weekly-links-v-11": {
+    "title": "Weekly links v.11",
+    "published": true,
+    "date": "2014-12-20 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "diy-vim-statusline": {
+    "title": "DIY Vim statusline",
+    "published": false,
+    "date": "2015-10-05 14:00",
+    "tags": ["vim","unix","terminal"],
+    "demo": null
+  }
 }
