@@ -181,5 +181,12 @@
     "date": "2015-10-05 14:00",
     "tags": ["vim","unix","terminal"],
     "demo": null
+  },
+  "evernote-to-jrnl": {
+    "title": "Migrating from Evernote",
+    "published": true,
+    "date": "2015-10-05 14:00",
+    "tags": ["notes", "journal", "python", "node", "vim","unix","terminal"],
+    "demo": null
   }
 }
