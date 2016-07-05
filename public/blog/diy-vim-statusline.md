@@ -146,7 +146,7 @@ check my previous [article](/blog/custom-colors-in-your-zsh-prompt) on this.
 
 Full credit goes to Reman on [Stackoverflow](http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim/10416234#10416234) and greduan [dotfiles](https://github.com/Greduan/dotfiles/blob/76e16dd8a04501db29989824af512c453550591d/vim/after/plugin/statusline.vim).
 
-[Here is a gif for my statusline](/assets/img/content/statusline.gif) and here is the code in my [vimrc](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/vimrc.local#L272-L374) _I have enabled true color in iTerm2, Neovm and tmux. So ignore the hex code for colors_
+[Here is a gif for my statusline](/assets/img/content/statusline.gif) and here is the code in my [vimrc](https://github.com/ahmedelgabri/dotfiles/blob/c4f40c27b295ecfb7673bd29d373cab26b93379b/vim/vimrc.local#L302-L423) _I have enabled true color in iTerm2, Neovm and tmux. So ignore the hex code for colors_
 
 Vim and CLI are both really powerful and the ability to have your workflow in
 one place is very productive as everything we don't know it's scary at first but
