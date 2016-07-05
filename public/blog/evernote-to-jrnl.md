@@ -1,17 +1,17 @@
 To start, Evernote is nice app. But not for me, I always had this love/hate relationship with it and with note talking apps in general. All I want from a note talking app is very simple.
 
-1. I don't need to use the app to write my notes, I can use my fav text editor to do this.
+1. I don't need to use the app to write my notes, I can use my favourite text editor to do this.
 2. Export my notes as text/Markdown.
 3. Full Markdown support.
 4. Own my data and the ability to choose whatever service I like to sync my notes with, iCloud, Dropbox, etc...
 
-Evernote supported none of these requirments, but it was the best one and recommended by nearly everyone I know. So I started to use it and then after a couple of years I moved to [simplenote](http://simplenote.com) which was a bit better but note much better than Evernote, it supported Markdown _to some extend_ the app was less sluggish too which was a huge plus.
+Evernote supported none of these requirements, but it was the best one and recommended by nearly everyone I know. So I started to use it and then after a couple of years I moved to [simplenote](http://simplenote.com) which was a bit better but note much better than Evernote, it supported Markdown _to some extend_ the app was less sluggish too which was a huge plus.
 
-Last year I found about [Alternote](http://alternoteapp.com/) for Evernote, It combined what I liked between Evernote and Simplenote togeather and it allowed me to write note using Markdown. So I went back to Evernote. But I was still not happy at all.
+Last year I found about [Alternote](http://alternoteapp.com/) for Evernote, It combined what I liked between Evernote and Simplenote together and it allowed me to write note using Markdown. So I went back to Evernote. But I was still not happy at all.
 
 ### Using your text editor of choice
 
-I use Vim and most of my day I spend doing stuff in iTerm2, and I don't see any point for me to not be able to write my notes using Vim or _insert your fav text editor here_ and/or using Markdown. Both Evernote and Simplenote don't offically have any way to do this, so I found these Vim plugins [evervim](https://github.com/kakkyz81/evervim) and [simplenote.vim](https://github.com/mrtazz/simplenote.vim) I tried both for a while but I was not statisfed and it was not the workflow I liked.
+I use Vim and most of my day I spend doing stuff in iTerm2, and I don't see any point for me to not be able to write my notes using Vim or _insert your fav text editor here_ and/or using Markdown. Both Evernote and Simplenote don't officially have any way to do this, so I found these Vim plugins [evervim](https://github.com/kakkyz81/evervim) and [simplenote.vim](https://github.com/mrtazz/simplenote.vim) I tried both for a while but I was not satisfied and it was not the workflow I liked.
 
 I'm aware of [Geeknote](http://www.geeknote.me/) but it was too much for me, I like simple solutions.
 
@@ -25,7 +25,7 @@ I'm aware of [Geeknote](http://www.geeknote.me/) but it was too much for me, I l
 * Evernote: No.
 * Simplenote: Yes to some extend.
 
-### Own my data and sync using my fav service.
+### Own my data and sync using my favourite service.
 
 Both doesn't support this option.
 
@@ -35,25 +35,25 @@ So I had to find another option because I was really getting annoyed, I tried lo
 
 ### Converting Evernote `.enex` export to `.json`
 
-But in order to do this I have to migrate my notes from Evernote to Day one. But the export from Evernote is `.enex`, how can I do anything useful with it. I found this Python package called [ever2simple](https://github.com/claytron/ever2simple) it was meant to be a tool to convert `.enex` to `.json` to be able to import your notes into simplenote but the irony is that Simplenote doesn't support this anymore!
+But in order to do this I have to migrate my notes from Evernote to Day one. But the export from Evernote is `.enex`, how can I do anything useful with it. I found this Python package called [ever2simple](https://github.com/claytron/ever2simple) it was meant to be a tool to convert `.enex` to `.json` to be able to import your notes into Simplenote but the irony is that Simplenote doesn't support this anymore!
 
-But still having all my notes as `.json` was a huge improvment to `.enex`
+But still having all my notes as `.json` was a huge improvement to `.enex`
 
 ### Create Markdown notes from `.json`
 
 At this point I have a `.json` file with all my notes info in there with all the metadata too, which is great. Day one CLI tool can import any text format file to Day one. So at this point I wrote a _dirty_ node script to create all my notes as Markdown files and import them using the Day one CLI tool.
 
-Here is the script _it's written in ES6_
+Here is the _quick & dirty_ script using node and ES2016 (aka ES6) syntax.
 
 ```js
-#!/usr/bin/env babel-node
+#!/usr/bin/env node
 
-import fs from 'fs'
-import path from 'path'
-import { execSync } from 'child_process'
-import moment from 'moment'
-import slug from 'slug'
-import notes from './evernote.json'
+const fs = require('fs')
+const path = require('path')
+const { execSync } = require('child_process')
+const moment = require('moment')
+const slug = require('slug')
+const notes = require('./evernote.json')
 
 let title
 let tags
@@ -71,12 +71,10 @@ notes.forEach(note => {
   tags = note.tags.length > 1 ? note.tags.map(tag => `#${tag.toLowerCase()}`).join(', ') : note.tags.map(tag => `#${tag.toLowerCase()}`).join()
   file = path.join(__dirname, './evernote-md', `${date}-${slugg}.md`)
   content = `# ${title}
-
   ---
   date: ${creationDate}
   tags: ${tags}
   ---
-
 ${note.content.substring(note.content.split('\n')[0].length).replace(/\s?\n\n?\s?/g, '\n')}
 `
   console.log(tags)
