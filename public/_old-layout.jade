@@ -1,0 +1,20 @@
+doctype
+html(lang="en")
+    include _partials/head
+    block head
+      link(rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/tomorrow-night-eighties.min.css")
+      link(rel="stylesheet",href="/assets/css/old/style.css")
+  body(class="#{current.source}")
+    include _partials/header
+
+    main(class="cf l-wrapper #{  current.path[0] === 'work' && current.source !== 'index' ? 'portfolio-single' : '' }")
+      if environment === 'development'
+        pre= current.source
+        pre= JSON.stringify(current)
+      block content
+        != yield
+
+
+    include _partials/old-footer
+    include _partials/scripts
+    include _partials/analytics

@@ -1,0 +1,11 @@
+footer(role="contentinfo")
+  ul.social
+    - var sites = Object.keys(social)
+    each site in sites
+      li(class="#{site.toLowerCase()}")
+        a(href="#{social[site]}", rel="me", target="_blank") #{site}
+
+  div.l-wrapper.cf
+    - var year = new Date().getFullYear()
+    small ©#{year} Ahmed El Gabri
+
