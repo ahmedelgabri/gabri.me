@@ -27,6 +27,12 @@ html, body {
   height: 100%;
 }
 
+.logo {
+  width: 1.5rem;
+  height: auto;
+  opacity: .3;
+}
+
 main {
   max-width: 40rem;
   margin-right: auto;
@@ -62,9 +68,7 @@ a:focus {
 .background-blue      { background-color: $blue; }
 .background-dark-blue { background-color: $darkblue;  }
 
-.tight-leading { line-height: 1.2; }
-
-
+.leading-tight { line-height: 1.2; }
 
 .text-xxl  { font-size: 4rem; }     /* 64px */
 .text-xl   { font-size: 3rem; }     /* 48px */
