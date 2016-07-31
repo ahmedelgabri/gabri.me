@@ -49,9 +49,16 @@ route.all(/^\/([0-9]{4})\/([0-9]{2})\/([a-z0-9\-].*?)(\/)?$/, function (req, res
   next();
 });
 
-// Handling the change in URLs rom portfolio to work.
+// Handling the change in URLs from portfolio to work.
 route.all(/^\/portfolio(\/)?$/, function(req, res, next){
   res.writeHead(302, { 'location': '/work/' });
+  res.end();
+  return;
+});
+
+// Handling the removal of /about
+route.all(/^\/about(\/)?$/, function(req, res, next){
+  res.writeHead(302, { 'location': '/' });
   res.end();
   return;
 });
@@ -70,7 +77,7 @@ route.all(/^\/portfolio\/([a-z0-9\-].*?)(\/)?$/, function (req, res, next) {
 });
 
 // Handling w/o trailing slash for parent pages
-route.all(/^\/(blog|about|cv)(\/)?$/, function(req, res, next){
+route.all(/^\/(blog|about)(\/)?$/, function(req, res, next){
 
   if(req.params[2] !== '/'){
     res.writeHead(302, { 'location': req.params[1] + '/' });
