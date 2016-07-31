@@ -1,10 +1,17 @@
 footer(role="contentinfo")
-  div.l-wrapper.cf
-    - var year = new Date().getFullYear()
-    small ©#{year} Ahmed El Gabri
-
-    ul.social
-      - var sites = Object.keys(social)
+  ul.mt0.mr0.l0.mb1.p0
+    - var sites = Object.keys(social)
       each site in sites
-        li(class="#{site.toLowerCase()}")
+        li(class="inline-block mr1")
           a(href="#{social[site]}", rel="me", target="_blank") #{site}
+
+      li(class="inline-block mr1")
+        a(href="mailto:#{email}?subject=Hi!&body=👋🏼") Email
+
+      li(class="inline-block mr1")
+        a(href="https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/edit?usp=sharing", target="_blank") Resume
+
+  // div
+  //   - var year = new Date().getFullYear()
+  //   small.text-xs.dark-navy ©#{year} Ahmed El Gabri
+

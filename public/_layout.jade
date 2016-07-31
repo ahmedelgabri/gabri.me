@@ -2,16 +2,14 @@ doctype
 html(lang="en")
     include _partials/head
     block head
-  body(class="#{current.source}")
-    include _partials/header
-
-    main(class="cf l-wrapper #{  current.path[0] === 'work' && current.source !== 'index' ? 'portfolio-single' : '' }")
+      link(rel="stylesheet",href="/assets/css/app.css")
+  body
+    main(class="p1")
       if environment === 'development'
         pre= current.source
         pre= JSON.stringify(current)
       block content
         != yield
 
-
-    include _partials/footer
-    include _partials/scripts
+      include _partials/footer
+    include _partials/analytics
