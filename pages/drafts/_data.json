@@ -1,0 +1,35 @@
+{
+  "couple-of-tips-for-rtl": {
+    "layout": "../_old-layout",
+    "title": "Couple of tips for RTL",
+    "published": false,
+    "date": "2014-12-29 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "moving-to-harpjs": {
+    "layout": "../_old-layout",
+    "title": "Moving to harpjs",
+    "published": false,
+    "date": "2014-12-29 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "switching-to-vim": {
+    "layout": "../_old-layout",
+    "title": "Switching to Vim",
+    "published": false,
+    "date": "2014-12-29 19:00",
+    "tags": null,
+    "demo": null
+  },
+  "why-you-need-a-front-end-architect": {
+    "layout": "../_old-layout",
+    "title": "Why you might need a Front-end Architect",
+    "published": false,
+    "date": "2015-03-14 10:00",
+    "tags": null,
+    "demo": null
+  }
+
+}
