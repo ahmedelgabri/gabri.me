@@ -5,12 +5,13 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "node server.js"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
-    "next": "1.2.3"
+    "next": "2.0.0-beta.1",
+    "path-match": "1.2.4"
   }
 }
