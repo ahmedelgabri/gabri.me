@@ -1,0 +1,46 @@
+extends ../_old-layout
+
+block content
+  if current.path[0] === 'blog' && current.source !== 'index'
+    include ../_partials/posts-nav
+    div(itemscope, itemtype="http://schema.org/Article")
+      h2.h2 #{title}
+
+      small.author by <em itemprop="author">#{author}</em> on <em itemprop="datePublished">#{moment(date).format('D MMMM YYYY')}</em>
+
+      .blog-post.mod-2thirds.centered
+          != yield
+
+          if demo
+            .post-actions
+              for i, d in demo
+                if d === 'download'
+                  a(class="btn", download, href=i) Download
+                else
+                  a(class="btn", href=i) Demo
+
+      .mod-2thirds.centered
+        if environment === 'production'
+          #disqus_thread
+          //- TODO: disqus_identifier solution is dirty, do it properly.
+          script.
+            var disqus_shortname = '#{disqus}';
+            var disqus_title = '#{title}';
+            var oldID = '#{disqus_id}';
+            if ( oldID !== '') {
+              var disqus_identifier = '#{disqus_id}';
+            }
+            var disqus_url = '#{site_url}/#{current.path.join('/')}/';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+          noscript Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus</a>.
+
+
+
+      //- <p class="comments-title comment-text"><a href="http://twitter.com/share?screen_name=ahmedelgabri&url=&text=Re:<?php the_permalink(); ?>" target="_blank">Comment on twitter</a></p>
+  else
+    != yield
+

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { style } from 'next/css'
-import Link from 'next/link'
+import Link from 'next/prefetch'
 import data from '../../harp'
 import Footer from '../../components/Footer'
 

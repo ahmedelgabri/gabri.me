@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import Link from 'next/prefetch'
 import data from '../harp'
 import Footer from '../components/Footer'
 
