@@ -36,7 +36,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: 'css-loader?importLoaders-1!postcss-loader?sourceMap-inline'
+          loader: 'css-loader?importLoaders=1&-autoprefixer!postcss-loader?sourceMap-inline'
         })
       },
       {
