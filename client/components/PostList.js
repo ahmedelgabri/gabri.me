@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 import Link from 'react-router/Link'
 import Helmet from 'react-helmet'
 
@@ -12,7 +12,7 @@ export default props => {
       <Link to='/'> HOME </Link>
       Hi, I'm the blog!
       <pre>{JSON.stringify(props, null, 2)}</pre>
-      <Link to="/blog/haha">POST?!</Link>
+      <Link to='/blog/haha'>POST?!</Link>
       <Footer social={data.social} />
     </div>
   )
