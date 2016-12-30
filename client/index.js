@@ -6,9 +6,11 @@ import Link from 'react-router/Link'
 import Helmet from 'react-helmet'
 
 import data from '../data.json'
-import Footer from '../components/Footer'
+import Post from './components/Post'
+import PostList from './components/PostList'
+import Footer from './components/Footer'
 
-const favicon = require('../public/favicon.ico')
+const favicon = require('../public/favicon.png')
 
 const Home = () => (
   <div>
@@ -22,15 +24,14 @@ const Home = () => (
   </div>
 )
 
-const Blog = () => <div> <Helmet title='BLOG' /> Blog <Link to='/'> HOME </Link></div>
-
 const App = () => {
   return (
     <Router>
       <div>
         <Helmet title={data.site_title} link={[{ rel: 'icon', href: 'favicon.png' }]} />
         <Match exactly pattern='/' component={Home} />
-        <Match exactly pattern='/blog' component={Blog} />
+        <Match exactly pattern='/blog' component={PostList} />
+        <Match pattern='/blog/:post' component={Post} />
       </div>
     </Router>
   )
