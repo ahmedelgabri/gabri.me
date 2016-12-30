@@ -10,7 +10,12 @@
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
+    "autoprefixer": "6.6.0",
+    "cssnano": "3.9.1",
+    "csx": "8.2.1",
     "express": "4.14.0",
+    "postcss-custom-properties": "5.0.1",
+    "postcss-smart-import": "0.6.6",
     "ramda": "0.23.0",
     "react": "15.4.1",
     "react-dom": "15.4.1",
@@ -22,10 +27,14 @@
     "babel-loader": "6.2.10",
     "babel-preset-env": "1.1.4",
     "babel-preset-react": "6.16.0",
+    "css-loader": "0.26.1",
+    "extract-text-webpack-plugin": "2.0.0-beta.4",
     "file-loader": "0.9.0",
     "html-webpack-plugin": "2.24.1",
+    "postcss-loader": "1.2.1",
+    "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "2.2.0-rc.2",
+    "webpack": "2.2.0-rc.3",
     "webpack-dev-server": "2.2.0-rc.0"
   }
 }

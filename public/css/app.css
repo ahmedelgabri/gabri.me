@@ -1,11 +1,10 @@
 /* Colors */
-$blue: #5ca7ff;
-$darkblue: #014798;
-$wheat: #dfe5ec;
-$orange: #efb958;
-
 :root {
-  font-size: 100%;
+  font-size  : 100%;
+  --teal     : #607D8B;
+  --darkteal : #455A64;
+  --wheat    : #dfe5ec;
+  --orange   : #d84315;
 }
 
 
@@ -16,8 +15,8 @@ body {
   -webkit-text-size-adjust: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   margin: 0;
-  background-color: $darkblue;
-  color: $wheat;
+  background-color: var(--wheat);
+  color: var(--darkteal);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,33 +39,33 @@ main {
 }
 
 a {
-  color: $orange;
+  color: var(--orange);
   text-decoration: none;
   transition: all .2s ease-in-out;
 }
 
 a:hover,
 a:focus {
-  color: $blue;
+  text-decoration: underline;
 }
 
 :focus {
-  outline: 2px solid $blue;
+  outline: 2px solid var(--teal);
 }
 
 .light { font-weight: light; }
 .normal { font-weight: normal; }
 .bold { font-weight: bold; }
 
-.blue                 { color: $blue; }
-.dark-blue            { color: $darkblue;  }
+.teal                 { color: var(--teal); }
+.dark-teal            { color: var(--darkteal);  }
 
 
-.fill-blue            { fill: $blue; }
-.fill-dark-blue       { fill: $darkblue;  }
+.fill-teal            { fill: var(--teal); }
+.fill-dark-teal       { fill: var(--darkteal);  }
 
-.background-blue      { background-color: $blue; }
-.background-dark-blue { background-color: $darkblue;  }
+.background-teal      { background-color: var(--teal); }
+.background-dark-teal { background-color: var(--darkteal);  }
 
 .leading-tight { line-height: 1.2; }
 
