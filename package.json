@@ -3,15 +3,29 @@
   "version": "4.0.0",
   "description": "Some guy on the web",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "node server.js"
+    "build": "rm -rf ./__build__ && NODE_ENV=production webpack",
+    "start": "webpack-dev-server"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
-    "next": "2.0.0-beta.1",
-    "path-match": "1.2.4"
+    "express": "4.14.0",
+    "ramda": "0.23.0",
+    "react": "15.4.1",
+    "react-dom": "15.4.1",
+    "react-helmet": "3.2.3",
+    "react-router": "4.0.0-alpha.6"
+  },
+  "devDependencies": {
+    "babel-core": "6.21.0",
+    "babel-loader": "6.2.10",
+    "babel-preset-env": "1.1.4",
+    "babel-preset-react": "6.16.0",
+    "file-loader": "0.9.0",
+    "html-webpack-plugin": "2.24.1",
+    "url-loader": "0.5.7",
+    "webpack": "2.2.0-rc.2",
+    "webpack-dev-server": "2.2.0-rc.0"
   }
 }
