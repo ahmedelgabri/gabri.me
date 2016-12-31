@@ -13,7 +13,7 @@ export default props => {
       Hi, I'm the blog!
       <pre>{JSON.stringify(props, null, 2)}</pre>
       <Link to='/blog/haha'>POST?!</Link>
-      <Footer social={data.social} />
+      <Footer />
     </div>
   )
 }

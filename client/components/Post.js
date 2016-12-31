@@ -20,7 +20,7 @@ export default props => {
       </h1>
       <pre>{JSON.stringify(props, null, 2)}</pre>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-      <Footer social={data.social} />
+      <Footer />
     </div>
   )
 }

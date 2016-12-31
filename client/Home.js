@@ -13,7 +13,7 @@ export default () => (
     <p> A Developer with an eye for Design, builds for performance & clarity. Mainly focusing on front-end architecture & modular design systems. </p>
     <p> Currently working at <a href='http://lightspeedhq.com'>LightspeedHQ</a> in Amsterdam, The Netherlands. </p>
     <Link to='/blog'>BLOG!</Link>
-    <Footer social={data.social} />
+    <Footer />
   </main>
 )
 

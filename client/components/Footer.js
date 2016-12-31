@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import Logo from './Logo'
+import data from '../../data.json'
 
-export default ({ social = {} }) => {
+export default ({ social = data.social }) => {
   return (
     <footer role='contentinfo'>
       <ul className='mt0 mr0 l0 mb1 p0'>
@@ -12,9 +14,9 @@ export default ({ social = {} }) => {
           )
         })}
       </ul>
-      {/* <div className="">
-      <small className="text-xs dark-navy"> ©{new Date().getFullYear()} Ahmed El Gabri </small>
-    </div> */}
+      <div>
+        <small className='text-xs teal'> ©{new Date().getFullYear()} <Logo /></small>
+      </div>
     </footer>
   )
 }
