@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import Logo from './Logo'
-import data from '../../data.json'
+import config from '../../config.json'
 
-export default ({ social = data.social }) => {
+export default ({ social = config.social }) => {
   return (
     <footer role='contentinfo'>
       <ul className='mt0 mr0 l0 mb1 p0'>
@@ -15,7 +15,7 @@ export default ({ social = data.social }) => {
         })}
       </ul>
       <div>
-        <small className='text-xs teal'> ©{new Date().getFullYear()} <Logo /></small>
+        <small className='text-xs'><Logo /> ©{new Date().getFullYear()}</small>
       </div>
     </footer>
   )

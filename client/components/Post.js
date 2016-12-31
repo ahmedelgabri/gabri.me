@@ -2,26 +2,21 @@ import React, { PropTypes } from 'react'
 import Link from 'react-router/Link'
 import Helmet from 'react-helmet'
 
-import data from '../../data.json'
+import config from '../../config.json'
+import metadata from '../blog/metadata.json'
 import Footer from './Footer'
 
-const styles = {
-  red: {
-    color: 'red'
-  }
-}
-
 export default props => {
+  const post = {
+    meta: metadata[props.params.post],
+    content: require(`../blog/posts/${props.params.post}.md`)
+  }
+
   return (
-    <div className={styles.red}>
-      <h1>
-        {props.params.post}!
-        LOL
-      </h1>
+    <div>
       <pre>{JSON.stringify(props, null, 2)}</pre>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <div dangerouslySetInnerHTML={{__html: post.content}} />
       <Footer />
     </div>
   )
 }
-

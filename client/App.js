@@ -15,7 +15,7 @@ import '../public/css/app.css'
 const App = () => {
   return (
     <BrowserRouter>
-      <div>
+      <main className='P1'>
         <Match exactly pattern='/' component={Home} />
         {/* Maybe handle this on the server side
           <Match exactly pattern='/work' render={() => <Redirect to='/' />} />
@@ -24,7 +24,7 @@ const App = () => {
         <Match exactly pattern='/blog' component={PostList} />
         <Match pattern='/blog/:post' component={Post} />
         <Miss component={Error} />
-      </div>
+      </main>
     </BrowserRouter>
   )
 }

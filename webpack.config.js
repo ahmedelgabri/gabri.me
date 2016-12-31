@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const data = require('./data')
+const data = require('./config')
 const isPROD = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -31,6 +31,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.md$/, exclude: /node_modules/, loader: 'html-loader!markdown-loader' },
       {
         test: /\.css$/,
         exclude: /node_modules/,
