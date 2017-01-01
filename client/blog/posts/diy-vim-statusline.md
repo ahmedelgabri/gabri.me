@@ -1,3 +1,9 @@
+---
+title: 'DIY Vim statusline'
+published: true
+date: '2015-10-05 14:00'
+tags: ['vim','unix','terminal']
+---
 Nearly two years ago I decided to switch to Vim and move all my work into one
 app. The command line/Terminal or more sepcifically iTerm2. That desicion turns
 out to be one of the best things I've ever done. I'm still not a Vim expert by

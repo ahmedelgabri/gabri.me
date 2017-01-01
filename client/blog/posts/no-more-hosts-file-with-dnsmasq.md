@@ -1,3 +1,9 @@
+---
+title: 'No more hosts file with dnsmasq'
+published: true
+date: '2013-09-27 08:39'
+tags: null
+---
 In my search for the best local development setup on my Mac, I wanted to have local domains something like `project.dev` that can work when I'm working on a project locally instead of `http://localhost/dev/projectname/somethingelse/etc/`. It's easier, faster, cleaner & looks better.
 
 <!-- more -->

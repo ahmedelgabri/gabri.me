@@ -1,3 +1,10 @@
+---
+title: 'Making the default gulp task useful'
+published: true
+date: '2014-07-26 16:30'
+tags: null
+disqus_id: 'http://gabri.me/blog/making-the-default-gulp-task-useful/'
+---
 I have been using <a href="http://gulpjs.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://gulpjs.com']);">gulp</a> for a couple of months now &#038; I like how simple it is compared to Grunt also that I'm actually writing code not configurations &#038; it's easier to understand.
 
 <!-- more -->

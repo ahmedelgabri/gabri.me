@@ -1,3 +1,9 @@
+---
+title: 'Migrating from Evernote'
+published: true
+date: '2015-11-08 11:25'
+tags: ['notes','journal','python','node','vim','unix','terminal']
+---
 To start, Evernote is nice app. But not for me, I always had this love/hate relationship with it and with note talking apps in general. All I want from a note talking app is very simple.
 
 1. I don't need to use the app to write my notes, I can use my favourite text editor to do this.
