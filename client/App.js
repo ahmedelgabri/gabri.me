@@ -9,7 +9,6 @@ import Error from './components/Error'
 
 import '../public/css/app.css'
 
-
 // const favicon = require('../public/favicon.png')
 
 const App = () => {
@@ -17,12 +16,9 @@ const App = () => {
     <BrowserRouter>
       <main className='P1'>
         <Match exactly pattern='/' component={Home} />
-        {/* Maybe handle this on the server side
-          <Match exactly pattern='/work' render={() => <Redirect to='/' />} />
-          <Match pattern='/work/:project' render={() => <Redirect to='/' />} />
-        */}
         <Match exactly pattern='/blog' component={PostList} />
-        <Match pattern='/blog/:post' component={Post} />
+        <Match exactly pattern='/blog/:post' component={Post} />
+        <Match pattern='/work' render={() => <Redirect to='/' />} />
         <Miss component={Error} />
       </main>
     </BrowserRouter>
