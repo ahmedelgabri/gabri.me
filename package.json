@@ -3,17 +3,24 @@
   "version": "4.0.0",
   "description": "Some guy on the web",
   "scripts": {
-    "build": "rm -rf ./__build__ && NODE_ENV=production webpack",
-    "start": "webpack-dev-server"
+    "build": "rm -rf ./__build__ && node scripts/generateData.js && webpack",
+    "foo": "webpack-dev-server --progress --colors --hot --inline --history-api-fallback",
+    "dev": "node server/dev.js",
+    "start": "yarn run build && node server/prod.js"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "6.6.0",
+    "compression": "1.6.2",
     "cssnano": "3.9.1",
     "csx": "8.2.1",
+    "date-fns": "1.22.0",
     "express": "4.14.0",
+    "front-matter": "2.1.1",
+    "highlight.js": "9.9.0",
+    "marked": "0.3.6",
     "postcss-custom-properties": "5.0.1",
     "postcss-smart-import": "0.6.6",
     "ramda": "0.23.0",
@@ -27,16 +34,18 @@
     "babel-loader": "6.2.10",
     "babel-preset-env": "1.1.4",
     "babel-preset-react": "6.16.0",
+    "babel-preset-react-hmre": "1.1.1",
     "css-loader": "0.26.1",
     "extract-text-webpack-plugin": "2.0.0-beta.4",
     "file-loader": "0.9.0",
-    "html-loader": "0.4.4",
     "html-webpack-plugin": "2.24.1",
-    "markdown-loader": "0.1.7",
     "postcss-loader": "1.2.1",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "2.2.0-rc.3",
-    "webpack-dev-server": "2.2.0-rc.0"
+    "webpack-dev-middleware": "1.9.0",
+    "webpack-dev-server": "2.2.0-rc.0",
+    "webpack-hot-middleware": "2.14.0",
+    "yargs": "6.6.0"
   }
 }
