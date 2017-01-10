@@ -13,8 +13,7 @@
             "firefox >= 49"
           ]
         },
-        "modules": false,
-        "useBuiltIns": true
+        "modules": false
       }
     ],
     "react"
