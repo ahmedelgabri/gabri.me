@@ -8,7 +8,6 @@ const isPROD = process.env.NODE_ENV === 'production'
 module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
-    compress: true,
     port: 9000
   },
   devtool: isPROD ? 'hidden-source-map' : 'eval-source-map',
@@ -17,11 +16,13 @@ module.exports = {
   stats: {
     reasons: !isPROD
   },
-  entry: {
-    app: './client/App.js',
-  },
+  entry: [
+    !isPROD && 'webpack-hot-middleware/client?reload=true', // Because HMR doesn't work on stateless components
+    './client/App.js'
+  ].filter(Boolean),
   output: {
     path: path.resolve(__dirname, '__build__'),
+    publicPath: '/',
     filename: isPROD ? 'js/[name]-[hash].js' : 'js/[name].js',
     chunkFilename: isPROD ? 'js/[name]-chunk-[hash].js' : 'js/[name]-chunk.js'
   },
@@ -30,8 +31,14 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
-      { test: /\.md$/, exclude: /node_modules/, loader: 'html-loader!markdown-loader' },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['react-hmre']
+        }
+      },
       {
         test: /\.css$/,
         exclude: /node_modules/,
@@ -53,6 +60,7 @@ module.exports = {
     ]
   },
   plugins: [
+    !isPROD && new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: !isPROD,
       minimize: isPROD
@@ -84,5 +92,5 @@ module.exports = {
         removeScriptTypeAttributes: true
       }
     })
-  ]
+  ].filter(Boolean)
 }
