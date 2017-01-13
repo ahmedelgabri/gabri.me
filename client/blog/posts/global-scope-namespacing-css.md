@@ -7,12 +7,12 @@ tags: ['css','front-end']
 _This post was posted on [Medium](https://medium.com/front-end-development/681bda44c43e)_
 
 
-###The problem
+### The problem
 Anyone who worked with `CSS` before knows that one of the biggest problems we face as front-end developers is that `CSS` lacks scope or namescpacing, unlike with JavaScript for example. Which makes it very prone to selector conflicts which is something for sure you have struggled with at least a couple of times, whether it’s through third-party plugins/apps/API’s injected `CSS` or you working on an old projects with a tight deadline or even working with other developers who don’t understand `CSS` very well.
 
 <!-- more -->
 
-###The fix
+### The fix
 Some smart people came up with new ideas to fix it like that: [Jonathan Snook's SMACSS](http://smacss.com/book/categorizing) or the clever guys at Yandex with their [BEM](http://bem.info/method/) methodology & syntax which I prefer and started to use in all my projects.
 
 But with the rise of [OOCSS](http://oocss.org/) and trying to be as modular and flexible as possible and to make our selectors short and concise, the problem seems still existant. For example take the media object Harry Roberts mentioned in his [article about BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/); the syntax looks like the following.
