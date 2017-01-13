@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const data = require('./config')
+const data = require('./client/data')
 const isPROD = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     reasons: !isPROD
   },
   entry: [
-    !isPROD && 'webpack-hot-middleware/client?reload=true', // Because HMR doesn't work on stateless components
+    !isPROD && 'webpack-hot-middleware/client',
     './client/App.js'
   ].filter(Boolean),
   output: {
@@ -76,7 +76,9 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       __DEV__: process.env.NODE_ENV !== 'production',
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
     }),
     new ExtractTextPlugin(`css/${isPROD ? '[name]-[contenthash]' : '[name]'}.css`),
     new HtmlWebpackPlugin({

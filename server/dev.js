@@ -19,7 +19,8 @@ const fs = middleware.fileSystem
 const app = express()
 const PORT = process.env.PORT || 9000
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../__build__')))
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(middleware)
 app.use(webpackHotMiddleware(compiler))
 
