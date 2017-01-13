@@ -4,10 +4,12 @@ import Link from 'react-router/Link'
 import Helmet from 'react-helmet'
 
 import metadata from '../blog/posts/metadata.json'
-import config from '../../config.json'
-import Footer from './Footer'
-import Error from './Error'
+import data from '../data.json'
 
+import Back from './Back'
+import Error from './Error'
+import Contact from './Contact'
+import Footer from './Footer'
 
 export default props => {
   const post = metadata[props.params.post]
@@ -16,7 +18,7 @@ export default props => {
 
   return (
     <div>
-      <pre>{JSON.stringify(props, null, 2)}</pre>
+      <Back />
       <h2>{post.attributes.title}</h2>
       <time>On {post.attributes.date}</time>
       <div dangerouslySetInnerHTML={{__html: post.__html}} />

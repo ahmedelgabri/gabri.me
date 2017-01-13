@@ -1,22 +1,16 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import cxs from 'cxs'
 import Logo from './Logo'
-import config from '../../config.json'
 
-export default ({ social = config.social }) => {
-  return (
-    <footer role='contentinfo'>
-      <ul className='mt0 mr0 l0 mb1 p0'>
-        {Object.keys(social).map(site => {
-          return (
-            <li key={site} className='inline-block mr1'>
-              <a href={social[site]} rel='me' target='_blank'>{site}</a>
-            </li>
-          )
-        })}
-      </ul>
-      <div>
-        <small className='text-xs'><Logo /> ©{new Date().getFullYear()}</small>
-      </div>
-    </footer>
-  )
-}
+const s = cxs({
+  fontSize: '.75rem'
+})
+
+export default () =>
+  <div>
+    <small className={s}>
+      <Logo style={{ width: '1.5rem', height: 'auto', opacity: .3 }}/> ©{new Date().getFullYear()}
+    </small>
+  </div>
+
+
