@@ -7,52 +7,6 @@
   --orange   : #d84315;
 }
 
-
-body {
-  font-size: 1rem;
-  line-height: 1.4;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  margin: 0;
-  background-color: var(--wheat);
-  color: var(--darkteal);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-html, body {
-  height: 100%;
-}
-
-.logo {
-  width: 1.5rem;
-  height: auto;
-  opacity: .3;
-}
-
-main {
-  max-width: 40rem;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-a {
-  color: var(--orange);
-  text-decoration: none;
-  transition: all .2s ease-in-out;
-}
-
-a:hover,
-a:focus {
-  text-decoration: underline;
-}
-
-:focus {
-  outline: 2px solid var(--teal);
-}
-
 .light { font-weight: light; }
 .normal { font-weight: normal; }
 .bold { font-weight: bold; }
