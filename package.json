@@ -15,7 +15,7 @@
     "autoprefixer": "6.6.0",
     "compression": "1.6.2",
     "cssnano": "3.9.1",
-    "csx": "8.2.1",
+    "cxs": "3.0.3",
     "date-fns": "1.22.0",
     "express": "4.14.0",
     "front-matter": "2.1.1",
