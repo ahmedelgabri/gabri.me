@@ -3,7 +3,10 @@
   "version": "4.0.0",
   "description": "Some guy on the web",
   "scripts": {
-    "build": "rm -rf ./__build__ && node scripts/generateData.js && webpack",
+    "clean": "rm -rf ./__build__",
+    "generateData": "node scripts/generateData.js",
+    "generateFeed": "node scripts/generateFeed.js",
+    "build": "yarn run clean && yarn run generateData && webpack && yarn run generateFeed",
     "foo": "webpack-dev-server --progress --colors --hot --inline --history-api-fallback",
     "dev": "node server/dev.js",
     "start": "yarn run build && node server/prod.js"
