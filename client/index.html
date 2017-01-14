@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title><%= htmlWebpackPlugin.options.data.author %> | <%= htmlWebpackPlugin.options.data.title %></title>
+    <meta name="description" content="<%- htmlWebpackPlugin.options.data.description %>">
     <meta name="viewport" content="initial-scale=1, width=device-width">
-    <link rel="icon" href="favicon.png">
-    <!-- @TODO: social stuff here -->
+    <link rel="alternate" type="application/rss+xml" title="<%= htmlWebpackPlugin.options.data.author %> | Feed" href="<%= htmlWebpackPlugin.options.data.url %>/feed/">
+    <link rel="icon" href="/favicon.png">
+    <!-- <link rel="canonical" href="<%= htmlWebpackPlugin.options.data.url %>"> -->
+
+    <link rel="dns-prefetch" href="//platform.twitter.com">
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//p.twitter.com">
+    <link rel="dns-prefetch" href="//cdn.api.twitter.com">
+    <link type="text/plain" rel="author" href="https://plus.google.com/101787568188227600845/">
+
+    <meta name="application-name" content="Gabri.me">
+    <link name="msapplication-TileImage" href="/img/ms-logo.png">
+    <link name="msapplication-TileColor" content="#1f2325">
+
+    <meta name="theme-color" content="#1f2325">
+
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-57x57-precomposed.png">
+    <link rel="logo" type="image/svg" href="/img/logo.svg">
+    <meta name="apple-mobile-web-app-title" content="Gabri.me">
+    <link rel="author" href="https://plus.google.com/101787568188227600845/posts">
+
+    <!-- G+ -->
+    <!-- <meta itemprop="name" content="<%= htmlWebpackPlugin.options.data.author %> | <%= htmlWebpackPlugin.options.data.title %>"> -->
+    <!-- <meta itemprop="description" content="<%= htmlWebpackPlugin.options.data.author %> | <%= htmlWebpackPlugin.options.data.title %>"> -->
+    <!-- <meta itemprop="image" content="/img/fb-image.png"> -->
+
+    <!-- FB Open Graph meta tags -->
+    <!-- <meta property="og:title" content="<%= htmlWebpackPlugin.options.data.author %> | <%= htmlWebpackPlugin.options.data.title %>"> -->
+    <!-- <meta property="og:description" content="<%= htmlWebpackPlugin.options.data.author %> | <%= htmlWebpackPlugin.options.data.title %>"> -->
+
+    <!-- <meta property="og:url" content="<%= htmlWebpackPlugin.options.data.url %>"> -->
+    <!-- <meta property="og:image" content="/img/fb-image.png"> -->
+    <!-- <meta property="og:type" content="website"> -->
+
+    <!-- Twitter cards -->
+    <meta property="twitter:account_id" content="<%= htmlWebpackPlugin.options.data.twitter_id %>">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="<%= htmlWebpackPlugin.options.data.twitter %>">
+    <!-- <meta name="twiiter:url" content="<%= htmlWebpackPlugin.options.data.url %>"> -->
+
+    <!-- <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.data.author %> | <%= htmlWebpackPlugin.options.data.title %>"> -->
+    <!-- <meta name="twitter:image" content="/img/logo.svg"> -->
+    <!-- <meta name="twitter:domain" content="<%= htmlWebpackPlugin.options.data.url %>"> -->
   </head>
   <body class="<%= htmlWebpackPlugin.options.environment || 'DEV' %>">
     <div id="App"></div>

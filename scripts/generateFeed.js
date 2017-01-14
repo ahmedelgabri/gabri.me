@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const format = require('date-fns/format')
-const escape = require('./helpers/escape')
+const escape = require('../helpers/escape')
 const data = require('../client/data')
 const posts = require('../client/blog/posts/metadata')
 

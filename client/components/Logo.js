@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import cxs from 'cxs'
 
 export default ({ width = 83, height = 35, style }) => {

@@ -1,5 +1,5 @@
+// @flow
 import React, { Component } from 'react'
-import { render } from 'react-dom'
 import { BrowserRouter, Match, Miss, Redirect } from 'react-router'
 import cxs from 'cxs'
 import cxm from 'cxs/monolithic'
@@ -7,6 +7,8 @@ import cxm from 'cxs/monolithic'
 import Home from './Home'
 import Post from './components/Post'
 import Error from './components/Error'
+import Head from './components/Head'
+
 import colors from './colors'
 
 cxm('html', {
@@ -59,11 +61,12 @@ const goHome = () => <Redirect to='/' />
 
 // The only reason this is stateful component is that HMR doesn't work on stateless ones
 //  ¯\_(ツ)_/¯
-class App extends Component {
-  render() {
+export default class App extends Component {
+  render () {
     return (
       <BrowserRouter>
         <main className={s}>
+          <Head />
           <Match exactly pattern='/' component={Home} />
           <Match exactly pattern='/blog' render={goHome} />
           <Match exactly pattern='/blog/:post' component={Post} />
@@ -74,5 +77,3 @@ class App extends Component {
     )
   }
 }
-
-render(<App />, document.querySelector('#App'))

@@ -21,8 +21,12 @@ const PORT = process.env.PORT || 9000
 
 app.use(express.static(path.join(__dirname, '../__build__')))
 app.use(express.static(path.join(__dirname, '../public')))
+
 app.use(middleware)
 app.use(webpackHotMiddleware(compiler))
+
+app.get('/feed((\/)|(\.xml))?', (req, res) => res.sendFile(path.join(__dirname, '../__build__/feed.xml')))
+app.get('/sitemap((\/)|(\.xml))?', (req, res) => res.sendFile(path.join(__dirname, '../__build__/sitemap.xml')))
 
 app.get('*', (req, res) => {
   fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {

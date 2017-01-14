@@ -1,9 +1,8 @@
-import React, { PropTypes } from 'react'
+// @flow
+import React from 'react'
 import Link from 'react-router/Link'
 
-import data from '../data.json'
 import metadata from '../blog/posts/metadata.json'
-import Post from './Post'
 
 export default () =>
   <div className="mb1">

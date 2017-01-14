@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react'
-import Link from 'react-router/Link'
 import cxs from 'cxs'
-// import Helmet from 'react-helmet'
 
 import data from './data.json'
 import colors from './colors'

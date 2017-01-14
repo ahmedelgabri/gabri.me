@@ -1,9 +1,10 @@
 {
-  "site_url": "https://gabri.me",
+  "url": "https://gabri.me",
   "author": "Ahmed El Gabri",
-  "site_title": "Front-end Engineer",
+  "title": "Front-end Engineer",
   "description": "Ahmed El Gabri is a Front-end Engineer who brings structure where it is lacking, systematizing information & automating processes.",
   "email": "ahmed@gabri.me",
+  "twitter": "@ahmedelgabri",
   "social": {
     "Twitter": "http://twitter.com/ahmedelgabri",
     "Github": "https://github.com/ahmedelgabri",

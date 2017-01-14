@@ -17,8 +17,9 @@ module.exports = {
     reasons: !isPROD
   },
   entry: [
+    !isPROD && 'webpack/hot/dev-server',
     !isPROD && 'webpack-hot-middleware/client',
-    './client/App.js'
+    './client/index.js'
   ].filter(Boolean),
   output: {
     path: path.resolve(__dirname, '__build__'),
@@ -34,10 +35,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['react-hmre']
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
@@ -82,7 +80,7 @@ module.exports = {
     }),
     new ExtractTextPlugin(`css/${isPROD ? '[name]-[contenthash]' : '[name]'}.css`),
     new HtmlWebpackPlugin({
-      title: `${data.author} | ${data.site_title}`,
+      data,
       template: './client/index.html',
       inject: true,
       minify: {
