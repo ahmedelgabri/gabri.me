@@ -19,7 +19,7 @@ const s = {
   contact: cxs({
     marginBottom: '1rem',
     paddingBottom: '1rem',
-    paddingTop: '1rem',
+    paddingTop: '1rem'
   })
 }
 

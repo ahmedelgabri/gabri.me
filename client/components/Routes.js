@@ -8,7 +8,6 @@ import Error from './Error'
 import Head from './Head'
 import WithAnalytics from './hoc/WithAnalytics'
 
-
 const s = cxs({
   maxWidth: '50rem',
   marginRight: 'auto',

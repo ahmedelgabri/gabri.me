@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react'
-import { BrowserRouter} from 'react-router'
+import React from 'react'
+import { BrowserRouter } from 'react-router'
 import cxm from 'cxs/monolithic'
 import Routes from './components/Routes'
 import { colors } from './style'
@@ -31,10 +31,10 @@ cxm('a', {
   borderBottom: '2px solid rgba(0, 0, 0, .1)',
   transition: 'all .2s ease-in-out',
   ':hover': {
-    borderBottomColor: colors.orange,
+    borderBottomColor: colors.orange
   },
   ':focus': {
-    borderBottomColor: colors.orange,
+    borderBottomColor: colors.orange
   }
 })
 
