@@ -1,15 +1,13 @@
 // @flow
 import React, { Component } from 'react'
-import { BrowserRouter, Match, Miss, Redirect } from 'react-router'
-import cxs from 'cxs'
+import { BrowserRouter} from 'react-router'
 import cxm from 'cxs/monolithic'
+import Routes from './components/Routes'
+import { colors } from './style'
 
-import Home from './Home'
-import Post from './components/Post'
-import Error from './components/Error'
-import Head from './components/Head'
-
-import colors from './colors'
+cxm('*', {
+  boxSizing: 'border-box'
+})
 
 cxm('html', {
   height: '100%',
@@ -24,21 +22,19 @@ cxm('body', {
   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
   margin: 0,
   backgroundColor: colors.wheat,
-  color: colors.teal,
-  /* display: flex, */
-  justifyContent: 'center',
-  alignItems: 'center'
+  color: colors.teal
 })
 
 cxm('a', {
-  color: colors.orange,
+  color: 'inherit',
   textDecoration: 'none',
+  borderBottom: '2px solid rgba(0, 0, 0, .1)',
   transition: 'all .2s ease-in-out',
   ':hover': {
-    textDecoration: 'underline'
+    borderBottomColor: colors.orange,
   },
   ':focus': {
-    textDecoration: 'underline'
+    borderBottomColor: colors.orange,
   }
 })
 
@@ -50,30 +46,23 @@ cxm('img', { maxWidth: '100%' })
 cxm('ul', { padding: 0 })
 cxm('ol', { padding: 0 })
 
-const s = cxs({
-  maxWidth: '40rem',
-  marginRight: 'auto',
-  marginLeft: 'auto',
-  padding: '1rem'
+const monospace = 'Fira Code, Input Mono, Input, Droid Sans Mono, monospace, monospace'
+cxm('pre', {
+  overflow: 'auto',
+  maxWidth: '100%',
+  padding: '1rem',
+  borderRadius: '3px',
+  backgroundColor: colors.darkBlue,
+  color: colors.wheat,
+  border: '1px solid',
+  fontFamily: monospace
 })
 
-const goHome = () => <Redirect to='/' />
+cxm('code', { fontFamily: monospace })
 
 // The only reason this is stateful component is that HMR doesn't work on stateless ones
 //  ¯\_(ツ)_/¯
-export default class App extends Component {
-  render () {
-    return (
-      <BrowserRouter>
-        <main className={s}>
-          <Head />
-          <Match exactly pattern='/' component={Home} />
-          <Match exactly pattern='/blog' render={goHome} />
-          <Match exactly pattern='/blog/:post' component={Post} />
-          <Match pattern='/work' render={goHome} />
-          <Miss component={Error} />
-        </main>
-      </BrowserRouter>
-    )
-  }
-}
+export default () =>
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>

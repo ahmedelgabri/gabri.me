@@ -3,28 +3,34 @@ import React from 'react'
 import cxs from 'cxs'
 
 import data from './data.json'
-import colors from './colors'
+import { colors } from './style'
 import PostList from './components/PostList'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 const s = {
   wrap: cxs({
-    borderBottom: '1px solid',
-    paddingBottom: '1rem',
-    marginBottom: '1rem'
+    borderBottom: '1px solid rgba(0, 0, 0, .2)',
+    paddingBottom: '3rem',
+    marginBottom: '3rem'
   }),
   h1: cxs({
     color: colors.teal,
-    fontSize: '3rem',
-    margin: 0
+    fontSize: '2rem',
+    margin: 0,
+    '@media screen and (min-width: 27em)': {
+      fontSize: '3rem'
+    }
   }),
   h2: cxs({
     color: colors.teal,
     margin: 0,
-    fontSize: '1.5rem',
+    fontSize: '1.2rem',
     fontWeight: 'normal',
-    lineHeight: 1.2
+    lineHeight: 1.2,
+    '@media screen and (min-width: 27em)': {
+      fontSize: '1.5rem'
+    }
   })
 }
 

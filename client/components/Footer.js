@@ -3,13 +3,20 @@ import React from 'react'
 import cxs from 'cxs'
 import Logo from './Logo'
 
-const s = cxs({
-  fontSize: '.75rem'
-})
+const s = {
+  small: cxs({
+    fontSize: '.75rem'
+  }),
+  logo: cxs({
+    width: '1.5rem',
+    height: 'auto',
+    opacity: .3
+  })
+}
 
 export default () =>
   <div>
-    <small className={s}>
-      <Logo style={{ width: '1.5rem', height: 'auto', opacity: .3 }} /> ©{new Date().getFullYear()}
+    <small className={s.small}>
+      <Logo className={s.logo} /> © {new Date().getFullYear()}
     </small>
   </div>
