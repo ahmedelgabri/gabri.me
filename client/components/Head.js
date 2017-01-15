@@ -6,7 +6,7 @@ import data from '../data.json'
 
 const Head = ({post = {}, pathname}) => {
   const TITLE = post.attributes && post.attributes.title
-    ? `${post.attributes.title} | ${data.title}`
+    ? `${post.attributes.title} | ${data.author} - ${data.title}`
     : `${data.author} | ${data.title}`
   const DESC = post.__html ? escape(post.__html) : TITLE
   const IMG = post.attributes && post.attributes.img || '/img/fb-image.png'
