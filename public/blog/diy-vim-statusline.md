@@ -34,7 +34,7 @@ let g:currentmode={
 	\ 'no' : 'N·Operator Pending ',
 	\ 'v'  : 'V ',
 	\ 'V'  : 'V·Line ',
-	\ '^V'; : 'V·Block ',
+	\ '^V' : 'V·Block ',
 	\ 's'  : 'Select ',
 	\ 'S'  : 'S·Line ',
 	\ '^S' : 'S·Block ',
@@ -48,7 +48,7 @@ let g:currentmode={
 	\ 'rm' : 'More ',
 	\ 'r?' : 'Confirm ',
 	\ '!'  : 'Shell ',
-  \ 't'  : 'Terminal '
+        \ 't'  : 'Terminal '
 	\}
 
 " Automatically change the statusline color depending on mode
