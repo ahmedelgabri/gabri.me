@@ -48,7 +48,7 @@ let g:currentmode={
 	\ 'rm' : 'More ',
 	\ 'r?' : 'Confirm ',
 	\ '!'  : 'Shell ',
-        \ 't'  : 'Terminal '
+	\ 't'  : 'Terminal '
 	\}
 
 " Automatically change the statusline color depending on mode
