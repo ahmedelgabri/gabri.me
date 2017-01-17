@@ -1,0 +1,11 @@
+/feed         /feed.xml
+/feed/        /feed.xml
+
+/work         /
+/work/        /
+/work/:item   /
+
+/blog         /
+/blog/        /
+
+/blogs/weekly-links-v-:id /
