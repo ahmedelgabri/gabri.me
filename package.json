@@ -6,7 +6,8 @@
     "clean": "rm -rf ./__build__",
     "generateData": "node scripts/generateData.js",
     "generateFeed": "node scripts/generateFeed.js",
-    "build": "yarn run clean && yarn run generateData && webpack && yarn run generateFeed",
+    "assets": "cp -R ./public/* _redirects __build__/",
+    "build": "yarn run clean && yarn run generateData && webpack && yarn run generateFeed && npm run assets",
     "foo": "webpack-dev-server --progress --colors --hot --inline --history-api-fallback",
     "dev": "yarn run clean && node server/dev.js",
     "start": "yarn run build && node server/prod.js"
