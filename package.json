@@ -26,9 +26,7 @@
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-helmet": "3.3.0",
-    "react-router": "4.0.0-alpha.6"
-  },
-  "devDependencies": {
+    "react-router": "4.0.0-alpha.6",
     "babel-core": "6.21.0",
     "babel-loader": "6.2.10",
     "babel-preset-env": "1.1.8",
