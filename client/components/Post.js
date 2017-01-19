@@ -35,7 +35,7 @@ export default props => {
       />
       <Back />
       <div className={s.post}>
-        <h2>{post.attributes.title}</h2>
+        <h1>{post.attributes.title}</h1>
         <time>On {format(post.attributes.date, 'Do MMMM YYYY')}</time>
         <div dangerouslySetInnerHTML={{__html: post.__html}} />
       </div>

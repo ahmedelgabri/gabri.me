@@ -7,12 +7,12 @@ tags: ['css','front-end']
 _This post was posted on [Medium](https://medium.com/front-end-development/681bda44c43e)_
 
 
-### The problem
+## The problem
 Anyone who worked with `CSS` before knows that one of the biggest problems we face as front-end developers is that `CSS` lacks scope or namescpacing, unlike with JavaScript for example. Which makes it very prone to selector conflicts which is something for sure you have struggled with at least a couple of times, whether it’s through third-party plugins/apps/API’s injected `CSS` or you working on an old projects with a tight deadline or even working with other developers who don’t understand `CSS` very well.
 
 <!-- more -->
 
-### The fix
+## The fix
 Some smart people came up with new ideas to fix it like that: [Jonathan Snook's SMACSS](http://smacss.com/book/categorizing) or the clever guys at Yandex with their [BEM](http://bem.info/method/) methodology & syntax which I prefer and started to use in all my projects.
 
 But with the rise of [OOCSS](http://oocss.org/) and trying to be as modular and flexible as possible and to make our selectors short and concise, the problem seems still existant. For example take the media object Harry Roberts mentioned in his [article about BEM](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/); the syntax looks like the following.
@@ -29,7 +29,7 @@ But with the rise of [OOCSS](http://oocss.org/) and trying to be as modular and 
 
 It’s still prone to conflicts, cause maybe another developers or even a third-party API decided to use .media class, selectors will conflict and the last one will win - _I’m not talking about specificity here, my rules are no IDs & max two selectors per rule. I'm trying to write simplest specific rules as possible -_, so I’m assuming that this component is first class citizen in your `CSS`.
 
-###My idea
+## My idea
 I’m in the process of writing a small framework to act as my starting point for any of the projects that I’m working on. So my solution for it was to create a fake scope. I achieved this by prefixing all my selectors with something like an your project initials, or your initials _maybe if you work alone_, framework initials, something that you &amp; your team can understand. **This should be documented of course**.
 
 So let's make this easier, if we imagined that `CSS` had a global scope like JavaScript it will look something like this.
@@ -98,7 +98,7 @@ YouTube is doing the same.
     <img src="/assets/img/content/youtube.png" alt="youtube" class="aligncenter size-medium wp-image-937" />
 </a>
 
-#### Useful links
+### Useful links
 - [About HTML semantics and front-end architecture](http://nicolasgallagher.com/about-html-semantics-front-end-architecture/)
 - [MindBEMding – getting your head ’round BEM syntax](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 - [The Evolution Of The BEM Methodology](http://coding.smashingmagazine.com/2013/02/21/the-history-of-the-bem-methodology/)

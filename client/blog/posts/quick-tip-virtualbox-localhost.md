@@ -8,7 +8,7 @@ This is just a quick tip that I found & I thought it might be useful for others.
 
 <!-- more -->
 
-### Apache VirtualHosts
+## Apache VirtualHosts
 
 Now, I have a problem cause I'm using Apache VirtualHosts on my machine, this is how my `httpd-vhosts.conf` file looks like this
 
