@@ -1,14 +1,20 @@
 const fs = require('fs')
 const path = require('path')
-const marked = require('marked')
 const compareDesc = require('date-fns/compare_desc')
 const fm = require('front-matter')
+const hljs = require('highlight.js')
+const md = require('markdown-it')({
+  html: true,
+  linkify: true,
+  typographer: true,
+  highlight(str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return `<pre class="hljs"><code>${hljs.highlight(lang, str, true).value}</code></pre>`
+      } catch (__) {}
+    }
 
-// @TODO: Cleanup this file, I don't like it very much
-
-marked.setOptions({
-  highlight (code) {
-    return require('highlight.js').highlightAuto(code).value
+    return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`
   }
 })
 
@@ -16,7 +22,7 @@ marked.setOptions({
 function generatePost (dir, slug) {
   const post = fs.readFileSync(path.resolve(__dirname, `${dir}/${slug}.md`), 'utf8')
   const metadata = fm(post)
-  return Object.assign({}, metadata, { __html: marked(metadata.body) })
+  return Object.assign({}, metadata, { __html: md.render(metadata.body) })
 }
 
 // generateData :: String -> Object
