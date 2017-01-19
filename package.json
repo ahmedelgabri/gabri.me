@@ -4,8 +4,8 @@
   "description": "Some guy on the web",
   "scripts": {
     "clean": "rm -rf ./__build__",
-    "generateData": "node scripts/generateData.js",
-    "generateFeed": "node scripts/generateFeed.js",
+    "generateData": "node ./bin/generateData.js",
+    "generateFeed": "node ./bin/generateFeed.js",
     "assets": "cp -R ./public/* _redirects __build__/",
     "build": "yarn run clean && yarn run generateData && webpack && yarn run generateFeed && npm run assets",
     "foo": "webpack-dev-server --progress --colors --hot --inline --history-api-fallback",
