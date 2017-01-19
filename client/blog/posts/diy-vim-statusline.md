@@ -36,26 +36,26 @@ of it. I managed to achieve what I want and it turns out to be quite simple.
 " Statusline
 
 let g:currentmode={
-	\ 'n'  : 'N ',
-	\ 'no' : 'N·Operator Pending ',
-	\ 'v'  : 'V ',
-	\ 'V'  : 'V·Line ',
-	\ '^V'; : 'V·Block ',
-	\ 's'  : 'Select ',
-	\ 'S'  : 'S·Line ',
-	\ '^S' : 'S·Block ',
-	\ 'i'  : 'I ',
-	\ 'R'  : 'R ',
-	\ 'Rv' : 'V·Replace ',
-	\ 'c'  : 'Command ',
-	\ 'cv' : 'Vim Ex ',
-	\ 'ce' : 'Ex ',
-	\ 'r'  : 'Prompt ',
-	\ 'rm' : 'More ',
-	\ 'r?' : 'Confirm ',
-	\ '!'  : 'Shell ',
-  \ 't'  : 'Terminal '
-	\}
+    \ 'n'  : 'N ',
+    \ 'no' : 'N·Operator Pending ',
+    \ 'v'  : 'V ',
+    \ 'V'  : 'V·Line ',
+    \ '^V'; : 'V·Block ',
+    \ 's'  : 'Select ',
+    \ 'S'  : 'S·Line ',
+    \ '^S' : 'S·Block ',
+    \ 'i'  : 'I ',
+    \ 'R'  : 'R ',
+    \ 'Rv' : 'V·Replace ',
+    \ 'c'  : 'Command ',
+    \ 'cv' : 'Vim Ex ',
+    \ 'ce' : 'Ex ',
+    \ 'r'  : 'Prompt ',
+    \ 'rm' : 'More ',
+    \ 'r?' : 'Confirm ',
+    \ '!'  : 'Shell ',
+    \ 't'  : 'Terminal '
+    \}
 
 " Automatically change the statusline color depending on mode
 function! ChangeStatuslineColor()
@@ -74,25 +74,25 @@ endfunction
 
 " Find out current buffer's size and output it.
 function! FileSize()
-	let bytes = getfsize(expand('%:p'))
-	if (bytes >= 1024)
-		let kbytes = bytes / 1024
-	endif
-	if (exists('kbytes') && kbytes >= 1000)
-		let mbytes = kbytes / 1000
-	endif
+  let bytes = getfsize(expand('%:p'))
+  if (bytes >= 1024)
+    let kbytes = bytes / 1024
+  endif
+  if (exists('kbytes') && kbytes >= 1000)
+    let mbytes = kbytes / 1000
+  endif
 
-	if bytes <= 0
-		return '0'
-	endif
+  if bytes <= 0
+    return '0'
+  endif
 
-	if (exists('mbytes'))
-		return mbytes . 'MB '
-	elseif (exists('kbytes'))
-		return kbytes . 'KB '
-	else
-		return bytes . 'B '
-	endif
+  if (exists('mbytes'))
+    return mbytes . 'MB '
+  elseif (exists('kbytes'))
+    return kbytes . 'KB '
+  else
+    return bytes . 'B '
+  endif
 endfunction
 
 function! ReadOnly()
