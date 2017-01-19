@@ -71,6 +71,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       data,
+      environment: process.env.NODE_ENV,
       template: './client/index.html',
       inject: true,
       minify: {
