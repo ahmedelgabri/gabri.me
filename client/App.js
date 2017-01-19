@@ -55,7 +55,8 @@ cxm('pre', {
   backgroundColor: colors.darkBlue,
   color: colors.wheat,
   border: '1px solid',
-  fontFamily: monospace
+  fontFamily: monospace,
+  fontSize: '.875rem'
 })
 
 cxm('code', { fontFamily: monospace })

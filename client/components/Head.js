@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import escape from '../../helpers/escape'
 import data from '../data.json'
 
-const Head = ({post = {}, pathname}) => {
+const Head = ({post = {}, pathname, ...rest}) => {
   const TITLE = post.attributes && post.attributes.title
     ? `${post.attributes.title} | ${data.author} - ${data.title}`
     : `${data.author} | ${data.title}`

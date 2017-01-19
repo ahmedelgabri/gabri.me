@@ -4,13 +4,13 @@ import cxs from 'cxs'
 import Miss from 'react-router/Miss'
 import format from 'date-fns/format'
 
-import metadata from '../blog/posts/metadata.json'
-
 import Head from './Head'
 import Back from './Back'
 import Error from './Error'
 import Contact from './Contact'
 import Footer from './Footer'
+import metadata from '../blog/posts/metadata.json'
+import 'highlight.js/styles/gruvbox-dark.css'
 
 const s = {
   post: cxs({
@@ -29,7 +29,10 @@ export default props => {
 
   return (
     <div>
-      <Head post={post} pathname={props.pathname} />
+      <Head
+        post={post}
+        pathname={props.pathname}
+      />
       <Back />
       <div className={s.post}>
         <h2>{post.attributes.title}</h2>
