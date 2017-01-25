@@ -1,12 +1,13 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-
-import data from './data.json'
-import { colors } from './style'
-import PostList from './components/PostList'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+import Head from 'next/head'
+import data from '../data.json'
+import { colors } from '../lib/style'
+import Meta from '../components/Meta'
+import PostList from '../components/PostList'
+import Contact from '../components/Contact'
+import Footer from '../components/Footer'
 
 const s = {
   wrap: cxs({
@@ -34,8 +35,9 @@ const s = {
   })
 }
 
-export default () =>
+export default () => (
   <div>
+    <Meta />
     <div className={s.wrap}>
       <h1 className={s.h1}>{data.author}</h1>
       <h2 className={s.h2}>Browser whisperer, symbols writer & CLI typer</h2>
@@ -44,7 +46,7 @@ export default () =>
       <p> Currently working at <a href='http://lightspeedhq.com'>LightspeedHQ</a> in Amsterdam, The Netherlands. </p>
       <Contact />
     </div>
-    <PostList />
+    {/* <PostList /> */}
     <Footer />
   </div>
-
+)
