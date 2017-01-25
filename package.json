@@ -10,7 +10,7 @@
     "build": "next build",
     "predev": "yarn run setup",
     "dev": "node server.js",
-    "postinstall": "heroku-nextjs-build",
+    "postinstall": "[ -z \"$TRAVS\" ] || heroku-nextjs-build",
     "start": "NODE_ENV=production node server.js"
   },
   "private": true,

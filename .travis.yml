@@ -6,6 +6,7 @@ node_js:
 
 env:
 - NODE_ENV=production
+- TRAVIS=true
 
 script:
 - yarn run build
