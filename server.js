@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
 const next = require('next')
-const metadata = require('./posts/articles/metadata')
 
 const dev = process.env.NODE_ENV !== 'production'
 const PORT = process.env.PORT || 3000
@@ -21,7 +20,7 @@ app
     server.get(/\/feed((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/feed.xml'))
     // server.get(/\/sitemap((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/sitemap.xml'))
     server.get(/\/(work(\/(.+)?)|blog)(\/)?$/, (req, res) => res.redirect(301, '/'))
-    server.get('/blog(\/)?', (req, res) => res.redirect(301, '/'))
+    server.get(/\/blog(\/)?/, (req, res) => res.redirect(301, '/'))
 
     server.get('/blog/:post', (req, res) => app.render(req, res, '/blog', req.params))
     server.get('*', (req, res) => handle(req, res))
@@ -31,7 +30,3 @@ app
       console.log(`> Ready on http://localhost:${PORT}`)
     })
   })
-
-
-
-

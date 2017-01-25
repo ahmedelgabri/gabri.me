@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@mars/heroku-nextjs-build@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@mars/heroku-nextjs-build/-/heroku-nextjs-build-1.1.0.tgz#30bcdc7642866e33134a1832684c79d7ca7e4f18"
+
 abbrev@1:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
