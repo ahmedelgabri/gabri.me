@@ -94,8 +94,8 @@ I'll be using this technique in all of my upcoming projects &amp; let's see, but
 <h5><mark>Update:</mark></h5>
 YouTube is doing the same.
 
-<a href="/assets/img/content/youtube.png">
-    <img src="/assets/img/content/youtube.png" alt="youtube" class="aligncenter size-medium wp-image-937" />
+<a href="/static/img/content/youtube.png">
+    <img src="/static/img/content/youtube.png" alt="youtube" class="aligncenter size-medium wp-image-937" />
 </a>
 
 ### Useful links
