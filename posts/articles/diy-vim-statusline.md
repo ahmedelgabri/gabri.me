@@ -1,5 +1,5 @@
-title: 'DIY Vim statusline'
 ---
+title: 'DIY Vim statusline'
 published: true
 date: '2015-10-05 14:00'
 tags: ['vim','unix','terminal']
@@ -157,4 +157,3 @@ Here is a gif for my statusline <a href="/static/img/statusline.gif"><img src="/
 Vim and CLI are both really powerful and the ability to have your workflow in
 one place is very productive as everything we don't know it's scary at first but
 once you get some basic understanding of it it becomes easier to understand.
-
