@@ -1,4 +1,4 @@
 // @flow
 import React from 'react'
 
-export default props => <pre>{JSON.stringify(props, null, 2)}</pre>
+export default ({ p }) => <pre>{JSON.stringify(p, null, 2)}</pre>

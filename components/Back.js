@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import Link from 'react-router/Link'
+import Link from 'next/prefetch'
 import Logo from './Logo'
 import cxs from 'cxs'
 
@@ -30,8 +30,10 @@ const s = {
 
 export default () =>
   <p className={s.back}>
-    <Link to='/' className={s.link}>
-      <Logo className={s.logo}/>
-      👈🏼 Go back
+    <Link href='/' className={s.link}>
+      <a>
+        <Logo className={s.logo} />
+        👈🏼 Go back
+      </a>
     </Link>
   </p>

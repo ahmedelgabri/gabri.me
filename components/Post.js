@@ -1,16 +1,13 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import Miss from 'react-router/Miss'
+import Head from 'next/head'
 import format from 'date-fns/format'
-
-import Head from './Head'
+import Meta from './Meta'
 import Back from './Back'
-import Error from './Error'
 import Contact from './Contact'
 import Footer from './Footer'
-import metadata from '../blog/posts/metadata.json'
-import 'highlight.js/styles/gruvbox-dark.css'
+// import 'highlight.js/styles/gruvbox-dark.css'
 
 const s = {
   post: cxs({
@@ -23,16 +20,12 @@ const s = {
   })
 }
 
-export default props => {
-  const post = metadata[props.params.post]
-  if (!post) return (<Miss component={Error} />)
+export default (props) => {
+  const { post, slug } = props
 
   return (
     <div>
-      <Head
-        post={post}
-        pathname={props.pathname}
-      />
+      <Meta post={post} pathname={slug} />
       <Back />
       <div className={s.post}>
         <h1>{post.attributes.title}</h1>
