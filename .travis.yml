@@ -2,13 +2,11 @@ sudo: false
 
 language: node_js
 node_js:
-- '0.12'
+- '7'
 
 env:
 - NODE_ENV=production
-
-before_script:
-- npm install
+- TRAVIS=true
 
 script:
-- npm run build
+- yarn run build
