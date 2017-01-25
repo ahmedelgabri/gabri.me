@@ -13,23 +13,18 @@ app
   .then(() => {
     const server = express()
 
-    server.get('/feed((\/)|(\.xml))?', (req, res) =>
-      res.sendFile(path.join(__dirname, './static/feed.xml')))
+    server.disable('x-powered-by')
 
-    server.get('/sitemap((\/)|(\.xml))?', (req, res) =>
-      res.sendFile(path.join(__dirname, './static/sitemap.xml')))
+    // server.get('/sitemap.xml', (req, res) => res.sendFile(path.join(__dirname, './static/sitemap.xml')))
+    server.get('/feed.xml', (req, res) => res.sendFile(path.join(__dirname, './static/feed.xml')))
 
-    server.get('/blog/:post', (req, res) => {
-      return app.render(req, res, '/blog', req.params)
-    })
+    server.get(/\/feed((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/feed.xml'))
+    // server.get(/\/sitemap((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/sitemap.xml'))
+    server.get(/\/(work(\/(.+)?)|blog)(\/)?$/, (req, res) => res.redirect(301, '/'))
+    server.get('/blog(\/)?', (req, res) => res.redirect(301, '/'))
 
-    server.get(/\/(work(\/(.*)?)?|blog(\/(weekly-links-v-\d+)?)?)/, (req, res) => {
-      res.redirect(301, '/')
-    })
-
-    server.get('*', (req, res) => {
-      return handle(req, res)
-    })
+    server.get('/blog/:post', (req, res) => app.render(req, res, '/blog', req.params))
+    server.get('*', (req, res) => handle(req, res))
 
     server.listen(PORT, (err) => {
       if (err) throw err
