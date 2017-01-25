@@ -1,5 +1,5 @@
----
 title: 'DIY Vim statusline'
+---
 published: true
 date: '2015-10-05 14:00'
 tags: ['vim','unix','terminal']
