@@ -1,33 +1,38 @@
 {
   "name": "gabri.me",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "Some guy on the web",
-  "main": "server.js",
   "scripts": {
-    "test": "harp compile",
-    "build": "node ./server.js compile",
-    "server": "node ./server.js",
-    "watch": "nodemon -w ./public -e js,jade,styl,scss,md ./server.js",
-    "dev": "npm run build && npm run watch",
-    "start": "npm run build && npm run server",
-    "clean": "rm -rf www/",
-    "predeploy": "npm run clean && npm run build"
+    "generateData": "node ./lib/scripts/generateData.js",
+    "generateFeed": "node ./lib/scripts/generateFeed.js",
+    "setup": "yarn run generateData && yarn run generateFeed",
+    "prebuild": "yarn run setup",
+    "build": "next build",
+    "predev": "yarn run setup",
+    "dev": "node server.js",
+    "postinstall": "[ \"$TRAVIS\" == true ] || heroku-nextjs-build",
+    "start": "NODE_ENV=production node server.js"
   },
   "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
-    "glob": "^5.0.14",
-    "harp": "^0.19.0",
-    "jstransformer-marked": "^1.0.1",
-    "moment": "^2.10.6",
-    "router-stupid": "^0.7.0",
-    "st": "^0.5.5"
-  },
-  "devDependencies": {
-    "nodemon": "^1.5.1"
+    "@mars/heroku-nextjs-build": "1.1.0",
+    "autotrack": "1.1.0",
+    "babel-preset-stage-0": "6.22.0",
+    "cxs": "3.0.4",
+    "date-fns": "1.25.0",
+    "express": "4.14.0",
+    "front-matter": "2.1.1",
+    "highlight.js": "9.9.0",
+    "markdown-it": "8.2.2",
+    "next": "2.0.0-beta.18",
+    "ramda": "0.23.0"
   },
   "engines": {
-    "node": "0.12.7"
-  }
+    "node": "7"
+  },
+  "cacheDirectories": [
+    "nextjs/node_modules"
+  ]
 }
