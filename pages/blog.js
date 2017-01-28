@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
-import metadata from '../posts/articles/metadata.json'
+import posts from '../posts/articles/metadata.json'
+import newsletter from '../posts/weekly-links/metadata.json'
 import Post from '../components/Post'
 
 export default class Blog extends Component {
   static async getInitialProps ({ res, query: { post } }) {
-    // if no post redirect to 404
-    if (!metadata[post]) {
-      res.statusCode = 404
-      res.redirect('/404')
+
+    // if /blog
+    if (!post) {
+      res.statusCode = 301
+      res.redirect('/')
       return
     }
 
     return {
-      post: metadata[post],
-      slug: post,
+      post: posts[post] || newsletter[post],
+      slug: post
     }
   }
 
