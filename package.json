@@ -26,7 +26,7 @@
     "front-matter": "2.1.1",
     "highlight.js": "9.9.0",
     "markdown-it": "8.2.2",
-    "next": "2.0.0-beta.18",
+    "next": "2.0.0-beta.20",
     "ramda": "0.23.0"
   },
   "engines": {

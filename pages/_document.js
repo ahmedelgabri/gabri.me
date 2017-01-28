@@ -45,13 +45,13 @@ export default class MyDocument extends Document {
           <meta name='twitter:domain' content={data.url} />
 
           <style dangerouslySetInnerHTML={{ __html: this.props.style }} />
-          <script src='https://www.google-analytics.com/analytics.js' async />
         </Head>
         <body>
           <div className={s}>
             <Main />
             <NextScript />
           </div>
+          <script src='https://www.google-analytics.com/analytics.js' async />
         </body>
       </html>
     )
