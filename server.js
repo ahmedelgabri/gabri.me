@@ -19,7 +19,8 @@ app
 
     server.get(/\/feed((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/feed.xml'))
     // server.get(/\/sitemap((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/sitemap.xml'))
-    server.get(/\/(work(\/(.+)?)/, (req, res) => res.redirect(301, '/'))
+    server.get('/work/?', (req, res) => res.redirect(301, '/'))
+    server.get('/work/:item/?', (req, res) => res.redirect(301, '/'))
     server.get('/blog/?', (req, res) => res.redirect(301, '/'))
     server.get('/blog/:post/?', (req, res) => app.render(req, res, '/blog', req.params))
 
