@@ -46,7 +46,7 @@ export default () => (
       <p> Currently working at <a href='http://lightspeedhq.com'>LightspeedHQ</a> in Amsterdam, The Netherlands. </p>
       <Contact />
     </div>
-    {/* <PostList /> */}
+    <PostList />
     <Footer />
   </div>
 )
