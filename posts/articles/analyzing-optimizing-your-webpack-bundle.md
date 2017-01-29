@@ -119,7 +119,7 @@ plugins: [
 
 Congratulations, you have just removed ~`2MB` from your bundle 🎉
 
-While following best practices when you setting up Webpack can go a long way for optimizing your bundle, you need still need to monitor it for any sudden size increase and/or audit it evey once in a while to make sure things like this doesn't happen.
+While following best practices when you setting up Webpack can go a long way for optimizing your bundle, you need still need to monitor it for any sudden size increase and/or audit it every once in a while to make sure things like this doesn't happen.
 
 If you want to play with the code it's on [Github](https://github.com/ahmedelgabri/webpack-analyze)
 
