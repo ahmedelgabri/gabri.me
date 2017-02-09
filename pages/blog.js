@@ -5,8 +5,6 @@ import Post from '../components/Post'
 
 export default class Blog extends Component {
   static async getInitialProps ({ res, query: { post } }) {
-
-    // if /blog
     if (!post) {
       res.statusCode = 301
       res.redirect('/')
