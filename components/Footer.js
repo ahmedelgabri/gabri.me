@@ -10,7 +10,6 @@ const s = {
   logo: cxs({
     width: '1.5rem',
     height: 'auto',
-    opacity: .3
   })
 }
 

@@ -2,6 +2,7 @@
 import React from 'react'
 import cxs from 'cxs'
 import format from 'date-fns/format'
+import { fonts } from '../lib/style'
 import Meta from './Meta'
 import Back from './Back'
 import Footer from './Footer'
@@ -10,6 +11,13 @@ import TweetButton from './TweetButton'
 // import 'highlight.js/styles/gruvbox-dark.css'
 
 const s = {
+  title: cxs({
+    margin: 0,
+  }),
+  meta: cxs({
+    fontFamily: fonts.serif,
+    fontStyle: 'italic',
+  }),
   post: cxs({
     borderBottom: '1px solid rgba(0, 0, 0, .1)'
   }),
@@ -17,7 +25,7 @@ const s = {
     marginBottom: '1rem',
     paddingBottom: '1rem',
     paddingTop: '1rem'
-  })
+  }),
 }
 
 export default (props) => {
@@ -30,8 +38,8 @@ export default (props) => {
       </Meta>
       <Back />
       <div className={s.post}>
-        <h1>{post.attributes.title}</h1>
-        <time>On {format(post.attributes.date, 'Do MMMM YYYY')}</time>
+        <h1 className={s.title}>{post.attributes.title}</h1>
+        <time className={s.meta}>On {format(post.attributes.date, 'Do MMMM YYYY')}</time>
         <div dangerouslySetInnerHTML={{__html: post.__html}} />
       </div>
       <div className={s.contact}>

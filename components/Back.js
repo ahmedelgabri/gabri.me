@@ -21,7 +21,6 @@ const s = {
     width: 50,
     display: 'block',
     margin: '0 auto .5rem',
-    opacity: .3
   }),
   link: cxs({
     display: 'block'
