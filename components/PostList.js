@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import Link from 'next/prefetch'
+import Link from 'next/link'
 import cxs from 'cxs'
 
 import metadata from '../posts/articles/metadata.json'
@@ -16,7 +16,7 @@ export default () => (
       {
         Object.keys(metadata).map(post =>
           <li key={metadata[post].attributes.title}>
-            <Link href={`/blog?post=${post}`} as={`/blog/${post}`}><a>{metadata[post].attributes.title}</a></Link>
+            <Link prefetch href={`/blog?post=${post}`} as={`/blog/${post}`}><a>{metadata[post].attributes.title}</a></Link>
           </li>
         )
       }

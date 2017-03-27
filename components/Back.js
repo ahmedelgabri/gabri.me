@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import Link from 'next/prefetch'
+import Link from 'next/link'
 import Logo from './Logo'
 import cxs from 'cxs'
 
@@ -29,7 +29,7 @@ const s = {
 
 export default () =>
   <p className={s.back}>
-    <Link href='/' className={s.link}>
+    <Link href='/' className={s.link} prefetch>
       <a>
         <Logo className={s.logo} />
         👈🏼 Go back
