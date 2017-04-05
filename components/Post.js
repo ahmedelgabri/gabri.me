@@ -13,6 +13,7 @@ import TweetButton from './TweetButton'
 const s = {
   title: cxs({
     margin: 0,
+    lineHeight: 1.2
   }),
   meta: cxs({
     fontFamily: fonts.serif,
