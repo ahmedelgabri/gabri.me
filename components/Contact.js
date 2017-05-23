@@ -21,14 +21,14 @@ export default ({ social = data.social }) => (
         return (
           <li key={site} className={s.item}>
             <a
-              href={social[site]}
+              href={social[site].url}
               rel="me"
               target="_blank"
               data-ga-on="click"
               data-ga-event-category="Social links"
-              data-ga-event-action={social[site]}
+              data-ga-event-action={social[site].url}
             >
-              {site}
+              {social[site].display}
             </a>
           </li>
         )
