@@ -7,10 +7,7 @@ const s = {
   list: cxs({
     margin: 0,
     padding: 0,
-  }),
-  item: cxs({
-    display: 'inline-block',
-    marginRight: '1rem',
+    listStyle: 'none',
   }),
 }
 
@@ -19,7 +16,7 @@ export default ({ social = data.social }) => (
     <ul className={s.list}>
       {Object.keys(social).map(site => {
         return (
-          <li key={site} className={s.item}>
+          <li key={site}>
             <a
               href={social[site].url}
               rel="me"
