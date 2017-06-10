@@ -11,37 +11,41 @@ import TweetButton from './TweetButton'
 // import 'highlight.js/styles/gruvbox-dark.css'
 
 const s = {
-  title: cxs({
-    margin: 0,
-    lineHeight: 1.2
-  }),
   meta: cxs({
     fontFamily: fonts.serif,
     fontStyle: 'italic',
+    fontSize: '.75rem',
+    display: 'block',
+    marginBottom: '2rem',
   }),
   post: cxs({
-    borderBottom: '1px solid rgba(0, 0, 0, .1)'
+    borderBottom: '1px solid rgba(0, 0, 0, .1)',
   }),
   contact: cxs({
     marginBottom: '1rem',
     paddingBottom: '1rem',
-    paddingTop: '1rem'
+    paddingTop: '1rem',
   }),
 }
 
-export default (props) => {
+export default props => {
   const { post, slug } = props
 
   return (
     <div>
       <Meta post={post} pathname={slug}>
-        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/gruvbox-dark.min.css' />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/gruvbox-dark.min.css"
+        />
       </Meta>
-      <Back />
       <div className={s.post}>
+        <Back />
         <h1 className={s.title}>{post.attributes.title}</h1>
-        <time className={s.meta}>On {format(post.attributes.date, 'Do MMMM YYYY')}</time>
-        <div dangerouslySetInnerHTML={{__html: post.__html}} />
+        <time className={s.meta}>
+          On {format(post.attributes.date, 'Do MMMM YYYY')}
+        </time>
+        <div dangerouslySetInnerHTML={{ __html: post.__html }} />
       </div>
       <div className={s.contact}>
         <TweetButton title={post.attributes.title} slug={slug} />

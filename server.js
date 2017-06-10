@@ -7,27 +7,31 @@ const PORT = process.env.PORT || 3000
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-app
-  .prepare()
-  .then(() => {
-    const server = express()
+app.prepare().then(() => {
+  const server = express()
 
-    server.disable('x-powered-by')
+  server.disable('x-powered-by')
 
-    // server.get('/sitemap.xml', (req, res) => res.sendFile(path.join(__dirname, './static/sitemap.xml')))
-    server.get('/feed.xml', (req, res) => res.sendFile(path.join(__dirname, './static/feed.xml')))
+  // server.get('/sitemap.xml', (req, res) => res.sendFile(path.join(__dirname, './static/sitemap.xml')))
+  server.get('/feed.xml', (req, res) =>
+    res.sendFile(path.join(__dirname, './static/feed.xml'))
+  )
 
-    server.get(/\/feed((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/feed.xml'))
-    // server.get(/\/sitemap((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/sitemap.xml'))
-    server.get('/work/?', (req, res) => res.redirect(301, '/'))
-    server.get('/work/:item/?', (req, res) => res.redirect(301, '/'))
-    server.get('/blog/?', (req, res) => res.redirect(301, '/'))
-    server.get('/blog/:post/?', (req, res) => app.render(req, res, '/blog', req.params))
+  server.get(/\/feed((\/)|(\.xml))?/, (req, res) =>
+    res.redirect(301, '/feed.xml')
+  )
+  // server.get(/\/sitemap((\/)|(\.xml))?/, (req, res) => res.redirect(301, '/sitemap.xml'))
+  server.get('/work/?', (req, res) => res.redirect(301, '/'))
+  server.get('/work/:item/?', (req, res) => res.redirect(301, '/'))
+  server.get('/blog/?', (req, res) => res.redirect(301, '/'))
+  server.get('/blog/:post/?', (req, res) =>
+    app.render(req, res, '/blog', req.params)
+  )
 
-    server.get('*', (req, res) => handle(req, res))
+  server.get('*', (req, res) => handle(req, res))
 
-    server.listen(PORT, (err) => {
-      if (err) throw err
-      console.log(`> Ready on http://localhost:${PORT}`)
-    })
+  server.listen(PORT, err => {
+    if (err) throw err
+    console.log(`> Ready on http://localhost:${PORT}`)
   })
+})

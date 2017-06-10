@@ -9,27 +9,34 @@ const s = {
     padding: 0,
     listStyle: 'none',
   }),
+  item: cxs({
+    display: 'inline-block',
+    marginRight: '1rem',
+  }),
+  link: cxs({
+    border: 'none',
+  }),
 }
 
-export default ({ social = data.social }) => (
+export default ({ social = data.social }) =>
   <div role="contentinfo">
     <ul className={s.list}>
       {Object.keys(social).map(site => {
         return (
-          <li key={site}>
+          <li className={s.item} key={site}>
             <a
               href={social[site].url}
-              rel="me"
+              rel="me noopener noreferer"
+              className={s.link}
               target="_blank"
               data-ga-on="click"
               data-ga-event-category="Social links"
               data-ga-event-action={social[site].url}
             >
-              {social[site].display}
+              <img src={`static/img/${site}.svg`} alt="" width="24" />
             </a>
           </li>
         )
       })}
     </ul>
   </div>
-)

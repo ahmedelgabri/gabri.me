@@ -4,53 +4,40 @@ import cxs from 'cxs'
 import Head from 'next/head'
 import data from '../data.json'
 import { isNight, colors } from '../lib/style'
+import Wrap from '../components/layout/Wrap'
 import Meta from '../components/Meta'
+import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 
 const s = {
-  wrap: cxs({
-    borderBottom: `1px solid ${isNight() ? 'rgba(255, 255, 255, .2)' : 'rgba(0, 0, 0, .2)'}`,
-    paddingBottom: '3rem',
-    marginBottom: '3rem',
-  }),
-  h1: cxs({
-    color: colors().teal(),
-    fontSize: '2rem',
-    margin: 0,
-    '@media screen and (min-width: 27em)': {
-      fontSize: '3rem',
-    },
-  }),
-  h2: cxs({
-    color: colors().teal(),
-    margin: 0,
-    fontSize: '1.2rem',
-    fontWeight: 'normal',
-    lineHeight: 1.2,
-    '@media screen and (min-width: 27em)': {
-      fontSize: '1.5rem',
+  logo: cxs({
+    width: 50,
+    display: 'inline-block',
+    opacity: 0.3,
+    transition: 'all .2s linear',
+    ':hover': {
+      opacity: 1,
     },
   }),
 }
 
-export default () => (
-  <div>
+export default () =>
+  <Wrap>
     <Meta />
-    <div className={s.wrap}>
+    <div>
+      <Logo className={s.logo} />
       <h1 className={s.h1}>{data.author}</h1>
       <p>
-        I'm a Front-end engineer, currently working as Lead Front-end Developer at
-        {' '}
-        <a href="http://lightspeedhq.com">LightspeedHQ</a>
-        {' '}
+        Front-end engineer,
+        <br />
+        Lead Front-end Developer at {' '}
+        <a href="http://lightspeedhq.com">Lightspeed</a>
+        <br />
         in Amsterdam, The Netherlands.
-        {' '}
       </p>
       <Contact />
+      <PostList />
     </div>
-    <PostList />
-    <Footer />
-  </div>
-)
+  </Wrap>

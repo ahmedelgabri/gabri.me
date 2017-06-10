@@ -46,15 +46,16 @@ export default ({
   via = data.social.twitter.display,
   title,
   slug,
-}) => (
+}) =>
   <div className={s.wrap}>
     <a
       className={s.btn}
-      href={`https://twitter.com/share?url=${data.url}/blog/${slug}&via=${via.slice(1)}&text=${title}`}
+      href={`https://twitter.com/share?url=${data.url}/blog/${slug}&via=${via.slice(
+        1
+      )}&text=${title}`}
       target="_blank"
     >
-      <i className={s.icon}><img src="/static/img/twitter.svg" alt="" /></i>
+      <i className={s.icon}><img src="/static/img/twitter-btn.svg" alt="" /></i>
       <span className={s.label}>Tweet</span>
     </a>
   </div>
-)
