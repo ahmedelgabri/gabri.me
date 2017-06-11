@@ -8,7 +8,10 @@ export default ({ post = null, pathname, children, ...rest }) => {
   const TITLE = post && post.attributes && post.attributes.title
     ? `${post.attributes.title} | ${data.author} - ${data.title}`
     : `${data.author} | ${data.title}`
-  const DESC = post && post.__html ? escape(post.__html) : TITLE
+  const DESC = post &&
+    ((post.attributes && post.attributes.description) || post.body)
+    ? `${escape(post.body.slice(0, 161))}...`
+    : TITLE
   const IMG =
     (post && post.attributes && post.attributes.img) ||
     '/static/img/fb-image.png'
