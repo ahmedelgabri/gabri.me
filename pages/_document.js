@@ -1,4 +1,5 @@
 // @flow
+import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 import cxs from 'cxs'
 import data from '../data.json'
@@ -7,13 +8,13 @@ import { global } from '../lib/style'
 export default class MyDocument extends Document {
   static async getInitialProps({ renderPage }) {
     const page = renderPage()
-    let style = cxs.getCss()
+    const style = cxs.getCss()
     return { ...page, style: `${global}${style}` }
   }
 
   render() {
     return (
-      <html>
+      <html lang="en">
         <Head>
           <meta name="description" content={data.description} />
           <meta name="viewport" content="initial-scale=1, width=device-width" />

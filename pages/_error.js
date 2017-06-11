@@ -18,7 +18,7 @@ export default class Error extends React.Component {
         </Head>
         <Back />
         <h2>ERROR {this.props.errorCode} - PAGE NOT FOUND</h2>
-        <img src="/static/img/404.gif" style={{ maxWidth: '100%' }} />
+        <img src="/static/img/404.gif" alt="" style={{ maxWidth: '100%' }} />
       </Wrap>
     )
   }

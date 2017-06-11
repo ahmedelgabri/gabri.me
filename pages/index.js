@@ -1,14 +1,12 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import Head from 'next/head'
 import data from '../data.json'
 import Wrap from '../components/layout/Wrap'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Contact from '../components/Contact'
-import Footer from '../components/Footer'
 
 const s = {
   logo: cxs({
@@ -16,9 +14,7 @@ const s = {
     display: 'inline-block',
     opacity: 0.3,
     transition: 'all .2s linear',
-    ':hover': {
-      opacity: 1,
-    },
+    ':hover': { opacity: 1 },
   }),
 }
 

@@ -33,7 +33,7 @@ export default () =>
         <li key={metadata[post].attributes.title}>
           <Link prefetch href={`/blog?post=${post}`} as={`/blog/${post}`}>
             <MyLink
-              onCustomClick={e =>
+              onCustomClick={() =>
                 logEvent('Post', metadata[post].attributes.title)}
             >
               {metadata[post].attributes.title}

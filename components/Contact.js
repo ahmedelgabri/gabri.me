@@ -21,20 +21,18 @@ const s = {
 export default ({ social }) =>
   <div role="contentinfo">
     <ul className={s.list}>
-      {Object.keys(social).map(site => {
-        return (
-          <li className={s.item} key={site}>
-            <a
-              href={social[site].url}
-              rel="me noopener noreferer"
-              className={s.link}
-              target="_blank"
-              onClick={e => logEvent('Social links', social[site].url)}
-            >
-              <img src={`static/img/${site}.svg`} alt="" width="24" />
-            </a>
-          </li>
-        )
-      })}
+      {Object.keys(social).map(site =>
+        <li className={s.item} key={site}>
+          <a
+            href={social[site].url}
+            rel="noopener noreferrer me"
+            className={s.link}
+            target="_blank"
+            onClick={() => logEvent('Social links', social[site].url)}
+          >
+            <img src={`static/img/${site}.svg`} alt="" width="24" />
+          </a>
+        </li>
+      )}
     </ul>
   </div>

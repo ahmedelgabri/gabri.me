@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
 import Link from 'next/link'
-import Logo from './Logo'
 import cxs from 'cxs'
+import Logo from './Logo'
 
 const s = {
   logo: cxs({

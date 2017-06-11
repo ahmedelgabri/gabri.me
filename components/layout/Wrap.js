@@ -1,3 +1,4 @@
+/* global window */
 // @flow
 import React, { Component } from 'react'
 import cxs from 'cxs'

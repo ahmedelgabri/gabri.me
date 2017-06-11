@@ -53,6 +53,7 @@ export default ({
       href={`https://twitter.com/share?url=${data.url}/blog/${slug}&via=${via.slice(
         1
       )}&text=${title}`}
+      rel="noopener noreferrer"
       target="_blank"
     >
       <i className={s.icon}><img src="/static/img/twitter-btn.svg" alt="" /></i>

@@ -22,9 +22,9 @@ export default ({ post = null, pathname, children, ...rest }) => {
       <title>{TITLE}</title>
 
       {/* G+ */}
-      <meta itemprop="name" content={TITLE} />
-      <meta itemprop="description" content={DESC} />
-      <meta itemprop="image" content={IMG} />
+      <meta itemProp="name" content={TITLE} />
+      <meta itemProp="description" content={DESC} />
+      <meta itemProp="image" content={IMG} />
 
       {/* FB Open Graph meta tags */}
       <meta property="og:title" content={TITLE} />
