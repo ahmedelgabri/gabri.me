@@ -37,7 +37,7 @@ export default () =>
         <br />
         in Amsterdam, The Netherlands.
       </p>
-      <Contact />
+      <Contact social={data.social}/>
       <PostList />
     </div>
   </Wrap>

@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import data from '../data.json'
+import { logEvent } from '../lib/analytics'
 
 const s = {
   list: cxs({
@@ -18,7 +18,7 @@ const s = {
   }),
 }
 
-export default ({ social = data.social }) =>
+export default ({ social }) =>
   <div role="contentinfo">
     <ul className={s.list}>
       {Object.keys(social).map(site => {
@@ -29,9 +29,7 @@ export default ({ social = data.social }) =>
               rel="me noopener noreferer"
               className={s.link}
               target="_blank"
-              data-ga-on="click"
-              data-ga-event-category="Social links"
-              data-ga-event-action={social[site].url}
+              onClick={e => logEvent('Social links', social[site].url)}
             >
               <img src={`static/img/${site}.svg`} alt="" width="24" />
             </a>
