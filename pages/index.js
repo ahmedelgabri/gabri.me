@@ -3,7 +3,6 @@ import React from 'react'
 import cxs from 'cxs'
 import Head from 'next/head'
 import data from '../data.json'
-import { isNight, colors } from '../lib/style'
 import Wrap from '../components/layout/Wrap'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
@@ -37,7 +36,7 @@ export default () =>
         <br />
         in Amsterdam, The Netherlands.
       </p>
-      <Contact social={data.social}/>
+      <Contact social={data.social} />
       <PostList />
     </div>
   </Wrap>
