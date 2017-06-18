@@ -1,3 +1,4 @@
 {
-    "extends": ["@ahmedelgabri"]
+    "extends": ["@ahmedelgabri"],
+    "parser": "babel-eslint"
 }

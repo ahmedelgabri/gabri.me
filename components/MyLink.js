@@ -16,7 +16,7 @@ export default class MyLink extends Component {
   }
 
   render() {
-    const { onCustomClick, ...props } = this.props
-    return <a {...props} onClick={this.handleClick} />
+    const { onCustomClick, children, ...props } = this.props
+    return <a {...props} onClick={this.handleClick}>{children}</a>
   }
 }

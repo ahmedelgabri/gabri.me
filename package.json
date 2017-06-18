@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@mars/heroku-nextjs-build": "^2.0.0",
+    "babel-eslint": "^7.2.3",
     "babel-preset-stage-0": "^6.24.1",
     "cxs": "^3.0.4",
     "date-fns": "^1.28.5",
