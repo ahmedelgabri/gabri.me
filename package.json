@@ -1,6 +1,7 @@
 {
   "name": "gabri.me",
   "version": "4.0.0",
+  "private": true,
   "description": "Some guy on the web",
   "scripts": {
     "generateData": "node ./lib/scripts/generateData.js",
@@ -10,10 +11,11 @@
     "build": "next build",
     "predev": "yarn run setup",
     "dev": "node server.js",
+    "flow:typed": "flow-typed install",
+    "flow": "flow",
     "postinstall": "[ \"$TRAVIS\" = true ] || heroku-nextjs-build",
     "start": "NODE_ENV=production node server.js"
   },
-  "private": true,
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "dependencies": {
@@ -22,6 +24,8 @@
     "cxs": "^3.0.4",
     "date-fns": "^1.28.5",
     "express": "^4.15.3",
+    "flow-bin": "^0.48.0",
+    "flow-typed": "^2.1.2",
     "front-matter": "^2.1.2",
     "highlight.js": "^9.12.0",
     "markdown-it": "^8.3.1",
