@@ -23,7 +23,7 @@ export default () =>
     <Meta />
     <div>
       <Logo className={s.logo} />
-      <h1 className={s.h1}>{data.author}</h1>
+      <h1>{data.author}</h1>
       <p>
         Front-end engineer,
         <br />
