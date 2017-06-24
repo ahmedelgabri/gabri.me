@@ -16,6 +16,11 @@ const s = {
   link: cxs({
     border: 'none',
   }),
+  img: icon =>
+    cxs({
+      verticalAlign: 'middle',
+      maxWidth: icon === 'resume' ? 16 : 24,
+    }),
 }
 
 export default ({ social }) =>
@@ -30,7 +35,11 @@ export default ({ social }) =>
             target="_blank"
             onClick={() => logEvent('Social links', social[site].url)}
           >
-            <img src={`static/img/${site}.svg`} alt="" width="24" />
+            <img
+              className={s.img(site)}
+              src={`static/img/${site}.svg`}
+              alt=""
+            />
           </a>
         </li>
       )}

@@ -16,6 +16,10 @@
     "email": {
       "display": "email",
       "url": "mailto:ahmed@gabri.me?subject=Hi!&body=👋🏼"
+    },
+    "resume": {
+      "display": "resume",
+      "url": "https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/edit?usp=sharing"
     }
   },
   "google_analytics": {
