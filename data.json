@@ -27,5 +27,11 @@
     "local": "UA-10517764-7"
   },
   "disqus": "gabrime",
-  "twitter_id": "1512909779"
+  "twitter_id": "1512909779",
+  "talks": {
+    "AmsterdamJS": [
+      "http://bit.ly/amsterdamjs-codemods",
+      "https://youtu.be/xGjSMbks9vA"
+    ]
+  }
 }

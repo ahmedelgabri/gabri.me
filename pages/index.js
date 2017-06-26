@@ -6,6 +6,7 @@ import Wrap from '../components/layout/Wrap'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
+import Talks from '../components/Talks'
 import Contact from '../components/Contact'
 
 const s = {
@@ -15,6 +16,12 @@ const s = {
     opacity: 0.3,
     transition: 'all .2s linear',
     ':hover': { opacity: 1 },
+  }),
+  split: cxs({
+    '@media screen and (min-width: 48em)': {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
   }),
 }
 
@@ -33,6 +40,13 @@ export default () =>
         in Amsterdam, The Netherlands.
       </p>
       <Contact social={data.social} />
-      <PostList />
+      <div className={s.split}>
+        <div>
+          <PostList />
+        </div>
+        <div>
+          <Talks />
+        </div>
+      </div>
     </div>
   </Wrap>
