@@ -30,7 +30,7 @@
     "front-matter": "^2.1.2",
     "highlight.js": "^9.12.0",
     "markdown-it": "^8.3.1",
-    "next": "^2.4.4",
+    "next": "^2.4.5",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -48,9 +48,9 @@
     "eslint-config-prettier": "^2.2.0",
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-jsx-a11y": "^6.0.0",
     "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-react": "^7.1.0",
-    "prettier": "^1.4.4"
+    "prettier": "^1.5.2"
   }
 }
