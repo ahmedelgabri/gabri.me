@@ -1,7 +1,8 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import { logEvent } from '../lib/analytics'
+// import { logEvent } from '../lib/analytics'
+const logEvent = () => {}
 
 const s = {
   list: cxs({

@@ -16,7 +16,7 @@ export const colors = {
   logo: '#c0c5ca',
 }
 
-export const global = `
+export const globalStyles = `
   * {
     box-sizing: border-box;
   }

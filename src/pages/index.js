@@ -1,9 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import data from '../data.json'
-import Wrap from '../components/layout/Wrap'
-import Meta from '../components/Meta'
+// import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
@@ -25,12 +23,14 @@ const s = {
   }),
 }
 
-export default () =>
-  <Wrap>
-    <Meta />
+export default props => {
+  const { author, social } = props.data.site.siteMetadata
+  return (
     <div>
       <Logo className={s.logo} />
-      <h1>{data.author}</h1>
+      <h1>
+        {author}
+      </h1>
       <p>
         Front-end engineer,
         <br />
@@ -39,7 +39,7 @@ export default () =>
         <br />
         in Amsterdam, The Netherlands.
       </p>
-      <Contact social={data.social} />
+      <Contact social={social} />
       <div className={s.split}>
         <div>
           <PostList />
@@ -49,4 +49,36 @@ export default () =>
         </div>
       </div>
     </div>
-  </Wrap>
+  )
+}
+
+export const pageQuery = graphql`
+  query indexQuery {
+    site {
+      siteMetadata {
+        author
+        description
+        social {
+          twitter {
+            display
+            url
+          }
+          github {
+            display
+            url
+          }
+          email {
+            display
+            url
+          }
+          resume {
+            display
+            url
+          }
+        }
+        twitter_id
+        url
+      }
+    }
+  }
+`

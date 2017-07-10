@@ -1,8 +1,10 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import { talks } from '../data.json'
-import { logEvent } from '../lib/analytics'
+// import { talks } from '../data.json'
+// import { logEvent } from '../lib/analytics'
+
+const logEvent = () => {}
 
 const s = {
   section: cxs({
@@ -23,7 +25,7 @@ const s = {
   }),
 }
 
-export default () =>
+export default ({ talks = {} }) =>
   <div className={s.section}>
     <h2>Talks</h2>
     <ul>

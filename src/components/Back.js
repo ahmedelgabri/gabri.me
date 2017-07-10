@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import Link from 'next/link'
+import Link from 'gatsby-link'
 import cxs from 'cxs'
 import Logo from './Logo'
 
@@ -21,7 +21,7 @@ const s = {
 
 export default () =>
   <p>
-    <Link href="/" prefetch>
+    <Link href="/">
       <a className={s.link}>
         <Logo className={s.logo} />
       </a>

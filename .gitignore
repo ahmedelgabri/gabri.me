@@ -52,6 +52,8 @@ node_modules/
 .bundle/
 www/
 .next/
+.cache/
+public/
 
 # vim       #
 #############

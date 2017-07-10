@@ -1,10 +1,12 @@
 // @flow
 import React from 'react'
-import Link from 'next/link'
+import Link from 'gatsby-link'
 import cxs from 'cxs'
-import { logEvent } from '../lib/analytics'
+// import { logEvent } from '../lib/analytics'
 import MyLink from './MyLink'
-import metadata from '../posts/articles/metadata.json'
+// import metadata from '../posts/articles/metadata.json'
+
+const logEvent = () => {}
 
 const s = {
   section: cxs({
@@ -25,7 +27,7 @@ const s = {
   }),
 }
 
-export default () =>
+export default ({ metadata = {} }) =>
   <div className={s.section}>
     <h2>Writing</h2>
     <ul className={s.list}>

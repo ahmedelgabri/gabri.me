@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { colors } from '../lib/style'
+import { colors } from '../utils/style'
 
 export default ({ width = 83, height = 35, className }) => {
   return (
