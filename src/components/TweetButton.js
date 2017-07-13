@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import data from '../data.json'
+import icon from '../../public/img/twitter-btn.svg'
 
 const s = {
   wrap: cxs({
@@ -41,22 +41,19 @@ const s = {
   }),
 }
 
-export default ({
-  twitterScript = data.twitterScript,
-  via = data.social.twitter.display,
-  title,
-  slug,
-}) =>
+export default ({ via, title, url }) =>
   <div className={s.wrap}>
     <a
       className={s.btn}
-      href={`https://twitter.com/share?url=${data.url}/blog/${slug}&via=${via.slice(
+      href={`https://twitter.com/share?url=${url}&via=${via.slice(
         1
       )}&text=${title}`}
       rel="noopener noreferrer"
       target="_blank"
     >
-      <i className={s.icon}><img src="/static/img/twitter-btn.svg" alt="" /></i>
+      <i className={s.icon}>
+        <img src={icon} alt="" />
+      </i>
       <span className={s.label}>Tweet</span>
     </a>
   </div>
