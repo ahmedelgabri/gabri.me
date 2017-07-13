@@ -37,7 +37,7 @@
     "react-ga": "^2.2.0"
   },
   "engines": {
-    "node": "8"
+    "node": "8.1.4"
   },
   "cacheDirectories": [
     "nextjs/node_modules"
