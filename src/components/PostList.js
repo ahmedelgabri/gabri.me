@@ -3,7 +3,6 @@ import React from 'react'
 import Link from 'gatsby-link'
 import cxs from 'cxs'
 // import { logEvent } from '../lib/analytics'
-import MyLink from './MyLink'
 // import metadata from '../posts/articles/metadata.json'
 
 const logEvent = () => {}
@@ -33,10 +32,8 @@ export default ({ posts = [] }) =>
     <ul className={s.list}>
       {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) =>
         <li key={title}>
-          <Link to={slug}>
-            <MyLink onCustomClick={() => logEvent('Post', title)}>
-              {title}
-            </MyLink>
+          <Link to={slug} onClick={() => logEvent('Post', title)}>
+            {title}
           </Link>
         </li>
       )}

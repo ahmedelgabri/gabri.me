@@ -1,8 +1,18 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
+import twitter from '../../public/img/twitter.svg'
+import github from '../../public/img/github.svg'
+import email from '../../public/img/email.svg'
+import resume from '../../public/img/resume.svg'
 // import { logEvent } from '../lib/analytics'
 const logEvent = () => {}
+const icons = {
+  twitter,
+  github,
+  email,
+  resume,
+}
 
 const s = {
   list: cxs({
@@ -36,11 +46,7 @@ export default ({ social }) =>
             target="_blank"
             onClick={() => logEvent('Social links', social[site].url)}
           >
-            <img
-              className={s.img(site)}
-              src={`static/img/${site}.svg`}
-              alt=""
-            />
+            <img className={s.img(site)} src={icons[site]} alt="" />
           </a>
         </li>
       )}

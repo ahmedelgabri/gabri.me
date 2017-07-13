@@ -3,12 +3,11 @@ import React from 'react'
 import cxs from 'cxs'
 import format from 'date-fns/format'
 import { fonts } from '../utils/style'
-// import Meta from '../components/Meta'
+import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
-
-// import 'highlight.js/styles/gruvbox-dark.css'
+import 'prism-themes/themes/prism-duotone-dark.css'
 
 const s = {
   meta: cxs({
@@ -30,21 +29,28 @@ const s = {
 
 const Post = props => {
   const { title, date } = props.data.markdownRemark.frontmatter
+  const {
+    title: siteTitle,
+    author,
+    url,
+    social: { twitter: { display } },
+  } = props.data.site.siteMetadata
   const html = props.data.markdownRemark.html
   const slug = props.data.markdownRemark.fields.slug
   return (
     <div>
-      {/*
-      <Meta post={post} pathname={slug}>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/gruvbox-dark.min.css"
-        />
-      </Meta>
-      */}
+      <Meta
+        post={{
+          title,
+          html,
+        }}
+        author={author}
+        siteTitle={siteTitle}
+        url={url + slug}
+      />
       <div className={s.post}>
         <Back />
-        <h1 className={s.title}>
+        <h1>
           {title}
         </h1>
         <time className={s.meta}>
@@ -53,9 +59,9 @@ const Post = props => {
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
       <div className={s.contact}>
-        <TweetButton title={title} slug={slug} />
+        <TweetButton via={display} title={title} url={url + slug} />
       </div>
-      <Footer />
+      <Footer author={author} />
     </div>
   )
 }
@@ -68,6 +74,12 @@ export const postQuery = graphql`
       siteMetadata {
         title
         author
+        url
+        social {
+          twitter {
+            display
+          }
+        }
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {

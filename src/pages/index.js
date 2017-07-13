@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-// import Meta from '../components/Meta'
+import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
@@ -25,10 +25,11 @@ const s = {
 }
 
 export default props => {
-  const { author, social, talks } = props.data.site.siteMetadata
+  const { author, social, talks, title, url } = props.data.site.siteMetadata
   const posts = props.data.allMarkdownRemark.edges
   return (
     <div>
+      <Meta author={author} url={url} siteTitle={title} />
       <Logo className={s.logo} />
       <h1>
         {author}
@@ -60,6 +61,8 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         author
+        title
+        url
         description
         social {
           twitter {

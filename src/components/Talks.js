@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-// import { talks } from '../data.json'
 // import { logEvent } from '../lib/analytics'
 
 const logEvent = () => {}
