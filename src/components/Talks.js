@@ -41,7 +41,7 @@ export default ({ talks = {} }) =>
                 target="_blank"
                 rel="noreferer noopener"
               >
-                video
+                Video
               </a>}
             {video && ' - '}
             {slides &&

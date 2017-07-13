@@ -24,7 +24,8 @@ const s = {
 }
 
 export default props => {
-  const { author, social } = props.data.site.siteMetadata
+  const { author, social, talks } = props.data.site.siteMetadata
+  const posts = props.data.allMarkdownRemark.edges
   return (
     <div>
       <Logo className={s.logo} />
@@ -42,10 +43,10 @@ export default props => {
       <Contact social={social} />
       <div className={s.split}>
         <div>
-          <PostList />
+          <PostList posts={posts} />
         </div>
         <div>
-          <Talks />
+          <Talks talks={talks} />
         </div>
       </div>
     </div>
@@ -76,8 +77,26 @@ export const pageQuery = graphql`
             url
           }
         }
+        talks {
+          AmsterdamJS
+        }
         twitter_id
         url
+      }
+    }
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { fileAbsolutePath: { regex: "/articles/" } }
+    ) {
+      edges {
+        node {
+          fields {
+            slug
+          }
+          frontmatter {
+            title
+          }
+        }
       }
     }
   }

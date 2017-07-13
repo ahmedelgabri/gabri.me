@@ -27,18 +27,15 @@ const s = {
   }),
 }
 
-export default ({ metadata = {} }) =>
+export default ({ posts = [] }) =>
   <div className={s.section}>
     <h2>Writing</h2>
     <ul className={s.list}>
-      {Object.keys(metadata).map(post =>
-        <li key={metadata[post].attributes.title}>
-          <Link prefetch href={`/blog?post=${post}`} as={`/blog/${post}`}>
-            <MyLink
-              onCustomClick={() =>
-                logEvent('Post', metadata[post].attributes.title)}
-            >
-              {metadata[post].attributes.title}
+      {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) =>
+        <li key={title}>
+          <Link to={slug}>
+            <MyLink onCustomClick={() => logEvent('Post', title)}>
+              {title}
             </MyLink>
           </Link>
         </li>
