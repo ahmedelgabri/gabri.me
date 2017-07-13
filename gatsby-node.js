@@ -1,5 +1,19 @@
 const path = require('path')
 
+// Create slugs for files.
+exports.onCreateNode = ({ node, boundActionCreators }) => {
+  const { createNodeField } = boundActionCreators
+
+  if (node.internal.type === 'MarkdownRemark') {
+    // https://github.com/gatsbyjs/gatsby/issues/1471
+    createNodeField({
+      node,
+      name: 'slug',
+      value: `/blog/${path.basename(node.fileAbsolutePath, '.md')}`,
+    })
+  }
+}
+
 exports.createPages = async ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators
 
@@ -12,8 +26,8 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
         allMarkdownRemark(limit: 1000) {
           edges {
             node {
-              frontmatter {
-                path
+              fields {
+                slug
               }
             }
           }
@@ -28,11 +42,12 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
 
         // Create blog posts pages.
         result.data.allMarkdownRemark.edges.forEach(edge => {
+          const slug = edge.node.fields.slug
           createPage({
-            path: edge.node.frontmatter.path,
+            path: slug,
             component: blogPost,
             context: {
-              path: edge.node.frontmatter.path,
+              slug,
             },
           })
         })
