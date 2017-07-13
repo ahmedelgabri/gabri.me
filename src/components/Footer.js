@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import data from '../data.json'
 
 const s = {
   small: cxs({
@@ -10,9 +9,9 @@ const s = {
   }),
 }
 
-export default () =>
+export default ({ author }) =>
   <div>
     <small className={s.small}>
-      {data.author} © {new Date().getFullYear()}
+      {author} © {new Date().getFullYear()}
     </small>
   </div>
