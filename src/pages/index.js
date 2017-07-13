@@ -6,6 +6,7 @@ import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
 import Contact from '../components/Contact'
+import Footer from '../components/Footer'
 
 const s = {
   logo: cxs({
@@ -49,6 +50,7 @@ export default props => {
           <Talks talks={talks} />
         </div>
       </div>
+      <Footer author={author} />
     </div>
   )
 }
