@@ -1,33 +1,29 @@
 // @flow
 import React from 'react'
-// import Head from 'next/head'
+import Helmet from 'react-helmet'
 import Back from '../components/Back'
-// import Wrap from '../components/layout/Wrap'
+import Footer from '../components/Footer'
+import gif from '../../public/img/404.gif'
 
-const Error = () =>
-  <Wrap>
-    <Head>
+const Error = props =>
+  <div>
+    <Helmet>
       <title>Oops - page not found 🙈</title>
-    </Head>
+    </Helmet>
     <Back />
-    <h2>
-      ERROR {this.props.errorCode} - PAGE NOT FOUND
-    </h2>
-    <img src="/static/img/404.gif" alt="" style={{ maxWidth: '100%' }} />
-  </Wrap>
+    <h2>ERROR 404 - PAGE NOT FOUND</h2>
+    <img src={gif} alt="" style={{ maxWidth: '100%' }} />
+    <Footer author={props.data.site.siteMetadata.author} />
+  </div>
 
 export default Error
-// export default class Error extends React.Component {
-//   render() {
-//     return (
-//       <Wrap>
-//         <Head>
-//           <title>Oops - page not found 🙈</title>
-//         </Head>
-//         <Back />
-//         <h2>ERROR {this.props.errorCode} - PAGE NOT FOUND</h2>
-//         <img src="/static/img/404.gif" alt="" style={{ maxWidth: '100%' }} />
-//       </Wrap>
-//     )
-//   }
-// }
+
+export const pageQuery = graphql`
+  query errorQuery {
+    site {
+      siteMetadata {
+        author
+      }
+    }
+  }
+`
