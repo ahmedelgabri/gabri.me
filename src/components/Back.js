@@ -21,9 +21,7 @@ const s = {
 
 export default () =>
   <p>
-    <Link href="/">
-      <a className={s.link}>
-        <Logo className={s.logo} />
-      </a>
+    <Link to="/" className={s.link}>
+      <Logo className={s.logo} />
     </Link>
   </p>
