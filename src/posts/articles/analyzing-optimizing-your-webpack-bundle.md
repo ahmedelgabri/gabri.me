@@ -17,7 +17,7 @@ So let’s start…
 
 I have a very simple react app here, you just type in the input field & it will slugify the output of what you typed.
 
-![](/static/img/webpack-analyze-app.gif)
+![](/img/webpack-analyze-app.gif)
 
 That's the code for the app, pretty normal stuff nothing fancy here.
 
@@ -58,7 +58,7 @@ render(<App />, document.querySelector('#App'))
 
 So, you run it through Webpack & eveything is fine, right? It compiles, works & everyone is happy. But look at this output from Webpack.
 
-![](/static/img/webpack-analyze-output.jpg)
+![](/img/webpack-analyze-output.jpg)
 
 The bundle size is **1.84mb**! And there is this file called `So.js` which is `1.91mb` alone, and it's coming from a folder called `unicode/category`. How can we get more info about this?
 
@@ -98,13 +98,13 @@ I'll go with the second option, so I'll add this script to my `package.json` so 
 
 This `npm run debug` will simply reveal more info about the bundle & modules that will allow us to narrow down what is the problem exactly. I recommend to read more about the [Webpack CLI](https://webpack.js.org/api/cli/) to get an idea on what else you can do. So after running `npm run debug` you will get something like this (_it's too big to put it all in the post so this is just the part that we are interested in_)
 
-![](/static/img/webpack-analyze-debug.jpg)
+![](/img/webpack-analyze-debug.jpg)
 
 So now we know that `So.js` is related to the `slug` module, great. So it turns out that the `slug` module, has a `postinstall` hook that creates some unicode files to handle different languages & `So.js` is one of them & it holds mainly Arabic & Tibetan unicode symbols.
 
 Another solution to check your bundle which can actually help you even, is using something like [`webpack-bundle-analyzer`](https://www.npmjs.com/package/webpack-bundle-analyzer). Because it visualizes the size of your dependency tree using tree maps, it should look like this.
 
-![](/static/img/webpack-bundle-analyzer.jpg)
+![](/img/webpack-bundle-analyzer.jpg)
 
 So, the perfect scenario you would use a different module other than `slug`, but let's assume that you can replace this right now for whatever reason (time, overhead, etc...) you still don't want to serve these `~2mb` for your users. So how can you do this?
 
@@ -119,7 +119,7 @@ plugins: [
 
 And here is the output after that change, the bundle is only `150KB` now.
 
-![](/static/img/webpack-analyze-output-after.jpg)
+![](/img/webpack-analyze-output-after.jpg)
 
 Congratulations, you have just removed `~2mb` from your bundle 🎉
 

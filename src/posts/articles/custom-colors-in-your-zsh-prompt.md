@@ -12,7 +12,7 @@ So I have already customized my terminal to a very good extend but lately I have
 
 So I searched for this if it's possible <del> &amp; I found [this](https://github.com/robbyrussell/oh-my-zsh/issues/1101) for ZSH &amp; iterm2, another search for "Spectrum" &amp; I found [this function](https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/spectrum.zsh#L22)</del> Actually, it turned out that the spectrum function is already in [ohmyzsh](https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/spectrum.zsh#L23) . Drop this function inside your `.zshrc` file then call `spectrum_ls` in the terminal &amp; boom! watch the magic.
 
-<img src="/static/img/zsh-colors.png" alt="zsh-colors" class="aligncenter size-full wp-image-891" />
+<img src="/img/zsh-colors.png" alt="zsh-colors" class="aligncenter size-full wp-image-891" />
 
 Now all you need to is to reference the color code outputted like so `$FG[000]` in your ZSH theme, just replace "000" with the color code "000" is black btw &amp; you are good to go! for example in create a new ZSH theme &amp; try this `PROMPT='$FG[154]%~%{$reset_color%} '`.
 
