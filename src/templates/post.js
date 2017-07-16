@@ -35,19 +35,16 @@ const Post = props => {
     siteUrl,
     social: { twitter: { display } },
   } = props.data.site.siteMetadata
-  const html = props.data.markdownRemark.html
+  const { html, excerpt } = props.data.markdownRemark
   const slug = props.data.markdownRemark.fields.slug
   const postUrl = siteUrl + slug
   return (
     <div>
       <Meta
-        post={{
-          title,
-          html,
-        }}
-        author={author}
-        siteTitle={siteTitle}
+        title={`${title} | ${author} - ${siteTitle}`}
+        excerpt={excerpt}
         url={postUrl}
+        post
       />
       <div className={s.post}>
         <Back />
@@ -86,6 +83,7 @@ export const postQuery = graphql`
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       html
+      excerpt(pruneLength: 160)
       fields {
         slug
       }

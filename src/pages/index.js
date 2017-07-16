@@ -29,7 +29,7 @@ export default props => {
   const posts = props.data.allMarkdownRemark.edges
   return (
     <div>
-      <Meta author={author} url={siteUrl} siteTitle={title} />
+      <Meta title={`${author} | ${title}`} url={siteUrl} />
       <Logo className={s.logo} />
       <h1>
         {author}
