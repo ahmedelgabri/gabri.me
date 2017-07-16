@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     author: 'Ahmed El Gabri',
     title: 'Front-end Engineer',
-    url: 'https://gabri.me',
+    siteUrl: 'https://gabri.me',
     description:
       'Ahmed El Gabri is a Front-end Engineer who like to bring structure where it is lacking, systematizing information & automating processes.',
     email: 'ahmed@gabri.me',
@@ -41,41 +41,56 @@ module.exports = {
   plugins: [
     'gatsby-plugin-offline',
     'gatsby-plugin-react-helmet',
-    // {
-    //   resolve: 'gatsby-plugin-feed',
-    //   options: {},
-    // },
     {
-      resolve: 'gatsby-plugin-sitemap',
+      resolve: `gatsby-plugin-feed`,
       options: {
         query: `
+        {
+          site {
+            siteMetadata {
+              title
+              description
+              siteUrl
+            }
+          }
+        }
+      `,
+        feeds: [
+          {
+            query: `
             {
-              site {
-                siteMetadata {
-                  url
-                }
-              }
-
-              allSitePage(
-                filter: {
-                  path: {ne: "/dev-404-page/"}
-                }
+              allMarkdownRemark(
+                limit: 1000,
+                sort: { order: DESC, fields: [frontmatter___date] }
               ) {
                 edges {
                   node {
-                    path
+                    excerpt
+                    html
+                    fields { slug }
+                    frontmatter {
+                      title
+                      date
+                    }
                   }
                 }
               }
-          }
-        `,
+            }
+          `,
+          },
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
         serialize: ({ site, allSitePage }) =>
           allSitePage.edges.map(edge => {
             const isBlog = ~edge.node.path.indexOf('/blog/')
             const changefreq = isBlog ? 'weekly' : 'yearly'
             const priority = isBlog ? 1 : 0.7
             return {
-              url: site.siteMetadata.url + edge.node.path,
+              url: site.siteMetadata.siteUrl + edge.node.path,
               changefreq,
               priority,
             }

@@ -25,11 +25,11 @@ const s = {
 }
 
 export default props => {
-  const { author, social, talks, title, url } = props.data.site.siteMetadata
+  const { author, social, talks, title, siteUrl } = props.data.site.siteMetadata
   const posts = props.data.allMarkdownRemark.edges
   return (
     <div>
-      <Meta author={author} url={url} siteTitle={title} />
+      <Meta author={author} url={siteUrl} siteTitle={title} />
       <Logo className={s.logo} />
       <h1>
         {author}
@@ -62,7 +62,7 @@ export const pageQuery = graphql`
       siteMetadata {
         author
         title
-        url
+        siteUrl
         description
         social {
           twitter {
@@ -86,7 +86,6 @@ export const pageQuery = graphql`
           AmsterdamJS
         }
         twitter_id
-        url
       }
     }
     allMarkdownRemark(

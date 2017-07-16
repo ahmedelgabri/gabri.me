@@ -29,7 +29,13 @@ const cssStr =
 
 export default function HTML(props) {
   const head = Helmet.rewind()
-  const { author, description, social, twitter_id, url } = config.siteMetadata
+  const {
+    author,
+    description,
+    social,
+    twitter_id,
+    siteUrl,
+  } = config.siteMetadata
 
   return (
     <html lang="en">
@@ -40,7 +46,7 @@ export default function HTML(props) {
           rel="alternate"
           type="application/rss+xml"
           title={`${author} | Feed`}
-          href={`${url}/feed/`}
+          href={`${siteUrl}/feed/`}
         />
         <style
           id="gatsby-inlined-css"
@@ -78,7 +84,7 @@ export default function HTML(props) {
         <meta property="twitter:account_id" content={twitter_id} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:creator" content={social.twitter.url} />
-        <meta name="twitter:domain" content={url} />
+        <meta name="twitter:domain" content={siteUrl} />
 
         {props.headComponents}
       </head>

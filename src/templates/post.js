@@ -32,11 +32,12 @@ const Post = props => {
   const {
     title: siteTitle,
     author,
-    url,
+    siteUrl,
     social: { twitter: { display } },
   } = props.data.site.siteMetadata
   const html = props.data.markdownRemark.html
   const slug = props.data.markdownRemark.fields.slug
+  const postUrl = siteUrl + slug
   return (
     <div>
       <Meta
@@ -46,7 +47,7 @@ const Post = props => {
         }}
         author={author}
         siteTitle={siteTitle}
-        url={url + slug}
+        url={postUrl}
       />
       <div className={s.post}>
         <Back />
@@ -59,7 +60,7 @@ const Post = props => {
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
       <div className={s.contact}>
-        <TweetButton via={display} title={title} url={url + slug} />
+        <TweetButton via={display} title={title} url={postUrl} />
       </div>
       <Footer author={author} />
     </div>
@@ -74,7 +75,7 @@ export const postQuery = graphql`
       siteMetadata {
         title
         author
-        url
+        siteUrl
         social {
           twitter {
             display
