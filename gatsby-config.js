@@ -1,3 +1,5 @@
+const feedUrl = 'feed.xml'
+
 module.exports = {
   siteMetadata: {
     author: 'Ahmed El Gabri',
@@ -5,7 +7,6 @@ module.exports = {
     siteUrl: 'https://gabri.me',
     description:
       'Ahmed El Gabri is a Front-end Engineer who like to bring structure where it is lacking, systematizing information & automating processes.',
-    email: 'ahmed@gabri.me',
     social: {
       twitter: {
         display: '@ahmedelgabri',
@@ -42,62 +43,6 @@ module.exports = {
     'gatsby-plugin-offline',
     'gatsby-plugin-react-helmet',
     {
-      resolve: `gatsby-plugin-feed`,
-      options: {
-        query: `
-        {
-          site {
-            siteMetadata {
-              title
-              description
-              siteUrl
-            }
-          }
-        }
-      `,
-        feeds: [
-          {
-            query: `
-            {
-              allMarkdownRemark(
-                limit: 1000,
-                sort: { order: DESC, fields: [frontmatter___date] }
-              ) {
-                edges {
-                  node {
-                    excerpt
-                    html
-                    fields { slug }
-                    frontmatter {
-                      title
-                      date
-                    }
-                  }
-                }
-              }
-            }
-          `,
-          },
-        ],
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-sitemap',
-      options: {
-        serialize: ({ site, allSitePage }) =>
-          allSitePage.edges.map(edge => {
-            const isBlog = ~edge.node.path.indexOf('/blog/')
-            const changefreq = isBlog ? 'weekly' : 'yearly'
-            const priority = isBlog ? 1 : 0.7
-            return {
-              url: site.siteMetadata.siteUrl + edge.node.path,
-              changefreq,
-              priority,
-            }
-          }),
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/posts`,
@@ -118,6 +63,96 @@ module.exports = {
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
         ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-feed',
+      options: {
+        setup({
+          site: { siteMetadata },
+          allMarkdownRemark: { edges },
+          generator,
+        }) {
+          return Object.assign({}, siteMetadata, edges, generator, {
+            title: `${siteMetadata.author} | ${siteMetadata.title}`,
+            site_url: siteMetadata.siteUrl,
+            feed_url: `${siteMetadata.siteUrl}/${feedUrl}`,
+            language: 'en-US',
+          })
+        },
+        query: `
+          {
+            site {
+              siteMetadata {
+                author
+                title
+                description
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            query: `
+            {
+              allMarkdownRemark(
+                limit: 1000,
+                sort: {
+                  order: DESC,
+                  fields: [frontmatter___date]
+                }
+              ) {
+                edges {
+                  node {
+                    frontmatter {
+                      title
+                      date
+                    }
+                    fields {
+                      slug
+                    }
+                    excerpt
+                    html
+                  }
+                }
+              }
+            }
+          `,
+            serialize({
+              site: { siteMetadata },
+              allMarkdownRemark: { edges },
+            }) {
+              return edges.map(edge => {
+                const url = siteMetadata.siteUrl + edge.node.fields.slug
+                return Object.assign({}, edge.node.frontmatter, {
+                  url,
+                  guid: url,
+                  description: edge.node.excerpt,
+                  pubDate: new Date(edge.node.frontmatter.date).toUTCString(),
+                  custom_elements: [{ 'content:encoded': edge.node.html }],
+                })
+              })
+            },
+            output: feedUrl,
+          },
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        serialize: ({ site, allSitePage }) =>
+          allSitePage.edges.map(edge => {
+            const isBlog = ~edge.node.path.indexOf('/blog/')
+            const changefreq = isBlog ? 'weekly' : 'yearly'
+            const priority = isBlog ? 1 : 0.7
+            return {
+              url: site.siteMetadata.siteUrl + edge.node.path,
+              changefreq,
+              priority,
+            }
+          }),
       },
     },
   ],

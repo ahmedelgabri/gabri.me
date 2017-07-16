@@ -29,25 +29,13 @@ const cssStr =
 
 export default function HTML(props) {
   const head = Helmet.rewind()
-  const {
-    author,
-    description,
-    social,
-    twitter_id,
-    siteUrl,
-  } = config.siteMetadata
+  const { description, social, twitter_id, siteUrl } = config.siteMetadata
 
   return (
     <html lang="en">
       <head>
         <meta name="description" content={description} />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title={`${author} | Feed`}
-          href={`${siteUrl}/feed/`}
-        />
         <style
           id="gatsby-inlined-css"
           dangerouslySetInnerHTML={{ __html: cssStr }}
