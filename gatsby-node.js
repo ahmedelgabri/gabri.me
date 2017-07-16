@@ -1,3 +1,4 @@
+// @flow
 const path = require('path')
 
 // Create slugs for files.

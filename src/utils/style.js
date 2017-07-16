@@ -1,3 +1,4 @@
+// @flow
 export const fonts = {
   monospace:
     'Fira Code, Input Mono, Input, Droid Sans Mono, monospace, monospace',

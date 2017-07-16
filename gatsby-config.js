@@ -1,3 +1,4 @@
+// @flow
 const feedUrl = 'feed.xml'
 
 module.exports = {
