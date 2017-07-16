@@ -39,6 +39,49 @@ module.exports = {
     },
   },
   plugins: [
+    'gatsby-plugin-offline',
+    'gatsby-plugin-react-helmet',
+    // {
+    //   resolve: 'gatsby-plugin-feed',
+    //   options: {},
+    // },
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        query: `
+            {
+              site {
+                siteMetadata {
+                  url
+                }
+              }
+
+              allSitePage(
+                filter: {
+                  path: {ne: "/dev-404-page/"}
+                }
+              ) {
+                edges {
+                  node {
+                    path
+                  }
+                }
+              }
+          }
+        `,
+        serialize: ({ site, allSitePage }) =>
+          allSitePage.edges.map(edge => {
+            const isBlog = ~edge.node.path.indexOf('/blog/')
+            const changefreq = isBlog ? 'weekly' : 'yearly'
+            const priority = isBlog ? 1 : 0.7
+            return {
+              url: site.siteMetadata.url + edge.node.path,
+              changefreq,
+              priority,
+            }
+          }),
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -62,8 +105,5 @@ module.exports = {
         ],
       },
     },
-    'gatsby-plugin-feed',
-    'gatsby-plugin-offline',
-    'gatsby-plugin-react-helmet',
   ],
 }
