@@ -1,7 +1,7 @@
 ---
 title: 'DIY Vim statusline'
 published: true
-date: '2015-10-05 14:00'
+date: '2015-10-05'
 tags: ['vim','unix','terminal']
 ---
 Nearly two years ago I decided to switch to Vim and move all my work into one

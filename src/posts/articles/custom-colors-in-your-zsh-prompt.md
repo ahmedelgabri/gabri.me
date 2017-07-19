@@ -1,7 +1,7 @@
 ---
 title: 'Custom colors in your ZSH prompt'
 published: true
-date: '2013-01-24 07:53'
+date: '2013-01-24'
 tags: ['commandline','zsh','shell']
 ---
 I have been using [ZSH](https://github.com/robbyrussell/oh-my-zsh/) as my main shell for nearly a year &amp; I really love it! Most of my days are between [iterm2](http://www.iterm2.com/) &amp; [Sublime Text 2](http://www.sublimetext.com/). So customizing both are a natural thing for me.

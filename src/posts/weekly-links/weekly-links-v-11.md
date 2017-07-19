@@ -1,7 +1,7 @@
 ---
 title: 'Weekly links v.11'
 published: true
-date: '2014-12-20 19:00'
+date: '2014-12-20'
 tags: null
 ---
 Here are some of the most interesting links that I have found on the web this week.

@@ -1,7 +1,7 @@
 ---
 title: 'Analyzing & optimizing your webpack bundle'
 published: true
-date: '2017-01-29 18:20'
+date: '2017-01-29'
 tags: ['webpack', 'performance', 'JavaScript']
 ---
 

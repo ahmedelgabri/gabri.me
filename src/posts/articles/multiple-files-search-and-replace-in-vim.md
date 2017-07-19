@@ -1,7 +1,7 @@
 ---
 title: 'Multiple files search and replace in vim'
 published: true
-date: '2017-03-12 12:00'
+date: '2017-03-12'
 tags: ['vim', 'cli', 'productivity']
 ---
 

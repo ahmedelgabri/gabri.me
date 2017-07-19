@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
-import format from 'date-fns/format'
 import { fonts } from '../utils/style'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
@@ -52,7 +51,7 @@ const Post = props => {
           {title}
         </h1>
         <time className={s.meta}>
-          On {format(date, 'Do MMMM YYYY')}
+          On {date}
         </time>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
@@ -89,7 +88,7 @@ export const postQuery = graphql`
       }
       frontmatter {
         title
-        date
+        date(formatString: "Do MMMM YYYY")
       }
     }
   }

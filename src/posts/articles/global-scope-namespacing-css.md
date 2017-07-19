@@ -1,7 +1,7 @@
 ---
 title: 'Global scope, namespacing & CSS'
 published: true
-date: '2013-08-06 09:30'
+date: '2013-08-06'
 tags: ['css','front-end']
 ---
 _This post was posted on [Medium](https://medium.com/front-end-development/681bda44c43e)_

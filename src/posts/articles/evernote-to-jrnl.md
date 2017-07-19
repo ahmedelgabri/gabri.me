@@ -1,7 +1,7 @@
 ---
 title: 'Migrating from Evernote'
 published: true
-date: '2015-11-08 11:25'
+date: '2015-11-08'
 tags: ['notes','journal','python','node','vim','unix','terminal']
 ---
 To start, Evernote is nice app. But not for me, I always had this love/hate relationship with it and with note talking apps in general. All I want from a note talking app is very simple.

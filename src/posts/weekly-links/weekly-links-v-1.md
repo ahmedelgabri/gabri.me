@@ -1,7 +1,7 @@
 ---
 title: 'Weekly links v.1'
 published: true
-date: '2014-10-04 19:00'
+date: '2014-10-04'
 tags: null
 ---
 - [How we built the new wired.co.uk homepage](http://www.wired.co.uk/news/archive/2014-09/04/building-the-new-wired-website-landing-pages)

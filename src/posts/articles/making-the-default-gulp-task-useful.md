@@ -1,7 +1,7 @@
 ---
 title: 'Making the default gulp task useful'
 published: true
-date: '2014-07-26 16:30'
+date: '2014-07-26'
 tags: null
 disqus_id: 'http://gabri.me/blog/making-the-default-gulp-task-useful/'
 ---
