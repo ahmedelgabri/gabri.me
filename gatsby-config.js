@@ -70,9 +70,11 @@ module.exports = {
       resolve: 'gatsby-plugin-feed',
       options: {
         setup({
-          site: { siteMetadata },
-          allMarkdownRemark: { edges },
-          generator,
+          query: {
+            site: { siteMetadata },
+            allMarkdownRemark: { edges },
+            generator,
+          },
         }) {
           return Object.assign({}, siteMetadata, edges, generator, {
             title: `${siteMetadata.author} | ${siteMetadata.title}`,
@@ -121,8 +123,7 @@ module.exports = {
             }
           `,
             serialize({
-              site: { siteMetadata },
-              allMarkdownRemark: { edges },
+              query: { site: { siteMetadata }, allMarkdownRemark: { edges } },
             }) {
               return edges.map(edge => {
                 const url = siteMetadata.siteUrl + edge.node.fields.slug
