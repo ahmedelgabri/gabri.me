@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@ahmedelgabri/eslint-config@*":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@ahmedelgabri/eslint-config/-/eslint-config-0.0.4.tgz#328d464b0842e3193d3caa5e9c50a2cc3e6cf34e"
+"@ahmedelgabri/eslint-config@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@ahmedelgabri/eslint-config/-/eslint-config-1.0.2.tgz#7a254dbf7a5cfc352fbaa65f48f5544be36827a8"
   dependencies:
     eslint-restricted-globals "^0.1.1"
 
@@ -43,6 +43,10 @@ acorn@^3.0.0, acorn@^3.0.4:
 acorn@^5.0.1:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.0.3.tgz#c460df08491463f028ccb82eab3730bf01087b3d"
+
+add-px-to-style@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/add-px-to-style/-/add-px-to-style-1.0.0.tgz#d0c135441fa8014a8137904531096f67f28f263a"
 
 address@^1.0.1:
   version "1.0.2"
@@ -2225,11 +2229,12 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cxs@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/cxs/-/cxs-3.0.4.tgz#2e1a1537742931a53dbe3157afbf121da62df797"
+cxs@^4.0.0-0:
+  version "4.0.0-0"
+  resolved "https://registry.yarnpkg.com/cxs/-/cxs-4.0.0-0.tgz#2e18c5eab494e4fb0223b773fe531d53b127db9e"
   dependencies:
-    glamor "^2.17.14"
+    objss "^1.0.3"
+    tag-hoc "^1.0.0-0"
 
 d@1:
   version "1.0.0"
@@ -3046,7 +3051,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.1, fbjs@^0.8.8, fbjs@^0.8.9:
+fbjs@^0.8.1, fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
   dependencies:
@@ -3620,14 +3625,6 @@ github@^9.2.0:
     https-proxy-agent "^1.0.0"
     mime "^1.2.11"
     netrc "^0.1.4"
-
-glamor@^2.17.14:
-  version "2.20.22"
-  resolved "https://registry.yarnpkg.com/glamor/-/glamor-2.20.22.tgz#86c11a143deee7d4c051de50d69387d8b4e700ba"
-  dependencies:
-    babel-runtime "^6.18.0"
-    fbjs "^0.8.8"
-    object-assign "^4.1.0"
 
 glob-base@^0.3.0:
   version "0.3.0"
@@ -5678,6 +5675,12 @@ object.pick@^1.2.0:
   resolved "https://registry.yarnpkg.com/object.pick/-/object.pick-1.2.0.tgz#b5392bee9782da6d9fb7d6afaf539779f1234c2b"
   dependencies:
     isobject "^2.1.0"
+
+objss@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/objss/-/objss-1.0.3.tgz#d8b7dc09c94942a15249cb6a090557363fe61bc3"
+  dependencies:
+    add-px-to-style "^1.0.0"
 
 observable@^2.1.4:
   version "2.1.4"
@@ -8157,6 +8160,10 @@ table@^4.0.1:
     lodash "^4.0.0"
     slice-ansi "0.0.4"
     string-width "^2.0.0"
+
+tag-hoc@^1.0.0-0:
+  version "1.0.0-0"
+  resolved "https://registry.yarnpkg.com/tag-hoc/-/tag-hoc-1.0.0-0.tgz#bc25d20f99e11431f6876c8013219fbaf85049e4"
 
 tapable@^0.1.8, tapable@~0.1.8:
   version "0.1.10"
