@@ -2,6 +2,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import cxs from 'cxs'
+import { logEvent } from '../utils/analytics'
 
 const s = {
   section: cxs({
@@ -28,7 +29,7 @@ export default ({ posts = [] }) =>
     <ul className={s.list}>
       {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) =>
         <li key={title}>
-          <Link to={slug}>
+          <Link to={slug} onClick={() => logEvent('Post', title)}>
             {title}
           </Link>
         </li>

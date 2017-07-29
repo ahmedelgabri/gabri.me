@@ -14,5 +14,3 @@ exports.onRouteUpdate = state => {
   ReactGA.set({ page: state.location.pathname })
   ReactGA.pageview(state.location.pathname)
 }
-
-// ReactGA.event({ category, action })

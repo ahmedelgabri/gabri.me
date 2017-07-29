@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
+import { logEvent } from '../utils/analytics'
 
 const s = {
   section: cxs({
@@ -31,12 +32,22 @@ export default ({ talks = {} }) =>
           <li key={talk}>
             {talk} {'- '}
             {video &&
-              <a href={video} target="_blank" rel="noreferer noopener">
+              <a
+                href={video}
+                onClick={() => logEvent('Talk', `${talk} video`)}
+                target="_blank"
+                rel="noreferer noopener"
+              >
                 Video
               </a>}
             {video && ' - '}
             {slides &&
-              <a href={slides} target="_blank" rel="noreferer noopener">
+              <a
+                href={slides}
+                onClick={() => logEvent('Talk', `${talk} slides`)}
+                target="_blank"
+                rel="noreferer noopener"
+              >
                 Slides
               </a>}
           </li>

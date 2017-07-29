@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
+import { logEvent } from '../utils/analytics'
 import icon from '../../public/img/twitter-btn.svg'
 
 const s = {
@@ -45,6 +46,7 @@ export default ({ via, title, url }) =>
   <div className={s.wrap}>
     <a
       className={s.btn}
+      onClick={() => logEvent('Tweet', title)}
       href={`https://twitter.com/share?url=${url}&via=${via.slice(
         1
       )}&text=${title}`}

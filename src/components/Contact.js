@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import cxs from 'cxs'
+import { logEvent } from '../utils/analytics'
 
 const s = {
   list: cxs({
@@ -30,6 +31,7 @@ export default ({ social }) =>
             rel="noopener noreferrer me"
             className={s.link}
             target="_blank"
+            onClick={() => logEvent('Social', site)}
           >
             <img
               className={s.img}
