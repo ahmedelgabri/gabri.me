@@ -1,13 +1,6 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
-
-const s = {
-  small: cxs({
-    fontSize: '.5rem',
-    opacity: '.3',
-  }),
-}
+import s from './footer.module.css'
 
 export default ({ author }) =>
   <div>

@@ -1,14 +1,9 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
-
-const s = cxs({
-  maxWidth: '60rem',
-  padding: '6%',
-})
+import s from './layout.module.css'
 
 const Layout = ({ children }) =>
-  <div className={s}>
+  <div className={s.wrap}>
     {children()}
   </div>
 

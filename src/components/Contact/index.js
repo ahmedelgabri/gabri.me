@@ -1,25 +1,7 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
-import { logEvent } from '../utils/analytics'
-
-const s = {
-  list: cxs({
-    margin: 0,
-    padding: 0,
-    listStyle: 'none',
-  }),
-  item: cxs({
-    display: 'inline-block',
-    marginRight: '1rem',
-  }),
-  link: cxs({
-    border: 'none',
-  }),
-  img: cxs({
-    verticalAlign: 'middle',
-  }),
-}
+import { logEvent } from '../../utils/analytics'
+import s from './contact.module.css'
 
 export default ({ social }) =>
   <div role="contentinfo">

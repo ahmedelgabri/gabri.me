@@ -1,0 +1,15 @@
+.logo {
+  width: 50px;
+  display: inline-block;
+  opacity: 0.3;
+  transition: all .2s linear;
+  &:hover {
+    opacity: 1;
+  }
+}
+.split {
+  @media screen and (min-width: 48em) {
+    display: flex;
+    justify-content: space-between;
+  }
+}

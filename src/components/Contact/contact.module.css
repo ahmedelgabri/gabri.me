@@ -1,0 +1,15 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: inline-block;
+  margin-right: 1rem;
+}
+.link {
+  border: none;
+}
+.img {
+  vertical-align: middle;
+}

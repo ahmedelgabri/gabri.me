@@ -1,28 +1,12 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
-
-const s = {
-  logo: cxs({
-    width: 50,
-    display: 'inline-block',
-    opacity: 0.3,
-    transition: 'all .2s linear',
-    ':hover': { opacity: 1 },
-  }),
-  split: cxs({
-    '@media screen and (min-width: 48em)': {
-      display: 'flex',
-      justifyContent: 'space-between',
-    },
-  }),
-}
+import s from './index.module.css'
 
 export default props => {
   const { author, social, talks, title, siteUrl } = props.data.site.siteMetadata

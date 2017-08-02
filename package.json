@@ -17,7 +17,6 @@
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "csso": "^3.1.1",
-    "cxs": "3",
     "flow-bin": "^0.52.0",
     "flow-typed": "^2.1.5",
     "gatsby": "^1.6.3",

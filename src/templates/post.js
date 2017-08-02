@@ -1,30 +1,12 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
 import { fonts } from '../utils/style'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
+import s from './post.module.css'
 import 'prism-themes/themes/prism-duotone-dark.css'
-
-const s = {
-  meta: cxs({
-    fontFamily: fonts.serif,
-    fontStyle: 'italic',
-    fontSize: '.75rem',
-    display: 'block',
-    marginBottom: '2rem',
-  }),
-  post: cxs({
-    borderBottom: '1px solid rgba(0, 0, 0, .1)',
-  }),
-  contact: cxs({
-    marginBottom: '1rem',
-    paddingBottom: '1rem',
-    paddingTop: '1rem',
-  }),
-}
 
 const Post = props => {
   const { title, date } = props.data.markdownRemark.frontmatter
@@ -50,7 +32,7 @@ const Post = props => {
         <h1>
           {title}
         </h1>
-        <time className={s.meta}>
+        <time className={s.meta} style={{ fontFamily: fonts.serif }}>
           On {date}
         </time>
         <div dangerouslySetInnerHTML={{ __html: html }} />

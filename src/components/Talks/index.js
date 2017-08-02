@@ -1,26 +1,7 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
-import { logEvent } from '../utils/analytics'
-
-const s = {
-  section: cxs({
-    '@media screen and (min-width: 65em)': {
-      opacity: 0.3,
-      transition: 'opacity .2s linear',
-      ':hover': {
-        opacity: 1,
-      },
-    },
-  }),
-  list: cxs({
-    lineHeight: 1.5,
-    paddingLeft: '.5rem',
-    '@media screen and (min-width: 48em)': {
-      paddingLeft: 0,
-    },
-  }),
-}
+import { logEvent } from '../../utils/analytics'
+import s from './talks.module.css'
 
 export default ({ talks = {} }) =>
   <div className={s.section}>

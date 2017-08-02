@@ -1,0 +1,16 @@
+.meta {
+  font-style: italic;
+  font-size: .75rem;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.post {
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.contact {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}

@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import cxs from 'cxs'
 import Helmet from 'react-helmet'
 import { minify } from 'csso'
 import config from '../gatsby-config'
@@ -21,10 +20,9 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
-const appStyles = cxs.getCss()
 const cssStr =
   process.env.NODE_ENV === `production`
-    ? minify(stylesStr + globalStyles + appStyles).css
+    ? minify(stylesStr + globalStyles).css
     : globalStyles
 
 export default function HTML(props) {
