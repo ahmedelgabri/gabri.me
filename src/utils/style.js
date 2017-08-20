@@ -1,7 +1,6 @@
 // @flow
 export const fonts = {
-  monospace:
-    'Fira Code, Input Mono, Input, Droid Sans Mono, monospace, monospace',
+  monospace: 'monospace, monospace',
   fontFamily:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
   serif: 'palatino, georgia, serif',
@@ -99,6 +98,7 @@ export const globalStyles = `
     border: 1px solid;
     font-family: ${fonts.monospace};
     font-size: .875rem;
+    margin-bottom: 1.5rem !important;
   }
 
   code {

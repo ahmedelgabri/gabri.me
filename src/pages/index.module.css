@@ -1,3 +1,8 @@
+.intro {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
 .logo {
   width: 50px;
   display: inline-block;
@@ -7,9 +12,19 @@
     opacity: 1;
   }
 }
+
 .split {
   @media screen and (min-width: 48em) {
     display: flex;
-    justify-content: space-between;
   }
+}
+
+.section {
+  @media screen and (min-width: 48em) {
+    margin-right: 4rem;
+  }
+}
+
+.column {
+  flex-basis: 50%;
 }

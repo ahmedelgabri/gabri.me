@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import cn from 'classnames'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
@@ -13,26 +14,28 @@ export default props => {
   const posts = props.data.allMarkdownRemark.edges
   return (
     <div>
-      <Meta title={`${author} | ${title}`} url={siteUrl} />
-      <Logo className={s.logo} />
-      <h1>
-        {author}
-      </h1>
-      <p>
-        Front-end engineer,
-        <br />
-        Lead Front-end Developer at {' '}
-        <a href="http://lightspeedhq.com">Lightspeed</a>
-        <br />
-        in Amsterdam, The Netherlands.
-      </p>
-      <Contact social={social} />
+      <div className={s.intro}>
+        <Meta title={`${author} | ${title}`} url={siteUrl} />
+        <Logo className={s.logo} />
+        <h1>
+          {author}
+        </h1>
+        <p>
+          Front-end engineer,
+          <br />
+          Lead Front-end Developer at {' '}
+          <a href="http://lightspeedhq.com">Lightspeed</a>
+          <br />
+          Based in Amsterdam, The Netherlands.
+        </p>
+        <Contact social={social} />
+      </div>
       <div className={s.split}>
-        <div>
-          <PostList posts={posts} />
-        </div>
-        <div>
+        <div className={cn(s.section, s.column)}>
           <Talks talks={talks} />
+        </div>
+        <div className={cn(s.section, s.column)}>
+          <PostList posts={posts} />
         </div>
       </div>
       <Footer author={author} />

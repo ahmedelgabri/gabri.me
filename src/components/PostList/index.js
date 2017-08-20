@@ -6,7 +6,7 @@ import s from './postlist.module.css'
 
 export default ({ posts = [] }) =>
   <div className={s.section}>
-    <h2>Writing</h2>
+    <h2>Posts</h2>
     <ul className={s.list}>
       {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) =>
         <li key={title}>

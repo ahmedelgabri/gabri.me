@@ -20,7 +20,7 @@ const Post = props => {
   const slug = props.data.markdownRemark.fields.slug
   const postUrl = siteUrl + slug
   return (
-    <div>
+    <div className={s.wrap}>
       <Meta
         title={`${title} | ${author} - ${siteTitle}`}
         excerpt={excerpt}

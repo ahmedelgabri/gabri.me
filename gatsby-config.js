@@ -36,7 +36,7 @@ module.exports = {
     talks: {
       AmsterdamJS: [
         'http://bit.ly/amsterdamjs-codemods',
-        'https://youtu.be/xGjSMbks9vA',
+        'xGjSMbks9vA',
       ],
     },
   },
