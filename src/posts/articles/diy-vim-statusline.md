@@ -4,6 +4,10 @@ published: true
 date: '2015-10-05'
 tags: ['vim','unix','terminal']
 ---
+
+_**Update 20 Aug 2017** I'm currently using a new better version of the code posted in the post,
+you can check the code here: [statusline](https://github.com/ahmedelgabri/dotfiles/blob/cce3181bc3b5a7693247943ad48ba8614e00c2b1/vim/.vim/plugin/statusline.vim) & [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/cce3181bc3b5a7693247943ad48ba8614e00c2b1/vim/.vim/autoload/statusline.vim)_
+
 Nearly two years ago I decided to switch to Vim and move all my work into one
 app. The command line/Terminal or more sepcifically iTerm2. That desicion turns
 out to be one of the best things I've ever done. I'm still not a Vim expert by
