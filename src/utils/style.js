@@ -1,18 +1,22 @@
 // @flow
+
+import chroma from 'chroma-js'
+
 export const fonts = {
-  monospace: 'monospace, monospace',
-  fontFamily:
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  monospace: 'Inconsolata, monospace',
+  fontFamily: 'Inconsolata, monospace',
   serif: 'palatino, georgia, serif',
 }
 
 export const colors = {
   teal: 'rgba(96, 125, 139, 1)',
+  black: '#171717',
+  darkGrey: '#272727',
   darkteal: '#455A64',
   wheat: '#f2f2f2',
   orange: '#d84315',
-  darkBlue: '#24333A',
-  blue: '#297ca5',
+  darkBlue: '#132331',
+  blue: '#5ba0c2',
   logo: '#c0c5ca',
 }
 
@@ -45,8 +49,8 @@ export const globalStyles = `
     text-size-adjust: 100%;
     font-family: ${fonts.fontFamily};
     margin: 0;
-    background-color: ${colors.wheat};
-    color: ${colors.teal};
+    background-color: ${colors.darkGrey};
+    color: ${colors.blue};
     font-feature-settings: "kern", "liga", "dlig", "hlig", "cswh";
     font-kerning: auto;
   }
@@ -70,7 +74,7 @@ export const globalStyles = `
   a {
     color: inherit;
     text-decoration: none;
-    border-bottom: 2px solid rgba(0, 0, 0, .1);
+    border-bottom: 2px solid ${chroma(colors.darkGrey).brighten()};
     transition: all .2s ease-in-out;
   }
 
@@ -80,7 +84,7 @@ export const globalStyles = `
   }
 
   :focus {
-    outline: 2px solid ${colors.teal};
+    outline: 2px solid ${colors.blue};
   }
 
   img { max-width: 100%; }
@@ -93,20 +97,22 @@ export const globalStyles = `
     max-width: 100%;
     padding: 1rem;
     border-radius: 3px;
-    background-color: ${colors.darkBlue};
-    color: ${colors.wheat};
+    background-color: ${colors.wheat};
+    color: ${colors.darkGrey};
     border: 1px solid;
-    font-family: ${fonts.monospace};
-    font-size: .875rem;
+    font-family: ${fonts.fontFamily} !important;
+    font-size: inherit !important;
     margin-bottom: 1.5rem !important;
   }
 
   code {
-    font-family: ${fonts.monospace};
+    font-family: ${fonts.fontFamily} !important;
+    font-size: inherit !important;
   }
 
   p > code {
-    background-color: rgba(3, 169, 244, 0.06);
+    background-color: ${colors.black};
+    color: ${colors.logo};
     padding: .1em .3em;
     border-radius: .2em;
   }
@@ -117,7 +123,7 @@ export const globalStyles = `
     border: 1px solid;
     margin-left: 0;
     padding: 1em;
-    background: white;
+    background: ${colors.darkBlue};
     width: 100%;
   }
 
