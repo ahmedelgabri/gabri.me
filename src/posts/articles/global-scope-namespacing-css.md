@@ -70,22 +70,21 @@ And you will need to apply this to all of your project objects, the pros of this
 The only downside I can think of know is it' more verbose especially if you are going to use multiple classes on the same object like so. Which I stopped caring about anyway. Code readability is much more important
 
 ```
-<div class="rm-media rm-media--wide rm-theme--green clearfix">
+&lt;div class="rm-media rm-media--wide rm-theme--green clearfix"&gt;
 
-    <div class="rm-media__img">
+    &lt;div class="rm-media__img"&gt;
 
-        <!-- code -->
+        &lt;!-- code --&gt;
 
-    </div>
+    &lt;/div&gt;
 
-    <div class="rm-media__body">
+    &lt;div class="rm-media__body"&gt;
 
-        <!-- code -->
+        &lt;!-- code --&gt;
 
-    </div>
+    &lt;/div&gt;
 
-</div>
-
+&lt;/div&gt;
 ```
 
 Yes I used `.clearfix` without a prefix cause it's not an object class &amp; most probably when it's used by someone else it is a clearfix, if you want to be on the safe side maybe you can prefix helper classes with `.h-` or something if you like
