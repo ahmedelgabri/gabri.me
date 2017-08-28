@@ -34,14 +34,12 @@ module.exports = {
     disqus: 'gabrime',
     twitter_id: '1512909779',
     talks: {
-      AmsterdamJS: [
-        'http://bit.ly/amsterdamjs-codemods',
-        'xGjSMbks9vA',
-      ],
+      AmsterdamJS: ['http://bit.ly/amsterdamjs-codemods', 'xGjSMbks9vA'],
     },
   },
   plugins: [
     'gatsby-plugin-offline',
+    'gatsby-plugin-twitter',
     'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-source-filesystem',

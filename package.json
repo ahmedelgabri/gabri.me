@@ -27,6 +27,7 @@
     "gatsby-plugin-offline": "^1.0.4",
     "gatsby-plugin-react-helmet": "^1.0.3",
     "gatsby-plugin-sitemap": "^1.2.2",
+    "gatsby-plugin-twitter": "^1.0.8",
     "gatsby-remark-copy-linked-files": "^1.5.2",
     "gatsby-remark-prismjs": "^1.2.1",
     "gatsby-remark-responsive-iframe": "^1.4.3",

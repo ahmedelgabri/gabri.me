@@ -10,6 +10,7 @@ export const fonts = {
 
 export const colors = {
   teal: 'rgba(96, 125, 139, 1)',
+  grey: '#989898',
   black: '#171717',
   darkGrey: '#272727',
   darkteal: '#455A64',
@@ -50,9 +51,13 @@ export const globalStyles = `
     font-family: ${fonts.fontFamily};
     margin: 0;
     background-color: ${colors.darkGrey};
-    color: ${colors.blue};
+    color: ${colors.grey};
     font-feature-settings: "kern", "liga", "dlig", "hlig", "cswh";
     font-kerning: auto;
+  }
+
+  h1, h2, h3, h4, h5, h6, a {
+    color: ${colors.blue};
   }
 
   h1 {
@@ -71,8 +76,11 @@ export const globalStyles = `
     margin: 0 0 1em;
   }
 
+  .twitter-tweet {
+    margin: 0 0 1rem !important;
+  }
+
   a {
-    color: inherit;
     text-decoration: none;
     border-bottom: 2px solid ${chroma(colors.darkGrey).brighten()};
     transition: all .2s ease-in-out;
@@ -110,7 +118,7 @@ export const globalStyles = `
     font-size: inherit !important;
   }
 
-  p > code {
+  :not(pre) > code {
     background-color: ${colors.black};
     color: ${colors.logo};
     padding: .1em .3em;
