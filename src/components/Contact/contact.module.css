@@ -13,3 +13,11 @@
 .img {
   vertical-align: middle;
 }
+
+.icon16 {
+  width: 1rem;
+}
+
+.icon24 {
+  width: 1.5rem;
+}

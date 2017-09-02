@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import cn from 'classnames'
 import { logEvent } from '../../utils/analytics'
 import s from './contact.module.css'
 
@@ -16,8 +17,10 @@ export default ({ social }) =>
             onClick={() => logEvent('Social', site)}
           >
             <img
-              className={s.img}
-              width={site === 'resume' ? 16 : 24}
+              className={cn(s.img, {
+                [s.icon16]: site === 'resume',
+                [s.icon24]: site !== 'resume',
+              })}
               src={`/img/${site}.svg`}
               alt=""
             />
