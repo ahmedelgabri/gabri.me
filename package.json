@@ -41,15 +41,10 @@
     "react-helmet": "5.2.0"
   },
   "devDependencies": {
-    "@ahmedelgabri/eslint-config": "1.0.2",
-    "eslint": "4.6.1",
-    "eslint-config-prettier": "2.4.0",
-    "eslint-import-resolver-webpack": "0.8.3",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jsx-a11y": "6.0.2",
-    "eslint-plugin-prettier": "2.2.0",
-    "eslint-plugin-react": "7.3.0",
-    "prettier": "1.6.1"
+    "@ahmedelgabri/eslint-config": "standard",
+    "prettier": "1.6.1",
+    "standard": "10.0.3",
+    "webpack": "3.5.5"
   },
   "engines": {
     "node": "8.1.4"
