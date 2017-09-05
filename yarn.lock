@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@ahmedelgabri/eslint-config@^1.0.2":
+"@ahmedelgabri/eslint-config@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@ahmedelgabri/eslint-config/-/eslint-config-1.0.2.tgz#7a254dbf7a5cfc352fbaa65f48f5544be36827a8"
   dependencies:
@@ -439,7 +439,7 @@ babel-core@^6.26.0:
     slash "^1.0.0"
     source-map "^0.5.6"
 
-babel-eslint@^7.2.3:
+babel-eslint@7.2.3:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/babel-eslint/-/babel-eslint-7.2.3.tgz#b2fe2d80126470f5c19442dc757253a897710827"
   dependencies:
@@ -1817,7 +1817,7 @@ chownr@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
 
-chroma-js@^1.3.4:
+chroma-js@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-1.3.4.tgz#93a7c19f287960285cc3fdebb205b8ea1a0f04f9"
 
@@ -1847,7 +1847,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@^2.2.5:
+classnames@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -2335,7 +2335,7 @@ cssesc@^0.1.0:
     postcss-value-parser "^3.2.3"
     postcss-zindex "^2.0.1"
 
-csso@^3.1.1:
+csso@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/csso/-/csso-3.1.1.tgz#ab427584486c2e02e180327511b0b02a9179c272"
   dependencies:
@@ -2840,7 +2840,7 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-config-prettier@^2.4.0:
+eslint-config-prettier@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-2.4.0.tgz#fb7cf29c0ab2ba61af5164fb1930f9bef3be2872"
   dependencies:
@@ -2853,7 +2853,7 @@ eslint-import-resolver-node@^0.3.1:
     debug "^2.6.8"
     resolve "^1.2.0"
 
-eslint-import-resolver-webpack@^0.8.3:
+eslint-import-resolver-webpack@0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-webpack/-/eslint-import-resolver-webpack-0.8.3.tgz#ad61e28df378a474459d953f246fd43f92675385"
   dependencies:
@@ -2876,7 +2876,7 @@ eslint-module-utils@^2.1.1:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
-eslint-plugin-import@^2.7.0:
+eslint-plugin-import@2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.7.0.tgz#21de33380b9efb55f5ef6d2e210ec0e07e7fa69f"
   dependencies:
@@ -2891,7 +2891,7 @@ eslint-plugin-import@^2.7.0:
     minimatch "^3.0.3"
     read-pkg-up "^2.0.0"
 
-eslint-plugin-jsx-a11y@^6.0.2:
+eslint-plugin-jsx-a11y@6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.0.2.tgz#659277a758b036c305a7e4a13057c301cd3be73f"
   dependencies:
@@ -2903,14 +2903,14 @@ eslint-plugin-jsx-a11y@^6.0.2:
     emoji-regex "^6.1.0"
     jsx-ast-utils "^1.4.0"
 
-eslint-plugin-prettier@^2.2.0:
+eslint-plugin-prettier@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.2.0.tgz#f2837ad063903d73c621e7188fb3d41486434088"
   dependencies:
     fast-diff "^1.1.1"
     jest-docblock "^20.0.1"
 
-eslint-plugin-react@^7.3.0:
+eslint-plugin-react@7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.3.0.tgz#ca9368da36f733fbdc05718ae4e91f778f38e344"
   dependencies:
@@ -2930,9 +2930,9 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.6.0.tgz#98ced4a706a87abbe63207895d0023a38e250bbe"
+eslint@4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.6.1.tgz#ddc7fc7fd70bf93205b0b3449bb16a1e9e7d4950"
   dependencies:
     ajv "^5.2.0"
     babel-code-frame "^6.22.0"
@@ -3348,11 +3348,11 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@^0.54.0:
+flow-bin@0.54.0:
   version "0.54.0"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.54.0.tgz#f2fb0478e9e99702b623c9ed84079a39903bba77"
 
-flow-typed@^2.1.5:
+flow-typed@2.1.5:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/flow-typed/-/flow-typed-2.1.5.tgz#c96912807a286357340042783c9369360f384bbd"
   dependencies:
@@ -3513,7 +3513,7 @@ gatsby-1-config-css-modules@^1.0.4:
   dependencies:
     babel-runtime "^6.26.0"
 
-gatsby-link@^1.6.16:
+gatsby-link@1.6.16:
   version "1.6.16"
   resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.6.16.tgz#56d24a49c2cb77084e9d42a88564fe39ce13f9ae"
   dependencies:
@@ -3528,7 +3528,7 @@ gatsby-module-loader@^1.0.5:
     babel-runtime "^6.26.0"
     loader-utils "^0.2.16"
 
-gatsby-plugin-feed@^1.3.9:
+gatsby-plugin-feed@1.3.9:
   version "1.3.9"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-feed/-/gatsby-plugin-feed-1.3.9.tgz#97c824b4dec65feec728cf27895ebff7a729f6e0"
   dependencies:
@@ -3537,34 +3537,34 @@ gatsby-plugin-feed@^1.3.9:
     pify "^3.0.0"
     rss "^1.2.2"
 
-gatsby-plugin-offline@^1.0.9:
+gatsby-plugin-offline@1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-offline/-/gatsby-plugin-offline-1.0.9.tgz#5d5879caf81a6e762984341f6eba765818d92320"
   dependencies:
     babel-runtime "^6.26.0"
     sw-precache "^5.0.0"
 
-gatsby-plugin-react-helmet@^1.0.6:
+gatsby-plugin-react-helmet@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-react-helmet/-/gatsby-plugin-react-helmet-1.0.6.tgz#32431fbfd072b05453080ed304142f4747868848"
   dependencies:
     babel-runtime "^6.26.0"
     react-helmet "^5.1.3"
 
-gatsby-plugin-sitemap@^1.2.5:
+gatsby-plugin-sitemap@1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sitemap/-/gatsby-plugin-sitemap-1.2.5.tgz#80d9542a5e5ebbdafdd0d240ae431a86c2e050d9"
   dependencies:
     babel-runtime "^6.26.0"
     sitemap "^1.12.0"
 
-gatsby-plugin-twitter@^1.0.10:
+gatsby-plugin-twitter@1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-twitter/-/gatsby-plugin-twitter-1.0.10.tgz#cac183238442779ddbbc54fb04622c114907af17"
   dependencies:
     babel-runtime "^6.26.0"
 
-gatsby-remark-copy-linked-files@^1.5.7:
+gatsby-remark-copy-linked-files@1.5.7:
   version "1.5.7"
   resolved "https://registry.yarnpkg.com/gatsby-remark-copy-linked-files/-/gatsby-remark-copy-linked-files-1.5.7.tgz#59817877cb2978a6a72df62f2353033f0f8a6e35"
   dependencies:
@@ -3575,7 +3575,7 @@ gatsby-remark-copy-linked-files@^1.5.7:
     lodash "^4.17.4"
     unist-util-visit "^1.1.1"
 
-gatsby-remark-prismjs@^1.2.7:
+gatsby-remark-prismjs@1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/gatsby-remark-prismjs/-/gatsby-remark-prismjs-1.2.7.tgz#71101011ad20e2b0175d895b7dd2a724f4071c99"
   dependencies:
@@ -3584,7 +3584,7 @@ gatsby-remark-prismjs@^1.2.7:
     prismjs "^1.6.0"
     unist-util-visit "^1.1.1"
 
-gatsby-remark-responsive-iframe@^1.4.7:
+gatsby-remark-responsive-iframe@1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/gatsby-remark-responsive-iframe/-/gatsby-remark-responsive-iframe-1.4.7.tgz#38a360ab8d978ee694fc42084afea8734d2dee14"
   dependencies:
@@ -3594,7 +3594,7 @@ gatsby-remark-responsive-iframe@^1.4.7:
     lodash "^4.17.4"
     unist-util-visit "^1.1.1"
 
-gatsby-remark-smartypants@^1.4.7:
+gatsby-remark-smartypants@1.4.7:
   version "1.4.7"
   resolved "https://registry.yarnpkg.com/gatsby-remark-smartypants/-/gatsby-remark-smartypants-1.4.7.tgz#2fc191b3945bc82c039069b0681ec5399db936b9"
   dependencies:
@@ -3603,7 +3603,7 @@ gatsby-remark-smartypants@^1.4.7:
     retext-smartypants "^2.0.0"
     unist-util-visit "^1.1.1"
 
-gatsby-source-filesystem@^1.4.12:
+gatsby-source-filesystem@1.4.12:
   version "1.4.12"
   resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-1.4.12.tgz#0406da9a2528784cd60b9057af51bd706630e369"
   dependencies:
@@ -3618,9 +3618,9 @@ gatsby-source-filesystem@^1.4.12:
     pretty-bytes "^4.0.2"
     slash "^1.0.0"
 
-gatsby-transformer-remark@^1.7.6:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-1.7.6.tgz#2ebe0a21f29da5ced7777c70bb9aca3ad7e1c216"
+gatsby-transformer-remark@1.7.7:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-1.7.7.tgz#b911ed25c4fbb7ba7bc1f39cd03f94e7dc800c91"
   dependencies:
     babel-runtime "^6.26.0"
     bluebird "^3.5.0"
@@ -3635,9 +3635,9 @@ gatsby-transformer-remark@^1.7.6:
     unist-util-select "^1.5.0"
     unist-util-visit "^1.1.1"
 
-gatsby@^1.9.22:
-  version "1.9.22"
-  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-1.9.22.tgz#ecc5e134bb2c6ab9b277bb39d89ef4eac3f0051b"
+gatsby@1.9.24:
+  version "1.9.24"
+  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-1.9.24.tgz#6ccf77c634d26762024eaff35594f29e92052e09"
   dependencies:
     async "^2.1.2"
     babel-code-frame "^6.22.0"
@@ -6810,13 +6810,13 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
+prettier@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.1.tgz#850f411a3116226193e32ea5acfc21c0f9a76d7d"
+
 prettier@^1.3.1:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.5.2.tgz#7ea0751da27b93bfb6cecfcec509994f52d83bb3"
-
-prettier@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.6.1.tgz#850f411a3116226193e32ea5acfc21c0f9a76d7d"
 
 pretty-bytes@^4.0.2:
   version "4.0.2"
@@ -6829,7 +6829,7 @@ pretty-error@^2.1.1:
     renderkid "^2.0.1"
     utila "~0.4"
 
-prism-themes@^1.0.0:
+prism-themes@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/prism-themes/-/prism-themes-1.0.0.tgz#58089547ed39df273e5195e1628c69177341bf88"
 
@@ -6983,7 +6983,7 @@ querystringify@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-1.0.0.tgz#6286242112c5b712fa654e526652bf6a13ff05cb"
 
-ramda@^0.24.1:
+ramda@0.24.1:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
 
@@ -7036,7 +7036,7 @@ react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
 
-react-dom@^15.6.0, react-dom@^15.6.1:
+react-dom@15.6.1, react-dom@^15.6.0:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.6.1.tgz#2cb0ed4191038e53c209eb3a79a23e2a4cf99470"
   dependencies:
@@ -7045,7 +7045,7 @@ react-dom@^15.6.0, react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-ga@^2.2.0:
+react-ga@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.2.0.tgz#45235de1356e4d988d9b82214d615a08489c9291"
   dependencies:
@@ -7053,18 +7053,18 @@ react-ga@^2.2.0:
     object-assign "^4.0.1"
     prop-types "^15.5.6"
 
-react-helmet@^5.1.3:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.1.3.tgz#cd40626593a29eecf684b6d38d711f44c48188af"
+react-helmet@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"
   dependencies:
     deep-equal "^1.0.1"
     object-assign "^4.1.1"
     prop-types "^15.5.4"
     react-side-effect "^1.1.0"
 
-react-helmet@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"
+react-helmet@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.1.3.tgz#cd40626593a29eecf684b6d38d711f44c48188af"
   dependencies:
     deep-equal "^1.0.1"
     object-assign "^4.1.1"
@@ -7123,7 +7123,7 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react@^15.6.0, react@^15.6.1:
+react@15.6.1, react@^15.6.0:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
   dependencies:
