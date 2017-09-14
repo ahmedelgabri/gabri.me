@@ -1,10 +1,15 @@
 // @flow
 import React from 'react'
-import s from './footer.module.css'
+import { css } from 'emotion'
 
 export default ({ author }) =>
   <div>
-    <small className={s.small}>
+    <small
+      css={`
+      font-size: .5rem;
+      opacity: .3;
+    `}
+    >
       {author} © {new Date().getFullYear()}
     </small>
   </div>

@@ -1,9 +1,9 @@
 // @flow
 import React from 'react'
-import s from './layout.module.css'
+import { css } from 'emotion'
 
 const Layout = ({ children }) =>
-  <div className={s.wrap}>
+  <div css={`padding: 3% 6%`}>
     {children()}
   </div>
 

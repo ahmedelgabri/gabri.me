@@ -1,26 +1,37 @@
 // @flow
 import React from 'react'
-import cn from 'classnames'
 import { logEvent } from '../../utils/analytics'
-import s from './contact.module.css'
+import { css } from 'emotion'
 
 export default ({ social }) =>
   <div role="contentinfo">
-    <ul className={s.list}>
+    <ul
+      css={`  
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      `}
+    >
       {Object.keys(social).map(site =>
-        <li className={s.item} key={site}>
+        <li
+          css={`
+            display: inline-block;
+            margin-right: 1rem;
+          `}
+          key={site}
+        >
           <a
             href={social[site].url}
             rel="noopener noreferrer me"
-            className={s.link}
+            css={`border: none`}
             target="_blank"
             onClick={() => logEvent('Social', site)}
           >
             <img
-              className={cn(s.img, {
-                [s.icon16]: site === 'resume',
-                [s.icon24]: site !== 'resume',
-              })}
+              css={`
+                vertical-align: middle
+                width: ${site === 'resume' ? '1rem' : '1.5rem'}
+              `}
               src={`/img/${site}.svg`}
               alt=""
             />

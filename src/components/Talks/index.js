@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { logEvent } from '../../utils/analytics'
-import s from './talks.module.css'
+import { css } from 'emotion'
 
 export default ({ talks = {} }) =>
   <div>
@@ -10,11 +10,17 @@ export default ({ talks = {} }) =>
       const [slides, video] = talks[talk]
       return (
         <div key={talk}>
-          <h3 className={s.talkTitle}>
+          <h3
+            css={`
+            font-size: 1rem;
+            font-weight: normal;
+            margin-bottom: .5em;
+          `}
+          >
             {talk}{' '}
             {slides &&
               <a
-                className={s.slides}
+                css={`font-size: .75em`}
                 href={slides}
                 onClick={() => logEvent('Talk', `${talk} slides`)}
                 target="_blank"
@@ -24,9 +30,22 @@ export default ({ talks = {} }) =>
               </a>}
           </h3>
           {video &&
-            <div className={s.videoWrapper}>
+            <div
+              css={`
+                position: relative;
+                padding-bottom: 56.25%; /* 16:9 */
+                padding-top: 25px;
+                height: 0;
+              `}
+            >
               <iframe
-                className={s.iframe}
+                css={`
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                `}
                 width="560"
                 height="315"
                 src={`https://www.youtube.com/embed/${video}?rel=0`}

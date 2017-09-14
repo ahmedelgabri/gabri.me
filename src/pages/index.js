@@ -1,22 +1,36 @@
 // @flow
 import React from 'react'
-import cn from 'classnames'
+import { css } from 'emotion'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
-import s from './index.module.css'
 
 export default props => {
   const { author, social, talks, title, siteUrl } = props.data.site.siteMetadata
   const posts = props.data.allMarkdownRemark.edges
   return (
     <div>
-      <div className={s.intro}>
+      <div
+        css={`
+          padding-bottom: 1rem;
+          border-bottom: 1px solid rgba(0, 0, 0, .1);
+        `}
+      >
         <Meta title={`${author} | ${title}`} url={siteUrl} />
-        <Logo className={s.logo} />
+        <Logo
+          css={`
+            width: 50px;
+            display: inline-block;
+            opacity: 0.3;
+            transition: all .2s linear;
+            &:hover {
+              opacity: 1;
+            }
+          `}
+        />
         <h1>
           {author}
         </h1>
@@ -30,11 +44,25 @@ export default props => {
         </p>
         <Contact social={social} />
       </div>
-      <div className={s.split}>
-        <div className={cn(s.section, s.column)}>
+      <div
+        css={`
+        @media screen and (min-width: 48em) {
+          display: flex;
+        }
+
+        > div {
+          @media screen and (min-width: 48em) {
+            margin-right: 4rem;
+          }
+
+          flex-basis: 50%;
+        }
+      `}
+      >
+        <div>
           <Talks talks={talks} />
         </div>
-        <div className={cn(s.section, s.column)}>
+        <div>
           <PostList posts={posts} />
         </div>
       </div>
