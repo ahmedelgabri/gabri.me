@@ -1,7 +1,12 @@
 {
-    "extends": ["@ahmedelgabri", "@ahmedelgabri/prettier", "@ahmedelgabri/flow", "@ahmedelgabri/import"],
-    "parser": "babel-eslint",
-    "globals": {
-      "graphql": true
-    }
+  "extends": [
+    "@ahmedelgabri",
+    "@ahmedelgabri/prettier",
+    "@ahmedelgabri/flow",
+    "@ahmedelgabri/import"
+  ],
+  "parser": "babel-eslint",
+  "globals": {
+    "graphql": true
+  }
 }
