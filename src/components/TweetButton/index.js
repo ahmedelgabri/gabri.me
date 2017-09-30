@@ -28,7 +28,7 @@ export default ({ via, title, url }) => (
       `}
       onClick={() => logEvent('Tweet', title)}
       href={`https://twitter.com/share?url=${url}&via=${via.slice(
-        1
+        1,
       )}&text=${title}`}
       rel="noopener noreferrer"
       target="_blank"
