@@ -31,9 +31,7 @@ export default props => {
             }
           `}
         />
-        <h1>
-          {author}
-        </h1>
+        <h1>{author}</h1>
         <p>
           Front-end engineer,
           <br />

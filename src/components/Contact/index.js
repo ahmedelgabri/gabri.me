@@ -3,7 +3,7 @@ import React from 'react'
 import { logEvent } from '../../utils/analytics'
 import { css } from 'emotion'
 
-export default ({ social }) =>
+export default ({ social }) => (
   <div role="contentinfo">
     <ul
       css={`  
@@ -12,7 +12,7 @@ export default ({ social }) =>
         list-style: none;
       `}
     >
-      {Object.keys(social).map(site =>
+      {Object.keys(social).map(site => (
         <li
           css={`
             display: inline-block;
@@ -29,7 +29,7 @@ export default ({ social }) =>
           >
             <img
               css={`
-                vertical-align: middle
+                vertical-align: middle;
                 width: ${site === 'resume' ? '1rem' : '1.5rem'}
               `}
               src={`/img/${site}.svg`}
@@ -37,6 +37,7 @@ export default ({ social }) =>
             />
           </a>
         </li>
-      )}
+      ))}
     </ul>
   </div>
+)

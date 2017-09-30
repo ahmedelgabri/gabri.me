@@ -4,7 +4,7 @@ import { logEvent } from '../../utils/analytics'
 import icon from '../../../public/img/twitter-btn.svg'
 import { css } from 'emotion'
 
-export default ({ via, title, url }) =>
+export default ({ via, title, url }) => (
   <div css={`text-align: center`}>
     <a
       css={`
@@ -57,3 +57,4 @@ export default ({ via, title, url }) =>
       </span>
     </a>
   </div>
+)

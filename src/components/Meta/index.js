@@ -12,9 +12,7 @@ export default ({
 }) => {
   return (
     <Helmet>
-      <title>
-        {title}
-      </title>
+      <title>{title}</title>
 
       {/* G+ */}
       <meta itemProp="name" content={title} />

@@ -3,7 +3,7 @@ import React from 'react'
 import { logEvent } from '../../utils/analytics'
 import { css } from 'emotion'
 
-export default ({ talks = {} }) =>
+export default ({ talks = {} }) => (
   <div>
     <h2>Talks</h2>
     {Object.keys(talks).map(talk => {
@@ -18,7 +18,7 @@ export default ({ talks = {} }) =>
           `}
           >
             {talk}{' '}
-            {slides &&
+            {slides && (
               <a
                 css={`font-size: .75em`}
                 href={slides}
@@ -27,9 +27,10 @@ export default ({ talks = {} }) =>
                 rel="noreferer noopener"
               >
                 Slides
-              </a>}
+              </a>
+            )}
           </h3>
-          {video &&
+          {video && (
             <div
               css={`
                 position: relative;
@@ -52,8 +53,10 @@ export default ({ talks = {} }) =>
                 frameBorder="0"
                 allowFullScreen
               />
-            </div>}
+            </div>
+          )}
         </div>
       )
     })}
   </div>
+)

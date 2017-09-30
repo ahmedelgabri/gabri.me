@@ -29,14 +29,12 @@ const Post = props => {
       />
       <div css={`border-bottom: 1px solid rgba(0, 0, 0, .1)`}>
         <Back />
-        <h1>
-          {title}
-        </h1>
+        <h1>{title}</h1>
         <time
           css={`
           font-style: italic;
           font-size: .75rem;
-          font-family: ${fonts.serif}
+          font-family: ${fonts.serif};
           display: block;
           margin-bottom: 2rem;
         `}

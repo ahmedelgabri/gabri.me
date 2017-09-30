@@ -4,7 +4,7 @@ import Link from 'gatsby-link'
 import { logEvent } from '../../utils/analytics'
 import { css } from 'emotion'
 
-export default ({ posts = [] }) =>
+export default ({ posts = [] }) => (
   <div>
     <h2>Posts</h2>
     <ul
@@ -16,12 +16,13 @@ export default ({ posts = [] }) =>
         }
     `}
     >
-      {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) =>
+      {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) => (
         <li key={title}>
           <Link to={slug} onClick={() => logEvent('Post', title)}>
             {title}
           </Link>
         </li>
-      )}
+      ))}
     </ul>
   </div>
+)

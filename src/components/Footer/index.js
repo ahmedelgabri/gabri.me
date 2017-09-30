@@ -2,7 +2,7 @@
 import React from 'react'
 import { css } from 'emotion'
 
-export default ({ author }) =>
+export default ({ author }) => (
   <div>
     <small
       css={`
@@ -13,3 +13,4 @@ export default ({ author }) =>
       {author} © {new Date().getFullYear()}
     </small>
   </div>
+)
