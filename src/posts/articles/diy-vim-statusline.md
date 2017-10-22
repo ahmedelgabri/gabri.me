@@ -160,4 +160,4 @@ Here is a gif for my statusline <a href="/img/statusline.gif"><img src="/img/sta
 
 Vim and CLI are both really powerful and the ability to have your workflow in
 one place is very productive as everything we don't know it's scary at first but
-once you get some basic understanding of it it becomes easier to understand.
+once you get some basic understanding of it becomes easier to understand.
