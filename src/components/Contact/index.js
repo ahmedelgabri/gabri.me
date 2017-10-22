@@ -6,7 +6,7 @@ import { css } from 'emotion'
 export default ({ social }) => (
   <div role="contentinfo">
     <ul
-      css={`  
+      className={css`
         margin: 0;
         padding: 0;
         list-style: none;
@@ -14,7 +14,7 @@ export default ({ social }) => (
     >
       {Object.keys(social).map(site => (
         <li
-          css={`
+          className={css`
             display: inline-block;
             margin-right: 1rem;
           `}
@@ -23,14 +23,16 @@ export default ({ social }) => (
           <a
             href={social[site].url}
             rel="noopener noreferrer me"
-            css={`border: none`}
+            className={css`
+              border: none;
+            `}
             target="_blank"
             onClick={() => logEvent('Social', site)}
           >
             <img
-              css={`
+              className={css`
                 vertical-align: middle;
-                width: ${site === 'resume' ? '1rem' : '1.5rem'}
+                width: ${site === 'resume' ? '1rem' : '1.5rem'};
               `}
               src={`/img/${site}.svg`}
               alt=""

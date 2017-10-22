@@ -5,10 +5,10 @@ import { css } from 'emotion'
 export default ({ author }) => (
   <div>
     <small
-      css={`
-      font-size: .5rem;
-      opacity: .3;
-    `}
+      className={css`
+        font-size: 0.5rem;
+        opacity: 0.3;
+      `}
     >
       {author} © {new Date().getFullYear()}
     </small>

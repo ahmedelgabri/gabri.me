@@ -14,18 +14,18 @@ export default props => {
   return (
     <div>
       <div
-        css={`
+        className={css`
           padding-bottom: 1rem;
-          border-bottom: 1px solid rgba(0, 0, 0, .1);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         `}
       >
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Logo
-          css={`
+          className={css`
             width: 50px;
             display: inline-block;
             opacity: 0.3;
-            transition: all .2s linear;
+            transition: all 0.2s linear;
             &:hover {
               opacity: 1;
             }
@@ -43,19 +43,19 @@ export default props => {
         <Contact social={social} />
       </div>
       <div
-        css={`
-        @media screen and (min-width: 48em) {
-          display: flex;
-        }
-
-        > div {
+        className={css`
           @media screen and (min-width: 48em) {
-            margin-right: 4rem;
+            display: flex;
           }
 
-          flex-basis: 50%;
-        }
-      `}
+          > div {
+            @media screen and (min-width: 48em) {
+              margin-right: 4rem;
+            }
+
+            flex-basis: 50%;
+          }
+        `}
       >
         <div>
           <Talks talks={talks} />

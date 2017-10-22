@@ -11,16 +11,18 @@ export default ({ talks = {} }) => (
       return (
         <div key={talk}>
           <h3
-            css={`
-            font-size: 1rem;
-            font-weight: normal;
-            margin-bottom: .5em;
-          `}
+            className={css`
+              font-size: 1rem;
+              font-weight: normal;
+              margin-bottom: 0.5em;
+            `}
           >
             {talk}{' '}
             {slides && (
               <a
-                css={`font-size: .75em`}
+                className={css`
+                  font-size: 0.75em;
+                `}
                 href={slides}
                 onClick={() => logEvent('Talk', `${talk} slides`)}
                 target="_blank"
@@ -32,7 +34,7 @@ export default ({ talks = {} }) => (
           </h3>
           {video && (
             <div
-              css={`
+              className={css`
                 position: relative;
                 padding-bottom: 56.25%; /* 16:9 */
                 padding-top: 25px;
@@ -40,7 +42,7 @@ export default ({ talks = {} }) => (
               `}
             >
               <iframe
-                css={`
+                className={css`
                   position: absolute;
                   top: 0;
                   left: 0;

@@ -20,35 +20,43 @@ const Post = props => {
   const slug = props.data.markdownRemark.fields.slug
   const postUrl = siteUrl + slug
   return (
-    <div css={`max-width: 45rem`}>
+    <div
+      className={css`
+        max-width: 45rem;
+      `}
+    >
       <Meta
         title={`${title} | ${author} - ${siteTitle}`}
         excerpt={excerpt}
         url={postUrl}
         post
       />
-      <div css={`border-bottom: 1px solid rgba(0, 0, 0, .1)`}>
+      <div
+        className={css`
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        `}
+      >
         <Back />
         <h1>{title}</h1>
         <time
-          css={`
-          font-style: italic;
-          font-size: .75rem;
-          font-family: ${fonts.serif};
-          display: block;
-          margin-bottom: 2rem;
-        `}
+          className={css`
+            font-style: italic;
+            font-size: 0.75rem;
+            font-family: ${fonts.serif};
+            display: block;
+            margin-bottom: 2rem;
+          `}
         >
           On {date}
         </time>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
       <div
-        css={`
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
-        padding-top: 1rem;
-      `}
+        className={css`
+          margin-bottom: 1rem;
+          padding-bottom: 1rem;
+          padding-top: 1rem;
+        `}
       >
         <TweetButton via={display} title={title} url={postUrl} />
       </div>

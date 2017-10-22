@@ -5,9 +5,13 @@ import icon from '../../../public/img/twitter-btn.svg'
 import { css } from 'emotion'
 
 export default ({ via, title, url }) => (
-  <div css={`text-align: center`}>
+  <div
+    className={css`
+      text-align: center;
+    `}
+  >
     <a
-      css={`
+      className={css`
         font-size: 11px;
         position: relative;
         height: 20px;
@@ -34,24 +38,24 @@ export default ({ via, title, url }) => (
       target="_blank"
     >
       <i
-        css={`
-        position: relative;
-        top: 2px;
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        padding-right: 2px;
-      `}
+        className={css`
+          position: relative;
+          top: 2px;
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          padding-right: 2px;
+        `}
       >
         <img src={icon} alt="" />
       </i>
       <span
-        css={`
-        display: inline-block;
-        vertical-align: top;
-        margin-left: 3px;
-        white-space: nowrap;
-      `}
+        className={css`
+          display: inline-block;
+          vertical-align: top;
+          margin-left: 3px;
+          white-space: nowrap;
+        `}
       >
         Tweet
       </span>
