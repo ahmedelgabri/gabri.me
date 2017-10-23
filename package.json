@@ -38,8 +38,8 @@
     "gatsby-transformer-remark": "1.7.17",
     "prism-themes": "1.0.0",
     "ramda": "0.25.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "react": "16.0.0",
+    "react-dom": "16.0.0",
     "react-ga": "2.3.5",
     "react-helmet": "5.2.0"
   },
