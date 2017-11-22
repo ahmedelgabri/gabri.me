@@ -17,8 +17,7 @@ const Post = props => {
     social: { twitter: { display } },
   } = props.data.site.siteMetadata
   const { html, excerpt } = props.data.markdownRemark
-  const slug = props.data.markdownRemark.fields.slug
-  const postUrl = siteUrl + slug
+  const postUrl = `${siteUrl}${props.location.pathname}`
   return (
     <div
       className={css`
@@ -82,12 +81,8 @@ export const postQuery = graphql`
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      id
       html
       excerpt(pruneLength: 160)
-      fields {
-        slug
-      }
       frontmatter {
         title
         date(formatString: "Do MMMM YYYY")

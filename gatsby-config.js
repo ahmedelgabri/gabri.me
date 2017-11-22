@@ -38,15 +38,6 @@ module.exports = {
     },
   },
   plugins: [
-    // {
-    //   resolve: 'gatsby-plugin-klipse',
-    //   options: {
-    //     classPrefix: 'language-',
-    //     // klipseSettings: {
-    //     //   selector_eval_ruby: '.language-klipse-ruby',
-    //     // },
-    //   },
-    // },
     'gatsby-plugin-offline',
     'gatsby-plugin-twitter',
     'gatsby-plugin-emotion',
