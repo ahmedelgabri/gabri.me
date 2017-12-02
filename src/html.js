@@ -32,6 +32,7 @@ export default function HTML(props) {
   return (
     <html lang="en">
       <head>
+        <meta chartset="utf-8" />
         <meta name="description" content={description} />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <style
