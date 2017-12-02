@@ -38,7 +38,6 @@ module.exports = {
     },
   },
   plugins: [
-    'gatsby-plugin-offline',
     'gatsby-plugin-twitter',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
