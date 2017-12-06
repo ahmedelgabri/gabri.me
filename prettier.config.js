@@ -1,6 +1,6 @@
 module.exports = {
-  parser: 'flow',
   semi: false,
+  proseWrap: 'always',
   singleQuote: true,
   trailingComma: 'all',
 }
