@@ -35,7 +35,7 @@ export default props => {
         <p>
           Front-end engineer,
           <br />
-          Leading the Front-end at {' '}
+          Leading the Front-end at{' '}
           <a href="http://lightspeedhq.com">Lightspeed</a>
           <br />
           Based in Amsterdam, The Netherlands.
