@@ -8,7 +8,7 @@ const tracker =
     ? 'local'
     : 'prod'
 
-ReactGA.initialize(config.siteMetadata.google_analytics[tracker])
+ReactGA.initialize(config.siteMetadata.googleAnalytics[tracker])
 
 exports.onRouteUpdate = state => {
   ReactGA.set({ page: state.location.pathname })

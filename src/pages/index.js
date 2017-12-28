@@ -100,7 +100,6 @@ export const pageQuery = graphql`
         talks {
           AmsterdamJS
         }
-        twitter_id
       }
     }
     allMarkdownRemark(

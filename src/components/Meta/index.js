@@ -54,7 +54,7 @@ export default ({
         rel="author"
         href="https://plus.google.com/101787568188227600845/posts"
       />
-      <meta property="twitter:account_id" content={twitter_id} />
+      <meta property="twitter:account_id" content={twitterId} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:creator" content={social.twitter.url} />
       <meta name="twitter:domain" content={siteUrl} />

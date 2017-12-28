@@ -27,12 +27,12 @@ module.exports = {
           'https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/edit?usp=sharing',
       },
     },
-    google_analytics: {
+    googleAnalytics: {
       prod: 'UA-10517764-2',
       local: 'UA-10517764-7',
     },
     disqus: 'gabrime',
-    twitter_id: '1512909779',
+    twitterId: '1512909779',
     talks: {
       AmsterdamJS: ['http://bit.ly/amsterdamjs-codemods', 'xGjSMbks9vA'],
     },
