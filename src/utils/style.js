@@ -81,14 +81,13 @@ export const globalStyles = `
   }
 
   a {
-    text-decoration: none;
-    border-bottom: 2px solid ${chroma(colors.darkGrey).brighten()};
     transition: all .2s ease-in-out;
+    text-decoration-color: ${chroma(colors.darkGrey).brighten()}
   }
 
   a:hover,
   a:focus {
-    border-bottom-color: ${colors.orange};
+    text-decoration-color: ${colors.orange}
   }
 
   :focus {
