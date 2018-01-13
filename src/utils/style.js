@@ -18,7 +18,7 @@ export const colors = {
   wheat: '#f2f2f2',
   orange: '#d84315',
   darkBlue: '#132331',
-  blue: '#5ba0c2',
+  blue: '#096794',
   logo: '#c0c5ca',
 }
 
@@ -49,10 +49,10 @@ export const globalStyles = `
     font-size: 1rem;
     line-height: 1.6;
     text-size-adjust: 100%;
-    font-family: ${fonts.monospace};
+    font-family: ${fonts.sansSerif};
     margin: 0;
-    background-color: ${colors.darkGrey};
-    color: ${colors.grey};
+    background-color: #f1f1f1;
+    color: #000;
     font-feature-settings: "kern", "liga", "dlig", "hlig", "cswh";
     font-kerning: auto;
   }
@@ -85,7 +85,7 @@ export const globalStyles = `
   a {
     color: ${colors.blue};
     transition: all .2s ease-in-out;
-    text-decoration-color: ${chroma(colors.darkGrey).brighten()}
+    text-decoration-color: ${colors.blue}
   }
 
   a:hover,
@@ -114,13 +114,17 @@ export const globalStyles = `
     margin-bottom: 1.5rem !important;
   }
 
+  pre code {
+    color: inherit;
+  }
+
   code {
     font-family: ${fonts.monospace} !important;
     font-size: inherit !important;
   }
 
-  :not(pre) > code {
-    color: ${colors.logo};
+  code {
+    color: ${colors.grey};
   }
 
   blockquote {
