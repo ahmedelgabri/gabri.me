@@ -16,7 +16,7 @@ export default ({ social }) => (
         <li
           className={css`
             display: inline-block;
-            margin-right: 1rem;
+            margin-right: 0.75rem;
           `}
           key={site}
         >
@@ -32,7 +32,7 @@ export default ({ social }) => (
             <img
               className={css`
                 vertical-align: middle;
-                width: ${site === 'resume' ? '1rem' : '1.5rem'};
+                width: ${site === 'resume' ? '.75em' : '1.2em'};
               `}
               src={`/img/${site}.svg`}
               alt=""

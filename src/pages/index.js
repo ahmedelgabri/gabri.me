@@ -24,17 +24,28 @@ export default props => {
       >
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Logo />
-        <h1>{author}</h1>
-        <p>
-          Front-end engineer,
-          <br />
-          Lead Front-end at{' '}
-          <a target="_blank" href="http://lightspeedhq.com">
-            Lightspeed
-          </a>
-          <br />
-          Based in Amsterdam, The Netherlands.
-        </p>
+        <div
+          className={css`
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+          `}
+        >
+          <h1
+            className={css`
+              margin-bottom: 0em;
+            `}
+          >
+            {author}
+          </h1>
+          <p>
+            Front-end engineer, Lead Front-end at{' '}
+            <a target="_blank" href="http://lightspeedhq.com">
+              Lightspeed
+            </a>
+            <br />
+            Based in Amsterdam, The Netherlands.
+          </p>
+        </div>
         <Contact social={social} />
       </div>
       <div

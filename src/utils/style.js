@@ -3,9 +3,10 @@
 import chroma from 'chroma-js'
 
 export const fonts = {
-  monospace: 'Inconsolata, monospace',
-  fontFamily: 'Inconsolata, monospace',
-  serif: 'palatino, georgia, serif',
+  monospace: 'Inconsolata, monospace, monospace',
+  sansSerif:
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  serif: 'georgia, serif',
 }
 
 export const colors = {
@@ -33,7 +34,7 @@ export const globalStyles = `
 
   @media screen and (min-width: 25em) {
     html {
-      font-size: 140%;
+      font-size: 120%;
     }
   }
 
@@ -48,7 +49,7 @@ export const globalStyles = `
     font-size: 1rem;
     line-height: 1.6;
     text-size-adjust: 100%;
-    font-family: ${fonts.fontFamily};
+    font-family: ${fonts.monospace};
     margin: 0;
     background-color: ${colors.darkGrey};
     color: ${colors.grey};
@@ -56,14 +57,15 @@ export const globalStyles = `
     font-kerning: auto;
   }
 
-  h1, h2, h3, h4, h5, h6, a {
-    color: ${colors.blue};
+  h1, h2, h3, h4, h5, h6 {
+    font-family: ${fonts.sansSerif};
+    font-weight: 600;
+    line-height: 1.2;
   }
 
   h1 {
     font-size: 2rem;
     margin: 0 0 .5em;
-    line-height: 1.2;
   }
 
   @media screen and (min-width: 27em) {
@@ -81,6 +83,7 @@ export const globalStyles = `
   }
 
   a {
+    color: ${colors.blue};
     transition: all .2s ease-in-out;
     text-decoration-color: ${chroma(colors.darkGrey).brighten()}
   }
@@ -103,34 +106,29 @@ export const globalStyles = `
     overflow: auto;
     max-width: 100%;
     padding: 1rem;
-    border-radius: 3px;
     background-color: ${colors.wheat};
     color: ${colors.darkGrey};
-    border: 1px solid;
-    font-family: ${fonts.fontFamily} !important;
+    font-family: ${fonts.monospace} !important;
+    border-radius: 0 !important;
     font-size: inherit !important;
     margin-bottom: 1.5rem !important;
   }
 
   code {
-    font-family: ${fonts.fontFamily} !important;
+    font-family: ${fonts.monospace} !important;
     font-size: inherit !important;
   }
 
   :not(pre) > code {
-    background-color: ${colors.black};
     color: ${colors.logo};
-    padding: .1em .3em;
-    border-radius: .2em;
   }
 
   blockquote {
     font-style: italic;
-    font-family: ${fonts.serif};
-    border: 1px solid;
+    color: ${colors.teal};
+    border-left: .75em solid;
     margin-left: 0;
-    padding: 1em;
-    background: ${colors.darkBlue};
+    padding-left: 1em;
     width: 100%;
   }
 

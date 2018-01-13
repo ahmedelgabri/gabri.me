@@ -1,12 +1,12 @@
 // @flow
 import React from 'react'
-import { fonts } from '../utils/style'
+import { fonts, colors } from '../utils/style'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
 import { css } from 'emotion'
-import 'prism-themes/themes/prism-duotone-dark.css'
+import 'prism-themes/themes/prism-atom-dark.css'
 
 const Post = props => {
   const { title, date } = props.data.markdownRemark.frontmatter
@@ -24,30 +24,24 @@ const Post = props => {
         max-width: 45rem;
       `}
     >
-      <Meta
-        title={`${title} | ${author} - ${siteTitle}`}
-        excerpt={excerpt}
-        url={postUrl}
-        post
-      />
+      <Meta title={`${title} | ${author} - ${siteTitle}`} excerpt={excerpt} url={postUrl} post />
       <div
         className={css`
           border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         `}
       >
         <Back />
-        <h1>{title}</h1>
         <time
           className={css`
             font-style: italic;
             font-size: 0.75rem;
             font-family: ${fonts.serif};
             display: block;
-            margin-bottom: 2rem;
           `}
         >
           On {date}
         </time>
+        <h1>{title}</h1>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
       <div
