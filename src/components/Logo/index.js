@@ -1,8 +1,9 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
+import { css } from 'emotion'
 import { colors } from '../../utils/style'
 
-export default ({ width = 83, height = 35, className }) => {
+export default ({ width = 83, height = 35 }) => {
   return (
     <svg
       width="83"
@@ -10,7 +11,15 @@ export default ({ width = 83, height = 35, className }) => {
       x="0"
       y="0"
       viewBox={`208.58 223.187 ${width} ${height}`}
-      className={className}
+      className={css`
+        width: 50px;
+        display: inline-block;
+        opacity: 0.3;
+        transition: opacity 0.2s linear;
+        &:hover {
+          opacity: 1;
+        }
+      `}
     >
       <path
         fill={colors.logo}

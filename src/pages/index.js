@@ -1,12 +1,15 @@
 // @flow
 import React from 'react'
-import { css } from 'emotion'
+import { css, injectGlobal } from 'emotion'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
+import { globalStyles } from '../utils/style'
+
+injectGlobal`${globalStyles}`
 
 export default props => {
   const { author, social, talks, title, siteUrl } = props.data.site.siteMetadata
@@ -20,17 +23,7 @@ export default props => {
         `}
       >
         <Meta title={`${author} | ${title}`} url={siteUrl} />
-        <Logo
-          className={css`
-            width: 50px;
-            display: inline-block;
-            opacity: 0.3;
-            transition: all 0.2s linear;
-            &:hover {
-              opacity: 1;
-            }
-          `}
-        />
+        <Logo />
         <h1>{author}</h1>
         <p>
           Front-end engineer,

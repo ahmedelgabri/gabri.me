@@ -12,17 +12,7 @@ export default () => (
         border: none;
       `}
     >
-      <Logo
-        className={css`
-          width: 50px;
-          display: inline-block;
-          opacity: 0.3;
-          transition: opacity 0.2s linear;
-          &:hover {
-            opacity: 1;
-          }
-        `}
-      />
+      <Logo />
     </Link>
   </p>
 )

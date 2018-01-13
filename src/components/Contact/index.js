@@ -1,7 +1,7 @@
 // @flow
-import React from 'react'
-import { logEvent } from '../../utils/analytics'
+import * as React from 'react'
 import { css } from 'emotion'
+import { logEvent } from '../../utils/analytics'
 
 export default ({ social }) => (
   <div role="contentinfo">

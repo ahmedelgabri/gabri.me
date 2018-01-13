@@ -1,9 +1,7 @@
 // @flow
 import * as React from 'react'
 import Helmet from 'react-helmet'
-import { minify } from 'csso'
 import favicon from '../static/favicon.png'
-import { globalStyles } from './utils/style'
 
 let stylesStr = ''
 if (process.env.NODE_ENV === 'production') {
@@ -14,11 +12,6 @@ if (process.env.NODE_ENV === 'production') {
   }
 }
 
-const cssStr =
-  process.env.NODE_ENV === `production`
-    ? minify(stylesStr + globalStyles).css
-    : globalStyles
-
 export default function HTML(props) {
   const head = Helmet.rewind()
 
@@ -27,10 +20,7 @@ export default function HTML(props) {
       <head>
         <meta chartset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <style
-          id="gatsby-inlined-css"
-          dangerouslySetInnerHTML={{ __html: cssStr }}
-        />
+        <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: stylesStr }} />
         <link rel="shortcut icon" href={favicon} />
         {props.headComponents}
       </head>
