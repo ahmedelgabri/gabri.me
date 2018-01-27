@@ -19,7 +19,7 @@ export default props => {
       <div
         className={css`
           padding-bottom: 1rem;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          margin-bottom: 1rem;
         `}
       >
         <Meta title={`${author} | ${title}`} url={siteUrl} />
@@ -64,10 +64,10 @@ export default props => {
         `}
       >
         <div>
-          <Talks talks={talks} />
+          <PostList posts={posts} />
         </div>
         <div>
-          <PostList posts={posts} />
+          <Talks talks={talks} />
         </div>
       </div>
       <Footer author={author} />

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
-import { fonts, colors } from '../utils/style'
+import colors from 'colors.css'
+import { fonts } from '../utils/style'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Footer from '../components/Footer'
@@ -36,6 +37,7 @@ const Post = props => {
             font-style: italic;
             font-size: 0.75rem;
             font-family: ${fonts.serif};
+            color: ${colors.gray};
             display: block;
           `}
         >

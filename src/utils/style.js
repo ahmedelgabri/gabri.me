@@ -1,25 +1,12 @@
 // @flow
 
-import chroma from 'chroma-js'
+import colors from 'colors.css'
 
 export const fonts = {
   monospace: 'Inconsolata, monospace, monospace',
   sansSerif:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
   serif: 'georgia, serif',
-}
-
-export const colors = {
-  teal: 'rgba(96, 125, 139, 1)',
-  grey: '#989898',
-  black: '#171717',
-  darkGrey: '#272727',
-  darkteal: '#455A64',
-  wheat: '#f2f2f2',
-  orange: '#d84315',
-  darkBlue: '#132331',
-  blue: '#096794',
-  logo: '#c0c5ca',
 }
 
 export const globalStyles = `
@@ -49,10 +36,10 @@ export const globalStyles = `
     font-size: 1rem;
     line-height: 1.6;
     text-size-adjust: 100%;
-    font-family: ${fonts.sansSerif};
+    font-family: ${fonts.monospace};
     margin: 0;
-    background-color: #f1f1f1;
-    color: #000;
+    background-color: ${colors.black};
+    color: ${colors.silver};
     font-feature-settings: "kern", "liga", "dlig", "hlig", "cswh";
     font-kerning: auto;
   }
@@ -61,11 +48,11 @@ export const globalStyles = `
     font-family: ${fonts.sansSerif};
     font-weight: 600;
     line-height: 1.2;
+    margin: 0 0 1em;
   }
 
   h1 {
     font-size: 2rem;
-    margin: 0 0 .5em;
   }
 
   @media screen and (min-width: 27em) {
@@ -100,14 +87,15 @@ export const globalStyles = `
   img { max-width: 100%; }
   ul, ol {
     padding: 0;
+    list-style: square;
   }
 
   pre {
     overflow: auto;
     max-width: 100%;
     padding: 1rem;
-    background-color: ${colors.wheat};
-    color: ${colors.darkGrey};
+    background-color: ${colors.white};
+    color: ${colors.gray};
     font-family: ${fonts.monospace} !important;
     border-radius: 0 !important;
     font-size: inherit !important;
@@ -121,10 +109,7 @@ export const globalStyles = `
   code {
     font-family: ${fonts.monospace} !important;
     font-size: inherit !important;
-  }
-
-  code {
-    color: ${colors.grey};
+    color: ${colors.gray};
   }
 
   blockquote {

@@ -6,7 +6,7 @@ import { css } from 'emotion'
 
 export default ({ posts = [] }) => (
   <div>
-    <h2>Posts</h2>
+    <h2>Sometimes I write</h2>
     <ul
       className={css`
         line-height: 1.5;
