@@ -23,18 +23,18 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
     resolve(
       graphql(
         `
-      {
-        allMarkdownRemark(limit: 1000) {
-          edges {
-            node {
-              fields {
-                slug
+          {
+            allMarkdownRemark(limit: 1000) {
+              edges {
+                node {
+                  fields {
+                    slug
+                  }
+                }
               }
             }
           }
-        }
-      }
-    `
+        `,
       ).then(result => {
         if (result.errors) {
           console.log(result.errors)
@@ -52,7 +52,7 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
             },
           })
         })
-      })
+      }),
     )
   })
 }
