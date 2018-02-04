@@ -30,13 +30,7 @@ export default props => {
             padding-bottom: 1rem;
           `}
         >
-          <h1
-            className={css`
-              margin-bottom: 0em;
-            `}
-          >
-            {author}
-          </h1>
+          <h1>{author}</h1>
           <p>
             Front-end engineer, Lead Front-end at{' '}
             <a target="_blank" href="http://lightspeedhq.com">

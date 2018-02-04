@@ -36,7 +36,6 @@ const Post = props => {
           className={css`
             font-style: italic;
             font-size: 0.75rem;
-            font-family: ${fonts.serif};
             color: ${colors.gray};
             display: block;
           `}

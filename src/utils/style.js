@@ -34,7 +34,7 @@ export const globalStyles = `
   body {
     height: 100%;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.5;
     text-size-adjust: 100%;
     font-family: ${fonts.monospace};
     margin: 0;
@@ -47,7 +47,7 @@ export const globalStyles = `
   h1, h2, h3, h4, h5, h6 {
     font-family: ${fonts.sansSerif};
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.1;
     margin: 0 0 1em;
   }
 
@@ -62,7 +62,7 @@ export const globalStyles = `
   }
 
   p {
-    margin: 0 0 1em;
+    margin: 0 0 1.5em;
   }
 
   .twitter-tweet {
@@ -70,9 +70,9 @@ export const globalStyles = `
   }
 
   a {
-    color: ${colors.blue};
+    color: ${colors.aqua};
     transition: all .2s ease-in-out;
-    text-decoration-color: ${colors.blue}
+    text-decoration-color: transparent;
   }
 
   a:hover,
@@ -114,7 +114,7 @@ export const globalStyles = `
 
   blockquote {
     font-style: italic;
-    color: ${colors.teal};
+    color: ${colors.olive};
     border-left: .75em solid;
     margin-left: 0;
     padding-left: 1em;
@@ -123,5 +123,10 @@ export const globalStyles = `
 
   blockquote > p {
     margin-bottom: 0;
+  }
+
+  ::selection {
+    background-color: ${colors.yellow};
+    color: ${colors.black};
   }
 `
