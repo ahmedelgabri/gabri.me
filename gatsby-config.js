@@ -19,7 +19,7 @@ module.exports = {
       },
       email: {
         display: 'email',
-        url: 'mailto:ahmed@gabri.me?subject=Hi!&body=👋🏼',
+        url: 'mailto:ahmed+contact@gabri.me?subject=Hi!&body=👋🏼',
       },
       resume: {
         display: 'resume',
