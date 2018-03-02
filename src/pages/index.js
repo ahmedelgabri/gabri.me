@@ -32,7 +32,7 @@ export default props => {
         >
           <h1>{author}</h1>
           <p>
-            Front-end engineer, Lead Front-end at{' '}
+            Front-end engineer, Principal Software Developer at{' '}
             <a target="_blank" href="http://lightspeedhq.com">
               Lightspeed
             </a>
