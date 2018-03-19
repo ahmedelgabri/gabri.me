@@ -17,13 +17,13 @@ export default class Talks extends React.Component {
         <h2>Sometimes I give talks</h2>
 
         <ul
-          className={css`
-            line-height: 1.5;
-            padding-left: 0.5rem;
-            @media screen and (min-width: 48em) {
-              padding-left: 0;
-            }
-          `}
+          css={{
+            lineHeight: 1.5,
+            paddingLeft: '0.5rem',
+            '@media screen and (min-width: 48em)': {
+              paddingLeft: 0,
+            },
+          }}
         >
           {Object.keys(talks).map(talk => {
             const [slides, video] = talks[talk]
@@ -33,9 +33,7 @@ export default class Talks extends React.Component {
                 <span>{talk} </span>
                 {slides && (
                   <a
-                    className={css`
-                      font-size: 0.75em;
-                    `}
+                    css={{ fontSize: '0.75em' }}
                     href={slides}
                     onClick={() => logEvent('Talk', `${talk} slides`)}
                     target="_blank"
@@ -49,9 +47,7 @@ export default class Talks extends React.Component {
                   <React.Fragment>
                     {' '}
                     <a
-                      className={css`
-                        font-size: 0.75em;
-                      `}
+                      css={{ fontSize: '0.75em' }}
                       href={`https://www.youtube.com/watch?v=${video}`}
                       onClick={e => {
                         e.preventDefault()
@@ -69,21 +65,21 @@ export default class Talks extends React.Component {
                 )}
                 {this.state.showVideo === video && (
                   <div
-                    className={css`
-                      position: relative;
-                      padding-bottom: 56.25%; /* 16:9 */
-                      padding-top: 25px;
-                      height: 0;
-                    `}
+                    css={{
+                      position: 'relative',
+                      paddingBottom: '56.25%', // 16:9
+                      paddingTop: '25px',
+                      height: 0,
+                    }}
                   >
                     <iframe
-                      className={css`
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                      `}
+                      css={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                      }}
                       width="560"
                       height="315"
                       src={`https://www.youtube.com/embed/${video}?rel=0`}

@@ -11,15 +11,13 @@ export default ({ width = 83, height = 35 }) => {
       x="0"
       y="0"
       viewBox={`208.58 223.187 ${width} ${height}`}
-      className={css`
-        width: 50px;
-        display: inline-block;
-        opacity: 0.3;
-        transition: opacity 0.2s linear;
-        &:hover {
-          opacity: 1;
-        }
-      `}
+      css={{
+        width: '50px',
+        display: 'inline-block',
+        opacity: 0.3,
+        transition: 'opacity 0.2s linear',
+        '&:hover': { opacity: 1 },
+      }}
     >
       <path
         fill={colors.silver}

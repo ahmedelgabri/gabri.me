@@ -14,22 +14,13 @@ injectGlobal`${globalStyles}`
 export default props => {
   const { author, social, talks, title, siteUrl } = props.data.site.siteMetadata
   const posts = props.data.allMarkdownRemark.edges
+
   return (
     <div>
-      <div
-        className={css`
-          padding-bottom: 1rem;
-          margin-bottom: 1rem;
-        `}
-      >
+      <div css={{ paddingBottom: '1rem', marginBottom: '1rem' }}>
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Logo />
-        <div
-          className={css`
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-          `}
-        >
+        <div css={{ paddingBottom: '1rem', paddingTop: '1rem' }}>
           <h1>{author}</h1>
           <p>
             Front-end engineer, Principal Software Developer at{' '}
@@ -43,19 +34,19 @@ export default props => {
         <Contact social={social} />
       </div>
       <div
-        className={css`
-          @media screen and (min-width: 48em) {
-            display: flex;
-          }
+        css={{
+          '@media screen and (min-width: 48em)': {
+            display: 'flex',
+          },
 
-          > div {
-            @media screen and (min-width: 48em) {
-              margin-right: 4rem;
-            }
+          '> div': {
+            '@media screen and (min-width: 48em)': {
+              marginRight: '4rem',
+            },
 
-            flex-basis: 50%;
-          }
-        `}
+            flexBasis: '50%',
+          },
+        }}
       >
         <div>
           <PostList posts={posts} />

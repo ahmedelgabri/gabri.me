@@ -5,35 +5,24 @@ import { logEvent } from '../../utils/analytics'
 
 export default ({ social }) => (
   <div role="contentinfo">
-    <ul
-      className={css`
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      `}
-    >
+    <ul css={{ margin: 0, padding: 0, listStyle: 'none' }}>
       {Object.keys(social).map(site => (
         <li
-          className={css`
-            display: inline-block;
-            margin-right: 0.75rem;
-          `}
+          css={{
+            display: 'inline-block',
+            marginRight: '0.75rem',
+          }}
           key={site}
         >
           <a
             href={social[site].url}
             rel="noopener noreferrer me"
-            className={css`
-              border: none;
-            `}
+            css={{ border: 'none' }}
             target="_blank"
             onClick={() => logEvent('Social', site)}
           >
             <img
-              className={css`
-                vertical-align: middle;
-                width: ${site === 'resume' ? '.75em' : '1.2em'};
-              `}
+              css={{ verticalAlign: 'middle', width: `${site === 'resume' ? '.75' : '1.2'}em` }}
               src={`/img/${site}.svg`}
               alt=""
             />

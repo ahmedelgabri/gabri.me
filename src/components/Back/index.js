@@ -6,12 +6,7 @@ import { css } from 'emotion'
 
 export default () => (
   <p>
-    <Link
-      to="/"
-      className={css`
-        border: none;
-      `}
-    >
+    <Link to="/" css={{ border: 'none' }}>
       <Logo />
     </Link>
   </p>

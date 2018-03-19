@@ -8,13 +8,13 @@ export default ({ posts = [] }) => (
   <div>
     <h2>Sometimes I write</h2>
     <ul
-      className={css`
-        line-height: 1.5;
-        padding-left: 0.5rem;
-        @media screen and (min-width: 48em) {
-          padding-left: 0;
-        }
-      `}
+      css={{
+        lineHeight: 1.5,
+        paddingLeft: '0.5rem',
+        '@media screen and (min-width: 48em)': {
+          paddingLeft: 0,
+        },
+      }}
     >
       {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) => (
         <li key={title}>

@@ -69,17 +69,6 @@ export const globalStyles = `
     margin: 0 0 1rem !important;
   }
 
-  a {
-    color: ${colors.aqua};
-    transition: all .2s ease-in-out;
-    text-decoration-color: transparent;
-  }
-
-  a:hover,
-  a:focus {
-    text-decoration-color: ${colors.orange}
-  }
-
   :focus {
     outline: 2px solid ${colors.blue};
   }
@@ -128,5 +117,16 @@ export const globalStyles = `
   ::selection {
     background-color: ${colors.yellow};
     color: ${colors.black};
+  }
+
+  a {
+    color: ${colors.aqua};
+    transition: all .2s ease-in-out;
+    text-decoration-color: transparent;
+  }
+
+  a:hover,
+  a:focus {
+    text-decoration-color: ${colors.orange}
   }
 `
