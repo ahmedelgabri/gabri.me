@@ -6,7 +6,7 @@ import { css } from 'emotion'
 
 export default ({ posts = [] }) => (
   <div>
-    <h2>Sometimes I write</h2>
+    <h2 css={{ fontWeight: 500 }}>Sometimes I write</h2>
     <ul
       css={{
         lineHeight: 1.5,

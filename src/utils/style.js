@@ -3,10 +3,10 @@
 import colors from 'colors.css'
 
 export const fonts = {
-  monospace: 'Inconsolata, monospace, monospace',
+  monospace: '"IBM Plex Mono", Inconsolata, monospace, monospace',
   sansSerif:
-    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-  serif: 'georgia, serif',
+    '"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  serif: '"IBM Plex Serif", georgia, serif',
 }
 
 export const globalStyles = `

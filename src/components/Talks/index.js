@@ -14,7 +14,7 @@ export default class Talks extends React.Component {
     const { talks = {} } = this.props
     return (
       <div>
-        <h2>Sometimes I give talks</h2>
+        <h2 css={{ fontWeight: 500 }}>Sometimes I give talks</h2>
 
         <ul
           css={{

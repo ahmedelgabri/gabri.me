@@ -21,7 +21,7 @@ export default props => {
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Logo />
         <div css={{ paddingBottom: '1rem', paddingTop: '1rem' }}>
-          <h1>{author}</h1>
+          <h1 css={{ fontWeight: 500 }}>{author}</h1>
           <p>
             Front-end engineer, Principal Software Developer at{' '}
             <a target="_blank" href="http://lightspeedhq.com">
