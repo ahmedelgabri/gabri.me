@@ -6,14 +6,21 @@
   "author": "Ahmed El Gabri <ahmed@gabri.me>",
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
+    "build:gatsby": "gatsby build",
+    "build:lambda": "netlify-lambda build .lambda-dev",
+    "build": "yarn build:gatsby && yarn build:lambda",
     "serve": "gatsby serve",
-    "dev": "gatsby develop",
+    "dev:gatsby": "gatsby develop",
+    "dev:lambda": "netlify-lambda serve .lambda-dev",
+    "dev": "concurrently --kill-others 'yarn dev:gatsby' 'yarn dev:lambda'",
     "test": "",
     "flow:typed": "flow-typed install",
     "flow": "flow"
   },
   "dependencies": {
+    "babel-eslint": "8.2.2",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-flow": "6.23.0",
     "colors.css": "3.0.0",
     "emotion": "9.1.0",
     "emotion-server": "9.1.0",
@@ -34,6 +41,7 @@
     "gatsby-remark-smartypants": "1.4.12",
     "gatsby-source-filesystem": "1.5.27",
     "gatsby-transformer-remark": "1.7.39",
+    "netlify-lambda": "0.3.0",
     "prism-themes": "1.0.0",
     "ramda": "0.25.0",
     "react": "16.3.0",
@@ -43,10 +51,7 @@
   },
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "2.0.2",
-    "babel-eslint": "8.2.2",
-    "babel-preset-env": "1.6.1",
-    "babel-preset-flow": "6.23.0",
-    "netlify-lambda": "1.0.0-babel-7-beta",
+    "concurrently": "3.5.1",
     "prettier": "1.11.1",
     "standard": "11.0.1"
   },

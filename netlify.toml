@@ -1,2 +1,6 @@
 [build]
-  functions = ".lambdas"
+  command = "yarn build"
+  functions = ".lambda"
+  publish = "public"
+  environment = { NODE_ENV = "production", YARN_VERSION = "1.5.1" }
+

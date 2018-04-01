@@ -3,6 +3,8 @@ const feedUrl = 'feed.xml'
 
 module.exports = {
   siteMetadata: {
+    lambdaEndpoint:
+      process.env.NODE_ENV === 'production' ? '/.netlify/functions' : 'http://localhost:9000',
     author: 'Ahmed El Gabri',
     title: 'Front-end Engineer',
     siteUrl: 'https://gabri.me',
