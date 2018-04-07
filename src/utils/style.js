@@ -34,9 +34,9 @@ export const globalStyles = `
   body {
     height: 100%;
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.6;
     text-size-adjust: 100%;
-    font-family: ${fonts.monospace};
+    font-family: ${fonts.sansSerif};
     margin: 0;
     background-color: ${colors.black};
     color: ${colors.silver};
@@ -82,8 +82,8 @@ export const globalStyles = `
   pre {
     overflow: auto;
     max-width: 100%;
-    padding: 1rem;
-    background-color: ${colors.white};
+    padding: 0 !important;
+    background: none !important;
     color: ${colors.gray};
     font-family: ${fonts.monospace} !important;
     border-radius: 0 !important;
