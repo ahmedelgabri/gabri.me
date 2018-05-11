@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react'
-import { css } from 'emotion'
+import {css} from 'emotion'
 import colors from 'colors.css'
 
-export default ({ width = 83, height = 35 }) => {
+export default ({width = 83, height = 35}) => {
   return (
     <svg
       width="83"
@@ -16,7 +16,7 @@ export default ({ width = 83, height = 35 }) => {
         display: 'inline-block',
         opacity: 0.3,
         transition: 'opacity 0.2s linear',
-        '&:hover': { opacity: 1 },
+        '&:hover': {opacity: 1},
       }}
     >
       <path

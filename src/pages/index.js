@@ -1,27 +1,27 @@
 // @flow
 import React from 'react'
-import { css, injectGlobal } from 'emotion'
+import {css, injectGlobal} from 'emotion'
 import Meta from '../components/Meta'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
-import { globalStyles } from '../utils/style'
+import {globalStyles} from '../utils/style'
 
 injectGlobal`${globalStyles}`
 
 export default props => {
-  const { author, social, talks, title, siteUrl } = props.data.site.siteMetadata
+  const {author, social, talks, title, siteUrl} = props.data.site.siteMetadata
   const posts = props.data.allMarkdownRemark.edges
 
   return (
     <div>
-      <div css={{ paddingBottom: '1rem', marginBottom: '1rem' }}>
+      <div css={{paddingBottom: '1rem', marginBottom: '1rem'}}>
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Logo />
-        <div css={{ paddingBottom: '1rem', paddingTop: '1rem' }}>
-          <h1 css={{ fontWeight: 500 }}>{author}</h1>
+        <div css={{paddingBottom: '1rem', paddingTop: '1rem'}}>
+          <h1 css={{fontWeight: 500}}>{author}</h1>
           <p>
             Front-end engineer, Principal Software Developer at{' '}
             <a target="_blank" href="http://lightspeedhq.com">
@@ -92,8 +92,8 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { fileAbsolutePath: { regex: "/articles/" } }
+      sort: {fields: [frontmatter___date], order: DESC}
+      filter: {fileAbsolutePath: {regex: "/articles/"}}
     ) {
       edges {
         node {

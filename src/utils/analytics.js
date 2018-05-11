@@ -6,6 +6,6 @@ export const logEvent = (category = '', action = '') => {
   }
 
   if (category && action) {
-    ReactGA.event({ category, action })
+    ReactGA.event({category, action})
   }
 }

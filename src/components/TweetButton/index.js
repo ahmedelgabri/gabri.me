@@ -1,11 +1,11 @@
 // @flow
 import React from 'react'
-import { logEvent } from '../../utils/analytics'
+import {logEvent} from '../../utils/analytics'
 import icon from '../../../public/img/twitter-btn.svg'
-import { css } from 'emotion'
+import {css} from 'emotion'
 
-export default ({ via, title, url }) => (
-  <div css={{ textAlign: 'center' }}>
+export default ({via, title, url}) => (
+  <div css={{textAlign: 'center'}}>
     <a
       css={{
         fontSize: '11px',
@@ -26,7 +26,9 @@ export default ({ via, title, url }) => (
         },
       }}
       onClick={() => logEvent('Tweet', title)}
-      href={`https://twitter.com/share?url=${url}&via=${via.slice(1)}&text=${title}`}
+      href={`https://twitter.com/share?url=${url}&via=${via.slice(
+        1,
+      )}&text=${title}`}
       rel="noopener noreferrer"
       target="_blank"
     >

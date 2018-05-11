@@ -1,12 +1,12 @@
 // @flow
 import React from 'react'
 import Link from 'gatsby-link'
-import { logEvent } from '../../utils/analytics'
-import { css } from 'emotion'
+import {logEvent} from '../../utils/analytics'
+import {css} from 'emotion'
 
-export default ({ posts = [] }) => (
+export default ({posts = []}) => (
   <div>
-    <h2 css={{ fontWeight: 500 }}>Sometimes I write</h2>
+    <h2 css={{fontWeight: 500}}>Sometimes I write</h2>
     <ul
       css={{
         lineHeight: 1.5,
@@ -16,7 +16,7 @@ export default ({ posts = [] }) => (
         },
       }}
     >
-      {posts.map(({ node: { frontmatter: { title }, fields: { slug } } }) => (
+      {posts.map(({node: {frontmatter: {title}, fields: {slug}}}) => (
         <li key={title}>
           <Link to={slug} onClick={() => logEvent('Post', title)}>
             {title}

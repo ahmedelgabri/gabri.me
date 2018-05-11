@@ -20,12 +20,15 @@ export default function HTML(props) {
       <head>
         <meta chartset="utf-8" />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: stylesStr }} />
+        <style
+          id="gatsby-inlined-css"
+          dangerouslySetInnerHTML={{__html: stylesStr}}
+        />
         <link rel="shortcut icon" href={favicon} />
         {props.headComponents}
       </head>
       <body>
-        <div id="___gatsby" dangerouslySetInnerHTML={{ __html: props.body }} />
+        <div id="___gatsby" dangerouslySetInnerHTML={{__html: props.body}} />
         {props.postBodyComponents}
       </body>
     </html>

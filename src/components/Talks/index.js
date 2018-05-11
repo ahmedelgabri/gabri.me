@@ -1,20 +1,20 @@
 // @flow
 import * as React from 'react'
-import { css } from 'emotion'
-import { logEvent } from '../../utils/analytics'
+import {css} from 'emotion'
+import {logEvent} from '../../utils/analytics'
 
 export default class Talks extends React.Component {
-  state = { video: '' }
+  state = {video: ''}
 
   constructor(props) {
     super(props)
   }
 
   render() {
-    const { talks = {} } = this.props
+    const {talks = {}} = this.props
     return (
       <div>
-        <h2 css={{ fontWeight: 500 }}>Sometimes I give talks</h2>
+        <h2 css={{fontWeight: 500}}>Sometimes I give talks</h2>
 
         <ul
           css={{
@@ -33,7 +33,7 @@ export default class Talks extends React.Component {
                 <span>{talk} </span>
                 {slides && (
                   <a
-                    css={{ fontSize: '0.75em' }}
+                    css={{fontSize: '0.75em'}}
                     href={slides}
                     onClick={() => logEvent('Talk', `${talk} slides`)}
                     target="_blank"
@@ -47,12 +47,12 @@ export default class Talks extends React.Component {
                   <React.Fragment>
                     {' '}
                     <a
-                      css={{ fontSize: '0.75em' }}
+                      css={{fontSize: '0.75em'}}
                       href={`https://www.youtube.com/watch?v=${video}`}
                       onClick={e => {
                         e.preventDefault()
                         this.setState(
-                          state => ({ showVideo: video }),
+                          state => ({showVideo: video}),
                           logEvent('Talk', `${talk} video`),
                         )
                       }}
