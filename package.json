@@ -51,7 +51,7 @@
     "react-helmet": "5.2.0"
   },
   "devDependencies": {
-    "@ahmedelgabri/eslint-config": "3.0.0",
+    "@ahmedelgabri/eslint-config": "3.0.2",
     "concurrently": "3.5.1",
     "prettier": "1.12.1",
     "standard": "11.0.1"
