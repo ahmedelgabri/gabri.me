@@ -23,9 +23,9 @@ export default props => {
         <div css={{paddingBottom: '1rem', paddingTop: '1rem'}}>
           <h1 css={{fontWeight: 500}}>{author}</h1>
           <p>
-            Front-end engineer, Principal Software Developer at{' '}
+            Principal Software Developer at{' '}
             <a target="_blank" href="http://lightspeedhq.com">
-              Lightspeed
+              LightspeedHQ
             </a>
             <br />
             Based in Amsterdam, The Netherlands.
