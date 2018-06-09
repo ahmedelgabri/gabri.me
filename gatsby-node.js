@@ -2,8 +2,8 @@
 const path = require('path')
 
 // Create slugs for files.
-exports.onCreateNode = ({ node, boundActionCreators }) => {
-  const { createNodeField } = boundActionCreators
+exports.onCreateNode = ({node, boundActionCreators}) => {
+  const {createNodeField} = boundActionCreators
 
   if (node.internal.type === 'MarkdownRemark') {
     // https://github.com/gatsbyjs/gatsby/issues/1471
@@ -15,8 +15,8 @@ exports.onCreateNode = ({ node, boundActionCreators }) => {
   }
 }
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({graphql, boundActionCreators}) => {
+  const {createPage} = boundActionCreators
 
   return new Promise((resolve, reject) => {
     const blogPost = path.resolve('./src/templates/post.js')

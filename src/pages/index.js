@@ -2,6 +2,7 @@
 import React from 'react'
 import {css, injectGlobal} from 'emotion'
 import Meta from '../components/Meta'
+import Layout from '../components/Layout'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
@@ -16,7 +17,7 @@ export default props => {
   const posts = props.data.allMarkdownRemark.edges
 
   return (
-    <div>
+    <Layout>
       <div css={{paddingBottom: '1rem', marginBottom: '1rem'}}>
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Logo />
@@ -56,7 +57,7 @@ export default props => {
         </div>
       </div>
       <Footer author={author} />
-    </div>
+    </Layout>
   )
 }
 
