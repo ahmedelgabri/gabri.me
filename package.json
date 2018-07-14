@@ -18,14 +18,14 @@
     "flow": "flow"
   },
   "dependencies": {
-    "babel-eslint": "8.2.5",
+    "babel-eslint": "8.2.6",
     "babel-preset-env": "1.7.0",
     "babel-preset-flow": "6.23.0",
     "colors.css": "3.0.0",
-    "emotion": "9.2.4",
-    "emotion-server": "9.2.4",
-    "flow-bin": "0.75.0",
-    "flow-typed": "2.4.0",
+    "emotion": "9.2.5",
+    "emotion-server": "9.2.5",
+    "flow-bin": "0.76.0",
+    "flow-typed": "2.5.1",
     "gatsby": "1.9.273",
     "gatsby-link": "1.6.45",
     "gatsby-plugin-emotion": "1.1.17",
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "3.0.2",
     "concurrently": "3.6.0",
-    "prettier": "1.13.6",
+    "prettier": "1.13.7",
     "standard": "11.0.1"
   },
   "engines": {
