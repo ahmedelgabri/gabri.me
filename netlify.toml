@@ -2,5 +2,5 @@
   command = "yarn build"
   functions = ".lambda"
   publish = "public"
-  environment = { NODE_ENV = "production", YARN_VERSION = "1.5.1" }
+  environment = { NODE_ENV = "production", YARN_VERSION = "1.9.2" }
 
