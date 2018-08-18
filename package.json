@@ -24,7 +24,7 @@
     "colors.css": "3.0.0",
     "emotion": "9.2.6",
     "emotion-server": "9.2.6",
-    "flow-bin": "0.78.0",
+    "flow-bin": "0.79.1",
     "flow-typed": "2.5.1",
     "gatsby": "1.9.277",
     "gatsby-link": "1.6.46",
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "3.0.2",
     "concurrently": "3.6.1",
-    "prettier": "1.14.0",
+    "prettier": "1.14.2",
     "standard": "11.0.1"
   },
   "engines": {
