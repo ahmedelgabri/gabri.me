@@ -1,15 +1,16 @@
 // @flow
 import React from 'react'
 import colors from 'colors.css'
+import {graphql} from 'gatsby'
+import {css} from 'emotion'
 import Meta from '../components/Meta'
-import Layout from '../components/Layout'
 import Back from '../components/Back'
+import Layout from '../components/Layout'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
-import {css} from 'emotion'
 import 'prism-themes/themes/prism-atom-dark.css'
 
-const Post = props => {
+export default function Post(props) {
   const {title, date} = props.data.markdownRemark.frontmatter
   const {
     title: siteTitle,
@@ -61,10 +62,8 @@ const Post = props => {
   )
 }
 
-export default Post
-
 export const postQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query($slug: String!) {
     site {
       siteMetadata {
         title

@@ -4,7 +4,9 @@ const feedUrl = 'feed.xml'
 module.exports = {
   siteMetadata: {
     lambdaEndpoint:
-      process.env.NODE_ENV === 'production' ? '/.netlify/functions' : 'http://localhost:9000',
+      process.env.NODE_ENV === 'production'
+        ? '/.netlify/functions'
+        : 'http://localhost:9000',
     author: 'Ahmed El Gabri',
     title: 'Front-end Engineer',
     siteUrl: 'https://gabri.me',
@@ -69,7 +71,13 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-feed',
       options: {
-        setup({ query: { site: { siteMetadata }, allMarkdownRemark: { edges }, generator } }) {
+        setup({
+          query: {
+            site: {siteMetadata},
+            allMarkdownRemark: {edges},
+            generator,
+          },
+        }) {
           return Object.assign({}, siteMetadata, edges, generator, {
             title: `${siteMetadata.author} | ${siteMetadata.title}`,
             site_url: siteMetadata.siteUrl,
@@ -116,7 +124,12 @@ module.exports = {
               }
             }
           `,
-            serialize({ query: { site: { siteMetadata }, allMarkdownRemark: { edges } } }) {
+            serialize({
+              query: {
+                site: {siteMetadata},
+                allMarkdownRemark: {edges},
+              },
+            }) {
               return edges.map(edge => {
                 const url = siteMetadata.siteUrl + edge.node.fields.slug
                 return Object.assign({}, edge.node.frontmatter, {
@@ -124,7 +137,7 @@ module.exports = {
                   guid: url,
                   description: edge.node.excerpt,
                   pubDate: new Date(edge.node.frontmatter.date).toUTCString(),
-                  custom_elements: [{ 'content:encoded': edge.node.html }],
+                  custom_elements: [{'content:encoded': edge.node.html}],
                 })
               })
             },
@@ -136,7 +149,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-sitemap',
       options: {
-        serialize: ({ site, allSitePage }) =>
+        serialize: ({site, allSitePage}) =>
           allSitePage.edges.map(edge => {
             const isBlog = ~edge.node.path.indexOf('/blog/')
             const changefreq = isBlog ? 'weekly' : 'yearly'
