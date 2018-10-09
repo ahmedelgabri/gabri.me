@@ -5568,10 +5568,10 @@ gatsby-plugin-emotion@2.0.5:
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-gatsby-plugin-feed@2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-feed/-/gatsby-plugin-feed-2.0.6.tgz#b91c1a651caeb9e7b05c4aba9ad97d9aa4bce2bf"
-  integrity sha512-+iqNg3tfC2PtMfA7HkF0jZJbtbIomLpgXyD0wXB8pNOOIRM607bufmFtUfdKYVWBhaEYU2sKB13vJzS2fcO+TA==
+gatsby-plugin-feed@2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-feed/-/gatsby-plugin-feed-2.0.8.tgz#4fdd31d852891df225538c4c690dbb9a7a6bc0e7"
+  integrity sha512-ComKXQ4g+PRWNUd/vVFUvRDfqvE64W7HkAe1f0Fk/eNzkVZtvOLIDUD6ENh/IPMP9AaulrDeoN0OP6ek/qp1Kg==
   dependencies:
     "@babel/runtime" "^7.0.0"
     lodash.merge "^4.6.0"
@@ -5684,10 +5684,10 @@ gatsby-remark-smartypants@2.0.5:
     retext-smartypants "^3.0.0"
     unist-util-visit "^1.3.0"
 
-gatsby-source-filesystem@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.0.1.tgz#27aa5393a8e50fe160e65bb88b5e62f28dafa6de"
-  integrity sha512-eph6HpET10JGhYu5D+CEsWfYRbcZpslIkXXYkhhP6YIIFt1KaDqnBbq7AiBHnc9oQMBM6aUhEQYc5aG6pE818Q==
+gatsby-source-filesystem@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/gatsby-source-filesystem/-/gatsby-source-filesystem-2.0.2.tgz#ec0fbdbaf653c535d48a2c4524acd4f699b0bd96"
+  integrity sha512-P3A3fBZomQ5r+DwA26R2hxPxkwDfqfcTUIv4rgxy6QhXHsFAF4bD+Q8Q6fcNp38FvCregO7gfoBtgvPA2J6pyQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     better-queue "^3.8.7"
@@ -5727,10 +5727,10 @@ gatsby-transformer-remark@2.1.6:
     unist-util-select "^1.5.0"
     unist-util-visit "^1.3.0"
 
-gatsby@2.0.18:
-  version "2.0.18"
-  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-2.0.18.tgz#a07d47b99812a69f49aa5b6a6fcb65b66722beab"
-  integrity sha512-E+8aFsfnZVUdO3WBcCUtI6ctsD+AJY1TAupSm0vg+a9/aKz8VZ3VWhtDWBC3kDqoh65hUGaUy1dUXj/sfilPPg==
+gatsby@2.0.19:
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-2.0.19.tgz#d59498567460d147f0ea0d9038a7d276e5994a49"
+  integrity sha512-l6AjOJALxPmydYS3JSbUr4FeVMyKCJ3nEC5Bx2tcaulzhZ+ypseXV/l7TZ9EWrYpAyIOV8GfiZJ6SCy9HV1WOA==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/core" "^7.0.0"
