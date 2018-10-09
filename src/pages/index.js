@@ -37,6 +37,10 @@ export default function Index(props) {
                   display
                   url
                 }
+                linkedin {
+                  display
+                  url
+                }
                 resume {
                   display
                   url

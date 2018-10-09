@@ -25,6 +25,10 @@ module.exports = {
         display: 'email',
         url: 'mailto:ahmed+contact@gabri.me?subject=Hi!&body=👋🏼',
       },
+      linkedin: {
+        display: 'ahmedelgabri',
+        url: 'https://www.linkedin.com/in/ahmedelgabri/',
+      },
       resume: {
         display: 'resume',
         url:

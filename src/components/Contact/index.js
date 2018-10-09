@@ -24,7 +24,9 @@ export default ({social}) => (
             <img
               css={{
                 verticalAlign: 'middle',
-                width: `${site === 'resume' ? '.75' : '1.2'}em`,
+                width: `${
+                  site === 'resume' ? '.75' : site === 'linkedin' ? '1' : '1.2'
+                }em`,
               }}
               src={`/img/${site}.svg`}
               alt=""
