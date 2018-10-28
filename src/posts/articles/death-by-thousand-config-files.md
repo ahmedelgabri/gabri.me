@@ -1,8 +1,8 @@
 ---
-title: 'Death by thousand config files'
+title: "Death by thousand config files"
 published: true
-date: '2017-08-27'
-tags: ['front-end', 'config', 'build tools', 'tooling']
+date: "2017-08-27"
+tags: ["front-end", "config", "build tools", "tooling"]
 ---
 
 Today, just a couple of hours ago
@@ -16,33 +16,33 @@ files, etc..._
 
 ## Here is a list of file config files we currently have in our repo that are only related to front-end tools:
 
-* `.babelrc` - also will support `.js`
-* `.eslintrc.js` - supports `.yaml` & `.js`
-* `.eslintignore`
-* `.npmrc` - Just has `save-exact = true`
-* `.nvmrc` - to make sure everyone is using the same node version
-* `.yarnrc` - has `exact "true"` & `save-prefix ""`. We mainly use `yarn`
-* `package.json` - aside from the normal `package.json` stuff, it contains `jest` configuration
+- `.babelrc` - also will support `.js`
+- `.eslintrc.js` - supports `.yaml` & `.js`
+- `.eslintignore`
+- `.npmrc` - Just has `save-exact = true`
+- `.nvmrc` - to make sure everyone is using the same node version
+- `.yarnrc` - has `exact "true"` & `save-prefix ""`. We mainly use `yarn`
+- `package.json` - aside from the normal `package.json` stuff, it contains `jest` configuration
   which I could have already kept in a `jest.config.js`.
-* `webpack.config.js` - still a config-ish file, that depends on the loaders that you use can depend
+- `webpack.config.js` - still a config-ish file, that depends on the loaders that you use can depend
   on the other `.*rc` files too. For example `babel-loader` will pick up the config from `.babelrc`.
   If you have `eslint-loader` it will pick up `.eslintrc`, etc...
 
 ## Here are a couple more that we might have in the next few days/weeks:
 
-* `.flowconfig`
-* `.stylelintrc`
-* `.stylelintignore`
+- `.flowconfig`
+- `.stylelintrc`
+- `.stylelintignore`
 
 ## And of course:
 
-* `.prettierrc`
-* `.prettierignore`
+- `.prettierrc`
+- `.prettierignore`
 
 ## honorary mention:
 
-* `.tsconfig.json` - for typescript
-* ~~`.bsconfig.json` - for bucklescript if you use [ReasonML](https://reasonml.github.io)~~ actually
+- `.tsconfig.json` - for typescript
+- ~~`.bsconfig.json` - for bucklescript if you use [ReasonML](https://reasonml.github.io)~~ actually
   in ReasonML this might be the only config file you need next to `webpack.config.js`. Another
   _reason_ to like it.
 
@@ -58,10 +58,10 @@ don't mind doing_ - and most probably will start doing. that's not the main issu
 
 ### The issue is
 
-* This loop will never end: tomorrow someone comes with a new great tool called `X` & they decide
+- This loop will never end: tomorrow someone comes with a new great tool called `X` & they decide
   they need some config for it & boom we have `.Xrc` & `.Xignore` now. This loop will never end this
   way.
-* They are not really separate. 90% of the time you will need to change a couple of them if you want
+- They are not really separate. 90% of the time you will need to change a couple of them if you want
   to add a new tool because all of them relate/work with each other. Which makes it painful to deal
   with.
 
@@ -78,9 +78,9 @@ problem but at least it keeps us a little bit saner.
 
 What is wrong with this? And yes it must be a `.js` file:
 
-* Comments are easier than in `.json` files
-* You can change the config depends on the environment.
-* If you want, you can dynamically generate your config.
+- Comments are easier than in `.json` files
+- You can change the config depends on the environment.
+- If you want, you can dynamically generate your config.
 
 ```js
 // use this to toggle on/off some configs or switch them completely
@@ -98,9 +98,9 @@ module.exports = {
 
 The answer is, it's not much better but at least we can have these:
 
-* Less cognitive load
-* One place to handle most of the logic (env switching, etc...)
-* Restoring some sanity?
+- Less cognitive load
+- One place to handle most of the logic (env switching, etc...)
+- Restoring some sanity?
 
 I really do like all of these projects, they are amazing projects made by smarter people than I am.
 But honestly I never felt JavaScript fatigue, but I started to feel Config/rc files fatigue.

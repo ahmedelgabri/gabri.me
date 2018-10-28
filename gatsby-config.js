@@ -50,26 +50,33 @@ module.exports = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: 'gatsby-mdx',
       options: {
-        path: `${__dirname}/src/posts`,
-        name: 'posts',
-      },
-    },
-    {
-      resolve: 'gatsby-transformer-remark',
-      options: {
-        plugins: [
+        extensions: ['.mdx', '.md'],
+        gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-responsive-iframe',
             options: {
               wrapperStyle: 'margin-bottom: 1.0725rem',
             },
           },
-          'gatsby-remark-prismjs',
-          'gatsby-remark-copy-linked-files',
-          'gatsby-remark-smartypants',
+          {
+            resolve: 'gatsby-remark-prismjs',
+          },
+          {
+            resolve: 'gatsby-remark-copy-linked-files',
+          },
+          {
+            resolve: 'gatsby-remark-smartypants',
+          },
         ],
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/posts`,
+        name: 'posts',
       },
     },
     {
@@ -78,7 +85,7 @@ module.exports = {
         setup({
           query: {
             site: {siteMetadata},
-            allMarkdownRemark: {edges},
+            allMdx: {edges},
             generator,
           },
         }) {
@@ -105,8 +112,7 @@ module.exports = {
           {
             query: `
             {
-              allMarkdownRemark(
-                limit: 1000,
+              allMdx(
                 sort: {
                   order: DESC,
                   fields: [frontmatter___date]
@@ -121,8 +127,7 @@ module.exports = {
                     fields {
                       slug
                     }
-                    excerpt
-                    html
+                    excerpt(pruneLength: 500)
                   }
                 }
               }
@@ -131,7 +136,7 @@ module.exports = {
             serialize({
               query: {
                 site: {siteMetadata},
-                allMarkdownRemark: {edges},
+                allMdx: {edges},
               },
             }) {
               return edges.map(edge => {
@@ -141,7 +146,6 @@ module.exports = {
                   guid: url,
                   description: edge.node.excerpt,
                   pubDate: new Date(edge.node.frontmatter.date).toUTCString(),
-                  custom_elements: [{'content:encoded': edge.node.html}],
                 })
               })
             },

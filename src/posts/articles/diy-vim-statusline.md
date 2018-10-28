@@ -1,12 +1,15 @@
 ---
-title: 'DIY Vim statusline'
+title: "DIY Vim statusline"
 published: true
-date: '2015-10-05'
-tags: ['vim','unix','terminal']
+date: "2015-10-05"
+tags: ["vim", "unix", "terminal"]
 ---
 
-> _**Update 20 Aug 2017:** I'm currently using a new & better version of the statusline code posted in this post,
-> you can check the code here: [statusline](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/.vim/plugin/statusline.vim) & [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/.vim/autoload/statusline.vim)_
+> _**Update 20 Aug 2017:** I'm currently using a new & better version of the
+> statusline code posted in this post, you can check the code here:
+> [statusline](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/.vim/plugin/statusline.vim)
+> &
+> [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/.vim/autoload/statusline.vim)_
 
 Nearly two years ago I decided to switch to Vim and move all my work into one
 app. The command line/Terminal or more sepcifically iTerm2. That desicion turns
@@ -21,13 +24,12 @@ people talk about this before.
 So one of the things that is important in Vim is the statusline it shows lots of
 useful info about the file you are editing and the mode you are currently on,
 etc... and as nearly everything in Vim it's insanely customizable so I went with
-the easiest solution which was
-[airline](https://github.com/bling/vim-airline), Airline is really powerful and
-customizable too. But after a while and as I usually do; I try to simplify my
-tools as much as I can and reduce the moving parts/dependencies. I started to
-read about statusline `:h 'statusline'` and check some articles about Vim and
-going through any dotfiles repo I can find and go through its code not only for
-Vim but for everything.
+the easiest solution which was [airline](https://github.com/bling/vim-airline),
+Airline is really powerful and customizable too. But after a while and as I
+usually do; I try to simplify my tools as much as I can and reduce the moving
+parts/dependencies. I started to read about statusline `:h 'statusline'` and
+check some articles about Vim and going through any dotfiles repo I can find and
+go through its code not only for Vim but for everything.
 
 I found out that for my needs I actually don't need airline, also because I was
 using lots of plugins this started to slow down Vim startup and sometimes
@@ -142,22 +144,34 @@ hi User9 ctermfg=007
 ```
 
 First we need to get create a map of Vim modes and change the color of the
-statusline depends on the mode we are in. What `ChangeStatuslineColor()` does
-is that it gets the current mode and checks in the `currentmode` map and change
-the color of the statusline accordingly. Pretty simple.
+statusline depends on the mode we are in. What `ChangeStatuslineColor()` does is
+that it gets the current mode and checks in the `currentmode` map and change the
+color of the statusline accordingly. Pretty simple.
 
 Next, the `FileSize()`, `ReadOnly()` and `GitInfo()` are pretty self
 explanatory. The next section is how we but all this information together and
 construct the statusline.
 
-First we need to tell vim to always show the statusline by doing `set laststatus=2` next we construct our statusline using all the functions that we created before. I won't go through all the code here and I highly recommend reading `:h statusline` what all these characters means.
+First we need to tell vim to always show the statusline by doing
+`set laststatus=2` next we construct our statusline using all the functions that
+we created before. I won't go through all the code here and I highly recommend
+reading `:h statusline` what all these characters means.
 
-At last, we set the colors for statusline using `highlight User1-9`, more in `:h hl-User1` and if you want to know where these color values comes from you can
-check my previous [article](/blog/custom-colors-in-your-zsh-prompt) on this.
+At last, we set the colors for statusline using `highlight User1-9`, more in
+`:h hl-User1` and if you want to know where these color values comes from you
+can check my previous [article](/blog/custom-colors-in-your-zsh-prompt) on this.
 
-Full credit goes to Reman on [Stackoverflow](http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim/10416234#10416234) and greduan [dotfiles](https://github.com/Greduan/dotfiles/blob/76e16dd8a04501db29989824af512c453550591d/vim/after/plugin/statusline.vim).
+Full credit goes to Reman on
+[Stackoverflow](http://stackoverflow.com/questions/5375240/a-more-useful-statusline-in-vim/10416234#10416234)
+and greduan
+[dotfiles](https://github.com/Greduan/dotfiles/blob/76e16dd8a04501db29989824af512c453550591d/vim/after/plugin/statusline.vim).
 
-Here is a gif for my statusline <a href="/img/statusline.gif"><img src="/img/statusline.gif" alt=""></a> and here is the code in my [vimrc](https://github.com/ahmedelgabri/dotfiles/blob/c4f40c27b295ecfb7673bd29d373cab26b93379b/vim/vimrc.local#L302-L423) _I have enabled true color in iTerm2, Neovm and tmux. So ignore the hex code for colors_
+Here is a gif for my statusline
+<a href="/img/statusline.gif"><img src="/img/statusline.gif" alt="" /></a> and
+here is the code in my
+[vimrc](https://github.com/ahmedelgabri/dotfiles/blob/c4f40c27b295ecfb7673bd29d373cab26b93379b/vim/vimrc.local#L302-L423)
+_I have enabled true color in iTerm2, Neovm and tmux. So ignore the hex code for
+colors_
 
 Vim and CLI are both really powerful and the ability to have your workflow in
 one place is very productive as everything we don't know it's scary at first but

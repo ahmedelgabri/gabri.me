@@ -51,7 +51,7 @@ export default function Index(props) {
               }
             }
           }
-          allMarkdownRemark(
+          allMdx(
             sort: {fields: [frontmatter___date], order: DESC}
             filter: {fileAbsolutePath: {regex: "/articles/"}}
           ) {
@@ -70,7 +70,7 @@ export default function Index(props) {
       `}
       render={data => {
         const {author, social, talks, title, siteUrl} = data.site.siteMetadata
-        const posts = data.allMarkdownRemark.edges
+        const posts = data.allMdx.edges
 
         return (
           <Layout>

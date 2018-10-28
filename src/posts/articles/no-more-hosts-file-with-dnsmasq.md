@@ -1,9 +1,10 @@
 ---
-title: 'No more hosts file with dnsmasq'
+title: "No more hosts file with dnsmasq"
 published: true
-date: '2013-09-27'
+date: "2013-09-27"
 tags: null
 ---
+
 In my search for the best local development setup on my Mac, I wanted to have local domains something like `project.dev` that can work when I'm working on a project locally instead of `http://localhost/dev/projectname/somethingelse/etc/`. It's easier, faster, cleaner & looks better.
 
 <!-- more -->
@@ -21,7 +22,7 @@ Then you will only need to edit the `hosts` file. Which is still manual & tediou
 
 The solution I found is using [dnsmasq](http://en.wikipedia.org/wiki/Dnsmasq), the setup actually is easy & straightforward. First you need to install dnsmasq through [Homebrew](http://brew.sh/) `brew install dnsmasq` make sure you follow the steps mentioned after the end of the installation.
 
-Then we need to edit `/usr/local/etc dnsmasq.conf`, let's say you want the local domain name to be `.dev` then you should add this line `address=/.dev/127.0.0.1` to `dnsmasq.conf` if you want to add more domains you can just add a new line with a new domain name. Next we need to create a file called `dev` _with no file extension_  inside `/etc/resolver/` with this `nameserver 127.0.0.1` inside. _If you have multiple domains you will need multiple files, each file name need to match the domain name_
+Then we need to edit `/usr/local/etc dnsmasq.conf`, let's say you want the local domain name to be `.dev` then you should add this line `address=/.dev/127.0.0.1` to `dnsmasq.conf` if you want to add more domains you can just add a new line with a new domain name. Next we need to create a file called `dev` _with no file extension_ inside `/etc/resolver/` with this `nameserver 127.0.0.1` inside. _If you have multiple domains you will need multiple files, each file name need to match the domain name_
 
 The last step is to setup your `httpd-vhosts.conf` let's say your folder structure is like this
 

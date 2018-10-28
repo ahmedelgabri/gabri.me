@@ -1,9 +1,10 @@
 ---
-title: 'Migrating from Evernote'
+title: "Migrating from Evernote"
 published: true
-date: '2015-11-08'
-tags: ['notes','journal','python','node','vim','unix','terminal']
+date: "2015-11-08"
+tags: ["notes", "journal", "python", "node", "vim", "unix", "terminal"]
 ---
+
 To start, Evernote is nice app. But not for me, I always had this love/hate relationship with it and with note talking apps in general. All I want from a note talking app is very simple.
 
 1. I don't need to use the app to write my notes, I can use my favourite text editor to do this.
@@ -23,13 +24,13 @@ I'm aware of [Geeknote](http://www.geeknote.me/) but it was too much for me, I l
 
 ## Export my notes as text/Markdown
 
-* Evernote export is the worst, it export your notes as `.enex` or `.html`.
-* Simplenote, exports your notes as text but without any metadata. I didn't like this too.
+- Evernote export is the worst, it export your notes as `.enex` or `.html`.
+- Simplenote, exports your notes as text but without any metadata. I didn't like this too.
 
 ## Full Markdown support
 
-* Evernote: No.
-* Simplenote: Yes to some extend.
+- Evernote: No.
+- Simplenote: Yes to some extend.
 
 ## Own my data and sync using my favourite service.
 
@@ -54,40 +55,45 @@ Here is the _quick & dirty_ script using node and ES2016 (aka ES6) syntax.
 ```js
 #!/usr/bin/env node
 
-const fs = require('fs')
-const path = require('path')
-const { execSync } = require('child_process')
-const moment = require('moment')
-const slug = require('slug')
-const notes = require('./evernote.json')
+const fs = require("fs");
+const path = require("path");
+const { execSync } = require("child_process");
+const moment = require("moment");
+const slug = require("slug");
+const notes = require("./evernote.json");
 
-let title
-let tags
-let date
-let creationDate
-let content
-let file
-let slugg
+let title;
+let tags;
+let date;
+let creationDate;
+let content;
+let file;
+let slugg;
 
 notes.forEach(note => {
-  title = note.content.split('\n')[0].substring(2)
-  slugg = slug(title.toLowerCase())
-  date = moment(note.createdate).format('YYYY-MM-DD')
-  creationDate = moment(note.createdate).format('YYYY-MM-DD HH:mm')
-  tags = note.tags.length > 1 ? note.tags.map(tag => `#${tag.toLowerCase()}`).join(', ') : note.tags.map(tag => `#${tag.toLowerCase()}`).join()
-  file = path.join(__dirname, './evernote-md', `${date}-${slugg}.md`)
+  title = note.content.split("\n")[0].substring(2);
+  slugg = slug(title.toLowerCase());
+  date = moment(note.createdate).format("YYYY-MM-DD");
+  creationDate = moment(note.createdate).format("YYYY-MM-DD HH:mm");
+  tags =
+    note.tags.length > 1
+      ? note.tags.map(tag => `#${tag.toLowerCase()}`).join(", ")
+      : note.tags.map(tag => `#${tag.toLowerCase()}`).join();
+  file = path.join(__dirname, "./evernote-md", `${date}-${slugg}.md`);
   content = `# ${title}
   ---
   date: ${creationDate}
   tags: ${tags}
   ---
-${note.content.substring(note.content.split('\n')[0].length).replace(/\s?\n\n?\s?/g, '\n')}
-`
-  console.log(tags)
+${note.content
+    .substring(note.content.split("\n")[0].length)
+    .replace(/\s?\n\n?\s?/g, "\n")}
+`;
+  console.log(tags);
 
-  fs.writeFileSync(file, content, 'utf-8')
-  execSync(`dayone -d="${creationDate}" new < ${file}`)
-})
+  fs.writeFileSync(file, content, "utf-8");
+  execSync(`dayone -d="${creationDate}" new < ${file}`);
+});
 ```
 
 At this moment I managed to import all my notes to Day one with my all metadata. And the nice thing in Day one that if you have `#something` this can be converted automatically for you as a tag.
@@ -118,10 +124,10 @@ Here is how my configuration looks like
 
 Also in Day one I've set it to iCloud although you can use one or more of these options:
 
-* Day one sync
-* Dropbox
-* iCloud
-* Custom location
+- Day one sync
+- Dropbox
+- iCloud
+- Custom location
 
 ## Rejoice!
 

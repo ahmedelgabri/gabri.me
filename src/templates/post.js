@@ -1,7 +1,9 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
 import colors from 'colors.css'
 import {graphql} from 'gatsby'
+import MDXRenderer from 'gatsby-mdx/mdx-renderer'
+import {MDXProvider} from '@mdx-js/tag'
 import {css} from 'emotion'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
@@ -11,7 +13,8 @@ import TweetButton from '../components/TweetButton'
 import 'prism-themes/themes/prism-atom-dark.css'
 
 export default function Post(props) {
-  const {title, date} = props.data.markdownRemark.frontmatter
+  const {children, data, ...rest} = props
+  const {title, date} = data.mdx.frontmatter
   const {
     title: siteTitle,
     author,
@@ -19,51 +22,53 @@ export default function Post(props) {
     social: {
       twitter: {display},
     },
-  } = props.data.site.siteMetadata
-  const {html, excerpt} = props.data.markdownRemark
+  } = data.site.siteMetadata
+  const {excerpt} = data.mdx
   const postUrl = `${siteUrl}${props.location.pathname}`
 
   return (
     <Layout>
-      <div css={{maxWidth: '45rem'}}>
-        <Meta
-          title={`${title} | ${author} - ${siteTitle}`}
-          excerpt={excerpt}
-          url={postUrl}
-          post
-        />
-        <div css={{borderBottom: '1px solid rgba(0, 0, 0, 0.1)'}}>
-          <Back />
-          <time
+      <MDXProvider components={{}}>
+        <div css={{maxWidth: '45rem'}}>
+          <Meta
+            title={`${title} | ${author} - ${siteTitle}`}
+            excerpt={excerpt}
+            url={postUrl}
+            post
+          />
+          <div css={{borderBottom: '1px solid rgba(0, 0, 0, 0.1)'}}>
+            <Back />
+            <time
+              css={{
+                fontStyle: 'italic',
+                fontSize: '0.75rem',
+                color: colors.gray,
+                display: 'block',
+              }}
+            >
+              On {date}
+            </time>
+            <h1>{title}</h1>
+            <MDXRenderer>{data.mdx.code.body}</MDXRenderer>
+          </div>
+          <div
             css={{
-              fontStyle: 'italic',
-              fontSize: '0.75rem',
-              color: colors.gray,
-              display: 'block',
+              marginBottom: '1rem',
+              paddingBottom: '1rem',
+              paddingTop: '1rem',
             }}
           >
-            On {date}
-          </time>
-          <h1>{title}</h1>
-          <div dangerouslySetInnerHTML={{__html: html}} />
+            <TweetButton via={display} title={title} url={postUrl} />
+          </div>
+          <Footer author={author} />
         </div>
-        <div
-          css={{
-            marginBottom: '1rem',
-            paddingBottom: '1rem',
-            paddingTop: '1rem',
-          }}
-        >
-          <TweetButton via={display} title={title} url={postUrl} />
-        </div>
-        <Footer author={author} />
-      </div>
+      </MDXProvider>
     </Layout>
   )
 }
 
-export const postQuery = graphql`
-  query($slug: String!) {
+export const pageQuery = graphql`
+  query($id: String!) {
     site {
       siteMetadata {
         title
@@ -76,12 +81,15 @@ export const postQuery = graphql`
         }
       }
     }
-    markdownRemark(fields: {slug: {eq: $slug}}) {
-      html
+    mdx(id: {eq: $id}) {
+      id
       excerpt(pruneLength: 160)
       frontmatter {
         title
         date(formatString: "Do MMMM YYYY")
+      }
+      code {
+        body
       }
     }
   }

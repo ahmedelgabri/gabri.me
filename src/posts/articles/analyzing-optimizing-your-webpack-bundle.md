@@ -1,8 +1,8 @@
 ---
-title: 'Analyzing & optimizing your webpack bundle'
+title: "Analyzing & optimizing your webpack bundle"
 published: true
-date: '2017-01-29'
-tags: ['webpack', 'performance', 'JavaScript']
+date: "2017-01-29"
+tags: ["webpack", "performance", "JavaScript"]
 ---
 
 One of the problems I noticed with many developers that when they use a module bundler like Webpack, Browserify, etc… they tend to think that it will automagically handle optimization for them just by enabling & using all the optimization plugins available in the tool.
@@ -22,38 +22,38 @@ I have a very simple react app here, you just type in the input field & it will 
 That's the code for the app, pretty normal stuff nothing fancy here.
 
 ```js
-import React, { Component } from 'react'
-import { render } from 'react-dom'
-import slug from 'slug'
+import React, { Component } from "react";
+import { render } from "react-dom";
+import slug from "slug";
 
-const Input = ({ onChange }) => <input type='text' onChange={onChange} />
+const Input = ({ onChange }) => <input type="text" onChange={onChange} />;
 
 class App extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      text: ''
-    }
+      text: ""
+    };
 
-    this.handleEvent = this.handleEvent.bind(this)
+    this.handleEvent = this.handleEvent.bind(this);
   }
 
-  handleEvent (e) {
-    this.setState({ text: e.target.value.trim() })
+  handleEvent(e) {
+    this.setState({ text: e.target.value.trim() });
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Input onChange={this.handleEvent} />
-        <p>{slug(this.state.text) || 'Start typing...'}</p>
+        <p>{slug(this.state.text) || "Start typing..."}</p>
       </div>
-    )
+    );
   }
 }
 
-render(<App />, document.querySelector('#App'))
+render(<App />, document.querySelector("#App"));
 ```
 
 So, you run it through Webpack & eveything is fine, right? It compiles, works & everyone is happy. But look at this output from Webpack.
@@ -112,9 +112,9 @@ Turns out that solutions was pretty simple, you can use Webpack's [`IgnorePlugin
 
 ```js
 plugins: [
-    // ignore the So.js unicode table file (mainly it contains Arabic & tibitan unicode data)
-    new webpack.IgnorePlugin(/unicode\/category\/So/, /node_modules/),
-]
+  // ignore the So.js unicode table file (mainly it contains Arabic & tibitan unicode data)
+  new webpack.IgnorePlugin(/unicode\/category\/So/, /node_modules/)
+];
 ```
 
 And here is the output after that change, the bundle is only `150KB` now.
@@ -126,6 +126,3 @@ Congratulations, you have just removed `~2mb` from your bundle 🎉
 While following best practices when setting up Webpack can go a long way for optimizing your bundle, you still need to monitor it for any sudden size increase and/or audit it every once in a while to make sure things like this doesn't happen.
 
 If you want to play with the code it's on [Github](https://github.com/ahmedelgabri/webpack-analyze)
-
-
-

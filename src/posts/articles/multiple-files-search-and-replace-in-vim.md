@@ -1,8 +1,8 @@
 ---
-title: 'Multiple files search and replace in vim'
+title: "Multiple files search and replace in vim"
 published: true
-date: '2017-03-12'
-tags: ['vim', 'cli', 'productivity']
+date: "2017-03-12"
+tags: ["vim", "cli", "productivity"]
 ---
 
 Many people assume that vim is a dumb editor after they see it for the first time and they start to ask how can I do X like my current editor is doing it. And that's a mistake, because editing in vim is a different way of thinking. I did this mistake when I was first learning too, one of those questions that seems to be very simple is, how can I do search & replace in multiple files in vim.

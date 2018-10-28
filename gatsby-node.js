@@ -1,11 +1,12 @@
 // @flow
 const path = require('path')
+const componentWithMDXScope = require('gatsby-mdx/component-with-mdx-scope')
 
 // Create slugs for files.
 exports.onCreateNode = ({node, actions}) => {
   const {createNodeField} = actions
 
-  if (node.internal.type === 'MarkdownRemark') {
+  if (node.internal.type === 'Mdx') {
     // https://github.com/gatsbyjs/gatsby/issues/1471
     createNodeField({
       node,
@@ -19,16 +20,19 @@ exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions
 
   return new Promise((resolve, reject) => {
-    const blogPost = path.resolve('./src/templates/post.js')
     resolve(
       graphql(
         `
           {
-            allMarkdownRemark(limit: 1000) {
+            allMdx {
               edges {
                 node {
+                  id
                   fields {
                     slug
+                  }
+                  code {
+                    scope
                   }
                 }
               }
@@ -42,17 +46,30 @@ exports.createPages = async ({graphql, actions}) => {
         }
 
         // Create blog posts pages.
-        result.data.allMarkdownRemark.edges.forEach(edge => {
-          const slug = edge.node.fields.slug
+        result.data.allMdx.edges.forEach(({node}) => {
+          const slug = node.fields.slug
+
           createPage({
             path: slug,
-            component: blogPost,
+            component: componentWithMDXScope(
+              path.resolve('./src/templates/post.js'),
+              node.code.scope,
+            ),
             context: {
               slug,
+              id: node.id,
             },
           })
         })
       }),
     )
+  })
+}
+
+exports.onCreateWebpackConfig = ({actions}) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+    },
   })
 }

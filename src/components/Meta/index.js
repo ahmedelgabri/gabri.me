@@ -28,11 +28,6 @@ export default ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={excerpt} />
 
-      <link
-        type="text/plain"
-        rel="author"
-        href="https://plus.google.com/101787568188227600845/"
-      />
       <meta name="application-name" content="Gabri.me" />
       <link name="msapplication-TileImage" href={msTile} />
       <link name="msapplication-TileColor" content="#1f2325" />
@@ -50,10 +45,6 @@ export default ({
       />
       <link rel="apple-touch-icon-precomposed" href={appleIcon57} />
       <meta name="apple-mobile-web-app-title" content="Gabri.me" />
-      <link
-        rel="author"
-        href="https://plus.google.com/101787568188227600845/posts"
-      />
       <meta property="twitter:account_id" content={twitterId} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:creator" content={social.twitter.url} />
