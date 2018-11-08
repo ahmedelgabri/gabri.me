@@ -46,6 +46,7 @@ module.exports = {
     },
   },
   plugins: [
+    'gatsby-plugin-remove-serviceworker',
     'gatsby-plugin-twitter',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
