@@ -45,6 +45,7 @@ export default function Post(props) {
                 color: colors.gray,
                 display: 'block',
               }}
+              datatime={date}
             >
               On {date}
             </time>
