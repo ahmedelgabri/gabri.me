@@ -1,10 +1,8 @@
-// @flow
 import * as React from 'react'
 import colors from 'colors.css'
 import {graphql} from 'gatsby'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 import {MDXProvider} from '@mdx-js/tag'
-import {css} from 'emotion'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Layout from '../components/Layout'
@@ -12,7 +10,37 @@ import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
 import 'prism-themes/themes/prism-atom-dark.css'
 
-export default function Post(props) {
+export interface Props {
+  data: {
+    site: {
+      siteMetadata: {
+        title: string
+        author: string
+        siteUrl: string
+        social: {
+          twitter: {display: string}
+        }
+      }
+    }
+    mdx: {
+      id: number
+      excerpt: string
+      frontmatter: {
+        title: string
+        date: string
+      }
+      code: {
+        body: string
+      }
+    }
+  }
+  location: {
+    pathname: string
+  }
+  children: React.ReactNode
+}
+
+export default function Post(props: Props) {
   const {children, data, ...rest} = props
   const {title, date} = data.mdx.frontmatter
   const {
@@ -24,7 +52,7 @@ export default function Post(props) {
     },
   } = data.site.siteMetadata
   const {excerpt} = data.mdx
-  const postUrl = `${siteUrl}${props.location.pathname}`
+  const postUrl = `${siteUrl}${rest.location.pathname}`
 
   return (
     <Layout>

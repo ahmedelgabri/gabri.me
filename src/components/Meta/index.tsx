@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import Helmet from 'react-helmet'
 import config from '../../../gatsby-config'
@@ -10,6 +9,15 @@ import appleIcon114 from '../../../static/apple-touch-icon-114x114-precomposed.p
 const {description, social, twitterId, siteUrl} = config.siteMetadata
 const socialImg = `${siteUrl}/img/fb-image.jpg`
 
+export interface Props {
+  title: string
+  url: string
+  excerpt?: string
+  post?: boolean
+  img?: string
+  children?: React.ReactChild
+}
+
 export default ({
   title,
   url,
@@ -17,7 +25,7 @@ export default ({
   post,
   img = socialImg,
   children,
-}) => {
+}: Props) => {
   return (
     <Helmet>
       <title>{title}</title>

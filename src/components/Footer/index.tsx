@@ -1,8 +1,10 @@
-// @flow
-import React from 'react'
-import {css} from 'emotion'
+import * as React from 'react'
 
-export default ({author}) => (
+export interface Props {
+  author: string
+}
+
+export default ({author}: Props) => (
   <div>
     <small css={{fontSize: '0.5rem', opacity: 0.3}}>
       {author} © {new Date().getFullYear()}

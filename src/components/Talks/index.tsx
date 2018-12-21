@@ -1,17 +1,23 @@
-// @flow
 import * as React from 'react'
-import {css} from 'emotion'
 import {logEvent} from '../../utils/analytics'
 
-export default class Talks extends React.Component {
-  state = {video: ''}
+export interface Props {
+  talks: ActivityT
+}
+export interface State {
+  showVideo: string
+}
 
-  constructor(props) {
+export default class Talks extends React.Component<Props, State> {
+  state = {showVideo: ''}
+
+  constructor(props: Props) {
     super(props)
   }
 
   render() {
     const {talks = {}} = this.props
+
     return (
       <div>
         <h2 css={{fontWeight: 500}}>Talks</h2>

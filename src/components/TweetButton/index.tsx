@@ -1,10 +1,14 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import {logEvent} from '../../utils/analytics'
 import icon from '../../../public/img/twitter-btn.svg'
-import {css} from 'emotion'
 
-export default ({via, title, url}) => (
+export interface Props {
+  via: string
+  title: string
+  url: string
+}
+
+export default ({via, title, url}: Props) => (
   <div css={{textAlign: 'center'}}>
     <a
       css={{

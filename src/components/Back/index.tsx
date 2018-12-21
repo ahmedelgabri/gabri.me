@@ -1,8 +1,6 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import {Link} from 'gatsby'
 import Logo from '../Logo'
-import {css} from 'emotion'
 
 export default () => (
   <p>

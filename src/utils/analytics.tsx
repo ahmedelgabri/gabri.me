@@ -1,6 +1,10 @@
 import ReactGA from 'react-ga'
 
-export const logEvent = (category = '', action = '') => {
+export interface LogEvent {
+  (category: string, action: string): void
+}
+
+export const logEvent: LogEvent = (category = '', action = '') => {
   if (process.env.NODE_ENV === 'development') {
     console.log(`Logging event for ${category} & ${action}`)
   }

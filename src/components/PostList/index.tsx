@@ -1,10 +1,12 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import {Link} from 'gatsby'
 import {logEvent} from '../../utils/analytics'
-import {css} from 'emotion'
 
-export default ({posts = []}) => (
+export interface Props {
+  posts: Array<{node: PostT}>
+}
+
+export default ({posts = []}: Props) => (
   <div>
     <h2 css={{fontWeight: 500}}>Articles</h2>
     <ul

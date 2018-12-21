@@ -1,7 +1,6 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import {StaticQuery, graphql} from 'gatsby'
-import {css, injectGlobal} from 'emotion'
+import {injectGlobal} from 'emotion'
 import Meta from '../components/Meta'
 import Layout from '../components/Layout'
 import Logo from '../components/Logo'
@@ -14,7 +13,14 @@ import {globalStyles} from '../utils/style'
 
 injectGlobal`${globalStyles}`
 
-export default function Index(props) {
+interface Data {
+  site: SiteMetaT
+  allMdx: {
+    edges: [{node: PostT}]
+  }
+}
+
+export default function Index() {
   return (
     <StaticQuery
       query={graphql`
@@ -72,7 +78,7 @@ export default function Index(props) {
           }
         }
       `}
-      render={data => {
+      render={(data: Data) => {
         const {
           author,
           social,

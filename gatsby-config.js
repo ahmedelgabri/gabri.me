@@ -1,4 +1,3 @@
-// @flow
 const feedUrl = 'feed.xml'
 
 module.exports = {
@@ -53,6 +52,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-remove-serviceworker',
+    'gatsby-plugin-typescript',
     'gatsby-plugin-twitter',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',

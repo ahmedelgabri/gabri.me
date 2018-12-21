@@ -1,8 +1,11 @@
-// @flow
 import * as React from 'react'
 import {logEvent} from '../../utils/analytics'
 
-export default function Interviews(props) {
+export interface Props {
+  interviews: ActivityT
+}
+
+export default function Interviews(props: Props) {
   const {interviews = {}} = props
 
   return (

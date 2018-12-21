@@ -1,5 +1,4 @@
-// @flow
-import React from 'react'
+import * as React from 'react'
 import Helmet from 'react-helmet'
 import {StaticQuery, graphql} from 'gatsby'
 import Layout from '../components/Layout'
@@ -7,7 +6,11 @@ import Back from '../components/Back'
 import Footer from '../components/Footer'
 import gif from '../../public/img/404.gif'
 
-export default function Error(props) {
+interface Data {
+  site: {siteMetadata: {author: string}}
+}
+
+export default function Error() {
   return (
     <StaticQuery
       query={graphql`
@@ -19,7 +22,7 @@ export default function Error(props) {
           }
         }
       `}
-      render={data => (
+      render={(data: Data) => (
         <Layout>
           <Helmet>
             <title>Oops - page not found 🙈</title>

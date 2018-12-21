@@ -1,9 +1,12 @@
-// @flow
 import * as React from 'react'
-import {css} from 'emotion'
 import colors from 'colors.css'
 
-export default ({width = 83, height = 35}) => {
+export interface Props {
+  width?: number
+  height?: number
+}
+
+export default ({width = 83, height = 35}: Props) => {
   return (
     <svg
       width="83"

@@ -1,12 +1,14 @@
-// @flow
 import * as React from 'react'
-import {css} from 'emotion'
 import {logEvent} from '../../utils/analytics'
 
-export default ({social}) => (
+export interface Props {
+  social: SocialT
+}
+
+export default ({social}: Props) => (
   <div role="contentinfo">
     <ul css={{margin: 0, padding: 0, listStyle: 'none'}}>
-      {Object.keys(social).map(site => (
+      {Object.entries(social).map(([site, {url}]) => (
         <li
           css={{
             display: 'inline-block',
@@ -15,7 +17,7 @@ export default ({social}) => (
           key={site}
         >
           <a
-            href={social[site].url}
+            href={url}
             rel="noopener noreferrer me"
             css={{border: 'none'}}
             target="_blank"
