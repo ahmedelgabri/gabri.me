@@ -44,6 +44,12 @@ module.exports = {
     talks: {
       AmsterdamJS: ['http://bit.ly/amsterdamjs-codemods', 'xGjSMbks9vA'],
     },
+    interviews: {
+      devtomanager: [
+        'Developer to manager blog interview',
+        'https://devtomanager.com/interviews/ahmed-el-gabri/',
+      ],
+    },
   },
   plugins: [
     'gatsby-plugin-remove-serviceworker',

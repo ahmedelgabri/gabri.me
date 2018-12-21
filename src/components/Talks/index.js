@@ -14,7 +14,7 @@ export default class Talks extends React.Component {
     const {talks = {}} = this.props
     return (
       <div>
-        <h2 css={{fontWeight: 500}}>Sometimes I give talks</h2>
+        <h2 css={{fontWeight: 500}}>Talks</h2>
 
         <ul
           css={{
@@ -45,7 +45,6 @@ export default class Talks extends React.Component {
 
                 {video && (
                   <React.Fragment>
-                    {' '}
                     <a
                       css={{fontSize: '0.75em'}}
                       href={`https://www.youtube.com/watch?v=${video}`}

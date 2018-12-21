@@ -7,6 +7,7 @@ import Layout from '../components/Layout'
 import Logo from '../components/Logo'
 import PostList from '../components/PostList'
 import Talks from '../components/Talks'
+import Interviews from '../components/Interviews'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 import {globalStyles} from '../utils/style'
@@ -49,6 +50,9 @@ export default function Index(props) {
               talks {
                 AmsterdamJS
               }
+              interviews {
+                devtomanager
+              }
             }
           }
           allMdx(
@@ -69,7 +73,14 @@ export default function Index(props) {
         }
       `}
       render={data => {
-        const {author, social, talks, title, siteUrl} = data.site.siteMetadata
+        const {
+          author,
+          social,
+          talks,
+          interviews,
+          title,
+          siteUrl,
+        } = data.site.siteMetadata
         const posts = data.allMdx.edges
 
         return (
@@ -110,6 +121,7 @@ export default function Index(props) {
               </div>
               <div>
                 <Talks talks={talks} />
+                <Interviews interviews={interviews} />
               </div>
             </div>
             <Footer author={author} />
