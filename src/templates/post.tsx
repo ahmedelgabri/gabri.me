@@ -10,37 +10,38 @@ import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
 import 'prism-themes/themes/prism-atom-dark.css'
 
-export interface Props {
-  data: {
-    site: {
-      siteMetadata: {
-        title: string
-        author: string
-        siteUrl: string
-        social: {
-          twitter: {display: string}
-        }
-      }
-    }
-    mdx: {
-      id: number
-      excerpt: string
-      frontmatter: {
-        title: string
-        date: string
-      }
-      code: {
-        body: string
-      }
-    }
-  }
-  location: {
-    pathname: string
-  }
-  children: React.ReactNode
-}
+// gatsby-mdx 0.2.0 doesn't support TS yet
+// interface Props {
+//   data: {
+//     site: {
+//       siteMetadata: {
+//         title: string
+//         author: string
+//         siteUrl: string
+//         social: {
+//           twitter: {display: string}
+//         }
+//       }
+//     }
+//     mdx: {
+//       id: number
+//       excerpt: string
+//       frontmatter: {
+//         title: string
+//         date: string
+//       }
+//       code: {
+//         body: string
+//       }
+//     }
+//   }
+//   location: {
+//     pathname: string
+//   }
+//   children: React.ReactNode
+// }
 
-export default function Post(props: Props) {
+export default function Post(props /*: Props*/) {
   const {children, data, ...rest} = props
   const {title, date} = data.mdx.frontmatter
   const {

@@ -18,14 +18,14 @@ export interface Props {
   children?: React.ReactChild
 }
 
-export default ({
+export default function Meta({
   title,
   url,
   excerpt = description,
   post,
   img = socialImg,
   children,
-}: Props) => {
+}: Props) {
   return (
     <Helmet>
       <title>{title}</title>

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Helmet from 'react-helmet'
 import favicon from '../static/favicon.png'
 
 export default class HTML extends React.Component<
@@ -14,7 +13,6 @@ export default class HTML extends React.Component<
   {}
 > {
   render() {
-    const head = Helmet.rewind()
     return (
       <html lang="en" {...this.props.htmlAttributes}>
         <head>

@@ -1,15 +1,14 @@
 {
   "defaultSeverity": "error",
+  "rulesDirectory": ["tslint-plugin-prettier"],
   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
   "jsRules": {},
   "rules": {
+    "prettier": true,
     "interface-name": false,
-    "semicolon": [true, "never"],
     "member-access": [false],
     "ordered-imports": [true],
-    "no-console": [false],
-    "no-var-requires": true,
-    "quotemark": [true, "single", "jsx-double"]
-  },
-  "rulesDirectory": []
+    "no-console": [true],
+    "no-var-requires": true
+  }
 }

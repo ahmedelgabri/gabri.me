@@ -52,7 +52,6 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-remove-serviceworker',
-    'gatsby-plugin-typescript',
     'gatsby-plugin-twitter',
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
@@ -178,5 +177,6 @@ module.exports = {
       },
     },
     'gatsby-plugin-netlify',
+    'gatsby-plugin-typescript',
   ],
 }

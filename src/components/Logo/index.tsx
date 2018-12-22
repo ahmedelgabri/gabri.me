@@ -6,7 +6,7 @@ export interface Props {
   height?: number
 }
 
-export default ({width = 83, height = 35}: Props) => {
+export default function Logo({width = 83, height = 35}: Props) {
   return (
     <svg
       width="83"
