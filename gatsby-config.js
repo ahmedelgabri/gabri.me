@@ -1,11 +1,19 @@
+const proxy = require('http-proxy-middleware')
 const feedUrl = 'feed.xml'
 
 module.exports = {
+  developMiddleware: app => {
+    app.use(
+      '/.netlify/functions/',
+      proxy({
+        target: 'http://localhost:9000',
+        pathRewrite: {
+          '/.netlify/functions/': '',
+        },
+      }),
+    )
+  },
   siteMetadata: {
-    lambdaEndpoint:
-      process.env.NODE_ENV === 'production'
-        ? '/.netlify/functions'
-        : 'http://localhost:9000',
     author: 'Ahmed El Gabri',
     title: 'Front-end Engineer',
     siteUrl: 'https://gabri.me',
