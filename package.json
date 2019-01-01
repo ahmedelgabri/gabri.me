@@ -8,11 +8,11 @@
   "scripts": {
     "build:gatsby": "gatsby build",
     "build:lambda": "netlify-lambda build .lambda-dev",
-    "build": "yarn build:gatsby && yarn build:lambda",
+    "build": "run-p build:**",
     "serve": "gatsby serve",
     "dev:gatsby": "gatsby develop",
     "dev:lambda": "netlify-lambda serve .lambda-dev",
-    "dev": "concurrently --kill-others 'yarn dev:gatsby' 'yarn dev:lambda'",
+    "dev": "run-p dev:**",
     "lint": "tslint 'src/**/*.{ts,tsx}' -p tsconfig.json",
     "type-check": "tsc"
   },
@@ -54,6 +54,7 @@
     "gatsby-remark-smartypants": "2.0.7",
     "gatsby-source-filesystem": "2.0.12",
     "netlify-lambda": "1.1.1",
+    "npm-run-all": "4.1.5",
     "prism-themes": "1.0.1",
     "prismjs": "1.15.0",
     "ramda": "0.26.1",
@@ -64,7 +65,6 @@
     "typescript": "3.2.2"
   },
   "devDependencies": {
-    "concurrently": "4.1.0",
     "prettier": "1.15.3",
     "tslint-config-prettier": "1.17.0",
     "tslint-plugin-prettier": "2.0.1",
