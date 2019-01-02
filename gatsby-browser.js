@@ -1,14 +1,12 @@
 /* global window */
 // @flow
 import ReactGA from 'react-ga'
-import config from './gatsby-config'
 
-const tracker =
+ReactGA.initialize(
   typeof window !== 'undefined' && window.location.hostname === 'localhost'
-    ? 'local'
-    : 'prod'
-
-ReactGA.initialize(config.siteMetadata.googleAnalytics[tracker])
+    ? 'UA-10517764-7'
+    : 'UA-10517764-2',
+)
 
 export const onRouteUpdate = state => {
   ReactGA.set({page: state.location.pathname})
