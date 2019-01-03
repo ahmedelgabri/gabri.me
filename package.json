@@ -27,7 +27,7 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/preset-env": "7.2.3",
     "@babel/preset-react": "7.0.0",
-    "@mdx-js/loader": "0.16.5",
+    "@mdx-js/loader": "0.16.6",
     "@mdx-js/mdx": "0.16.0",
     "@types/node": "10.12.18",
     "@types/react": "16.7.18",
