@@ -5024,11 +5024,6 @@ gatsby-plugin-feed@2.0.11:
     pify "^3.0.0"
     rss "^1.2.2"
 
-gatsby-plugin-klipse@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-klipse/-/gatsby-plugin-klipse-2.1.0.tgz#dd0e6fce188f4b7e9c099260d1427ed3152fe8fa"
-  integrity sha512-RbN4eKIrhk367bW8JjPXnyObNstWDShbQvESbubJns+O3sjiZb7NmEhWwznXOcNUJmRjzIq1xTT2DGnobybcpw==
-
 gatsby-plugin-netlify@2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-netlify/-/gatsby-plugin-netlify-2.0.6.tgz#2af2efe1c013a86d20365a49378dc70a2b8b6153"
