@@ -1,6 +1,7 @@
 /* global window */
-// @flow
+
 import ReactGA from 'react-ga'
+require('prism-themes/themes/prism-atom-dark.css')
 
 ReactGA.initialize(
   typeof window !== 'undefined' && window.location.hostname === 'localhost'

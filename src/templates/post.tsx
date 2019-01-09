@@ -8,7 +8,6 @@ import Back from '../components/Back'
 import Layout from '../components/Layout'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
-import 'prism-themes/themes/prism-atom-dark.css'
 
 // gatsby-mdx 0.2.0 doesn't support TS yet
 // interface Props {
