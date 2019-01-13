@@ -1,4 +1,3 @@
-// @flow
 const path = require('path')
 const componentWithMDXScope = require('gatsby-mdx/component-with-mdx-scope')
 

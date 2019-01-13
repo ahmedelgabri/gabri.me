@@ -1,6 +1,6 @@
 /* global window */
 
-import ReactGA from 'react-ga'
+import * as ReactGA from 'react-ga'
 require('prism-themes/themes/prism-atom-dark.css')
 
 ReactGA.initialize(
