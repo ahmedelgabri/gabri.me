@@ -31,7 +31,7 @@
     "@mdx-js/loader": "0.16.6",
     "@mdx-js/mdx": "0.16.0",
     "@types/node": "10.12.18",
-    "@types/react": "16.7.18",
+    "@types/react": "16.7.20",
     "@types/react-dom": "16.0.11",
     "@types/react-helmet": "5.0.8",
     "babel-plugin-styled-components": "1.10.0",
@@ -61,7 +61,7 @@
     "react-dom": "16.7.0",
     "react-ga": "2.5.6",
     "react-helmet": "5.2.0",
-    "typescript": "3.2.2"
+    "typescript": "3.2.4"
   },
   "devDependencies": {
     "prettier": "1.15.3",
