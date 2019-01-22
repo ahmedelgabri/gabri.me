@@ -27,13 +27,16 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/preset-env": "7.3.1",
     "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.1.0",
     "@emotion/core": "10.0.6",
     "@mdx-js/loader": "0.16.6",
     "@mdx-js/mdx": "0.16.0",
+    "@types/aws-lambda": "8.10.17",
     "@types/node": "10.12.18",
     "@types/react": "16.7.20",
     "@types/react-dom": "16.0.11",
     "@types/react-helmet": "5.0.8",
+    "babel-eslint": "11.0.0-beta.0",
     "babel-plugin-styled-components": "1.10.0",
     "colors.css": "3.0.0",
     "gatsby": "2.0.91",
@@ -45,7 +48,6 @@
     "gatsby-plugin-remove-serviceworker": "1.0.0",
     "gatsby-plugin-sitemap": "2.0.4",
     "gatsby-plugin-twitter": "2.0.8",
-    "gatsby-plugin-typescript": "2.0.3",
     "gatsby-remark-copy-linked-files": "2.0.8",
     "gatsby-remark-prismjs": "3.2.0",
     "gatsby-remark-responsive-iframe": "2.0.8",
@@ -64,11 +66,10 @@
     "typescript": "3.2.4"
   },
   "devDependencies": {
-    "@types/aws-lambda": "8.10.17",
+    "@ahmedelgabri/eslint-config": "3.0.2",
+    "eslint-config-standard": "12.0.0",
     "prettier": "1.16.1",
-    "tslint-config-prettier": "1.17.0",
-    "tslint-plugin-prettier": "2.0.1",
-    "tslint-react": "3.6.0"
+    "standard": "12.0.1"
   },
   "engines": {
     "node": ">=8.1.4"

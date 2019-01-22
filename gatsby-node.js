@@ -1,6 +1,24 @@
 const path = require('path')
 const componentWithMDXScope = require('gatsby-mdx/component-with-mdx-scope')
 
+exports.resolvableExtensions = () => [`.ts`, `.tsx`]
+exports.onCreateWebpackConfig = ({actions, loaders}) => {
+  const jsLoader = loaders.js()
+
+  if (!jsLoader) return
+
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: jsLoader,
+        },
+      ],
+    },
+  })
+}
+
 // Create slugs for files.
 exports.onCreateNode = ({node, actions}) => {
   const {createNodeField} = actions
