@@ -29,7 +29,7 @@
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.1.0",
     "@emotion/core": "10.0.6",
-    "@mdx-js/loader": "0.16.6",
+    "@mdx-js/loader": "0.16.8",
     "@mdx-js/mdx": "0.16.0",
     "@types/aws-lambda": "8.10.17",
     "@types/node": "10.12.18",
