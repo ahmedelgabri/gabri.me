@@ -6,12 +6,8 @@ module.exports = {
     '@ahmedelgabri/eslint-config/prettier',
     '@ahmedelgabri/eslint-config/import',
   ],
-  parser: 'babel-eslint',
-  parserOptions: {
-    babelOptions: {
-      configFile: path.resolve(__dirname, './.babelrc.js'),
-    },
-  },
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   globals: {
     graphql: true,
   },

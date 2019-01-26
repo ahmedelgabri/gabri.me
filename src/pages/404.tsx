@@ -4,7 +4,7 @@ import {StaticQuery, graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import Back from '../components/Back'
 import Footer from '../components/Footer'
-import gif from '../../public/img/404.gif'
+import gif from '../../static/img/404.gif'
 
 interface Data {
   site: {siteMetadata: {author: string}}

@@ -1,5 +1,7 @@
 import colors from 'colors.css'
 
+// #2e5090
+
 export const fonts: {monospace: string; sansSerif: string; serif: string} = {
   monospace:
     '"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata, monospace, monospace',
