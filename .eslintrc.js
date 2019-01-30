@@ -7,8 +7,11 @@ module.exports = {
     '@ahmedelgabri/eslint-config/import',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['plugin:@typescript-eslint/recommended'],
   globals: {
     graphql: true,
+  },
+  parserOptions: {
+    project: path.resolve(__dirname, './tsconfig.json'),
   },
 }
