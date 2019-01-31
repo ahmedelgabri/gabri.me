@@ -61,7 +61,7 @@
     "ramda": "0.26.1",
     "react": "16.7.0",
     "react-dom": "16.7.0",
-    "react-ga": "2.5.6",
+    "react-ga": "2.5.7",
     "react-helmet": "5.2.0",
     "typescript": "3.2.4"
   },
