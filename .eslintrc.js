@@ -7,7 +7,7 @@ module.exports = {
     '@ahmedelgabri/eslint-config/import',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['plugin:@typescript-eslint/recommended'],
+  plugins: ['react-hooks', 'plugin:@typescript-eslint/recommended'],
   globals: {
     graphql: true,
   },
