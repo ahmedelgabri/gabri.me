@@ -34,7 +34,7 @@
     "babel-eslint": "10.0.1",
     "babel-plugin-styled-components": "1.10.0",
     "colors.css": "3.0.0",
-    "flow-bin": "0.89.0",
+    "flow-bin": "0.92.1",
     "flow-typed": "2.5.1",
     "gatsby": "2.0.118",
     "gatsby-mdx": "0.2.0",
