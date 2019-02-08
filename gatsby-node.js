@@ -66,7 +66,7 @@ exports.createPages = async ({graphql, actions}) => {
     createPage({
       path: slug,
       component: componentWithMDXScope(
-        path.resolve(`./src/templates/${layout || 'post'}.tsx`),
+        path.resolve(`./src/templates/${layout || 'post'}.js`),
         scope,
       ),
       context: {

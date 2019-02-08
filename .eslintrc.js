@@ -1,17 +1,13 @@
-const path = require('path')
-
 module.exports = {
   extends: [
     '@ahmedelgabri',
     '@ahmedelgabri/eslint-config/prettier',
+    '@ahmedelgabri/eslint-config/flow',
     '@ahmedelgabri/eslint-config/import',
   ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-hooks', 'plugin:@typescript-eslint/recommended'],
+  parser: 'babel-eslint',
+  plugins: ['react-hooks'],
   globals: {
     graphql: true,
-  },
-  parserOptions: {
-    project: path.resolve(__dirname, './tsconfig.json'),
   },
 }

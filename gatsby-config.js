@@ -181,6 +181,5 @@ module.exports = {
       },
     },
     'gatsby-plugin-netlify',
-    'gatsby-plugin-typescript',
   ],
 }
