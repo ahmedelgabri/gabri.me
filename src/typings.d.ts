@@ -8,6 +8,8 @@
 // declare module "*.png"
 
 declare module 'colors.css'
+declare module 'prism-react-renderer'
+declare module 'mdx-utils'
 
 declare module '*.png'
 declare module '*.svg'

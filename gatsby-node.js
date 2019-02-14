@@ -1,5 +1,4 @@
 const path = require('path')
-const componentWithMDXScope = require('gatsby-mdx/component-with-mdx-scope')
 
 // Create slugs for files.
 exports.onCreateNode = ({node, actions}) => {
@@ -65,10 +64,7 @@ exports.createPages = async ({graphql, actions}) => {
 
     createPage({
       path: slug,
-      component: componentWithMDXScope(
-        path.resolve(`./src/templates/${layout || 'post'}.tsx`),
-        scope,
-      ),
+      component: path.resolve(`./src/templates/${layout || 'post'}.tsx`),
       context: {
         slug,
         id,

@@ -71,9 +71,6 @@ module.exports = {
             },
           },
           {
-            resolve: 'gatsby-remark-prismjs',
-          },
-          {
             resolve: 'gatsby-remark-copy-linked-files',
           },
           {
@@ -121,8 +118,8 @@ module.exports = {
         feeds: [
           {
             query: `
-            {
-              allMdx(
+        {
+          allMdx(
                 sort: {
                   order: DESC,
                   fields: [frontmatter___date]
