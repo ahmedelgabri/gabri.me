@@ -1,8 +1,8 @@
 ---
-title: "DIY Vim statusline"
+title: 'DIY Vim statusline'
 published: true
-date: "2015-10-05"
-tags: ["vim", "unix", "terminal"]
+date: '2015-10-05'
+tags: ['vim', 'unix', 'terminal']
 ---
 
 > _**Update 20 Aug 2017:** I'm currently using a new & better version of the

@@ -1,11 +1,12 @@
 ---
-title: "Weekly links v.9"
+title: 'Weekly links v.9'
 published: true
-date: "2014-11-29"
+date: '2014-11-29'
 tags: null
 ---
 
-Here are some of the most interesting links that I have found on the web this week.
+Here are some of the most interesting links that I have found on the web this
+week.
 
 ### Articles
 
@@ -19,16 +20,20 @@ Here are some of the most interesting links that I have found on the web this we
 - [ember-cli-remote-inspector](https://www.npmjs.org/package/ember-cli-remote-inspector)
 - [Organize Your GitHub Stars With Ease](http://astralapp.com/)
 - [Charted](http://www.charted.co/) - Beautiful, automatic charts.
-- [Livedown](https://github.com/shime/livedown) - Live Markdown previews for your favourite editor. Supports Vim, Emacs & Sublime Text.
-- [Liteicon](http://www.freemacsoft.net/liteicon/) is a simple app which allows you to change your system icons quickly and easily.
+- [Livedown](https://github.com/shime/livedown) - Live Markdown previews for
+  your favourite editor. Supports Vim, Emacs & Sublime Text.
+- [Liteicon](http://www.freemacsoft.net/liteicon/) is a simple app which allows
+  you to change your system icons quickly and easily.
 
 ### Development
 
 - [A Dive Into Plain JavaScript](http://blog.adtile.me/2014/01/16/a-dive-into-plain-javascript/)
-- [2 years with Angular.](http://www.fse.guru/2-years-with-angular) _Verdict: good enough (not really)_
+- [2 years with Angular.](http://www.fse.guru/2-years-with-angular) _Verdict:
+  good enough (not really)_
 - [What's in a Function Name?](http://bocoup.com/weblog/whats-in-a-function-name/)
 - [W3C HTML JSON form submission](http://www.w3.org/TR/html-json-forms/)
-- Wallmart's Nodejs [mobile Server Side Rendering](https://gist.github.com/kpdecker/c89361e2b452457f9d2e)
+- Wallmart's Nodejs
+  [mobile Server Side Rendering](https://gist.github.com/kpdecker/c89361e2b452457f9d2e)
 
 ### Design
 

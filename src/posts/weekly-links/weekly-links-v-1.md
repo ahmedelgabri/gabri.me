@@ -1,7 +1,7 @@
 ---
-title: "Weekly links v.1"
+title: 'Weekly links v.1'
 published: true
-date: "2014-10-04"
+date: '2014-10-04'
 tags: null
 ---
 

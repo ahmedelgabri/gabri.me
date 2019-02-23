@@ -1,24 +1,29 @@
 ---
-title: "Weekly links v.6"
+title: 'Weekly links v.6'
 published: true
-date: "2014-11-08"
+date: '2014-11-08'
 tags: null
 ---
 
-Here are some of the most interesting links that I have found on the web this week.
+Here are some of the most interesting links that I have found on the web this
+week.
 
 ### Articles
 
 - [Stop breaking the web.](http://ponyfoo.com/articles/stop-breaking-the-web)
 - [7 Principles of Rich Web Applications](http://rauchg.com/2014/7-principles-of-rich-web-applications/#server-rendered-pages-are-not-optional)
-- [Building SoundCloud](http://www.michaelevensen.com/) - A _6 parts_ retrospective highlighting some of the processes and narrative leading up to the launch of SoundCloud’s newly updated iPhone application.
+- [Building SoundCloud](http://www.michaelevensen.com/) - A _6 parts_
+  retrospective highlighting some of the processes and narrative leading up to
+  the launch of SoundCloud’s newly updated iPhone application.
 - [npm and front-end packaging](http://blog.npmjs.org/post/101775448305/npm-and-front-end-packaging)
 
 ### Links
 
-- Meet [Iconic.](https://useiconic.com/) The definitive icon set designed for the modern web.
+- Meet [Iconic.](https://useiconic.com/) The definitive icon set designed for
+  the modern web.
 - [HTML5 version of Clear iOS app version 2](http://clear.evanyou.me/)
-- [SoundKit](https://soundkit.io/) is a professional sound library designed for UI projects.
+- [SoundKit](https://soundkit.io/) is a professional sound library designed for
+  UI projects.
 
 ### Development
 
@@ -27,7 +32,8 @@ Here are some of the most interesting links that I have found on the web this we
 - [RxMarbels](http://rxmarbles.com/)
 - [Groupon adopts Kill Bill, the open-source Payments Platform](https://engineering.groupon.com/2014/misc/groupon-adopts-kill-bill-the-open-source-payments-platform/)
 - [Intern:](http://theintern.io/) A next-generation JavaScript testing stack
-- [Paperclipjs](http://paperclipjs.com/) Compiled templates for the Browser, and NodeJS
+- [Paperclipjs](http://paperclipjs.com/) Compiled templates for the Browser, and
+  NodeJS
 - [immutable-js](http://facebook.github.io/immutable-js/) by Facebook.
 
 ### Design

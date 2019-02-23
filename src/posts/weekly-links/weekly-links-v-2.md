@@ -1,11 +1,12 @@
 ---
-title: "Weekly links v.2"
+title: 'Weekly links v.2'
 published: true
-date: "2014-10-11"
+date: '2014-10-11'
 tags: null
 ---
 
-Here are some of the most interesting links that I have found on the web this week, let me know if you have any feedback.
+Here are some of the most interesting links that I have found on the web this
+week, let me know if you have any feedback.
 
 ### Articles
 
@@ -14,14 +15,21 @@ Here are some of the most interesting links that I have found on the web this we
 
 ### Links
 
-- [RequestBin](http://requestb.in/) gives you a URL that will collect requests made to it and let you inspect them in a human-friendly way. Use RequestBin to see what your HTTP client is sending or to inspect and debug webhook requests.
+- [RequestBin](http://requestb.in/) gives you a URL that will collect requests
+  made to it and let you inspect them in a human-friendly way. Use RequestBin to
+  see what your HTTP client is sending or to inspect and debug webhook requests.
 
 ### Development
 
 - [How GitHub is using Web Components in production](http://webcomponents.org/articles/interview-with-joshua-peek/)
-- Philip Roberts: [What the heck is the event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)| JSConf EU 2014. Also, here is the [code](https://github.com/latentflip/loupe) for the tool in the talk.
-- [Packer](http://www.packer.io/) is a tool for creating identical machine images for multiple platforms from a single source configuration.
-- [css-font-rendering](https://github.com/igrigorik/css-font-timeout/blob/patch-1/README.md), A proposal to let web developers control font-rendering via CSS.
+- Philip Roberts:
+  [What the heck is the event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)|
+  JSConf EU 2014. Also, here is the [code](https://github.com/latentflip/loupe)
+  for the tool in the talk.
+- [Packer](http://www.packer.io/) is a tool for creating identical machine
+  images for multiple platforms from a single source configuration.
+- [css-font-rendering](https://github.com/igrigorik/css-font-timeout/blob/patch-1/README.md),
+  A proposal to let web developers control font-rendering via CSS.
 
 ### Design
 

@@ -1,11 +1,12 @@
 ---
-title: "Weekly links v.3"
+title: 'Weekly links v.3'
 published: true
-date: "2014-10-19"
+date: '2014-10-19'
 tags: null
 ---
 
-Here are some of the most interesting links that I have found on the web this week.
+Here are some of the most interesting links that I have found on the web this
+week.
 
 ### Articles
 
@@ -22,7 +23,8 @@ Here are some of the most interesting links that I have found on the web this we
 
 ### Development
 
-- [Format.js](http://formatjs.io/), internationalize your web apps on the client & server.
+- [Format.js](http://formatjs.io/), internationalize your web apps on the client
+  & server.
 - [A Guide to SVG Animations (SMIL)](http://css-tricks.com/guide-svg-animations-smil/)
 - [Libsass 3.0](https://github.com/sass/libsass/releases/tag/3.0)
 

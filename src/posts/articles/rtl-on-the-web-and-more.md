@@ -1,8 +1,8 @@
 ---
-title: "RTL on the web, web related tools & maybe more..."
+title: 'RTL on the web, web related tools & maybe more...'
 published: true
-date: "2018-03-28"
-tags: ["front-end", "design", "rtl", "tooling", "arabic"]
+date: '2018-03-28'
+tags: ['front-end', 'design', 'rtl', 'tooling', 'arabic']
 ---
 
 Last month [@necolas](https://twitter.com/necolas) tweeted a thread about

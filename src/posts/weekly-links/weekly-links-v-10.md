@@ -1,11 +1,12 @@
 ---
-title: "Weekly links v.10"
+title: 'Weekly links v.10'
 published: true
-date: "2014-12-06"
+date: '2014-12-06'
 tags: null
 ---
 
-Here are some of the most interesting links that I have found on the web this week.
+Here are some of the most interesting links that I have found on the web this
+week.
 
 ### Articles
 
@@ -17,12 +18,12 @@ Here are some of the most interesting links that I have found on the web this we
 
 ### Links
 
-- [Mixture](http://mixture.io/blog/free/)
-  & [Cactus](http://cactusformac.com/blog/posts/cactus-and-glueprint.html) are
+- [Mixture](http://mixture.io/blog/free/) &
+  [Cactus](http://cactusformac.com/blog/posts/cactus-and-glueprint.html) are
   free now.
-- [Using Github App to connect to
-  Bitbucket](http://www.slideshare.net/liamdempsey/using-the-github-app-to-connect-to-bitbucket)
-- [Mermaid](https://github.com/knsv/mermaid) Generation of diagram and flowchart from text in a similar manner as markdown
+- [Using Github App to connect to Bitbucket](http://www.slideshare.net/liamdempsey/using-the-github-app-to-connect-to-bitbucket)
+- [Mermaid](https://github.com/knsv/mermaid) Generation of diagram and flowchart
+  from text in a similar manner as markdown
 - [REST client for Sublime Text 2 and 3](https://github.com/pjdietz/rester-sublime-http-client)
 - [Tindddle](https://tindddle.com/) - tinder for dribbble,
   [Tummis](http://www.tummis.com/) - tinder for twitter.
@@ -38,11 +39,12 @@ Here are some of the most interesting links that I have found on the web this we
 - [Holder.js](http://holderjs.com/) Holder renders image placeholders entirely
   in browser.
 - [Git hook to convert your TODOs into Github issues](https://github.com/naholyr/github-todos)
-- [Everything you need to know about
-  ES6](http://espadrine.github.io/New-In-A-Spec/es6/) in one page.
+- [Everything you need to know about ES6](http://espadrine.github.io/New-In-A-Spec/es6/)
+  in one page.
 
 ### Design
 
 - [Responsive Type, part 4: Responsive consistency](http://8gramgorilla.com/responsive-type-part-4-responsive-consistency/)
-- Design Explosions [Issue #1: Mapping on iOS](https://medium.com/@uxlaunchpad/design-explosions-mapping-on-ios-ad4ec6ba5c59)
+- Design Explosions
+  [Issue #1: Mapping on iOS](https://medium.com/@uxlaunchpad/design-explosions-mapping-on-ios-ad4ec6ba5c59)
 - [Chinese Mobile App UI Trends](http://dangrover.com/blog/2014/12/01/chinese-mobile-app-ui-trends.html)

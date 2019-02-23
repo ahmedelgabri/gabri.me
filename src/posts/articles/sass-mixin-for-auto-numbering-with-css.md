@@ -1,11 +1,19 @@
 ---
-title: "Sass mixin for auto-numbering with CSS"
+title: 'Sass mixin for auto-numbering with CSS'
 published: true
-date: "2013-05-25"
-tags: ["sass"]
+date: '2013-05-25'
+tags: ['sass']
 ---
 
-While I was working on a project at work I needed to have " table of contents" type of numbering in an `<ol>` but I wanted the numbers to be nested too like 1. , 1.1, 1.2, etc... which is not possible in HTML. And I remembered that I have faced this problem before &amp; I solved it using [CSS Counters](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Counters) and since I use [Sass](http://sass-lang.com/) now to write CSS. I thought about creating a `@mixin` for this. So here you go: _ Thanks for [cimmanon on Stackoverflow](http://stackoverflow.com/questions/16645824/check-for-a-variable-in-sass-mixin-print-it-if-its-defined/16648360?noredirect=1#16648360) for helping me with this_
+While I was working on a project at work I needed to have " table of contents"
+type of numbering in an `<ol>` but I wanted the numbers to be nested too like 1.
+, 1.1, 1.2, etc... which is not possible in HTML. And I remembered that I have
+faced this problem before &amp; I solved it using
+[CSS Counters](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Counters)
+and since I use [Sass](http://sass-lang.com/) now to write CSS. I thought about
+creating a `@mixin` for this. So here you go: _ Thanks for
+[cimmanon on Stackoverflow](http://stackoverflow.com/questions/16645824/check-for-a-variable-in-sass-mixin-print-it-if-its-defined/16648360?noredirect=1#16648360)
+for helping me with this_
 
 <!-- more -->
 
@@ -36,17 +44,16 @@ While I was working on a project at work I needed to have " table of contents" t
 
 The `@mixin` takes four arguments & must be called on the parent element:
 
-`$numbered-element`
-The element that you wanted to counted, in my case it was an `<li>` it can be anything.
+`$numbered-element` The element that you wanted to counted, in my case it was an
+`<li>` it can be anything.
 
-`$sep`
-s the seprator sign you want to use <b>Must be a string</b>
+`$sep` s the seprator sign you want to use <b>Must be a string</b>
 
-`$counter`
-ounter name, if you are using the `@mixin` more than once you must change the name for each one so it won't reset the counter before it.
+`$counter` ounter name, if you are using the `@mixin` more than once you must
+change the name for each one so it won't reset the counter before it.
 
-`$nested-parent`
-assing the name of the parent element if you wanted to work in a nested way like a `<ol>` or `<ul>` inside another `<ol>` or `<ul>`
+`$nested-parent` assing the name of the parent element if you wanted to work in
+a nested way like a `<ol>` or `<ul>` inside another `<ol>` or `<ul>`
 
 here is a demo of the mixin in action
 
