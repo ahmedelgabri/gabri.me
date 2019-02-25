@@ -67,7 +67,7 @@
   },
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "4.0.1",
-    "@typescript-eslint/eslint-plugin": "1.4.1",
+    "@typescript-eslint/eslint-plugin": "1.4.2",
     "@typescript-eslint/parser": "1.4.1",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-react-hooks": "1.2.0",
