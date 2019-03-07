@@ -946,10 +946,10 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@types/aws-lambda@8.10.20":
-  version "8.10.20"
-  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.20.tgz#082e7a65df53f344e50c7ebaddca999de31f48e3"
-  integrity sha512-dSgwcvNMZO/jlGEL7+c646bimLWXPklQOxO6056L2hOayQfXvt2q00BBmNTy8ixP7/TCz1cT8GsLBYI5kNoYmQ==
+"@types/aws-lambda@8.10.21":
+  version "8.10.21"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.21.tgz#8dce0945a722aa8dcdee35d2472a1e5c322c8f90"
+  integrity sha512-HaYGrmMYxOfjqSyOZywYlPMwf0V8AwhM8CXLfPiqnurGHrJL//0p50gq+C5+LHW5aD6W4Brt739w+Y/KWsQamw==
 
 "@types/configstore@^2.1.1":
   version "2.1.1"
