@@ -28,7 +28,7 @@
     "@babel/preset-env": "7.3.4",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.3.3",
-    "@emotion/core": "10.0.7",
+    "@emotion/core": "10.0.9",
     "@mdx-js/mdx": "0.20.3",
     "@mdx-js/tag": "0.20.3",
     "@types/aws-lambda": "8.10.21",
