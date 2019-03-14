@@ -957,10 +957,10 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@types/aws-lambda@8.10.22":
-  version "8.10.22"
-  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.22.tgz#5feecbee29436606edf771a9ee330871b224091c"
-  integrity sha512-FzGmRH253fQDxH0YRfDDwQqKF3IBAiBEVT2cvJR0pI3O+W4L0PktZOxpp5MMNHp1rlHWmHb7VN9X0NAX8IgDKA==
+"@types/aws-lambda@8.10.23":
+  version "8.10.23"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.23.tgz#ab90be8ee3d8796b35df0acef5d17d71c8928d97"
+  integrity sha512-erfexxfuc1+T7b4OswooKwpIjpdgEOVz6ZrDDWSR+3v7Kjhs4EVowfUkF9KuLKhpcjz+VVHQ/pWIl7zSVbKbFQ==
 
 "@types/configstore@^2.1.1":
   version "2.1.1"
