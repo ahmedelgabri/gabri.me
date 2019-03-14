@@ -39,7 +39,7 @@
     "babel-plugin-styled-components": "1.10.0",
     "colors.css": "3.0.0",
     "gatsby": "2.1.33",
-    "gatsby-mdx": "0.4.2",
+    "gatsby-mdx": "0.4.3",
     "gatsby-plugin-emotion": "4.0.6",
     "gatsby-plugin-feed": "2.0.15",
     "gatsby-plugin-netlify": "2.0.12",
