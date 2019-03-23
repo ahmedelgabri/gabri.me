@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {logEvent} from '../../utils/analytics'
-import icon from '../../../public/img/twitter-btn.svg'
+import icon from '../../../static/img/twitter-btn.svg'
 
 export interface Props {
   via: string
