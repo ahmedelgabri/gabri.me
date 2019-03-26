@@ -8732,10 +8732,10 @@ prism-react-renderer@0.1.6:
   resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-0.1.6.tgz#c9216baa234fab1c234209fcdaf0cd23a01c50a9"
   integrity sha512-uZJn5wrygCH0ZMue+2JRd0qJharrmpxa6/uK7deKgvCtJFFE+VsyvJ49LS8/ATt0mlAJS6vFQTDvhXBEXsda+A==
 
-prism-themes@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/prism-themes/-/prism-themes-1.0.1.tgz#8e68972176f5e4fbc0859cd8e9474a0bbfaf2e41"
-  integrity sha512-tRYOqg2tT5/eB++iX+rqRnqESkCKuoV+0PrUiGKdWMr5lApd/hwfu+72Hi0OS50wmcuIty3GB1HrRqoBD+Cpfg==
+prism-themes@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/prism-themes/-/prism-themes-1.1.0.tgz#9f4fadf0c9c7ee415773717ea69c2aaa25aedbfd"
+  integrity sha512-xBkflbKbstGGasW3P68KQzAuObLQeH//I5mn37jKVHVDrRLp4Xct/n8F/tV5h+CKIMa3nDAZ2q0bt8ItSiS72A==
 
 prismjs@1.16.0:
   version "1.16.0"
