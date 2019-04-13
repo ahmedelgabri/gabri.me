@@ -18,6 +18,11 @@
     eslint-plugin-promise "^4.0.1"
     eslint-plugin-standard "^4.0.0"
 
+"@ahmedelgabri/prettier-config@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ahmedelgabri/prettier-config/-/prettier-config-1.0.0.tgz#e69e726d7d068296aaeb0d696243078cf4adbd14"
+  integrity sha512-uligZfoH48zmBY2+rGrpt5fzK5O5bQk22u0ZphAu087fv5dcF5JVpB8B34jDkIUUfdswXxG2aOjzV6RENIqsYg==
+
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
