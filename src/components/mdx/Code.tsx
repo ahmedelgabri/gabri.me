@@ -9,10 +9,16 @@ interface Props {
 
 interface InnerProps {
   className: string
-  style: Object
-  tokens: Array<Array<unknown>>
-  getLineProps: (Object: {line: unknown[]; key: any}) => Object
-  getTokenProps: (Object: {token: unknown; key: any}) => Object
+  style: Record<string, unknown>
+  tokens: unknown[][]
+  getLineProps: (Object: {
+    line: unknown[]
+    key: unknown
+  }) => Record<string, unknown>
+  getTokenProps: (Object: {
+    token: unknown
+    key: unknown
+  }) => Record<string, unknown>
 }
 
 export default function Code({codeString, language}: Props) {

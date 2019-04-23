@@ -3,7 +3,7 @@ import {preToCodeBlock} from 'mdx-utils'
 import Code from './Code'
 
 export default {
-  pre: (preProps: Object) => {
+  pre: (preProps: Record<string, any>) => {
     const props = preToCodeBlock(preProps)
     // if there's a codeString and some props, we passed the test
     if (props) {

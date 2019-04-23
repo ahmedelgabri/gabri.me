@@ -18,7 +18,7 @@ The old way to achieve this needs you to edit the `/etc/hosts/` & Apache
 using `VirtualDocumentRoot` inside `httpd-vhosts.conf` you will have something
 like this
 
-```
+```conf
 NameVirtualHost *:80
 <VirtualHost *:80>
    VirtualDocumentRoot /Users/<username>/Sites/%1/%-1/build
@@ -44,7 +44,7 @@ match the domain name_
 The last step is to setup your `httpd-vhosts.conf` let's say your folder
 structure is like this
 
-```
+```text
 Sites/
 |- dev/
 |--|-project/
@@ -53,7 +53,7 @@ Sites/
 
 Then you will need to add this to your `httpd-vhosts.conf` file
 
-```
+```conf
 <Virtualhost *:80>
     UseCanonicalName Off
     VirtualDocumentRoot "/Users/<username>/Sites/dev/%1/public/"
