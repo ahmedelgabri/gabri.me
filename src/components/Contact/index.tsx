@@ -23,6 +23,7 @@ export default function Contact({social}: Props) {
               css={{border: 'none'}}
               target="_blank"
               onClick={() => logEvent('Social', site)}
+              title={site}
             >
               <img
                 css={{
