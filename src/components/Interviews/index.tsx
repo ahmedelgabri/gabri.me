@@ -29,7 +29,7 @@ export default function Interviews(props: Props) {
                 href={url}
                 onClick={() => logEvent('Interview', `${title}`)}
                 target="_blank"
-                rel="noreferer noopener"
+                rel="noreferrer noopener"
               >
                 {title}
               </a>

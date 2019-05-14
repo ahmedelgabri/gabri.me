@@ -94,7 +94,11 @@ export default function Index() {
                 <h1 css={{fontWeight: 500}}>{author}</h1>
                 <p>
                   Principal Software Developer at{' '}
-                  <a target="_blank" href="http://lightspeedhq.com">
+                  <a
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    href="http://lightspeedhq.com"
+                  >
                     LightspeedHQ
                   </a>
                   <br />

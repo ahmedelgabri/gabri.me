@@ -34,7 +34,7 @@ export default function Talks(props: Props) {
                   href={slides}
                   onClick={() => logEvent('Talk', `${talk} slides`)}
                   target="_blank"
-                  rel="noreferer noopener"
+                  rel="noreferrer noopener"
                 >
                   Slides
                 </a>
@@ -50,7 +50,7 @@ export default function Talks(props: Props) {
                       logEvent('Talk', `${talk} video`)
                     }}
                     target="_blank"
-                    rel="noreferer noopener"
+                    rel="noreferrer noopener"
                   >
                     Video
                   </a>
