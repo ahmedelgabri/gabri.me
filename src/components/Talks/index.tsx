@@ -1,4 +1,5 @@
 import * as React from 'react'
+import YouTube from '../YouTube'
 import {logEvent} from '../../utils/analytics'
 
 export interface Props {
@@ -56,31 +57,7 @@ export default function Talks(props: Props) {
                   </a>
                 </React.Fragment>
               )}
-              {state.showVideo === video && (
-                <div
-                  css={{
-                    position: 'relative',
-                    paddingBottom: '56.25%', // 16:9
-                    paddingTop: '25px',
-                    height: 0,
-                  }}
-                >
-                  <iframe
-                    css={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                    }}
-                    width="560"
-                    height="315"
-                    src={`https://www.youtube.com/embed/${video}?rel=0`}
-                    frameBorder="0"
-                    allowFullScreen
-                  />
-                </div>
-              )}
+              {state.showVideo === video && <YouTube id={video} />}
             </li>
           )
         })}
