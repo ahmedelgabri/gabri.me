@@ -31,7 +31,7 @@
     "@emotion/core": "10.0.10",
     "@mdx-js/mdx": "1.0.19",
     "@mdx-js/react": "1.0.16",
-    "@types/aws-lambda": "8.10.25",
+    "@types/aws-lambda": "8.10.26",
     "@types/node": "11.13.11",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
