@@ -7,9 +7,9 @@ tags: ['vim', 'unix', 'terminal']
 
 > _**Update 20 Aug 2017:** I'm currently using a new & better version of the
 > statusline code posted in this post, you can check the code here:
-> [statusline](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/.vim/plugin/statusline.vim)
+> [statusline](https://github.com/ahmedelgabri/dotfiles/blob/f2b74f6cd4dc8388047af87872621c5176c50306/files/.vim/plugin/statusline.vim)
 > &
-> [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/master/vim/.vim/autoload/statusline.vim)_
+> [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/f2b74f6cd4dc8388047af87872621c5176c50306/files/.vim/autoload/statusline.vim)_
 
 Nearly two years ago I decided to switch to Vim and move all my work into one
 app. The command line/Terminal or more sepcifically iTerm2. That desicion turns
