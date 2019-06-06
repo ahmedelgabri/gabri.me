@@ -33,7 +33,7 @@
     "@mdx-js/react": "1.0.16",
     "@types/aws-lambda": "8.10.26",
     "@types/node": "11.13.11",
-    "@types/react": "16.8.18",
+    "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
     "@types/react-helmet": "5.0.8",
     "babel-plugin-styled-components": "1.10.0",
