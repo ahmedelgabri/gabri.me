@@ -69,7 +69,7 @@
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "8.0.0",
     "@ahmedelgabri/prettier-config": "1.0.0",
-    "@typescript-eslint/eslint-plugin": "1.9.0",
+    "@typescript-eslint/eslint-plugin": "1.11.0",
     "@typescript-eslint/parser": "1.9.0",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-react-hooks": "1.6.0",
