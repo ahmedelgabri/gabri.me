@@ -67,7 +67,7 @@
     "typescript": "3.5.2"
   },
   "devDependencies": {
-    "@ahmedelgabri/eslint-config": "6.0.1",
+    "@ahmedelgabri/eslint-config": "8.0.0",
     "@ahmedelgabri/prettier-config": "1.0.0",
     "@typescript-eslint/eslint-plugin": "1.9.0",
     "@typescript-eslint/parser": "1.9.0",
