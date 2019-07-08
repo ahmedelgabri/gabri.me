@@ -38,7 +38,7 @@
     "@types/react-helmet": "5.0.8",
     "babel-plugin-styled-components": "1.10.4",
     "colors.css": "3.0.0",
-    "gatsby": "2.9.4",
+    "gatsby": "2.13.7",
     "gatsby-mdx": "0.6.3",
     "gatsby-plugin-emotion": "4.1.0",
     "gatsby-plugin-feed": "2.2.2",
