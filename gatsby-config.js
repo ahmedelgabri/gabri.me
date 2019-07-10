@@ -21,7 +21,7 @@ module.exports = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
     {
-      resolve: 'gatsby-mdx',
+      resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [

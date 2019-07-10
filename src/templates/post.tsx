@@ -1,7 +1,7 @@
 import * as React from 'react'
 import colors from 'colors.css'
 import {graphql} from 'gatsby'
-import MDXRenderer from 'gatsby-mdx/mdx-renderer'
+import MDXRenderer from 'gatsby-plugin-mdx/mdx-renderer'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Layout from '../components/Layout'
@@ -114,9 +114,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "Do MMMM YYYY")
       }
-      code {
-        body
-      }
+      body
     }
   }
 `
