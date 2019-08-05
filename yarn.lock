@@ -1073,10 +1073,10 @@
   resolved "https://registry.yarnpkg.com/@stefanprobst/lokijs/-/lokijs-1.5.6-b.tgz#6a36a86dbe132e702e6b15ffd3ce4139aebfe942"
   integrity sha512-MNodHp46og+Sdde/LCxTLrxcD5Dimu21R/Fer2raXMG1XtHSV2+vZnkIV87OPAxuf2NiDj1W5hN7Q2MYUfQQ8w==
 
-"@types/aws-lambda@8.10.28":
-  version "8.10.28"
-  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.28.tgz#d0222bf76feb0681a159e7a0fc43440c476bab67"
-  integrity sha512-MERGUHaCnVze5EausDGZQj1ZcH4YdiD7ltE0+guuZQOfrV7SipmCcQLFo6m36hostsRDjcs9UjQMRiPEdUBG9A==
+"@types/aws-lambda@8.10.31":
+  version "8.10.31"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.31.tgz#f34c42412e59824efa21717c71024f7d04405b51"
+  integrity sha512-xcmOvzVILQoex1oR+vjKnBP3OJn+g92r3yVzeTSmRgLQwBvSOghRPRSx3rVMQivLzAIR6atxlVu3AV9bxc/hQw==
 
 "@types/configstore@^2.1.1":
   version "2.1.1"
