@@ -40,9 +40,6 @@ exports.createPages = async ({graphql, actions}) => {
             fields {
               slug
             }
-            code {
-              scope
-            }
           }
         }
       }
@@ -58,7 +55,6 @@ exports.createPages = async ({graphql, actions}) => {
   allMarkdown.data.allMdx.edges.forEach(({node}) => {
     const {
       id,
-      code: {scope},
       fields: {slug, layout},
     } = node
 

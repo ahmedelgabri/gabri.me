@@ -1,45 +1,42 @@
 import * as React from 'react'
 import colors from 'colors.css'
 import {graphql} from 'gatsby'
-import MDXRenderer from 'gatsby-mdx/mdx-renderer'
+import {MDXRenderer} from 'gatsby-plugin-mdx'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Layout from '../components/Layout'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
 
-// gatsby-mdx 0.2.0 doesn't support TS yet
-// interface Props {
-//   data: {
-//     site: {
-//       siteMetadata: {
-//         title: string
-//         author: string
-//         siteUrl: string
-//         social: {
-//           twitter: {display: string}
-//         }
-//       }
-//     }
-//     mdx: {
-//       id: number
-//       excerpt: string
-//       frontmatter: {
-//         title: string
-//         date: string
-//       }
-//       code: {
-//         body: string
-//       }
-//     }
-//   }
-//   location: {
-//     pathname: string
-//   }
-//   children: React.ReactNode
-// }
+interface Props {
+  data: {
+    site: {
+      siteMetadata: {
+        title: string
+        author: string
+        siteUrl: string
+        social: {
+          twitter: {display: string}
+        }
+      }
+    }
+    mdx: {
+      id: number
+      excerpt: string
+      frontmatter: {
+        title: string
+        date: string
+      }
+      body: string
+    }
+  }
+  location: {
+    pathname: string
+  }
+  children: React.ReactNode
+}
 
-export default function Post(props /*: Props*/) {
+export default function Post(props: Props) {
   const {children, data, ...rest} = props
   const {title, date} = data.mdx.frontmatter
   const {
@@ -76,7 +73,7 @@ export default function Post(props /*: Props*/) {
             On {date}
           </time>
           <h1>{title}</h1>
-          <MDXRenderer>{data.mdx.code.body}</MDXRenderer>
+          <MDXRenderer>{data.mdx.body}</MDXRenderer>
         </div>
         <div
           css={{
@@ -114,9 +111,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "Do MMMM YYYY")
       }
-      code {
-        body
-      }
+      body
     }
   }
 `
