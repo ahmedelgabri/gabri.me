@@ -118,6 +118,7 @@ module.exports = {
               })
             },
             output: feedUrl,
+            title: `${siteMetadata.author} | ${siteMetadata.title}`,
           },
         ],
       },
