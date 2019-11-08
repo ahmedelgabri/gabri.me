@@ -30,7 +30,7 @@ slugify the output of what you typed.
 
 That's the code for the app, pretty normal stuff nothing fancy here.
 
-```js
+```js filename=App.js
 import React, {Component} from 'react'
 import {render} from 'react-dom'
 import slug from 'slug'
@@ -84,7 +84,7 @@ You have a couple of options here:
 I'll go with the second option, so I'll add this script to my `package.json` so
 I can run the command easily
 
-```json
+```json filename=package.json
 {
   "name": "webpack-analyze",
   "version": "1.0.0",

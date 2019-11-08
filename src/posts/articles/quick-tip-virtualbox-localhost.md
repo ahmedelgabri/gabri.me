@@ -22,7 +22,7 @@ applies to Windows or not_.
 Now, I have a problem cause I'm using Apache VirtualHosts on my machine, this is
 how my `httpd-vhosts.conf` file looks like this
 
-```apache
+```apacheconf filename=httpd-vhosts.conf
  NameVirtualHost *:80
 
  <VirtualHost *:80>

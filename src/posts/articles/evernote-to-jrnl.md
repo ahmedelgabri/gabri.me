@@ -86,7 +86,7 @@ notes as Markdown files and import them using the Day one CLI tool.
 
 Here is the _quick & dirty_ script using node and ES2016 (aka ES6) syntax.
 
-```js
+```js filename=script.js
 #!/usr/bin/env node
 
 const fs = require('fs')
@@ -144,7 +144,7 @@ support encryption too.
 
 Here is how my configuration looks like
 
-```json
+```json filename=.jrnl_config
 {
   "default_hour": 9,
   "linewrap": 79,

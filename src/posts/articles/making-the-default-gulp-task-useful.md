@@ -22,7 +22,7 @@ cloned/forked/collaborated on a project &#038; had to open `Gruntfile.js` or
 this? So I decided to make the default task as TOC of all the tasks available in
 the `Gulpfile.js` and this is what I came up with.
 
-```javascript
+```javascript filename=gulpfile.js
 // This is (optional) if you don't want colored output
 // you can ditch this if you are not using it for anything else.
 var utils = require('gulp-util')

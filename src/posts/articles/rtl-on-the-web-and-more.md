@@ -111,7 +111,7 @@ afterwards they slap a stylesheet to "flip everything".
 
 But sometimes you fall in the trap of having your classes named something like:
 
-```css
+```css filename=ltr.css
 .float-left {
   float: left;
 }
@@ -124,7 +124,7 @@ But sometimes you fall in the trap of having your classes named something like:
 Then you override these in your RTL stylesheet as follows, which is very counter
 intuitive, confusing & hard to maintain.
 
-```css
+```css filename=rtl.css
 .float-left {
   float: right;
 }
@@ -138,7 +138,7 @@ Compare that to this, which IMO is easier to understand & maintain
 
 In LTR stylesheet
 
-```css
+```css filename=ltr.css
 .float-start {
   float: left;
 }
@@ -150,7 +150,7 @@ In LTR stylesheet
 
 In RTL stylesheet
 
-```css
+```css filename=rtl.css
 .float-start {
   float: right;
 }
@@ -162,7 +162,7 @@ In RTL stylesheet
 
 This would have been even better if CSS had these values the same too
 
-```css
+```css filename=ltr.css
 .float-start {
   float: start;
 }

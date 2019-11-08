@@ -38,7 +38,7 @@ that it's blazingly fast to start, nearly instant. So I decided I'll write my
 own customization to emulate what I liked about airline without all the overhead
 of it. I managed to achieve what I want and it turns out to be quite simple.
 
-```vim
+```vim filename=.vimrc
 " Statusline
 
 " :h mode() to see all modes
