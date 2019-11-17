@@ -1,6 +1,0 @@
-https://www.gabri.me/* https://gabri.me/:splat 301!
-
-/blog         /           301!
-/work         /           301!
-/work/:item   /           301!
-/feed         /feed.xml   301!

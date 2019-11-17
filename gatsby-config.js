@@ -1,19 +1,7 @@
-const proxy = require('http-proxy-middleware')
 const siteMetadata = require('./src/config/meta')
 const feedUrl = 'feed.xml'
 
 module.exports = {
-  developMiddleware: app => {
-    app.use(
-      '/.netlify/functions/',
-      proxy({
-        target: 'http://localhost:9000',
-        pathRewrite: {
-          '/.netlify/functions/': '',
-        },
-      }),
-    )
-  },
   siteMetadata,
   plugins: [
     'gatsby-plugin-remove-serviceworker',
@@ -139,7 +127,6 @@ module.exports = {
           }),
       },
     },
-    'gatsby-plugin-netlify',
     'gatsby-plugin-typescript',
   ],
 }
