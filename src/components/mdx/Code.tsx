@@ -63,7 +63,7 @@ export default function Code(props: Props) {
             <code>
               {tokens.map((line, i) => (
                 <div {...getLineProps({line, key: i})}>
-                  <span
+                  {/* <span
                     css={css`
                       display: inline-block;
                       width: 1.5em;
@@ -74,7 +74,7 @@ export default function Code(props: Props) {
                     `}
                   >
                     {i + 1}
-                  </span>
+                  </span> */}
                   {line.map((token, key) => (
                     <span {...getTokenProps({token, key})} />
                   ))}
