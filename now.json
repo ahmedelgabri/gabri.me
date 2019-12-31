@@ -2,17 +2,6 @@
 	"version": 2,
 	"regions": ["all"],
 	"alias": ["gabri.me", "www.gabri.me"],
-	"builds": [
-		{
-			"src": "package.json",
-			"use": "@now/static-build",
-			"config": {"distDir": "public"}
-		},
-		{
-			"src": "api/*.js",
-			"use": "@now/node"
-		}
-	],
 	"routes": [
 		{
 			"src": "/api/(.*)",
@@ -20,13 +9,23 @@
 		},
 		{
 			"src": "/(blog|work)",
-			"dest": "/",
-			"status": 301
+			"status": 301,
+			"headers": {"Location": "https://gabri.me"}
+		},
+		{
+			"src": "/(blog|work)/",
+			"status": 301,
+			"headers": {"Location": "https://gabri.me"}
 		},
 		{
 			"src": "/feed",
-			"dest": "/feed.xml",
-			"status": 301
+			"status": 301,
+			"headers": {"Location": "https://gabri.me/feed.xml"}
+		},
+		{
+			"src": "/feed/",
+			"status": 301,
+			"headers": {"Location": "https://gabri.me/feed.xml"}
 		}
 	]
 }
