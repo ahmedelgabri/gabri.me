@@ -105,28 +105,28 @@ let file
 let slugg
 
 notes.forEach(note => {
-  title = note.content.split('\n')[0].substring(2)
-  slugg = slug(title.toLowerCase())
-  date = moment(note.createdate).format('YYYY-MM-DD')
-  creationDate = moment(note.createdate).format('YYYY-MM-DD HH:mm')
-  tags =
-    note.tags.length > 1
-      ? note.tags.map(tag => `#${tag.toLowerCase()}`).join(', ')
-      : note.tags.map(tag => `#${tag.toLowerCase()}`).join()
-  file = path.join(__dirname, './evernote-md', `${date}-${slugg}.md`)
-  content = `# ${title}
+	title = note.content.split('\n')[0].substring(2)
+	slugg = slug(title.toLowerCase())
+	date = moment(note.createdate).format('YYYY-MM-DD')
+	creationDate = moment(note.createdate).format('YYYY-MM-DD HH:mm')
+	tags =
+		note.tags.length > 1
+			? note.tags.map(tag => `#${tag.toLowerCase()}`).join(', ')
+			: note.tags.map(tag => `#${tag.toLowerCase()}`).join()
+	file = path.join(__dirname, './evernote-md', `${date}-${slugg}.md`)
+	content = `# ${title}
   ---
   date: ${creationDate}
   tags: ${tags}
   ---
 ${note.content
-  .substring(note.content.split('\n')[0].length)
-  .replace(/\s?\n\n?\s?/g, '\n')}
+	.substring(note.content.split('\n')[0].length)
+	.replace(/\s?\n\n?\s?/g, '\n')}
 `
-  console.log(tags)
+	console.log(tags)
 
-  fs.writeFileSync(file, content, 'utf-8')
-  execSync(`dayone -d="${creationDate}" new < ${file}`)
+	fs.writeFileSync(file, content, 'utf-8')
+	execSync(`dayone -d="${creationDate}" new < ${file}`)
 })
 ```
 
@@ -146,19 +146,19 @@ Here is how my configuration looks like
 
 ```json filename=.jrnl_config
 {
-  "default_hour": 9,
-  "linewrap": 79,
-  "encrypt": true,
-  "default_minute": 0,
-  "tagsymbols": "#",
-  "editor": "nvim",
-  "timeformat": "%Y-%m-%d %H:%M",
-  "highlight": true,
-  "journals": {
-    "default": {
-      "journal": "<dayone iCloud path on my laptop>"
-    }
-  }
+	"default_hour": 9,
+	"linewrap": 79,
+	"encrypt": true,
+	"default_minute": 0,
+	"tagsymbols": "#",
+	"editor": "nvim",
+	"timeformat": "%Y-%m-%d %H:%M",
+	"highlight": true,
+	"journals": {
+		"default": {
+			"journal": "<dayone iCloud path on my laptop>"
+		}
+	}
 }
 ```
 

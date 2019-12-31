@@ -1,1 +1,4 @@
-module.exports = require('@ahmedelgabri/prettier-config')
+module.exports = {
+	...require('@ahmedelgabri/prettier-config'),
+	useTabs: true,
+}

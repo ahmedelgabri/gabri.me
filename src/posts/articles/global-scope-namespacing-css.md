@@ -113,13 +113,13 @@ about anyway. Code readability is much more important
 
 ```html
 <div class="rm-media rm-media--wide rm-theme--green clearfix">
-  <div class="rm-media__img">
-    <!-- code -->
-  </div>
+	<div class="rm-media__img">
+		<!-- code -->
+	</div>
 
-  <div class="rm-media__body">
-    <!-- code -->
-  </div>
+	<div class="rm-media__body">
+		<!-- code -->
+	</div>
 </div>
 ```
 
