@@ -6,7 +6,7 @@ export const fonts: {monospace: string; sansSerif: string; serif: string} = {
 	monospace:
 		'"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata, monospace, monospace',
 	sansSerif:
-		'"Inter UI", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+		'inter, "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
 	serif: '"IBM Plex Serif", georgia, serif',
 }
 
