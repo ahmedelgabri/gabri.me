@@ -1,3 +1,4 @@
+const path = require('path')
 const siteMetadata = require('./src/config/meta')
 const feedUrl = 'feed.xml'
 
@@ -31,7 +32,7 @@ module.exports = {
 		{
 			resolve: 'gatsby-source-filesystem',
 			options: {
-				path: `${__dirname}/src/posts`,
+				path: path.join(__dirname, '/src/posts'),
 				name: 'posts',
 			},
 		},
