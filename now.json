@@ -1,6 +1,5 @@
 {
 	"version": 2,
-	"regions": ["all"],
 	"alias": ["gabri.me", "www.gabri.me"],
 	"routes": [
 		{
