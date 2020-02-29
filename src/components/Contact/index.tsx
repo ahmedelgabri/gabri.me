@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {logEvent} from '../../utils/analytics'
 
 export interface Props {
 	social: SocialT
@@ -22,7 +21,6 @@ export default function Contact({social}: Props) {
 							rel="noopener noreferrer me"
 							css={{border: 'none'}}
 							target="_blank"
-							onClick={() => logEvent('Social', site)}
 							title={site}
 						>
 							<img

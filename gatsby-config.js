@@ -5,6 +5,15 @@ const feedUrl = 'feed.xml'
 module.exports = {
 	siteMetadata,
 	plugins: [
+		// Must be first
+		{
+			resolve: `gatsby-plugin-google-analytics`,
+			options: {
+				trackingId: 'UA-10517764-2',
+				head: true,
+				anonymize: true,
+			},
+		},
 		'gatsby-plugin-remove-serviceworker',
 		'gatsby-plugin-twitter',
 		'gatsby-plugin-emotion',

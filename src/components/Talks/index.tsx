@@ -1,6 +1,5 @@
 import * as React from 'react'
 import YouTube from '../YouTube'
-import {logEvent} from '../../utils/analytics'
 
 export interface Props {
 	talks: ActivityT
@@ -33,7 +32,6 @@ export default function Talks(props: Props) {
 								<a
 									css={{fontSize: '0.75em'}}
 									href={slides}
-									onClick={() => logEvent('Talk', `${talk} slides`)}
 									target="_blank"
 									rel="noreferrer noopener"
 								>
@@ -48,7 +46,6 @@ export default function Talks(props: Props) {
 										onClick={e => {
 											e.preventDefault()
 											setState(() => ({showVideo: video}))
-											logEvent('Talk', `${talk} video`)
 										}}
 										target="_blank"
 										rel="noreferrer noopener"

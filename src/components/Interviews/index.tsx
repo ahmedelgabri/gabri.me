@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {logEvent} from '../../utils/analytics'
 
 export interface Props {
 	interviews: ActivityT
@@ -27,7 +26,6 @@ export default function Interviews(props: Props) {
 							<a
 								css={{fontSize: '0.75em'}}
 								href={url}
-								onClick={() => logEvent('Interview', `${title}`)}
 								target="_blank"
 								rel="noreferrer noopener"
 							>

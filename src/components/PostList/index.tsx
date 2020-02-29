@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {Link} from 'gatsby'
-import {logEvent} from '../../utils/analytics'
 
 export interface Props {
 	posts: Array<{node: PostT}>
@@ -21,9 +20,7 @@ export default function PostList({posts = []}: Props) {
 			>
 				{posts.map(({node: {frontmatter: {title}, fields: {slug}}}) => (
 					<li key={title}>
-						<Link to={slug} onClick={() => logEvent('Post', title)}>
-							{title}
-						</Link>
+						<Link to={slug}>{title}</Link>
 					</li>
 				))}
 			</ul>

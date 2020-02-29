@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {logEvent} from '../../utils/analytics'
 import icon from '../../../static/img/twitter-btn.svg'
 
 export interface Props {
@@ -30,7 +29,6 @@ export default function TweetButton({via, title, url}: Props) {
 						border: 'none',
 					},
 				}}
-				onClick={() => logEvent('Tweet', title)}
 				href={`https://twitter.com/share?url=${url}&via=${via.slice(
 					1,
 				)}&text=${title}`}
