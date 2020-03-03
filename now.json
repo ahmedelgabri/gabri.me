@@ -1,30 +1,19 @@
 {
 	"version": 2,
+	"github": {
+		"silent": true
+	},
+	"scope": "ahmed_elgabri",
 	"alias": ["gabri.me", "www.gabri.me"],
-	"routes": [
+	"trailingSlash": false,
+	"rewrites": [
 		{
-			"src": "/api/(.*)",
-			"dest": "/api/$1.js"
+			"source": "/feed/",
+			"destination": "/feed.xml"
 		},
 		{
-			"src": "/(blog|work)",
-			"status": 301,
-			"headers": {"Location": "https://gabri.me"}
-		},
-		{
-			"src": "/(blog|work)/",
-			"status": 301,
-			"headers": {"Location": "https://gabri.me"}
-		},
-		{
-			"src": "/feed",
-			"status": 301,
-			"headers": {"Location": "https://gabri.me/feed.xml"}
-		},
-		{
-			"src": "/feed/",
-			"status": 301,
-			"headers": {"Location": "https://gabri.me/feed.xml"}
+			"source": "/(blog|work)",
+			"destination": "/"
 		}
 	]
 }

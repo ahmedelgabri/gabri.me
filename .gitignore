@@ -68,3 +68,5 @@ metadata.json
 drafts/
 feed.xml
 .lambda
+
+.now
