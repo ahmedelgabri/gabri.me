@@ -6,11 +6,13 @@
 	"scope": "ahmed_elgabri",
 	"alias": ["gabri.me", "www.gabri.me"],
 	"trailingSlash": false,
-	"rewrites": [
+	"redirects": [
 		{
-			"source": "/feed/",
+			"source": "/feed",
 			"destination": "/feed.xml"
-		},
+		}
+	],
+	"rewrites": [
 		{
 			"source": "/(blog|work)",
 			"destination": "/"
