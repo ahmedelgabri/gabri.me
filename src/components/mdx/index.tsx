@@ -5,6 +5,7 @@ import Code from './Code'
 
 export default {
   YouTube,
+  p: (props) => <p {...props} className="mb-4" />,
   pre: (preProps: Record<string, any>) => {
     const props = preToCodeBlock(preProps)
     // if there's a codeString and some props, we passed the test

@@ -7,7 +7,6 @@
 // And to shim assets, use (one file extension per `declare`):
 // declare module "*.png"
 
-declare module 'colors.css'
 declare module 'prism-react-renderer'
 declare module 'mdx-utils'
 

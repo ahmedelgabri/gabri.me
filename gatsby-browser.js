@@ -1,3 +1,4 @@
 /* global window */
 
-require('prism-themes/themes/prism-atom-dark.css')
+import './src/assets/s/style.css'
+import 'prism-themes/themes/prism-duotone-sea.css'

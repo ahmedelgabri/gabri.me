@@ -1,6 +1,4 @@
 import * as React from 'react'
-import {Global, css} from '@emotion/core'
-import {globalStyles} from './utils/style'
 import favicon from '../static/favicon.png'
 
 export default class HTML extends React.Component<
@@ -25,11 +23,6 @@ export default class HTML extends React.Component<
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
           <link rel="shortcut icon" href={favicon} />
-          <Global
-            styles={css`
-              ${globalStyles}
-            `}
-          />
           {this.props.headComponents}
         </head>
         <body {...this.props.bodyAttributes}>

@@ -6,10 +6,8 @@ export interface Props {
 
 export default function Footer({author}: Props) {
   return (
-    <div>
-      <small css={{fontSize: '0.5rem', opacity: 0.3}}>
-        {author} © {new Date().getFullYear()}
-      </small>
-    </div>
+    <p className="text-gray-300 text-tiny">
+      {author} © {new Date().getFullYear()}
+    </p>
   )
 }

@@ -9,26 +9,13 @@ export default function Interviews(props: Props) {
 
   return (
     <div>
-      <h2 css={{fontWeight: 500}}>Interviews</h2>
+      <h2>Interviews</h2>
 
-      <ul
-        css={{
-          lineHeight: 1.5,
-          paddingLeft: '0.5rem',
-          '@media screen and (min-width: 48em)': {
-            paddingLeft: 0,
-          },
-        }}
-      >
+      <ul>
         {Object.entries(interviews).map(([key, [title, url]]) => {
           return (
             <li key={key}>
-              <a
-                css={{fontSize: '0.75em'}}
-                href={url}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
+              <a href={url} target="_blank" rel="noreferrer noopener">
                 {title}
               </a>
             </li>

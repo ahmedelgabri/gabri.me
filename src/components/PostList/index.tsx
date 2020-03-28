@@ -7,17 +7,11 @@ export interface Props {
 
 export default function PostList({posts = []}: Props) {
   return (
-    <div>
-      <h2 css={{fontWeight: 500}}>Articles</h2>
-      <ul
-        css={{
-          lineHeight: 1.5,
-          paddingLeft: '0.5rem',
-          '@media screen and (min-width: 48em)': {
-            paddingLeft: 0,
-          },
-        }}
-      >
+    <div className="prose">
+      <h2 className="text-6xl font-extrabold leading-tight tracking-tight">
+        Articles
+      </h2>
+      <ul>
         {posts.map(({node: {frontmatter: {title}, fields: {slug}}}) => (
           <li key={title}>
             <Link to={slug}>{title}</Link>

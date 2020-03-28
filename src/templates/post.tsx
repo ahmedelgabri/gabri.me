@@ -1,7 +1,8 @@
 import * as React from 'react'
-import colors from 'colors.css'
 import {graphql} from 'gatsby'
 import {MDXRenderer} from 'gatsby-plugin-mdx'
+import {MDXProvider} from '@mdx-js/react'
+import MdxComponents from '../components/mdx'
 import Meta from '../components/Meta'
 import Back from '../components/Back'
 import Layout from '../components/Layout'
@@ -51,42 +52,37 @@ export default function Post(props: Props) {
   const postUrl = `${siteUrl}${rest.location.pathname}`
 
   return (
-    <Layout>
-      <div css={{maxWidth: '45rem'}}>
+    <MDXProvider components={MdxComponents}>
+      <Layout>
         <Meta
           title={`${title} | ${author} - ${siteTitle}`}
           excerpt={excerpt}
           url={postUrl}
           post
         />
-        <div css={{borderBottom: '1px solid rgba(0, 0, 0, 0.1)'}}>
+        <div>
           <Back />
-          <time
-            css={{
-              fontStyle: 'italic',
-              fontSize: '0.75rem',
-              color: colors.gray,
-              display: 'block',
-            }}
-            datatime={date}
-          >
-            On {date}
-          </time>
-          <h1>{title}</h1>
-          <MDXRenderer>{data.mdx.body}</MDXRenderer>
+          <h1 className="mb-4 text-6xl font-extrabold leading-none tracking-tight">
+            {title}
+          </h1>
+          <div className="lg:w-3/4">
+            <time
+              className="block mb-4 italic text-gray-500 text-tiny"
+              dataTime={date}
+            >
+              On {date}
+            </time>
+            <div className="prose">
+              <MDXRenderer>{data.mdx.body}</MDXRenderer>
+            </div>
+          </div>
+          <div>
+            <TweetButton via={display} title={title} url={postUrl} />
+          </div>
+          <Footer author={author} />
         </div>
-        <div
-          css={{
-            marginBottom: '1rem',
-            paddingBottom: '1rem',
-            paddingTop: '1rem',
-          }}
-        >
-          <TweetButton via={display} title={title} url={postUrl} />
-        </div>
-        <Footer author={author} />
-      </div>
-    </Layout>
+      </Layout>
+    </MDXProvider>
   )
 }
 
