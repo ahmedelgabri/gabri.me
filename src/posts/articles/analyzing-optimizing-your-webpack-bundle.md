@@ -38,28 +38,28 @@ import slug from 'slug'
 const Input = ({onChange}) => <input type="text" onChange={onChange} />
 
 class App extends Component {
-	constructor(props) {
-		super(props)
+  constructor(props) {
+    super(props)
 
-		this.state = {
-			text: '',
-		}
+    this.state = {
+      text: '',
+    }
 
-		this.handleEvent = this.handleEvent.bind(this)
-	}
+    this.handleEvent = this.handleEvent.bind(this)
+  }
 
-	handleEvent(e) {
-		this.setState({text: e.target.value.trim()})
-	}
+  handleEvent(e) {
+    this.setState({text: e.target.value.trim()})
+  }
 
-	render() {
-		return (
-			<div>
-				<Input onChange={this.handleEvent} />
-				<p>{slug(this.state.text) || 'Start typing...'}</p>
-			</div>
-		)
-	}
+  render() {
+    return (
+      <div>
+        <Input onChange={this.handleEvent} />
+        <p>{slug(this.state.text) || 'Start typing...'}</p>
+      </div>
+    )
+  }
 }
 
 render(<App />, document.querySelector('#App'))
@@ -86,26 +86,26 @@ I can run the command easily
 
 ```json filename=package.json
 {
-	"name": "webpack-analyze",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "NODE_ENV=production webpack",
-		"debug": "npm run build -- --progress --colors --profile --display-modules --display-reasons --display-error-details"
-	},
-	"license": "MIT",
-	"dependencies": {
-		"babel-core": "6.22.1",
-		"babel-loader": "6.2.10",
-		"babel-preset-es2015": "6.22.0",
-		"babel-preset-react": "6.22.0",
-		"react": "15.4.2",
-		"react-dom": "15.4.2",
-		"slug": "0.9.1",
-		"slugify": "1.1.0",
-		"webpack": "2.2.0"
-	}
+  "name": "webpack-analyze",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "debug": "npm run build -- --progress --colors --profile --display-modules --display-reasons --display-error-details"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "6.22.1",
+    "babel-loader": "6.2.10",
+    "babel-preset-es2015": "6.22.0",
+    "babel-preset-react": "6.22.0",
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
+    "slug": "0.9.1",
+    "slugify": "1.1.0",
+    "webpack": "2.2.0"
+  }
 }
 ```
 
@@ -146,8 +146,8 @@ to tell Webpack to ignore this file from the bundle.
 
 ```js
 plugins: [
-	// ignore the So.js unicode table file (mainly it contains Arabic & tibitan unicode data)
-	new webpack.IgnorePlugin(/unicode\/category\/So/, /node_modules/),
+  // ignore the So.js unicode table file (mainly it contains Arabic & tibitan unicode data)
+  new webpack.IgnorePlugin(/unicode\/category\/So/, /node_modules/),
 ]
 ```
 

@@ -1,21 +1,21 @@
 {
-	"version": 2,
-	"github": {
-		"silent": true
-	},
-	"scope": "ahmed_elgabri",
-	"alias": ["gabri.me", "www.gabri.me"],
-	"trailingSlash": false,
-	"redirects": [
-		{
-			"source": "/feed",
-			"destination": "/feed.xml"
-		}
-	],
-	"rewrites": [
-		{
-			"source": "/(blog|work)",
-			"destination": "/"
-		}
-	]
+  "version": 2,
+  "github": {
+    "silent": true
+  },
+  "scope": "ahmed_elgabri",
+  "alias": ["gabri.me", "www.gabri.me"],
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/feed",
+      "destination": "/feed.xml"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(blog|work)",
+      "destination": "/"
+    }
+  ]
 }

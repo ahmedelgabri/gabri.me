@@ -27,13 +27,13 @@ the `Gulpfile.js` and this is what I came up with.
 // you can ditch this if you are not using it for anything else.
 var utils = require('gulp-util')
 
-gulp.task('default', function() {
-	var tasks = Object.keys(gulp.tasks).sort()
-	utils.log(utils.colors.yellow('You have the following tasks to run:'))
-	tasks.forEach(function(t) {
-		if (t === 'default') return
-		utils.log(utils.colors.yellow('• gulp ' + t))
-	})
+gulp.task('default', function () {
+  var tasks = Object.keys(gulp.tasks).sort()
+  utils.log(utils.colors.yellow('You have the following tasks to run:'))
+  tasks.forEach(function (t) {
+    if (t === 'default') return
+    utils.log(utils.colors.yellow('• gulp ' + t))
+  })
 })
 ```
 

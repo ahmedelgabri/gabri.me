@@ -3,13 +3,13 @@ import {MDXProvider} from '@mdx-js/react'
 import MdxComponents from '../mdx'
 
 export interface Props {
-	children: React.ReactNode
+  children: React.ReactNode
 }
 
 const Layout = ({children}: Props) => (
-	<MDXProvider components={MdxComponents}>
-		<div css={{padding: '3% 6%'}}>{children}</div>
-	</MDXProvider>
+  <MDXProvider components={MdxComponents}>
+    <div css={{padding: '3% 6%'}}>{children}</div>
+  </MDXProvider>
 )
 
 export default Layout

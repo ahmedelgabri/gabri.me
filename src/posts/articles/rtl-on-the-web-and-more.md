@@ -113,11 +113,11 @@ But sometimes you fall in the trap of having your classes named something like:
 
 ```css filename=ltr.css
 .float-left {
-	float: left;
+  float: left;
 }
 
 .margin-right {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 ```
 
@@ -126,11 +126,11 @@ intuitive, confusing & hard to maintain.
 
 ```css filename=rtl.css
 .float-left {
-	float: right;
+  float: right;
 }
 
 .margin-right {
-	margin-left: 10px;
+  margin-left: 10px;
 }
 ```
 
@@ -140,11 +140,11 @@ In LTR stylesheet
 
 ```css filename=ltr.css
 .float-start {
-	float: left;
+  float: left;
 }
 
 .margin-start {
-	margin-left: 10px;
+  margin-left: 10px;
 }
 ```
 
@@ -152,11 +152,11 @@ In RTL stylesheet
 
 ```css filename=rtl.css
 .float-start {
-	float: right;
+  float: right;
 }
 
 .margin-start {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 ```
 
@@ -164,11 +164,11 @@ This would have been even better if CSS had these values the same too
 
 ```css filename=ltr.css
 .float-start {
-	float: start;
+  float: start;
 }
 
 .margin-start {
-	margin-start: 10px;
+  margin-start: 10px;
 }
 ```
 
