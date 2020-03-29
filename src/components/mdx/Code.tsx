@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {css} from '@emotion/core'
+import cn from 'classnames'
 import Highlight, {defaultProps} from 'prism-react-renderer'
 import Prism from 'prism-react-renderer/prism'
 // https://github.com/FormidableLabs/prism-react-renderer/issues/53#issuecomment-546653848
@@ -11,6 +11,8 @@ require('prismjs/components/prism-apacheconf')
 interface Props {
   codeString: string
   language: string
+  className?: string
+  filename?: string
 }
 
 interface InnerProps {
@@ -28,20 +30,14 @@ interface InnerProps {
 }
 
 export default function Code(props: Props) {
-  const {codeString, language, filename} = props
+  const {codeString, language, filename, className: customClassName} = props
 
   return (
     <>
       {filename && (
-        <p
-          css={css`
-            padding-bottom: 0.5rem;
-            margin: 0;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-          `}
-        >
-          <code>{filename}</code>
-        </p>
+        <span className={cn('block p-2 m-0 bg-gray-800 text-white')}>
+          <code>File: {filename}</code>
+        </span>
       )}
       <Highlight
         {...defaultProps}
@@ -59,22 +55,13 @@ export default function Code(props: Props) {
           getLineProps,
           getTokenProps,
         }: InnerProps) => (
-          <pre className={className} style={style}>
+          <pre className={cn(className, customClassName)} style={style}>
             <code>
               {tokens.map((line, i) => (
                 <div {...getLineProps({line, key: i})}>
-                  {/* <span
-                    css={css`
-                      display: inline-block;
-                      width: 1.5em;
-                      text-align: right;
-                      margin-right: 1rem;
-                      user-select: none;
-                      opacity: 0.3;
-                    `}
-                  >
+                  <span className="inline-block w-8 mr-4 text-right opacity-25 select-none">
                     {i + 1}
-                  </span> */}
+                  </span>
                   {line.map((token, key) => (
                     <span {...getTokenProps({token, key})} />
                   ))}

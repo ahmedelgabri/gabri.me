@@ -2,9 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+/*******************************************************************************
+*                       Theme styles. Order is Importat                       *
+*******************************************************************************/
+
+:root {
+  --fg: theme('colors.black');
+  --bg: theme('colors.white');
+}
+
+@screen dark {
+  :root {
+    --bg: theme('colors.black');
+    --fg: theme('colors.white');
+  }
+}
+
+.light {
+  --fg: theme('colors.black');
+  --bg: theme('colors.white');
+}
+
+.dark {
+  --bg: theme('colors.black');
+  --fg: theme('colors.white');
+}
+
+/*******************************************************************************
+*                              End theme styles                               *
+*******************************************************************************/
+
 @media screen and (min-width: 25em) {
   html {
-    font-size: 200%;
+    font-size: 150%;
   }
 }
 
@@ -12,10 +42,12 @@ body {
   text-size-adjust: 100%;
   font-feature-settings: 'kern', 'liga', 'dlig', 'hlig', 'cswh';
   font-kerning: auto;
+  background-color: var(--bg);
+  color: var(--fg);
 }
 
 .twitter-tweet {
-  margin: 0 0 1rem !important;
+  @apply m-0 mb-6 !important;
 }
 
 .prose a {
@@ -38,8 +70,7 @@ img {
 }
 
 pre {
-  @apply max-w-full p-0 mb-6 overflow-auto font-mono;
-  /* color: ${colors.gray}; */
+  @apply max-w-full pl-0 m-0 mb-6 overflow-auto font-mono !important;
   font-size: inherit !important;
 }
 
@@ -53,8 +84,6 @@ code {
 }
 
 blockquote {
-  @apply w-full pl-4 ml-0 italic;
-  /* color: ${colors.olive}; */
   border-left: 0.75em solid;
 }
 
@@ -63,5 +92,5 @@ blockquote > p {
 }
 
 ::selection {
-  @apply text-black bg-yellow-300;
+  @apply text-black bg-yellow-300 !important;
 }

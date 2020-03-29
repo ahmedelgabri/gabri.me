@@ -166,7 +166,10 @@ Full credit goes to Reman on
 and greduan
 [dotfiles](https://github.com/Greduan/dotfiles/blob/76e16dd8a04501db29989824af512c453550591d/vim/after/plugin/statusline.vim).
 
-Here is a gif for my statusline [![](/img/statusline.gif)](/img/statusline.gif)
+Here is a gif for my statusline
+
+[![](/img/statusline.gif)](/img/statusline.gif)
+
 and here is the code in my
 [vimrc](https://github.com/ahmedelgabri/dotfiles/blob/c4f40c27b295ecfb7673bd29d373cab26b93379b/vim/vimrc.local#L302-L423)
 

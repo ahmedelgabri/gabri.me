@@ -55,8 +55,6 @@ like simple solutions.
 
 Both doesn't support this option.
 
----
-
 So I had to find another option because I was really getting annoyed, I tried
 lots of apps that integrated with Evernote or Simplenote but I didn't like any
 of them. In my search for a better workflow, I found

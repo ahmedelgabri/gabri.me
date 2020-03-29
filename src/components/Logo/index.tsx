@@ -13,14 +13,7 @@ export default function Logo({width = 83, height = 35}: Props) {
       x="0"
       y="0"
       viewBox={`208.58 223.187 ${width} ${height}`}
-      className="text-gray-700"
-      css={{
-        width: '50px',
-        display: 'inline-block',
-        opacity: 0.3,
-        transition: 'opacity 0.2s linear',
-        '&:hover': {opacity: 1},
-      }}
+      className="inline-block w-8 text-gray-700"
     >
       <path
         className="fill-current"

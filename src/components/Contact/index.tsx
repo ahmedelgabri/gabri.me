@@ -5,6 +5,7 @@ import {
   AiFillLinkedin,
   AiOutlineFileText,
 } from 'react-icons/ai'
+import {useTheme} from '../../hooks'
 
 export interface Props {
   social: SocialT
@@ -19,6 +20,9 @@ const iconsMap = {
 }
 
 export default function Contact({social}: Props) {
+  const {theme} = useTheme()
+  const iconColor = theme === 'dark' ? {color: 'white'} : {}
+
   return (
     <div role="contentinfo">
       <ul className="flex items-center justify-between">
@@ -34,7 +38,7 @@ export default function Contact({social}: Props) {
                 title={site}
                 className="text-black"
               >
-                {<Comp />}
+                {<Comp {...iconColor} />}
               </a>
             </li>
           )

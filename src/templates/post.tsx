@@ -4,7 +4,7 @@ import {MDXRenderer} from 'gatsby-plugin-mdx'
 import {MDXProvider} from '@mdx-js/react'
 import MdxComponents from '../components/mdx'
 import Meta from '../components/Meta'
-import Back from '../components/Back'
+import Header from '../components/Header'
 import Layout from '../components/Layout'
 import Footer from '../components/Footer'
 import TweetButton from '../components/TweetButton'
@@ -61,20 +61,18 @@ export default function Post(props: Props) {
           post
         />
         <div>
-          <Back />
+          <Header />
           <h1 className="mb-4 text-6xl font-extrabold leading-none tracking-tight">
             {title}
           </h1>
           <div className="lg:w-3/4">
             <time
               className="block mb-4 italic text-gray-500 text-tiny"
-              dataTime={date}
+              dateTime={date}
             >
               On {date}
             </time>
-            <div className="prose">
-              <MDXRenderer>{data.mdx.body}</MDXRenderer>
-            </div>
+            <MDXRenderer>{data.mdx.body}</MDXRenderer>
           </div>
           <div>
             <TweetButton via={display} title={title} url={postUrl} />

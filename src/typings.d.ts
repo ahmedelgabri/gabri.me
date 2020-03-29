@@ -15,6 +15,14 @@ declare module '*.svg'
 declare module '*.gif'
 declare module '*.jpg'
 
+declare type Theme = 'dark' | 'light'
+
+interface Window {
+  __onThemeChange(theme?: Theme): void
+  __theme: Theme
+  __setPreferredTheme(theme: Theme): void
+}
+
 // Global/Shared Props
 interface PostT {
   frontmatter: {title: string}

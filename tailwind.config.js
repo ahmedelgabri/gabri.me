@@ -3,6 +3,9 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   theme: {
     extend: {
+      screens: {
+        dark: {raw: '(prefers-color-scheme: dark)'},
+      },
       colors: {
         myBlue: {
           300: '#0074D9',

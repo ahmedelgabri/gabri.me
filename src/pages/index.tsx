@@ -2,10 +2,9 @@ import * as React from 'react'
 import {graphql, Link} from 'gatsby'
 import Meta from '../components/Meta'
 import Layout from '../components/Layout'
-import Logo from '../components/Logo'
+import Header from '../components/Header'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
-import {GoLinkExternal} from 'react-icons/go'
 
 export const query = graphql`
   query indexQuery {
@@ -61,7 +60,7 @@ export default function Index(props: any) {
     <Layout>
       <div>
         <Meta title={`${author} | ${title}`} url={siteUrl} />
-        <Logo />
+        <Header />
         <div className="lg:w-3/5">
           <div className="prose">
             <p className="text-6xl font-extrabold leading-tight tracking-tight">
@@ -89,10 +88,7 @@ export default function Index(props: any) {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                talks&nbsp;
-                <span className="inline-block">
-                  <GoLinkExternal size={20} />
-                </span>
+                talks
               </a>{' '}
               or get{' '}
               <a
@@ -100,14 +96,11 @@ export default function Index(props: any) {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                interviewed&nbsp;
-                <span className="inline-block">
-                  <GoLinkExternal size={20} />
-                </span>
+                interviewed
               </a>
             </p>
           </div>
-          <div className="mb-4 lg:w-1/2">
+          <div className="mb-4 lg:w-5/12">
             <Contact social={social} />
           </div>
         </div>

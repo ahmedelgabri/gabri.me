@@ -1,17 +1,20 @@
 import * as React from 'react'
 import {Link} from 'gatsby'
 import {useMatch} from '@reach/router'
-import Logo from '../Logo'
 
 export default function Back() {
-  const match = useMatch('/blog/:post')
-  const to = match ? '/blog' : '/'
+  const isArticle = useMatch('/blog/:post')
 
   return (
-    <p>
-      <Link to={to}>
-        <Logo />
-      </Link>
-    </p>
+    isArticle && (
+      <div className="mr-4">
+        <Link
+          className="p-1 text-gray-500 text-tiny hover:bg-gray-300 hover:text-black"
+          to="/blog"
+        >
+          ← Back to articles
+        </Link>
+      </div>
+    )
   )
 }
