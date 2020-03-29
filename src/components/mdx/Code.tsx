@@ -36,8 +36,8 @@ export default function Code(props: Props) {
   return (
     <>
       {filename && (
-        <span className={cn('block p-2 m-0 bg-gray-800 text-white')}>
-          <code>File: {filename}</code>
+        <span className={cn('font-mono block p-2 m-0 bg-gray-800 text-white')}>
+          {filename}
         </span>
       )}
       <Highlight
