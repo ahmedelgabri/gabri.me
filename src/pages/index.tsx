@@ -61,7 +61,7 @@ export default function Index(props: any) {
       <div>
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Header />
-        <div className="lg:w-3/5">
+        <div className="lg:w-5/12">
           <div className="prose">
             <p className="text-6xl font-extrabold leading-tight tracking-tight">
               Hi. 👋
