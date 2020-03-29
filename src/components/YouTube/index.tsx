@@ -9,21 +9,14 @@ export default function YouTube(props: Props) {
 
   return (
     <div
-      css={{
-        position: 'relative',
+      className="relative h-0"
+      style={{
         paddingBottom: '56.25%', // 16:9
         paddingTop: '25px',
-        height: 0,
       }}
     >
       <iframe
-        css={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        }}
+        className="absolute top-0 left-0 w-full h-full"
         width="560"
         height="315"
         src={`https://www.youtube.com/embed/${id}?rel=0`}

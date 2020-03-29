@@ -3,6 +3,7 @@ import cn from 'classnames'
 import Highlight, {defaultProps} from 'prism-react-renderer'
 import Prism from 'prism-react-renderer/prism'
 // https://github.com/FormidableLabs/prism-react-renderer/issues/53#issuecomment-546653848
+// @ts-ignore
 ;(typeof global !== 'undefined' ? global : window).Prism = Prism
 
 require('prismjs/components/prism-vim')

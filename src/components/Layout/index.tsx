@@ -5,7 +5,7 @@ export interface Props {
 }
 
 const Layout = ({children}: Props) => (
-  <div css={{padding: '3% 6%'}}>{children}</div>
+  <div style={{padding: '3% 6%'}}>{children}</div>
 )
 
 export default Layout

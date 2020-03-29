@@ -15,7 +15,6 @@ module.exports = {
       },
     },
     'gatsby-plugin-twitter',
-    'gatsby-plugin-emotion',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-postcss',
     {
@@ -25,7 +24,7 @@ module.exports = {
         develop: false,
         tailwind: true,
         // whitelist: ['whitelist'], // Don't remove this selector
-        // ignore: ['/ignored.css', 'prismjs/', 'docsearch.js/'], // Ignore files/folders
+        ignore: ['prism-plain.css'], // Ignore files/folders
         // purgeOnly : ['components/', '/main.css', 'bootstrap/'], // Purge only these files/folders
       },
     },
