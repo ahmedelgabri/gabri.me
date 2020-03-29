@@ -14,7 +14,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(blog|work)",
+      "source": "/work",
       "destination": "/"
     }
   ]
