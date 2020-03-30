@@ -67,8 +67,9 @@ export default function Index(props: any) {
               Hi. 👋
             </p>
             <p className="mb-4 tracking-tight">
-              My name is Ahmed El Gabri, I'm a software engineer with over a
-              decade of experience building products & leading/building teams.
+              My name is Ahmed El Gabri, I'm a software engineer, specializing
+              in front-end with over a decade of experience building products &
+              leading/building teams.
             </p>
             <p className="mb-4 tracking-tight">
               I'm currently working as a Principal Software Developer at{' '}

@@ -7,20 +7,20 @@
 *******************************************************************************/
 
 :root {
-  --fg: theme('colors.black');
-  --bg: theme('colors.white');
+  --bg: theme('colors.black');
+  --fg: theme('colors.white');
 }
 
-@screen dark {
+@screen light {
   :root {
-    --bg: theme('colors.black');
-    --fg: theme('colors.white');
+    --bg: theme('colors.white');
+    --fg: theme('colors.black');
   }
 }
 
 .light {
-  --fg: theme('colors.black');
   --bg: theme('colors.white');
+  --fg: theme('colors.black');
 }
 
 .dark {
@@ -31,6 +31,11 @@
 /*******************************************************************************
 *                              End theme styles                               *
 *******************************************************************************/
+html,
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
 
 @media screen and (min-width: 25em) {
   html {
@@ -42,8 +47,6 @@ body {
   text-size-adjust: 100%;
   font-feature-settings: 'kern', 'liga', 'dlig', 'hlig', 'cswh';
   font-kerning: auto;
-  background-color: var(--bg);
-  color: var(--fg);
 }
 
 .twitter-tweet {
