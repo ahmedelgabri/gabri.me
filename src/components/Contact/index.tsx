@@ -1,4 +1,5 @@
 import * as React from 'react'
+import cn from 'classnames'
 import {GoMarkGithub, GoMail} from 'react-icons/go'
 import {
   AiOutlineTwitter,
@@ -21,7 +22,6 @@ const iconsMap = {
 
 export default function Contact({social}: Props) {
   const {theme} = useTheme()
-  const iconColor = theme === 'dark' ? {color: 'white'} : {}
 
   return (
     <div role="contentinfo">
@@ -36,9 +36,12 @@ export default function Contact({social}: Props) {
                 rel="noopener noreferrer me"
                 target="_blank"
                 title={site}
-                className="text-black"
+                className={cn('hover:text-myBlue-300', {
+                  'text-black': theme !== 'dark',
+                  'text-white': theme === 'dark',
+                })}
               >
-                {<Comp {...iconColor} />}
+                <Comp />
               </a>
             </li>
           )

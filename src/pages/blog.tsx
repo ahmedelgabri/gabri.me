@@ -1,10 +1,10 @@
 import * as React from 'react'
 import {graphql} from 'gatsby'
-import Meta from '../../components/Meta'
-import Layout from '../../components/Layout'
-import Header from '../../components/Header'
-import PostList from '../../components/PostList'
-import Footer from '../../components/Footer'
+import Meta from '../components/Meta'
+import Layout from '../components/Layout'
+import Header from '../components/Header'
+import PostList from '../components/PostList'
+import Footer from '../components/Footer'
 
 export const query = graphql`
   query blogIndexQuery {
