@@ -72,13 +72,14 @@ export default function Index(props: any) {
               & leading/building teams.
             </p>
             <p className="mb-4 tracking-tight">
-              I'm currently working as a Principal Software Developer at{' '}
+              I'm currently working as a Tech Lead in the Platform team{' '}
+              <br className="hidden md:inline-block" /> at{' '}
               <a
                 target="_blank"
                 rel="noreferrer noopener"
-                href="http://lightspeedhq.com"
+                href="http://miro.com"
               >
-                LightspeedHQ
+                Miro
               </a>{' '}
               in Amsterdam, the Netherlands
             </p>
