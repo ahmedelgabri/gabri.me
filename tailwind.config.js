@@ -13,6 +13,7 @@ module.exports = {
         },
       },
       fontFamily: {
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: [
           '"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata',
           ...defaultTheme.fontFamily.mono,
