@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Helmet from 'react-helmet'
+import {Helmet} from 'react-helmet'
 import {useStaticQuery, graphql} from 'gatsby'
 import msTile from '../../../static/img/ms-logo.png'
 import appleIcon57 from '../../../static/apple-touch-icon-57x57-precomposed.png'
