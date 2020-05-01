@@ -72,8 +72,7 @@ export default function Index(props: any) {
               & leading/building teams.
             </p>
             <p className="mb-4 tracking-tight">
-              I'm currently working as a Tech Lead in the Platform team{' '}
-              <br className="hidden md:inline-block" /> at{' '}
+              I'm currently working as a Tech Lead in the Platform team at{' '}
               <a
                 target="_blank"
                 rel="noreferrer noopener"
