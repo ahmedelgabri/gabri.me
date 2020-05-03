@@ -6,7 +6,7 @@ export interface Props {
 
 export default function Footer({author}: Props) {
   return (
-    <p className="text-gray-300 text-tiny">
+    <p className="footer text-tiny">
       {author} © {new Date().getFullYear()}
     </p>
   )

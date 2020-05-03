@@ -9,23 +9,27 @@
 :root {
   --bg: theme('colors.black');
   --fg: theme('colors.white');
+  --footer: theme('colors.gray.800');
 }
 
 @screen light {
   :root {
     --bg: theme('colors.white');
     --fg: theme('colors.black');
+    --footer: theme('colors.gray.300');
   }
 }
 
 .light {
   --bg: theme('colors.white');
   --fg: theme('colors.black');
+  --footer: theme('colors.gray.300');
 }
 
 .dark {
   --bg: theme('colors.black');
   --fg: theme('colors.white');
+  --footer: theme('colors.gray.800');
 }
 
 /*******************************************************************************
@@ -96,4 +100,8 @@ blockquote > p {
 
 ::selection {
   @apply text-black bg-yellow-300 !important;
+}
+
+.footer {
+  color: var(--footer);
 }

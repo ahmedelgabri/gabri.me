@@ -2,8 +2,7 @@ module.exports = {
   author: 'Ahmed El Gabri',
   title: 'Front-end Engineer',
   siteUrl: 'https://gabri.me',
-  description:
-    'Ahmed El Gabri is a Front-end Engineer who like to bring structure where it is lacking, systematizing information & automating processes.',
+  description: `${this.author} is a ${this.title} who like to bring structure where it is lacking, systematizing information & automating processes.`,
   social: {
     twitter: {
       display: '@ahmedelgabri',
