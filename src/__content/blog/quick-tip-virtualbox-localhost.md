@@ -15,9 +15,7 @@ test your local website/app on your VirtualBox machine just type `10.0.2.2` &
 you will access your localhost _this is tested on Mac, I dunno if the same
 applies to Windows or not_.
 
-<!-- more -->
-
-## Apache VirtualHosts
+### Apache VirtualHosts
 
 Now, I have a problem cause I'm using Apache VirtualHosts on my machine, this is
 how my `httpd-vhosts.conf` file looks like this

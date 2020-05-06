@@ -12,8 +12,6 @@ for a couple of months now &#038; I like how simple it is compared to Grunt also
 that I'm actually writing code not configurations &#038; it's easier to
 understand.
 
-<!-- more -->
-
 When I was converting the project I'm working on now from Grunt to Gulp I had
 this idea, why not make the default task as TOC to list all available tasks?
 instead of using it for a real task. How many times you

@@ -32,7 +32,7 @@ some of these issues:
 
 So let's start...
 
-## Arabic support in media tools, Photoshop, etc...
+### Arabic support in media tools, Photoshop, etc...
 
 This is in my opinion the cause of most of the issues, because people uses these
 tools trusting that they are doing the right thing. But the reality is they
@@ -77,7 +77,7 @@ example
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">My only criticism of Black Panther is the reuse of this shot. You make a movie empowering non-white people, it&#39;d be nice to just spend 0.002% of your VFX budget on fixing your fake Arabic to actually be Arabic.<br/><br/>Black Panther remains an incredible, I&#39;d daresay must-see, movie. <a href="https://t.co/G1EmC1eFh6">https://t.co/G1EmC1eFh6</a></p>&mdash; Rami Ismail (@tha_rami) <a href="https://twitter.com/tha_rami/status/964868593535119360?ref_src=twsrc%5Etfw">February 17, 2018</a></blockquote>
 
-## Arabic typography on the web
+### Arabic typography on the web
 
 It's very simple, not that good at all. The default system fonts are very
 limited & the most used font (Tahoma Arabic) for lots of people _including me_
@@ -96,12 +96,12 @@ And Khaled summed it up better than me:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Almost all system fonts were designed decades ago and they were only passable because of the lowres rendering back in the day. Newer ones like Noto and <br/>Segoe UI are better, with the exception of Apple new Arabic UI font which is worse than its predecessor.</p>&mdash; Khaled Hosny (@KhaledGhetas) <a href="https://twitter.com/KhaledGhetas/status/965003153438658560?ref_src=twsrc%5Etfw">February 17, 2018</a></blockquote>
 
-## RTL development & some wrong assumptions.
+### RTL development & some wrong assumptions.
 
 There are lots of assumptions here that I read across the web, some of it seems
 very logical but in fact wrong.
 
-### Directional thinking (right/left margins, floats, etc...)
+#### Directional thinking (right/left margins, floats, etc...)
 
 IMO, one of the things that CSS got wrong was using the words "left" & "right"
 in `margins`, `paddings`, `floats`, etc... better names would have been `start`
@@ -172,7 +172,7 @@ This would have been even better if CSS had these values the same too
 }
 ```
 
-### Using `dir="rtl"` on the `<html>` tag
+#### Using `dir="rtl"` on the `<html>` tag
 
 Yes it makes sense & very logical to do so. But do you know that this will flip
 the scrollbars to the other side of the screen? Some will say yes this is the
@@ -191,13 +191,13 @@ the screen.
 Use `dir="rtl"` on the `<body>` instead, this will flip the text as intended but
 will keep the scrollbars in the same place.
 
-### Flipping media controllers (play, pause, etc...)
+#### Flipping media controllers (play, pause, etc...)
 
 Please don't. Like really, don't. It's a terrible terrible idea! These things
 are universal, don't confuse the users. Unless you know for sure, like 99.9%
 sure that your target users will want this.
 
-### Arabic numbers reads from Left-to-Right (LTR)
+#### Arabic numbers reads from Left-to-Right (LTR)
 
 Yes, we write from Right-to-Left but with numbers we do it from Left-to-Right,
 make sure to handle this properly whether you use
@@ -208,7 +208,7 @@ And one more point regarding numbers, what is considered Latin numbers now are
 actually the original Arabic numbers & what are considered Arabic numbers now
 are actually Hindi numbers. So you don't need to change this too.
 
-### UI & Design issues when supporting multiple languages
+#### UI & Design issues when supporting multiple languages
 
 - Your designs should be as fluid as possible, no width on any element. Only
   your grid.

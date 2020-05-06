@@ -21,7 +21,7 @@ even not be aware of some stuff, more on that latter)
 
 So let’s start…
 
-## Analyzing your Webpack bundle
+### Analyzing your Webpack bundle
 
 I have a very simple react app here, you just type in the input field & it will
 slugify the output of what you typed.

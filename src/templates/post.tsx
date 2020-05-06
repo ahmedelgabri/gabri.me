@@ -62,9 +62,9 @@ export default function Post(props: Props) {
         />
         <div>
           <Header />
-          <h1 className="mb-4 text-6xl font-extrabold leading-none tracking-tight">
+          <h2 className="mb-4 text-6xl font-extrabold leading-none tracking-tight">
             {title}
-          </h1>
+          </h2>
           <div className="lg:w-3/4">
             <time
               className="block mb-4 italic text-gray-500 text-tiny"
@@ -77,7 +77,7 @@ export default function Post(props: Props) {
           <div>
             <TweetButton via={display} title={title} url={postUrl} />
           </div>
-          <Footer author={author} />
+          <Footer />
         </div>
       </Layout>
     </MDXProvider>

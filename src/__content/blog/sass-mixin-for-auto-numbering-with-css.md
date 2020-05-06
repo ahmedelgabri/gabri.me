@@ -15,8 +15,6 @@ creating a `@mixin` for this. So here you go: _ Thanks for
 [cimmanon on Stackoverflow](http://stackoverflow.com/questions/16645824/check-for-a-variable-in-sass-mixin-print-it-if-its-defined/16648360?noredirect=1#16648360)
 for helping me with this_
 
-<!-- more -->
-
 ```sass
 @mixin auto-numbers($numbered-element, $sep, $counter: item, $nested-parent: false ){
     $sel: ();

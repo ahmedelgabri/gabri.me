@@ -11,8 +11,6 @@ shell for nearly a year &amp; I really love it! Most of my days are between
 [Sublime Text 2](http://www.sublimetext.com/). So customizing both are a natural
 thing for me.
 
-<!-- more -->
-
 So I have already customized my terminal to a very good extend but lately I have
 been more into trying to do some shell scripts to fasten my workflow. Like
 pushing, Committing, minifying and/or compiling my [Sass](http://sass-lang.com/)

@@ -27,7 +27,7 @@ combined what I liked between Evernote and Simplenote together and it allowed me
 to write note using Markdown. So I went back to Evernote. But I was still not
 happy at all.
 
-## Using your text editor of choice
+### Using your text editor of choice
 
 I use Vim and most of my day I spend doing stuff in iTerm2, and I don't see any
 point for me to not be able to write my notes using Vim or _insert your fav text
@@ -40,18 +40,18 @@ while but I was not satisfied and it was not the workflow I liked.
 I'm aware of [Geeknote](http://www.geeknote.me/) but it was too much for me, I
 like simple solutions.
 
-## Export my notes as text/Markdown
+### Export my notes as text/Markdown
 
 - Evernote export is the worst, it export your notes as `.enex` or `.html`.
 - Simplenote, exports your notes as text but without any metadata. I didn't like
   this too.
 
-## Full Markdown support
+### Full Markdown support
 
 - Evernote: No.
 - Simplenote: Yes to some extend.
 
-## Own my data and sync using my favourite service.
+### Own my data and sync using my favourite service.
 
 Both doesn't support this option.
 
@@ -64,7 +64,7 @@ on my phone and also to keep the tagging and search functionality here when
 [Day one](http://dayoneapp.com) comes to play. Did I mention that they have an
 official [CLI](http://dayoneapp.com/tools/cli-man/) tool too!
 
-## Converting Evernote `.enex` export to `.json`
+### Converting Evernote `.enex` export to `.json`
 
 But in order to do this I have to migrate my notes from Evernote to Day one. But
 the export from Evernote is `.enex`, how can I do anything useful with it. I
@@ -75,7 +75,7 @@ but the irony is that Simplenote doesn't support this anymore!
 
 But still having all my notes as `.json` was a huge improvement to `.enex`
 
-## Create Markdown notes from `.json`
+### Create Markdown notes from `.json`
 
 At this point I have a `.json` file with all my notes info in there with all the
 metadata too, which is great. Day one CLI tool can import any text format file
@@ -132,7 +132,7 @@ At this moment I managed to import all my notes to Day one with my all metadata.
 And the nice thing in Day one that if you have `#something` this can be
 converted automatically for you as a tag.
 
-## The new workflow and Syncing options
+### The new workflow and Syncing options
 
 After managing to import all my notes from Evernote to Day one app, now I need
 to connect the dots using `jrnl`. jrnl configuration is stored inside
@@ -168,7 +168,7 @@ options:
 - iCloud
 - Custom location
 
-## Rejoice!
+### Rejoice!
 
 Now all I need to do is type `jrnl` in my terminal and it will open my editor
 with all my settings, snippets etc... and I can write in Markdown. Once I save,

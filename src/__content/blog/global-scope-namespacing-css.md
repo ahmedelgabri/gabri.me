@@ -5,7 +5,7 @@ date: '2013-08-06'
 tags: ['css', 'front-end']
 ---
 
-## The problem
+### The problem
 
 Anyone who worked with `CSS` before knows that one of the biggest problems we
 face as front-end developers is that `CSS` lacks scope or namescpacing, unlike
@@ -17,7 +17,7 @@ developers who don’t understand `CSS` very well.
 
 <!-- more -->
 
-## The fix
+### The fix
 
 Some smart people came up with new ideas to fix it like that:
 [Jonathan Snook's SMACSS](http://smacss.com/book/categorizing) or the clever
@@ -52,7 +52,7 @@ last one will win - _I’m not talking about specificity here, my rules are no I
 possible -_, so I’m assuming that this component is first class citizen in your
 `CSS`.
 
-## My idea
+### My idea
 
 I’m in the process of writing a small framework to act as my starting point for
 any of the projects that I’m working on. So my solution for it was to create a
@@ -112,7 +112,7 @@ going to use multiple classes on the same object like so. Which I stopped caring
 about anyway. Code readability is much more important
 
 ```html
-<div class="rm-media rm-media--wide rm-theme--green clearfix">
+<div class="clearfix rm-media rm-media--wide rm-theme--green">
   <div class="rm-media__img">
     <!-- code -->
   </div>
@@ -130,20 +130,20 @@ you like I'll be using this technique in all of my upcoming projects &amp; let's
 see, but I'm optimistic about this approach. Let me know if you have any ideas
 about this or how can I improve it more.
 
-#### Update: YouTube is doing the same.
+##### Update: YouTube is doing the same.
 
 <a href="/img/youtube.png">
   <img src="/img/youtube.png" alt="youtube" class="aligncenter size-medium wp-image-937" />
 </a>
 
-### Useful links
+#### Useful links
 
 - [About HTML semantics and front-end architecture](http://nicolasgallagher.com/about-html-semantics-front-end-architecture/)
 - [MindBEMding – getting your head ’round BEM syntax](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 - [The Evolution Of The BEM Methodology](http://coding.smashingmagazine.com/2013/02/21/the-history-of-the-bem-methodology/)
 - [A New Front-End Methodology: BEM](http://coding.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/)
 
-#### Update #2 (2016):
+##### Update #2 (2016):
 
 Currently I don't use or recommend using BEM with big apps, I prefer
 functional/atomic CSS, CSS modules or CSS in JS with React. These are useful

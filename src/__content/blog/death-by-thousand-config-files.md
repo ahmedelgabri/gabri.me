@@ -15,7 +15,7 @@ you might have noticed my growing pain of the endless stream for `.*rc` &
 One of the things that I **really** liked about prettier was the lack of config
 _by any means, files, etc..._
 
-## Here is a list of file config files we currently have in our repo that are only related to front-end tools:
+### Here is a list of file config files we currently have in our repo that are only related to front-end tools:
 
 - `.babelrc` - also will support `.js`
 - `.eslintrc.js` - supports `.yaml` & `.js`
@@ -30,18 +30,18 @@ _by any means, files, etc..._
   `babel-loader` will pick up the config from `.babelrc`. If you have
   `eslint-loader` it will pick up `.eslintrc`, etc...
 
-## Here are a couple more that we might have in the next few days/weeks:
+### Here are a couple more that we might have in the next few days/weeks:
 
 - `.flowconfig`
 - `.stylelintrc`
 - `.stylelintignore`
 
-## And of course:
+### And of course:
 
 - `.prettierrc`
 - `.prettierignore`
 
-## honorary mention:
+### honorary mention:
 
 - `.tsconfig.json` - for typescript
 - ~~`.bsconfig.json` - for bucklescript if you use
@@ -49,7 +49,7 @@ _by any means, files, etc..._
   the only config file you need next to `webpack.config.js`. Another _reason_ to
   like it.
 
-### and more...
+#### and more...
 
 Not to mention that `babel-env` & `autoprefixer` now use the `browserlist`
 project, which allows you to pass which browsers you want to support so they can
@@ -61,7 +61,7 @@ config files? Before everyone starts yelling at me that I can add most of these
 configs inside `package.json` - _which I don't mind doing_ - and most probably
 will start doing. that's not the main issue.
 
-### The issue is
+#### The issue is
 
 - This loop will never end: tomorrow someone comes with a new great tool called
   `X` & they decide they need some config for it & boom we have `.Xrc` &
@@ -103,7 +103,7 @@ Or event better!
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">exactly. why not just have a `.config` dir in the project root, and put all the stuff in there, so they are out of sight, but there if you need to change something. you set up eslint in `.config/eslint/rc.json` or something similar, and its done, on the side.</p>&mdash; Pavlos Vinieratos (@pvinis) <a href="https://twitter.com/pvinis/status/1056853151540826112?ref_src=twsrc%5Etfw">October 29, 2018</a></blockquote>
 
-## So people might say & how is this better than having multiple files?
+### So people might say & how is this better than having multiple files?
 
 The answer is, it's not much better but at least we can have these:
 

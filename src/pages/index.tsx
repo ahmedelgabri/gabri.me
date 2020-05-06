@@ -63,24 +63,24 @@ export default function Index(props: any) {
         <Header />
         <div className="lg:w-5/12">
           <div className="prose">
-            <p className="text-6xl font-extrabold leading-tight tracking-tight">
+            <p className="mb-4 text-6xl font-extrabold leading-tight tracking-tight">
               Hi. 👋
             </p>
             <p className="mb-4 tracking-tight">
-              My name is Ahmed El Gabri, I'm a software engineer, specializing
-              in front-end with over a decade of experience in building products
-              & leading/building teams.
+              I'm a software engineer, specializing in front-end, based in
+              Amsterdam, the Netherlands. With over a decade of experience in
+              building products & leading/building teams.
             </p>
             <p className="mb-4 tracking-tight">
-              I'm currently working as a Tech Lead in the Platform team at{' '}
+              Currently Tech Lead, Platform at{' '}
               <a
                 target="_blank"
                 rel="noreferrer noopener"
                 href="http://miro.com"
               >
                 Miro
-              </a>{' '}
-              in Amsterdam, the Netherlands
+              </a>
+              .
             </p>
             <p className="mb-4 tracking-tight">
               Sometimes I <Link to="/blog">write</Link>, give{' '}
@@ -99,6 +99,7 @@ export default function Index(props: any) {
               >
                 interviewed
               </a>
+              .
             </p>
           </div>
           <div className="mb-4 lg:w-5/12">
@@ -106,7 +107,7 @@ export default function Index(props: any) {
           </div>
         </div>
       </div>
-      <Footer author={author} />
+      <Footer />
     </Layout>
   )
 }

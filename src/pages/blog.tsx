@@ -35,7 +35,7 @@ export default function Index(props: any) {
         <div className="mb-4">
           <PostList />
         </div>
-        <Footer author={author} />
+        <Footer />
       </div>
     </Layout>
   )

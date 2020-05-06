@@ -11,8 +11,6 @@ project locally instead of
 `http://localhost/dev/projectname/somethingelse/etc/`. It's easier, faster,
 cleaner & looks better.
 
-<!-- more -->
-
 The old way to achieve this needs you to edit the `/etc/hosts/` & Apache
 `httpd-vhosts.conf` files each time you want to add new project, or if you are
 using `VirtualDocumentRoot` inside `httpd-vhosts.conf` you will have something

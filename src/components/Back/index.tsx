@@ -7,14 +7,9 @@ export default function Back() {
 
   return (
     isArticle && (
-      <div className="mr-4">
-        <Link
-          className="p-1 text-gray-500 text-tiny hover:bg-gray-300 hover:text-black"
-          to="/blog"
-        >
-          ← Back to articles
-        </Link>
-      </div>
+      <Link className="leading-none text-gray-500 text-tiny" to="/blog">
+        ← Back to articles
+      </Link>
     )
   )
 }

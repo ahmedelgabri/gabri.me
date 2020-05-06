@@ -36,7 +36,7 @@ export default function Contact({social}: Props) {
                 rel="noopener noreferrer me"
                 target="_blank"
                 title={site}
-                className={cn('hover:text-myBlue-300', {
+                className={cn('mr-4 hover:text-myBlue-300', {
                   'text-black': theme !== 'dark',
                   'text-white': theme === 'dark',
                 })}
