@@ -154,6 +154,13 @@ module.exports = {
           }),
       },
     },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://gabri.me`,
+        stripQueryString: true,
+      },
+    },
     'gatsby-plugin-typescript',
   ],
 }
