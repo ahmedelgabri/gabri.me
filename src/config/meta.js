@@ -1,8 +1,11 @@
+const author = 'Ahmed El Gabri'
+const title = 'Front-end Engineer'
+
 module.exports = {
-  author: 'Ahmed El Gabri',
-  title: 'Front-end Engineer',
+  title,
+  author,
   siteUrl: 'https://gabri.me',
-  description: `${this.author} is a ${this.title} who like to bring structure where it is lacking, systematizing information & automating processes.`,
+  description: `${author} is a ${title} who like to bring structure where it is lacking, systematizing information & automating processes.`,
   social: {
     twitter: {
       display: '@ahmedelgabri',
