@@ -50,10 +50,8 @@ Thumbs.db
 node_modules/
 .gems/
 .bundle/
-www/
 .next/
 .cache/
-public/
 
 # vim       #
 #############
@@ -69,4 +67,7 @@ drafts/
 feed.xml
 .lambda
 
-.now
+.vercel
+.mdx-data
+public/sitemap.xml
+public/feed.xml
