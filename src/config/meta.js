@@ -12,11 +12,11 @@ module.exports = {
       url: 'http://twitter.com/ahmedelgabri',
     },
     github: {
-      display: 'github.com/ahmedelgabri',
+      display: 'ahmedelgabri',
       url: 'https://github.com/ahmedelgabri',
     },
     email: {
-      display: 'email',
+      display: 'ahmed@gabri.me',
       url: 'mailto:ahmed+contact@gabri.me?subject=Hi!&body=👋🏼',
     },
     linkedin: {
@@ -24,9 +24,9 @@ module.exports = {
       url: 'https://www.linkedin.com/in/ahmedelgabri/',
     },
     resume: {
-      display: 'resume',
+      display: 'Resume',
       url:
-        'https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/edit?usp=sharing',
+        'https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/export?format=pdf',
     },
   },
   disqus: 'gabrime',

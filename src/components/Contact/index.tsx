@@ -25,8 +25,8 @@ export default function Contact({social}: Props) {
 
   return (
     <div role="contentinfo">
-      <ul className="flex items-center justify-between">
-        {Object.entries(social).map(([site, {url}]) => {
+      <ul className="text-xs">
+        {Object.entries(social).map(([site, {url, display}]) => {
           const Comp = iconsMap[site] || site
 
           return (
@@ -36,12 +36,12 @@ export default function Contact({social}: Props) {
                 rel="noopener noreferrer me"
                 target="_blank"
                 title={site}
-                className={cn('mr-4 hover:text-myBlue-300', {
-                  'text-black': theme !== 'dark',
-                  'text-white': theme === 'dark',
+                className={cn('flex items-center hover:text-myBlue-300', {
+                  'text-gray-500': theme !== 'dark',
+                  'text-gray-700': theme === 'dark',
                 })}
               >
-                <Comp />
+                <Comp className="mr-2" /> {display}
               </a>
             </li>
           )

@@ -91,13 +91,13 @@ export default function Index(props: any) {
               >
                 talks
               </a>{' '}
-              or get{' '}
+              or{' '}
               <a
                 href={interviews.devtomanager[1]}
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                interviewed
+                talk to other people
               </a>
               .
             </p>
