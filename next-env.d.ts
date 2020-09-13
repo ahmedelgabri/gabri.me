@@ -17,6 +17,9 @@ declare module 'rehype-raw'
 declare module 'rehype-sanitize'
 declare module '@mapbox/rehype-prism'
 declare module 'rehype-stringify'
+declare module 'ahmedelgabri' {
+  export function getCard(): string
+}
 
 declare module '*.png'
 declare module '*.svg'
