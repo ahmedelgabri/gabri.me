@@ -20,10 +20,12 @@
   ],
   "dependencies": {
     "@mdx-js/react": "1.6.16",
+    "@now/node": "1.8.2",
     "@types/lodash.truncate": "4.4.6",
     "@types/node": "14.0.27",
     "@types/react": "16.9.44",
     "@types/react-dom": "16.9.8",
+    "ahmedelgabri": "4.0.0",
     "babel-plugin-import-glob-array": "0.2.0",
     "glhd-tailwindcss-transitions": "0.3.0",
     "globby": "11.0.1",
