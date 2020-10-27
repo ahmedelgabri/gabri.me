@@ -1,4 +1,4 @@
-import {NowRequest, NowResponse} from '@now/node'
+import {NowRequest, NowResponse} from '@vercel/node'
 import {getCard} from 'ahmedelgabri'
 
 const curl_user_agent_pattern = /^curl\/\d+\.\d+\.\d+$/
