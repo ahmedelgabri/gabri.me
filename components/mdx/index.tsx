@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Image from 'next/image'
 import cn from 'classnames'
 import {preToCodeBlock} from 'mdx-utils'
 import YouTube from '../YouTube'
@@ -93,7 +94,8 @@ export default {
     />
   ),
   img: (props: Props) => (
-    <img {...props} className={cn(props.className, 'max-w-full')} />
+    // @ts-ignore
+    <Image unsized {...props} className={cn(props.className, 'max-w-full')} />
   ),
   hr: (props: Props) => (
     <hr {...props} className={cn(props.className, 'mb-6')} />
