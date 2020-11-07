@@ -8,5 +8,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/indent': 'off',
     '@typescript-eslint/member-delimiter-style': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 }

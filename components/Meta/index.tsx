@@ -11,6 +11,15 @@ export interface Props {
   children?: React.ReactChild
 }
 
+const {
+  description,
+  social: {twitter, github, linkedin},
+  twitterId,
+  siteUrl,
+} = meta
+
+const {url: twitterUrl} = twitter
+
 export default function Meta({
   title,
   url,
@@ -19,14 +28,6 @@ export default function Meta({
   img,
   children,
 }: Props) {
-  const {
-    description,
-    social: {
-      twitter: {url: twitterUrl},
-    },
-    twitterId,
-    siteUrl,
-  } = meta
   const socialImg = `${siteUrl}/img/fb-image.jpg`
 
   return (
@@ -39,6 +40,10 @@ export default function Meta({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={excerpt || description} />
       <meta name="application-name" content="Gabri.me" />
+
+      {[twitter, github, linkedin].map(({url}) => (
+        <link key={url} href={url} rel="me" />
+      ))}
 
       <link
         // @ts-ignore
