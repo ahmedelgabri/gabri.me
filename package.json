@@ -19,11 +19,11 @@
     "not ie <= 11"
   ],
   "dependencies": {
-    "@mdx-js/react": "1.6.19",
+    "@mdx-js/react": "1.6.21",
     "@types/lodash.truncate": "4.4.6",
-    "@types/node": "14.14.6",
-    "@types/react": "16.9.55",
-    "@types/react-dom": "16.9.9",
+    "@types/node": "14.14.9",
+    "@types/react": "17.0.0",
+    "@types/react-dom": "17.0.0",
     "@vercel/node": "1.8.4",
     "ahmedelgabri": "4.0.0",
     "babel-plugin-import-glob-array": "0.2.0",
@@ -32,7 +32,7 @@
     "gray-matter": "4.0.2",
     "lodash.truncate": "4.4.2",
     "mdx-utils": "0.2.0",
-    "next": "10.0.0",
+    "next": "10.0.2",
     "next-mdx-enhanced": "5.0.0",
     "postcss-preset-env": "6.7.0",
     "prism-react-renderer": "1.1.1",
@@ -49,9 +49,9 @@
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "11.0.1",
     "@ahmedelgabri/prettier-config": "5.0.0",
-    "eslint": "7.12.1",
-    "prettier": "2.1.2",
-    "typescript": "4.0.5",
-    "vercel": "20.1.2"
+    "eslint": "7.14.0",
+    "prettier": "2.2.0",
+    "typescript": "4.1.2",
+    "vercel": "21.0.1"
   }
 }

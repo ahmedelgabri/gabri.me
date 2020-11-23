@@ -71,3 +71,12 @@ feed.xml
 .mdx-data
 public/sitemap.xml
 public/feed.xml
+
+
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
