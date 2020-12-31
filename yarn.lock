@@ -5316,6 +5316,7 @@ fsevents@~2.1.2:
     next-mdx-remote: 2.0.1
     next-sitemap: 1.3.29
     postcss: 8.2.2
+    preact: 10.5.8
     prettier: 2.2.1
     react: 17.0.1
     react-dom: 17.0.1
@@ -8387,6 +8388,13 @@ fsevents@~2.1.2:
     source-map: ^0.6.1
     supports-color: ^6.1.0
   checksum: 8a979ea9799dd48399337708a395ddb8cf0e328515201ed35c99f5ba5eaa7688eae65764c570bf49b5be0b106226e2f222abc210de068b3d3da9a9a3bbb70567
+  languageName: node
+  linkType: hard
+
+"preact@npm:10.5.8":
+  version: 10.5.8
+  resolution: "preact@npm:10.5.8"
+  checksum: 6f1ec47ab398804f454cff0a81566602b715dd7c00008c60c68357ac5e7c472e12a16d2ccadfeb95124e3e255e98c91a7fe1c74b1572fc97f47c4848da10d089
   languageName: node
   linkType: hard
 
