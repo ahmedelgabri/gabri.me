@@ -1,16 +1,14 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
-  purge: ['./components/**/*.tsx', './pages/**/*.tsx', './layouts/**/*.tsx'],
+  darkMode: 'class',
+  purge: [
+    './src/pages/**/*.{js,jsx,ts,tsx}',
+    './src/components/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
-      screens: {
-        light: {raw: '(prefers-color-scheme: light)'},
-      },
       colors: {
         myBlue: {
           300: '#0074D9',
@@ -31,6 +29,4 @@ module.exports = {
       },
     },
   },
-  variants: {},
-  plugins: [require('glhd-tailwindcss-transitions')()],
 }

@@ -1,19 +1,22 @@
 import * as React from 'react'
 import {useRouter} from 'next/router'
-import Meta from '../components/Meta'
-import Header from '../components/Header'
-import Layout from '../components/Layout'
-import Footer from '../components/Footer'
-import TweetButton from '../components/TweetButton'
-import meta from '../config/meta'
+import renderToString from 'next-mdx-remote/render-to-string'
+import hydrate from 'next-mdx-remote/hydrate'
+import Meta from '../../components/Meta'
+import Header from '../../components/Header'
+import Layout from '../../components/Layout'
+import Footer from '../../components/Footer'
+import TweetButton from '../../components/TweetButton'
+import meta from '../../config/meta'
+import {getPostBySlug, getAllPosts} from '../../lib/utils'
+import MdxComponents from '../../components/mdx'
 
 interface Props {
-  children: React.ReactNode
-  frontMatter: {
+  post: {
     title: string
     date: string
-    published: boolean
-    tags: string[]
+    content: string
+    mdxContent: string
     excerpt: string
   }
 }
@@ -27,11 +30,41 @@ const {
   },
 } = meta
 
+export async function getStaticProps({params}) {
+  const data = await getPostBySlug(params.post[0])
+
+  const mdxContent = await renderToString(data.content, {
+    components: MdxComponents,
+  })
+
+  return {
+    props: {
+      post: {
+        ...(data || {}),
+        mdxContent,
+      },
+    },
+  }
+}
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts()
+
+  return {
+    paths: posts.map((post) => post.slug),
+    fallback: false,
+  }
+}
+
 export default function Post(props: Props) {
-  const {children, frontMatter} = props
-  const {title, date, excerpt} = frontMatter
   const router = useRouter()
   const postUrl = `${siteUrl}${router.asPath}`
+
+  const {
+    post: {mdxContent, date, excerpt, title},
+  } = props
+
+  const content = hydrate(mdxContent, {components: MdxComponents})
 
   React.useEffect(() => {
     const s = document.createElement('script')
@@ -60,7 +93,7 @@ export default function Post(props: Props) {
           >
             On {date}
           </time>
-          <div>{children}</div>
+          <div>{content}</div>
         </div>
         <div>
           <TweetButton via={display} title={title} url={postUrl} />

@@ -1,14 +1,14 @@
 const fs = require('fs')
 const globby = require('globby')
 const prettier = require('prettier')
-const siteMeta = require('../config/meta')
+const siteMeta = require('../src/config/meta')
 
 ;(async () => {
-  const prettierConfig = await prettier.resolveConfig('./.prettier.config.js')
+  const prettierConfig = await prettier.resolveConfig('../.prettier.config.js')
   const pages = await globby([
-    'pages/**/*.{js,jsx,tsx,mdx,md}',
-    '!pages/_*.{js,jsx,tsx,mdx,md}',
-    '!pages/api',
+    'src/pages/**/*.{js,jsx,tsx,mdx,md}',
+    '!src/pages/_*.{js,jsx,tsx,mdx,md}',
+    '!src/pages/api',
   ])
   const sitemap = `
         <?xml version="1.0" encoding="UTF-8"?>
