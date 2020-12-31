@@ -1,7 +1,8 @@
 import * as React from 'react'
 import {useRouter} from 'next/router'
-import renderToString from 'next-mdx-remote/render-to-string'
 import hydrate from 'next-mdx-remote/hydrate'
+import renderToString from 'next-mdx-remote/render-to-string'
+import mdxPrism from 'mdx-prism'
 import Meta from '../../components/Meta'
 import Header from '../../components/Header'
 import Layout from '../../components/Layout'
@@ -9,7 +10,7 @@ import Footer from '../../components/Footer'
 import TweetButton from '../../components/TweetButton'
 import meta from '../../config/meta'
 import {getPostBySlug, getAllPosts} from '../../lib/utils'
-import MdxComponents from '../../components/mdx'
+import MdxComponents from '../../components/mdxComponents'
 
 interface Props {
   post: {
@@ -31,16 +32,24 @@ const {
 } = meta
 
 export async function getStaticProps({params}) {
-  const data = await getPostBySlug(params.post[0])
+  const post = await getPostBySlug(params.slug)
 
-  const mdxContent = await renderToString(data.content, {
+  const mdxContent = await renderToString(post.content, {
     components: MdxComponents,
+    mdxOptions: {
+      remarkPlugins: [
+        require('remark-autolink-headings'),
+        require('remark-slug'),
+        require('remark-code-titles'),
+      ],
+      rehypePlugins: [mdxPrism],
+    },
   })
 
   return {
     props: {
       post: {
-        ...(data || {}),
+        ...post,
         mdxContent,
       },
     },
@@ -57,13 +66,12 @@ export async function getStaticPaths() {
 }
 
 export default function Post(props: Props) {
-  const router = useRouter()
-  const postUrl = `${siteUrl}${router.asPath}`
-
   const {
     post: {mdxContent, date, excerpt, title},
   } = props
 
+  const router = useRouter()
+  const postUrl = `${siteUrl}${router.asPath}`
   const content = hydrate(mdxContent, {components: MdxComponents})
 
   React.useEffect(() => {

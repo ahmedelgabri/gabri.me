@@ -35,7 +35,7 @@ this in 2 steps using `:args` & `:argdo` commands
 
 First step,
 
-```
+```vim
 :args `grep --recursive --files-with-matches 'I hate vim' .`
 
 // can be shorter
@@ -63,7 +63,7 @@ of the buffers in your arglist _(argumnet list)_, so to run commands on an
 arglist you need to use `:argdo` command to do this, in our case we want to
 replace a string with another. So we will do this
 
-```
+```vim
 :argdo %s/I hate vim/I love vim/g | update
 ```
 

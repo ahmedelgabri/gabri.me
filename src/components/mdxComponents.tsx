@@ -1,8 +1,6 @@
 import * as React from 'react'
 import cn from 'classnames'
-import {preToCodeBlock} from 'mdx-utils'
-import YouTube from '../YouTube'
-import Code from '../mdx/Code'
+import YouTube from './YouTube'
 
 type Props = Record<string, any>
 
@@ -98,20 +96,4 @@ export default {
   hr: (props: Props) => (
     <hr {...props} className={cn(props.className, 'mb-6')} />
   ),
-  code: (props: Props) => (
-    <code
-      {...props}
-      className={cn(props.className, 'inline-block bg-yellow-100')}
-    />
-  ),
-  pre: (preProps: Props) => {
-    const props = preToCodeBlock(preProps)
-    // if there's a codeString and some props, we passed the test
-    if (props) {
-      return <Code {...props} />
-    } else {
-      // it's possible to have a pre without a code in it
-      return <pre {...preProps} className={cn(props.className, 'mb-6')} />
-    }
-  },
 }

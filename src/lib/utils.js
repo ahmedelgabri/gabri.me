@@ -1,3 +1,5 @@
+// This file is used in generate-feed.js that's why it's CJS & .js file
+
 const fs = require('fs')
 const path = require('path')
 const matter = require('gray-matter')
@@ -5,6 +7,10 @@ const remark = require('remark')
 const strip = require('strip-markdown')
 const truncate = require('lodash.truncate')
 const globby = require('globby')
+
+const root = process.cwd()
+const postsDirectory = path.resolve(root, './src/_content/blog')
+// const weeklyLinks = `${postsDirectory}/weekly-links`
 
 const getProcessor = remark().use(strip).freeze()
 
@@ -20,10 +26,7 @@ async function stripMarkdown(md) {
   }
 }
 
-const postsDirectory = path.resolve(process.cwd(), './src/_content/blog')
-// const weeklyLinks = `${postsDirectory}/weekly-links`
-
-async function getPostSlugs() {
+async function getPostsSlugs() {
   return (await globby([`${postsDirectory}/*.{md,mdx}`])).map((p) =>
     path.basename(path.basename(p, '.mdx'), '.md'),
   )
@@ -48,11 +51,16 @@ async function getPostBySlug(slug) {
   const raw = await stripMarkdown(content)
   const excerpt = truncate(raw, {length: 160})
 
-  return {...data, content, excerpt, slug: `/blog/${realSlug}`}
+  return {
+    ...data,
+    content,
+    excerpt,
+    slug: `/blog/${realSlug}`,
+  }
 }
 
 async function getAllPosts() {
-  const slugs = await getPostSlugs()
+  const slugs = await getPostsSlugs()
   const posts = await Promise.all(
     slugs.map(async (slug) => await getPostBySlug(slug)),
   )
@@ -62,8 +70,4 @@ async function getAllPosts() {
   )
 }
 
-module.exports = {
-  getPostSlugs,
-  getPostBySlug,
-  getAllPosts,
-}
+module.exports = {getPostsSlugs, getAllPosts, getPostBySlug}
