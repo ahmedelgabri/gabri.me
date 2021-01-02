@@ -8,6 +8,7 @@ import Header from '../../components/Header'
 import Layout from '../../components/Layout'
 import Footer from '../../components/Footer'
 import TweetButton from '../../components/TweetButton'
+import H from '../../components/Prose/H'
 import meta from '../../config/meta'
 import {getPostBySlug, getAllPosts} from '../../lib/utils'
 import MdxComponents from '../../components/mdxComponents'
@@ -91,16 +92,17 @@ export default function Post(props: Props) {
       />
       <div>
         <Header />
-        <h2 className="mb-4 text-6xl font-extrabold leading-none tracking-tight">
-          {title}
-        </h2>
-        <div className="post lg:w-3/4">
+        <div className="mb-12">
+          <H level="2">{title}</H>
+
           <time
             className="block mb-4 italic text-gray-500 text-sm"
             dateTime={date}
           >
             On {date}
           </time>
+        </div>
+        <div className="prose dark:prose-light">
           <div>{content}</div>
         </div>
         <div>

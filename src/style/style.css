@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@media screen and (min-width: 25em) {
-  html {
-    font-size: 150%;
-  }
-}
-
 body {
   text-size-adjust: 100%;
   font-feature-settings: 'kern', 'liga', 'dlig', 'hlig', 'cswh';
@@ -18,14 +12,14 @@ body {
   @apply m-0 mb-6 !important;
 }
 
-.prose a {
+a {
   @apply border-b-2 border-myBlue-400;
   /* @apply text-myBlue-400; */
 }
 
-.prose a:hover,
-.prose a:focus,
-.prose a:active {
+a:hover,
+a:focus,
+a:active {
   @apply text-black bg-yellow-300;
 }
 

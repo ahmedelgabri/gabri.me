@@ -25,9 +25,7 @@ export default function BlogIndex({posts}: any) {
       <div>
         <Meta title={`${author} | ${title}`} url={siteUrl} />
         <Header />
-        <div className="mb-4">
-          <PostList posts={posts} />
-        </div>
+        <PostList posts={posts} />
         <Footer />
       </div>
     </Layout>

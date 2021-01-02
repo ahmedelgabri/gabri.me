@@ -5,7 +5,7 @@ export interface Props {
 }
 
 const Layout = ({children}: Props) => (
-  <div style={{padding: '3% 6%'}}>{children}</div>
+  <div className="mx-auto xl:w-5/12 px-6">{children}</div>
 )
 
 export default Layout

@@ -1,14 +1,13 @@
 import * as React from 'react'
 import Link from 'next/link'
+import H from '../Prose/H'
 
 export default function PostList(props: {posts: any[]}) {
   const {posts} = props
 
   return (
-    <div className="prose">
-      <h2 className="text-6xl font-extrabold leading-tight tracking-tight">
-        Articles
-      </h2>
+    <>
+      <H level="2">Articles</H>
       <ul>
         {posts.map(({slug, date, title}) => (
           <li key={title} className="items-center mb-4 lg:mb-2 lg:flex">
@@ -23,6 +22,6 @@ export default function PostList(props: {posts: any[]}) {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }

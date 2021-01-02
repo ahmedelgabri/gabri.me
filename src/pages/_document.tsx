@@ -5,14 +5,14 @@ import {GA} from '../lib/gtag'
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" className="text-xl">
         <Head>
           <meta charSet="utf-8" />
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />
           <link rel="shortcut icon" href="favicon.png" />
           <GA />
         </Head>
-        <body className="text-black bg-white dark:text-white dark:bg-black">
+        <body className="text-gray-900 bg-gray-300 dark:text-gray-400 dark:bg-gray-900">
           <script
             dangerouslySetInnerHTML={{
               __html: `(function() {
@@ -21,7 +21,8 @@ export default class MyDocument extends Document {
   function setTheme(newTheme) {
     window.__theme = newTheme;
     preferredTheme = newTheme;
-    document.documentElement.className = newTheme;
+    document.documentElement.classList.remove(newTheme === 'dark' ? 'light' : 'dark');
+    document.documentElement.classList.add(newTheme);
     window.__onThemeChange(newTheme);
   }
 
