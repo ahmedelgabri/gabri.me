@@ -3,5 +3,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "scope": "ahmedelgabri",
-  "alias": ["gabri.me", "www.gabri.me"]
+  "alias": ["gabri.me", "www.gabri.me"],
+  "redirects": [
+    {
+      "source": "/blog",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
 }

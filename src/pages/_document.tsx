@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           <link rel="shortcut icon" href="favicon.png" />
           <GA />
         </Head>
-        <body className="text-gray-900 bg-gray-300 dark:text-gray-400 dark:bg-gray-900">
+        <body className="lg:border lg:border-my border-gray-400 dark:border-gray-800 text-gray-900 bg-gray-300 dark:text-gray-400 dark:bg-gray-900">
           <script
             dangerouslySetInnerHTML={{
               __html: `(function() {

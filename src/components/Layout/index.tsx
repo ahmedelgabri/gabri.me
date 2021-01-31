@@ -5,7 +5,7 @@ export interface Props {
 }
 
 const Layout = ({children}: Props) => (
-  <div className="mx-auto xl:w-5/12 px-6">{children}</div>
+  <div className="mx-auto xl:w-5/12 px-4 lg:px-8 py-12">{children}</div>
 )
 
 export default Layout

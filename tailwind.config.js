@@ -15,6 +15,9 @@ module.exports = {
           400: '#0035f5',
         },
       },
+      borderWidth: {
+        my: '1rem',
+      },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: [

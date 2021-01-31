@@ -7,7 +7,7 @@ export default function Header() {
   const {toggleTheme, theme} = useTheme()
 
   return (
-    <div className="flex items-center justify-between py-12">
+    <div className="flex items-center justify-between">
       <div>
         <Logo />
       </div>

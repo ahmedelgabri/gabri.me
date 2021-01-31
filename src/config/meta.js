@@ -38,5 +38,9 @@ module.exports = {
       'Developer to manager blog interview',
       'https://devtomanager.com/interviews/ahmed-el-gabri/',
     ],
+    nullplusplus: [
+      'Technical Leadership',
+      'https://nullplus.plus/episodes/episode45-technical-leadership-with-ahmed-el-gabri',
+    ],
   },
 }

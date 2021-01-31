@@ -76,32 +76,37 @@ export default function Post(props: Props) {
   const content = hydrate(mdxContent, {components: MdxComponents})
 
   React.useEffect(() => {
-    const s = document.createElement('script')
-    s.setAttribute('src', 'https://platform.twitter.com/widgets.js')
-    s.setAttribute('async', 'true')
-    document.head.appendChild(s)
+    const twitterScript = document.querySelector('#__twitter__')
+    if (!twitterScript) {
+      const s = document.createElement('script')
+      s.id = '__twitter__'
+      s.setAttribute('src', 'https://platform.twitter.com/widgets.js')
+      s.setAttribute('async', 'true')
+      document.head.appendChild(s)
+    }
   }, [])
 
   return (
-    <Layout>
+    <>
       <Meta
         title={`${title} | ${author} - ${siteTitle}`}
         excerpt={excerpt}
         url={postUrl}
         post
       />
-      <div>
+      <Layout>
         <Header />
-        <div className="mb-12">
-          <H level="2">{title}</H>
-
-          <time
-            className="block mb-4 italic text-gray-500 text-sm"
-            dateTime={date}
-          >
-            On {date}
-          </time>
-        </div>
+      </Layout>
+      <Layout>
+        <H level="2">{title}</H>
+        <time
+          className="font-mono block mb-4 italic text-gray-500 text-sm"
+          dateTime={date}
+        >
+          On {date}
+        </time>
+      </Layout>
+      <Layout>
         <div className="prose dark:prose-light">
           <div>{content}</div>
         </div>
@@ -109,7 +114,7 @@ export default function Post(props: Props) {
           <TweetButton via={display} title={title} url={postUrl} />
         </div>
         <Footer />
-      </div>
-    </Layout>
+      </Layout>
+    </>
   )
 }
