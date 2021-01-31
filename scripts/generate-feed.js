@@ -18,6 +18,15 @@ const {author, title, siteUrl, description} = siteMeta
     site_url: siteUrl,
     feed_url: `${siteUrl}/feed.xml`,
     description,
+    ttl: 60,
+    custom_elements: [
+      {
+        // skip from midnight 0 till 9
+        skipHours: Array.from({length: 10}, (_, i) => i).map((h) => ({
+          hour: h,
+        })),
+      },
+    ],
   })
 
   await Promise.all(
