@@ -126,7 +126,7 @@ export default function Index({posts}: any) {
         </Layout>
       </div>
 
-      <div className="bg-gray-600 dark:bg-gray-700 bg-opacity-30 dark:bg-opacity-100">
+      <div className="bg-gray-600 dark:bg-gray-700 bg-opacity-30 dark:bg-opacity-70">
         <Layout>
           <List
             title="Blog"

@@ -12,13 +12,14 @@ import H from '../../components/Prose/H'
 import meta from '../../config/meta'
 import {getPostBySlug, getAllPosts} from '../../lib/utils'
 import MdxComponents from '../../components/mdxComponents'
+import {MdxRemote} from 'next-mdx-remote/types'
 
 interface Props {
   post: {
     title: string
     date: string
     content: string
-    mdxContent: string
+    mdxContent: MdxRemote.Source
     excerpt: string
   }
 }
