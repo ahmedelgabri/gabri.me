@@ -9,12 +9,12 @@ type Props = {
 }
 
 const styles = {
-  1: 'text-6xl',
-  2: 'text-6xl',
-  3: 'text-4xl',
-  4: 'text-3xl',
-  5: 'text-2xl',
-  6: 'text-xl',
+  1: 'text-4xl lg:text-6xl',
+  2: 'text-4xl lg:text-6xl',
+  3: 'text-3xl lg:text-4xl',
+  4: 'text-2xl lg:text-3xl',
+  5: 'text-xl lg:text-2xl',
+  6: 'text-lg lg:text-xl',
 }
 
 export default function H({level = '1', children, extra, className}: Props) {
@@ -24,7 +24,7 @@ export default function H({level = '1', children, extra, className}: Props) {
     // @ts-ignore
     <Tag
       className={cn(
-        'mb-12 font-extrabold leading-snug sm:leading-snug md:leading-tight tracking-tight',
+        'mb-8 lg:mb-12 font-extrabold leading-snug sm:leading-snug md:leading-tight tracking-tight',
         className,
         styles[level],
       )}

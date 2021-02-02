@@ -97,17 +97,13 @@ export default function Post(props: Props) {
       />
       <Layout>
         <Header />
-      </Layout>
-      <Layout>
         <H level="2">{title}</H>
         <time
-          className="font-mono block mb-4 italic text-gray-500 text-sm"
+          className="font-mono block mb-12 italic text-gray-500 text-sm"
           dateTime={date}
         >
           On {date}
         </time>
-      </Layout>
-      <Layout>
         <div className="prose dark:prose-light">
           <div>{content}</div>
         </div>

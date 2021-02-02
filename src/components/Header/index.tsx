@@ -7,7 +7,7 @@ export default function Header() {
   const {toggleTheme, theme} = useTheme()
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="mb-12 flex items-center justify-between">
       <div>
         <Logo />
       </div>

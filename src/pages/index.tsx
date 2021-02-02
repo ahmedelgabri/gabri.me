@@ -31,8 +31,6 @@ export default function Index({posts}: any) {
       <Meta title={`${author} | ${title}`} url={siteUrl} />
       <Layout>
         <Header />
-      </Layout>
-      <Layout>
         <H level="2" extra="👋">
           Hi.
         </H>
