@@ -5,6 +5,7 @@ type Props = {
   level: '1' | '2' | '3' | '4' | '5' | '6'
   children: React.ReactNode
   className?: string
+  extra?: any
 }
 
 const styles = {
@@ -16,19 +17,22 @@ const styles = {
   6: 'text-xl',
 }
 
-export default function H({level = '1', children, className}: Props) {
+export default function H({level = '1', children, extra, className}: Props) {
   const Tag = `h${level}`
 
   return (
     // @ts-ignore
     <Tag
       className={cn(
-        'mb-12 font-extrabold leading-none tracking-tight',
+        'mb-12 font-extrabold leading-snug sm:leading-snug md:leading-tight tracking-tight',
         className,
         styles[level],
       )}
     >
-      {children}
+      <span className="inline-block bg-gradient-to-r from-blue-500 to-blue-700 dark:from-blue-300 dark:to-blue-500 bg-clip-text text-transparent">
+        {children}
+      </span>{' '}
+      {extra && extra}
     </Tag>
   )
 }

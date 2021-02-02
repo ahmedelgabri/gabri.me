@@ -12,7 +12,7 @@ export default function Header() {
         <Logo />
       </div>
       <div>
-        <button onClick={toggleTheme}>
+        <button className="p-2" onClick={toggleTheme}>
           {theme === 'dark' ? <IoMdSunny /> : <IoMdMoon />}
         </button>
       </div>

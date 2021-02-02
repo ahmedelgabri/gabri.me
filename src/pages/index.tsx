@@ -33,7 +33,9 @@ export default function Index({posts}: any) {
         <Header />
       </Layout>
       <Layout>
-        <H level="2">Hi. 👋</H>
+        <H level="2" extra="👋">
+          Hi.
+        </H>
         <p className="tracking-tight mb-6 text-xl">
           I'm a software engineer, specializing in front-end, With over a decade
           of experience in building products & leading/building teams.

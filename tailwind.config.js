@@ -10,6 +10,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundOpacity: ['dark'],
+      gradientColorStops: ['dark'],
     },
   },
   theme: {
@@ -22,6 +23,9 @@ module.exports = {
       },
       borderWidth: {
         my: '1rem',
+      },
+      width: {
+        my: '85ch',
       },
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],

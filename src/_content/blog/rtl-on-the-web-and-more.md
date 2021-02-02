@@ -56,7 +56,7 @@ Hebrew. It was called (Photoshop CC me) the "me" part I think referred to the
 "Middle East" version. It used be released later than the normal version too.
 
 They changed this now, but you need to turn a setting on if you want to right
-Arabic for example https://forums.adobe.com/thread/1878946
+Arabic [for example](https://forums.adobe.com/thread/1878946)
 
 To understand the problem a bit, you need to understand how the script works.
 Written Arabic is a script, so letters are connected to each other & letters
