@@ -11,6 +11,10 @@ tags: ['vim', 'unix', 'terminal']
 > &
 > [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/f2b74f6cd4dc8388047af87872621c5176c50306/files/.vim/autoload/statusline.vim)_
 
+<!-- prettier-ignore-start -->
+> _**Update 6 Feb 2021:** I mainly use neovim as my main editor & I have migrated my [statusline](https://github.com/ahmedelgabri/dotfiles/blob/acf6dc587f6b76024fad32391655fa910fc1ae3e/config/.vim/lua/\_/statusline.lua) to lua. Also it's much much minimal now._
+<!-- prettier-ignore-end -->
+
 Nearly two years ago I decided to switch to Vim and move all my work into one
 app. The command line/Terminal or more sepcifically iTerm2. That desicion turns
 out to be one of the best things I've ever done. I'm still not a Vim expert by
@@ -119,19 +123,19 @@ endfunction
 
 set laststatus=2
 set statusline=
-set statusline+=%{ChangeStatuslineColor()}               " Changing the statusline color
-set statusline+=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
-set statusline+=%8*\ [%n]                                " buffernr
-set statusline+=%8*\ %{GitInfo()}                        " Git Branch name
-set statusline+=%8*\ %<%F\ %{ReadOnly()}\ %m\ %w\        " File+path
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}             " Syntastic errors
-set statusline+=%*
-set statusline+=%9*\ %=                                  " Space
-set statusline+=%8*\ %y\                                 " FileType
-set statusline+=%7*\ %{(&fenc!=''?&fenc:&enc)}\[%{&ff}]\ " Encoding & Fileformat
-set statusline+=%8*\ %-3(%{FileSize()}%)                 " File size
-set statusline+=%0*\ %3p%%\ \ %l:\ %3c\                 " Rownumber/total (%)
+set statusline.=%{ChangeStatuslineColor()}               " Changing the statusline color
+set statusline.=%0*\ %{toupper(g:currentmode[mode()])}   " Current mode
+set statusline.=%8*\ [%n]                                " buffernr
+set statusline.=%8*\ %{GitInfo()}                        " Git Branch name
+set statusline.=%8*\ %<%F\ %{ReadOnly()}\ %m\ %w\        " File+path
+set statusline.=%#warningmsg#
+set statusline.=%{SyntasticStatuslineFlag()}             " Syntastic errors
+set statusline.=%*
+set statusline.=%9*\ %=                                  " Space
+set statusline.=%8*\ %y\                                 " FileType
+set statusline.=%7*\ %{(&fenc!=''?&fenc:&enc)}\[%{&ff}]\ " Encoding & Fileformat
+set statusline.=%8*\ %-3(%{FileSize()}%)                 " File size
+set statusline.=%0*\ %3p%%\ \ %l:\ %3c\                 " Rownumber/total (%)
 
 hi User1 ctermfg=007
 hi User2 ctermfg=008
