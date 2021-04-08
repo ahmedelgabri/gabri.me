@@ -1,4 +1,7 @@
 module.exports = {
+  future: {
+    webpack5: true,
+  },
   publicRuntimeConfig: {
     isPROD: process.env.NODE_ENV === 'production',
   },

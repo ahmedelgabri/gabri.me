@@ -41,15 +41,15 @@
     "remark-slug": "6.0.0",
     "rss": "1.2.2",
     "strip-markdown": "4.0.0",
-    "tailwindcss": "2.0.4"
+    "tailwindcss": "2.1.1"
   },
   "devDependencies": {
     "@ahmedelgabri/eslint-config": "11.0.1",
     "@ahmedelgabri/prettier-config": "5.0.0",
     "eslint": "7.23.0",
-    "next-sitemap": "1.6.18",
+    "next-sitemap": "1.6.20",
     "prettier": "2.2.1",
-    "typescript": "4.2.3",
+    "typescript": "4.2.4",
     "vercel": "21.3.3"
   }
 }
