@@ -17,6 +17,24 @@ module.exports = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/blog',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Permissions-Policy',
+            value: 'interest-cohort=()',
+          },
+        ],
+      },
     ]
   },
   webpack: (config, {isServer}) => {
