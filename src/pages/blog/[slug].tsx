@@ -1,7 +1,8 @@
 import * as React from 'react'
 import {useRouter} from 'next/router'
-import hydrate from 'next-mdx-remote/hydrate'
-import renderToString from 'next-mdx-remote/render-to-string'
+import {MDXRemote} from 'next-mdx-remote'
+import type {MDXRemoteSerializeResult} from 'next-mdx-remote'
+import {serialize} from 'next-mdx-remote/serialize'
 import mdxPrism from 'mdx-prism'
 import Meta from '../../components/Meta'
 import Header from '../../components/Header'
@@ -12,14 +13,13 @@ import H from '../../components/Prose/H'
 import meta from '../../config/meta'
 import {getPostBySlug, getAllPosts} from '../../lib/utils'
 import MdxComponents from '../../components/mdxComponents'
-import {MdxRemote} from 'next-mdx-remote/types'
 
 interface Props {
   post: {
     title: string
     date: string
     content: string
-    mdxContent: MdxRemote.Source
+    mdxContent: MDXRemoteSerializeResult
     excerpt: string
   }
 }
@@ -36,8 +36,7 @@ const {
 export async function getStaticProps({params}) {
   const post = await getPostBySlug(params.slug)
 
-  const mdxContent = await renderToString(post.content, {
-    components: MdxComponents,
+  const mdxContent = await serialize(post.content, {
     mdxOptions: {
       remarkPlugins: [
         require('remark-autolink-headings'),
@@ -74,7 +73,6 @@ export default function Post(props: Props) {
 
   const router = useRouter()
   const postUrl = `${siteUrl}${router.asPath}`
-  const content = hydrate(mdxContent, {components: MdxComponents})
 
   React.useEffect(() => {
     const twitterScript = document.querySelector('#__twitter__')
@@ -105,7 +103,7 @@ export default function Post(props: Props) {
           On {date}
         </time>
         <div className="prose dark:prose-light">
-          <div>{content}</div>
+          <MDXRemote {...mdxContent} components={MdxComponents} lazy />
         </div>
         <div>
           <TweetButton via={display} title={title} url={postUrl} />
