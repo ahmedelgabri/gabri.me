@@ -502,10 +502,15 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/node@*", "@types/node@15.0.2":
+"@types/node@*":
   version "15.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.2.tgz#51e9c0920d1b45936ea04341aa3e2e58d339fb67"
   integrity sha512-p68+a+KoxpoB47015IeYZYRrdqMUcpbK8re/zpFB8Ld46LHC1lPEbp3EXgkEhAYEcPvjJF6ZO+869SQ0aH1dcA==
+
+"@types/node@15.0.3":
+  version "15.0.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.3.tgz#ee09fcaac513576474c327da5818d421b98db88a"
+  integrity sha512-/WbxFeBU+0F79z9RdEOXH4CsDga+ibi5M8uEYr91u3CkT/pdWcV8MCook+4wDPnZBexRdwWS+PiVZ2xJviAzcQ==
 
 "@types/parse5@^5.0.0":
   version "5.0.3"
@@ -517,10 +522,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/react-dom@17.0.4":
-  version "17.0.4"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.4.tgz#d65159a847aca2a0fc87a7544a2f8fece8754d04"
-  integrity sha512-Wb6rlnPJfqbhpkvYN39y1NM/pOGGPzzIRquu0RdUMvTwgXNvASFO7pdtrtvyxGTQNb9wzBaQxXAWDdEqegZw2A==
+"@types/react-dom@17.0.5":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.5.tgz#df44eed5b8d9e0b13bb0cd38e0ea6572a1231227"
+  integrity sha512-ikqukEhH4H9gr4iJCmQVNzTB307kROe3XFfHAOTxOXPOw7lAoEXnM5KWTkzeANGL5Ce6ABfiMl/zJBYNi7ObmQ==
   dependencies:
     "@types/react" "*"
 
@@ -807,10 +812,10 @@ acorn@^8.2.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.2.4.tgz#caba24b08185c3b56e3168e97d15ed17f4d31fd0"
   integrity sha512-Ibt84YwBDDA890eDiDCEqcbwvHlBvzzDkU2cGBBDDI1QWT12jTiXIOn2CIw5KK4i6N5Z2HUxwYjzriDyqaqqZg==
 
-ahmedelgabri@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ahmedelgabri/-/ahmedelgabri-4.0.0.tgz#fa0f179e644b11a5dc3754b064937115e7501fd3"
-  integrity sha512-6CQUkRE1+Ilb3g1pLcal+WBVyy1xVpRDafderrdAvL56sanL9C62C0xF7teUY0CJiP3l5rVh2nLx61y3BFnzjw==
+ahmedelgabri@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ahmedelgabri/-/ahmedelgabri-4.1.0.tgz#4eba6851b26482fa04944c15a2f122f6734ecf48"
+  integrity sha512-JmBiTsdTKEnRHXredFcwxR9R5Mwg2z/JPjaOHvcA+dijfXju2UX9b9n0QXTFvG83tx6TTNxkVbDwI4PWx+d4hA==
 
 ajv-keywords@^3.5.2:
   version "3.5.2"
