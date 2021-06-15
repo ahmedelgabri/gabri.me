@@ -2,10 +2,11 @@ import * as React from 'react'
 
 export interface Props {
   id: string
+  title?: string
 }
 
 export default function YouTube(props: Props) {
-  const {id} = props
+  const {id, title} = props
 
   return (
     <div
@@ -19,6 +20,7 @@ export default function YouTube(props: Props) {
         className="absolute top-0 left-0 w-full h-full"
         width="560"
         height="315"
+        title={title || id}
         src={`https://www.youtube.com/embed/${id}?rel=0`}
         frameBorder="0"
         allowFullScreen

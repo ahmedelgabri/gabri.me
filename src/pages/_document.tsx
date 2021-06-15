@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Script from 'next/script'
 import Document, {Html, Head, Main, NextScript} from 'next/document'
 import {GA} from '../lib/gtag'
 
@@ -10,11 +11,11 @@ export default class MyDocument extends Document {
           <meta charSet="utf-8" />
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />
           <meta name="color-scheme" content="dark light" />
-          <link rel="shortcut icon" href="favicon.png" />
+          <link rel="shortcut icon" href="/favicon.png" />
           <GA />
         </Head>
         <body className="lg:border lg:border-my border-gray-400 dark:border-gray-800 text-gray-900 bg-gray-300 dark:text-gray-400 dark:bg-gray-900">
-          <script
+          <Script
             dangerouslySetInnerHTML={{
               __html: `(function() {
   window.__onThemeChange = function() {};

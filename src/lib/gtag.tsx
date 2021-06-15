@@ -1,3 +1,4 @@
+import * as React from 'react'
 import getConfig from 'next/config'
 
 const isPROD = getConfig()?.publicRuntimeConfig?.isPROD

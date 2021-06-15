@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {useRouter} from 'next/router'
+import Script from 'next/script'
 import {MDXRemote} from 'next-mdx-remote'
 import type {MDXRemoteSerializeResult} from 'next-mdx-remote'
 import {serialize} from 'next-mdx-remote/serialize'
@@ -74,17 +75,6 @@ export default function Post(props: Props) {
   const router = useRouter()
   const postUrl = `${siteUrl}${router.asPath}`
 
-  React.useEffect(() => {
-    const twitterScript = document.querySelector('#__twitter__')
-    if (!twitterScript) {
-      const s = document.createElement('script')
-      s.id = '__twitter__'
-      s.setAttribute('src', 'https://platform.twitter.com/widgets.js')
-      s.setAttribute('async', 'true')
-      document.head.appendChild(s)
-    }
-  }, [])
-
   return (
     <>
       <Meta
@@ -92,6 +82,10 @@ export default function Post(props: Props) {
         excerpt={excerpt}
         url={postUrl}
         post
+      />
+      <Script
+        strategy="lazyOnload"
+        src="https://platform.twitter.com/widgets.js"
       />
       <Layout>
         <Header />
