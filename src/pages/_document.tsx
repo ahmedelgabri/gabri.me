@@ -15,7 +15,7 @@ export default class MyDocument extends Document {
           <GA />
         </Head>
         <body className="lg:border lg:border-my border-gray-400 dark:border-gray-800 text-gray-900 bg-gray-300 dark:text-gray-400 dark:bg-gray-900">
-          <Script
+          <script
             dangerouslySetInnerHTML={{
               __html: `(function() {
   window.__onThemeChange = function() {};
