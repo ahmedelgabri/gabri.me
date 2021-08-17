@@ -48,7 +48,7 @@
     "@ahmedelgabri/prettier-config": "5.0.0",
     "eslint": "7.32.0",
     "eslint-config-next": "^11.1.0",
-    "next-sitemap": "1.6.155",
+    "next-sitemap": "1.6.157",
     "prettier": "2.3.2",
     "typescript": "4.3.5",
     "vercel": "23.1.2"
