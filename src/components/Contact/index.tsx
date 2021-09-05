@@ -24,8 +24,8 @@ export default function Contact({social}: Props) {
   const {theme} = useTheme()
 
   return (
-    <div role="contentinfo">
-      <ul className="flex">
+    <div>
+      <ul className="flex flex-wrap justify-start">
         {Object.entries(social).map(([site, {url}]) => {
           const Comp = iconsMap[site] || site
 
@@ -36,14 +36,14 @@ export default function Contact({social}: Props) {
                 rel="noopener noreferrer me"
                 target="_blank"
                 className={cn(
-                  'flex text-xl leading-relaxed items-center hover:text-myBlue-400 border-none hover:bg-transparent',
+                  'flex text-sm mr-4 leading-relaxed items-center hover:text-myBlue-400 border-none hover:bg-transparent',
                   {
                     'text-gray-500': theme !== 'dark',
                     'text-gray-600': theme === 'dark',
                   },
                 )}
               >
-                <Comp className="mr-4" />
+                <Comp className="mr-1" /> {site}
               </a>
             </li>
           )
