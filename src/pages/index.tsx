@@ -39,8 +39,8 @@ export default function Index({posts}: any) {
           of experience in building products & leading/building teams.
         </p>
         <p className="tracking-tight mb-6 text-xl">
-          Currently based in Amsterdam, the Netherlands & working as Tech Lead,
-          Platform at{' '}
+          Currently based in Amsterdam, the Netherlands & working as Staff
+          Software Engineer at{' '}
           <a target="_blank" rel="noreferrer noopener" href="http://miro.com">
             Miro
           </a>
