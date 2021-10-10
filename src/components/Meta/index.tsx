@@ -33,13 +33,25 @@ export default function Meta({
   return (
     <Head>
       <title>{title}</title>
-      <meta name="description" content={excerpt || description} />
-      <meta property="og:url" content={url} />
-      <meta property="og:image" content={img || socialImg} />
-      <meta property="og:type" content={post ? 'article' : 'website'} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={excerpt || description} />
-      <meta name="application-name" content="Gabri.me" />
+      <meta
+        key="description"
+        name="description"
+        content={excerpt || description}
+      />
+      <meta key="og:url" property="og:url" content={url} />
+      <meta key="og:image" property="og:image" content={img || socialImg} />
+      <meta
+        key="og:type"
+        property="og:type"
+        content={post ? 'article' : 'website'}
+      />
+      <meta key="twitter:title" name="twitter:title" content={title} />
+      <meta
+        key="twitter:description"
+        name="twitter:description"
+        content={excerpt || description}
+      />
+      <meta key="application-name" name="application-name" content="Gabri.me" />
 
       {[twitter, github, linkedin].map(({url}) => (
         <link key={url} href={url} rel="me" />
@@ -55,7 +67,7 @@ export default function Meta({
         name="msapplication-TileColor"
         content="#1f2325"
       />
-      <meta name="theme-color" content="#1f2325" />
+      <meta key="theme-color" name="theme-color" content="#1f2325" />
       <link
         rel="apple-touch-icon-precomposed"
         sizes="114x114"
@@ -70,11 +82,23 @@ export default function Meta({
         rel="apple-touch-icon-precomposed"
         href="apple-touch-icon-57x57-precomposed.png"
       />
-      <meta name="apple-mobile-web-app-title" content="Gabri.me" />
-      <meta property="twitter:account_id" content={twitterId} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:creator" content={twitterUrl} />
-      <meta name="twitter:domain" content={siteUrl} />
+      <meta
+        key="apple-mobile-web-app-title"
+        name="apple-mobile-web-app-title"
+        content="Gabri.me"
+      />
+      <meta
+        key="twitter:account_id"
+        property="twitter:account_id"
+        content={twitterId}
+      />
+      <meta
+        key="twitter:card"
+        name="twitter:card"
+        content="summary_large_image"
+      />
+      <meta key="twitter:creator" name="twitter:creator" content={twitterUrl} />
+      <meta key="twitter:domain" name="twitter:domain" content={siteUrl} />
       {children}
     </Head>
   )
