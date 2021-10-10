@@ -4,7 +4,6 @@ import Script from 'next/script'
 import {MDXRemote} from 'next-mdx-remote'
 import type {MDXRemoteSerializeResult} from 'next-mdx-remote'
 import {serialize} from 'next-mdx-remote/serialize'
-import mdxPrism from 'mdx-prism'
 import Meta from '../../components/Meta'
 import Header from '../../components/Header'
 import Layout from '../../components/Layout'
@@ -35,6 +34,9 @@ const {
 } = meta
 
 export async function getStaticProps({params}) {
+  const shiki = require('shiki')
+  const foo = await import('@stefanprobst/remark-shiki')
+  const highlighter = await shiki.getHighlighter({theme: 'github-dark'})
   const post = await getPostBySlug(params.slug)
 
   const mdxContent = await serialize(post.content, {
@@ -43,8 +45,13 @@ export async function getStaticProps({params}) {
         require('remark-autolink-headings'),
         require('remark-slug'),
         require('remark-code-titles'),
+        [
+          foo.default,
+          {
+            highlighter,
+          },
+        ],
       ],
-      rehypePlugins: [mdxPrism],
     },
   })
 
