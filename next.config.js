@@ -1,4 +1,8 @@
 module.exports = {
+  experimental: {
+    concurrentFeatures: true,
+    serverComponents: true,
+  },
   swcMinify: true,
   reactStrictMode: true,
   poweredByHeader: false,
