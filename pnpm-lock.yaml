@@ -11,7 +11,7 @@ specifiers:
   '@types/react-dom': 17.0.11
   '@types/rss': 0.0.29
   '@vercel/node': 1.12.1
-  ahmedelgabri: 5.0.0
+  ahmedelgabri: 5.0.2
   autoprefixer: 10.4.0
   classnames: 2.3.1
   eslint: 8.2.0
@@ -48,7 +48,7 @@ dependencies:
   '@types/react-dom': 17.0.11
   '@types/rss': 0.0.29
   '@vercel/node': 1.12.1
-  ahmedelgabri: 5.0.0
+  ahmedelgabri: 5.0.2
   autoprefixer: 10.4.0_postcss@8.3.11
   classnames: 2.3.1
   globby: 11.0.3
@@ -1067,8 +1067,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  /ahmedelgabri/5.0.0:
-    resolution: {integrity: sha512-UwoqiL/TtgRzmMWauXxylH2IOnKtcQSzLvlW6PP7xeIOdd57Q6NMph7Hokubi9X154OJizbHVN2h3Ivcboufog==}
+  /ahmedelgabri/5.0.2:
+    resolution: {integrity: sha512-/nUV2m4vzeVIqI4zDJ1x9rRR+tMDs2hnK47j3i5aQi99fo0xSOF0cd0i9sjtqO6ZMUNxJBSUEEQkWpOrrAVLvg==}
     hasBin: true
     dev: false
 

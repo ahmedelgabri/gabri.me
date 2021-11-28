@@ -16,6 +16,7 @@ declare module 'rehype-stringify'
 declare module 'mdx-prism'
 declare module 'ahmedelgabri' {
   export function getCard(): string
+  export function getPlainCard(): string
 }
 
 declare module '*.png'
