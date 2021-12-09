@@ -38,7 +38,7 @@ First step,
 ```vim
 :args `grep --recursive --files-with-matches 'I hate vim' .`
 
-// can be shorter
+" can be shorter
 
 :args `grep -r -l 'I hate vim' .`
 ```

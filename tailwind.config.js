@@ -3,16 +3,10 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   darkMode: 'class',
-  purge: [
+  content: [
     './src/pages/**/*.{js,jsx,ts,tsx}',
     './src/components/**/*.{js,jsx,ts,tsx}',
   ],
-  variants: {
-    extend: {
-      backgroundOpacity: ['dark'],
-      gradientColorStops: ['dark'],
-    },
-  },
   theme: {
     extend: {
       colors: {
