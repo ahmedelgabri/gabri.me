@@ -1,10 +1,10 @@
-:root {
-  color-scheme: dark light;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark light;
+}
 
 body {
   text-size-adjust: 100%;
@@ -17,18 +17,17 @@ body {
 }
 
 a {
-  @apply border-b-2 border-myBlue-400;
-  /* @apply text-myBlue-400; */
+  @apply underline underline-offset-1 decoration-2 decoration-slate-300 dark:decoration-slate-700 ease-in-out duration-150;
 }
 
 a:hover,
 a:focus,
 a:active {
-  @apply text-black bg-yellow-300;
+  @apply text-current bg-slate-300 dark:bg-zinc-800 decoration-blue-400;
 }
 
 :focus {
-  outline: 2px solid theme('colors.blue.500');
+  @apply ring-2;
 }
 
 img {
@@ -36,8 +35,8 @@ img {
 }
 
 pre {
-  @apply max-w-full p-4 m-0 mb-6 overflow-auto font-mono !important;
-  font-size: inherit !important;
+  @apply max-w-full p-4 m-0 mb-6 overflow-auto font-mono rounded-b leading-snug !important;
+  font-size: 0.9rem !important;
 }
 
 pre code {
@@ -58,9 +57,9 @@ blockquote > p {
 }
 
 ::selection {
-  @apply text-black bg-yellow-300 !important;
+  @apply text-black bg-orange-300 !important;
 }
 
 .remark-code-title {
-  @apply font-mono block p-2 m-0 bg-gray-800 text-white;
+  @apply font-mono block p-2 m-0 bg-neutral-900 text-slate-200 rounded-t !important;
 }

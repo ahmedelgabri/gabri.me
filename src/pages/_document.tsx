@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Script from 'next/script'
 import Document, {Html, Head, Main, NextScript} from 'next/document'
 import {GA} from '../lib/gtag'
 
@@ -12,9 +11,19 @@ export default class MyDocument extends Document {
           <meta httpEquiv="x-ua-compatible" content="ie=edge" />
           <meta name="color-scheme" content="dark light" />
           <link rel="shortcut icon" href="/favicon.png" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="true"
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet"
+          />
           <GA />
         </Head>
-        <body className="lg:border lg:border-my border-gray-400 dark:border-gray-800 text-gray-900 bg-gray-300 dark:text-gray-400 dark:bg-gray-900">
+        <body className="p-4 md:p-8 bg-slate-200 text-slate-700 dark:bg-zinc-900 dark:text-slate-400">
           <script
             dangerouslySetInnerHTML={{
               __html: `(function() {
@@ -47,7 +56,6 @@ export default class MyDocument extends Document {
   });
 
   setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
-
 })();`,
             }}
           />

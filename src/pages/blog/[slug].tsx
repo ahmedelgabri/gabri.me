@@ -35,8 +35,8 @@ const {
 
 export async function getStaticProps({params}) {
   const shiki = require('shiki')
-  const foo = await import('@stefanprobst/remark-shiki')
-  const highlighter = await shiki.getHighlighter({theme: 'github-dark'})
+  const {default: remarkShiki} = await import('@stefanprobst/remark-shiki')
+  const highlighter = await shiki.getHighlighter({theme: 'poimandres'})
   const post = await getPostBySlug(params.slug)
 
   const mdxContent = await serialize(post.content, {
@@ -46,7 +46,7 @@ export async function getStaticProps({params}) {
         require('remark-slug'),
         require('remark-code-titles'),
         [
-          foo.default,
+          remarkShiki,
           {
             highlighter,
           },

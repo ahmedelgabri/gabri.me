@@ -12,7 +12,7 @@ export default function List(props: {title: string; posts: any[]}) {
           <li key={`${date}-${i}`} className="items-start mb-4 lg:mb-2 lg:flex">
             <div className="lg:mr-4 lg:text-left">
               <time
-                className="font-mono text-sm tabular-nums text-gray-600 dark:text-gray-400"
+                className="font-mono text-sm tabular-nums text-gray-600"
                 dateTime={date}
               >
                 {date}

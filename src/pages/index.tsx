@@ -35,7 +35,7 @@ export default function Index({posts}: any) {
           Hi.
         </H>
         <p className="tracking-tight mb-6 text-xl">
-          I'm a software engineer, specializing in front-end, With over a decade
+          I'm a software engineer, specializing in front-end, with over a decade
           of experience in building products & leading/building teams.
         </p>
         <p className="tracking-tight mb-6 text-xl">
@@ -50,7 +50,7 @@ export default function Index({posts}: any) {
         <Contact social={social} />
       </Layout>
 
-      <div className="bg-gray-400 dark:bg-gray-800 bg-opacity-30">
+      <div>
         <Layout>
           <List
             title="Talks & Interviews"
@@ -60,10 +60,11 @@ export default function Index({posts}: any) {
                 item: (
                   <div className="flex items-center">
                     <AiFillAudio title="Podcast" className="mr-2" />
-                    <div>
+                    <div className="mr-2">
                       <a
                         href={interviews.nullplusplus[1]}
                         target="_blank"
+                        className="lg:p-2 after:content-['_↗']"
                         rel="noreferrer noopener"
                       >
                         Null++ Podcast (Arabic)
@@ -77,11 +78,12 @@ export default function Index({posts}: any) {
                 item: (
                   <div className="flex items-center">
                     <RiArticleLine title="Interview" className="mr-2" />
-                    <div>
+                    <div className="mr-2">
                       <a
                         href={interviews.devtomanager[1]}
                         target="_blank"
                         rel="noreferrer noopener"
+                        className="lg:p-2 after:content-['_↗']"
                       >
                         DevToManager Interview
                       </a>
@@ -98,18 +100,19 @@ export default function Index({posts}: any) {
                         title="Conference talk"
                         className="mr-2"
                       />
-                      <div>
+                      <div className="mr-2">
                         <a
                           href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`}
                           target="_blank"
                           rel="noreferrer noopener"
+                          className="lg:p-2 after:content-['_↗']"
                         >
                           Automating front-end refactoring
                         </a>
                         {' - '}(
                         <a
                           href={talks.AmsterdamJS[0]}
-                          className="italic"
+                          className="lg:p-2 after:content-['_↗']"
                           target="_blank"
                           rel="noreferrer noopener"
                         >
@@ -126,7 +129,7 @@ export default function Index({posts}: any) {
         </Layout>
       </div>
 
-      <div className="bg-gray-600 dark:bg-gray-700 bg-opacity-30 dark:bg-opacity-70">
+      <div>
         <Layout>
           <List
             title="Blog"
@@ -134,7 +137,7 @@ export default function Index({posts}: any) {
               date: p.date,
               item: (
                 <Link href={p.slug}>
-                  <a>{p.title}</a>
+                  <a className="lg:p-2">{p.title}</a>
                 </Link>
               ),
             }))}

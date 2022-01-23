@@ -24,12 +24,12 @@ export default function H({level = '1', children, extra, className}: Props) {
     // @ts-ignore
     <Tag
       className={cn(
-        'mb-8 lg:mb-12 font-extrabold leading-snug sm:leading-snug md:leading-tight tracking-tight',
+        'mb-8 lg:mb-12 font-extrabold font-serif !leading-snug tracking-tight',
         className,
         styles[level],
       )}
     >
-      <span className="inline-block bg-gradient-to-r from-blue-500 to-blue-700 dark:from-blue-300 dark:to-blue-500 bg-clip-text text-transparent">
+      <span className="inline-block bg-gradient-to-br from-slate-500 to-slate-900 dark:bg-gradient-to-b dark:from-slate-500 dark:to-slate-700 bg-clip-text text-transparent">
         {children}
       </span>{' '}
       {extra && extra}

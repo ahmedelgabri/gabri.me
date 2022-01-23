@@ -1,21 +1,23 @@
 import * as React from 'react'
 import cn from 'classnames'
 import YouTube from './YouTube'
+import H from './Prose/H'
 
-type Props = Record<string, any>
+type Props = Record<string, any> & {children: React.ReactNode}
 
 export default {
   YouTube,
   p(props: Props) {
-    return (
-      <p {...props} className={cn(props.className, 'mb-4 leading-normal')} />
-    )
+    return <p {...props} className={cn(props.className, 'mb-4')} />
   },
   ul(props: Props) {
     return (
       <ul
         {...props}
-        className={cn(props.className, 'mb-6 list-disc list-outside')}
+        className={cn(
+          props.className,
+          'mb-6 list-disc pl-4 md:pl-0 md:list-outside',
+        )}
       />
     )
   },
@@ -23,52 +25,25 @@ export default {
     return (
       <ul
         {...props}
-        className={cn(props.className, 'mb-6 list-decimal list-outside')}
+        className={cn(
+          props.className,
+          'mb-6 list-decimal pl-4 md:pl-0 md:list-outside',
+        )}
       />
     )
   },
   h3(props: Props) {
-    return (
-      <h3
-        {...props}
-        className={cn(
-          props.className,
-          'mb-6 text-3xl font-extrabold leading-tight tracking-tight',
-        )}
-      />
-    )
+    return <H level="3" {...props} className={cn(props.className, 'mb-6')} />
   },
   h4(props: Props) {
-    return (
-      <h4
-        {...props}
-        className={cn(
-          props.className,
-          'mb-6 text-2xl font-extrabold leading-tight tracking-tight',
-        )}
-      />
-    )
+    return <H level="4" {...props} className={cn(props.className, 'mb-6')} />
   },
   h5(props: Props) {
-    return (
-      <h5
-        {...props}
-        className={cn(
-          props.className,
-          'mb-6 text-xl font-extrabold leading-tight tracking-tight',
-        )}
-      />
-    )
+    return <H level="5" {...props} className={cn(props.className, 'mb-6')} />
   },
   h6(props: Props) {
     return (
-      <h6
-        {...props}
-        className={cn(
-          props.className,
-          'mb-6 font-extrabold leading-tight tracking-tight text-l',
-        )}
-      />
+      <H level="6" {...props} className={cn(props.className, 'mb-6 text-l')} />
     )
   },
   blockquote(props: Props) {

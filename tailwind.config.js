@@ -19,9 +19,10 @@ module.exports = {
         my: '1rem',
       },
       width: {
-        my: '85ch',
+        my: '65ch',
       },
       fontFamily: {
+        serif: ['Playfair Display', ...defaultTheme.fontFamily.serif],
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
         mono: [
           '"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata',
