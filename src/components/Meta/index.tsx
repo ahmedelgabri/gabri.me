@@ -16,6 +16,7 @@ const {
   social: {twitter, github, linkedin},
   twitterId,
   siteUrl,
+  author,
 } = meta
 
 const {url: twitterUrl} = twitter
@@ -38,6 +39,7 @@ export default function Meta({
         name="description"
         content={excerpt || description}
       />
+      <meta name="author" content={author} />
       <meta key="og:url" property="og:url" content={url} />
       <meta key="og:image" property="og:image" content={img || socialImg} />
       <meta
