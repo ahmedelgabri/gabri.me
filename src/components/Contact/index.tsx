@@ -36,7 +36,7 @@ export default function Contact({social}: Props) {
                 rel="noopener noreferrer me"
                 target="_blank"
                 className={cn(
-                  'flex text-sm mr-4 leading-relaxed p-2 items-center hover:text-slate-400 border-none hover:bg-transparent',
+                  'mr-4 flex items-center border-none p-2 text-sm leading-relaxed hover:bg-transparent hover:text-slate-400',
                   {
                     'text-gray-600': theme === 'dark',
                   },

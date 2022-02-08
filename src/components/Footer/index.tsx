@@ -5,7 +5,7 @@ const {author} = meta
 
 export default function Footer() {
   return (
-    <p className="text-gray-300 dark:text-gray-500 text-sm py-12">
+    <p className="py-12 text-sm text-gray-300 dark:text-gray-500">
       © {new Date().getFullYear()} {author}
     </p>
   )

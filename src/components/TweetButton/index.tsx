@@ -14,7 +14,7 @@ export interface Props {
 
 export default function TweetButton({via, title, url}: Props) {
   return (
-    <div className="border-t border-gray-700 mt-8 pt-8">
+    <div className="mt-8 border-t border-gray-700 pt-8">
       You can{' '}
       <AiOutlineTwitter className="inline-block fill-black dark:fill-white" />{' '}
       <a

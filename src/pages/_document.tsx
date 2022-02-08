@@ -23,7 +23,7 @@ export default class MyDocument extends Document {
           />
           <GA />
         </Head>
-        <body className="p-4 md:p-8 bg-slate-200 text-slate-700 dark:bg-zinc-900 dark:text-slate-400">
+        <body className="bg-slate-200 p-4 text-slate-700 dark:bg-zinc-900 dark:text-slate-400 md:p-8">
           <script
             dangerouslySetInnerHTML={{
               __html: `(function() {

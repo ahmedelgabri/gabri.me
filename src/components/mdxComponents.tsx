@@ -16,7 +16,7 @@ export default {
         {...props}
         className={cn(
           props.className,
-          'mb-6 list-disc pl-4 md:pl-0 md:list-outside',
+          'mb-6 list-disc pl-4 md:list-outside md:pl-0',
         )}
       />
     )
@@ -27,7 +27,7 @@ export default {
         {...props}
         className={cn(
           props.className,
-          'mb-6 list-decimal pl-4 md:pl-0 md:list-outside',
+          'mb-6 list-decimal pl-4 md:list-outside md:pl-0',
         )}
       />
     )
@@ -43,14 +43,14 @@ export default {
   },
   h6(props: Props) {
     return (
-      <H level="6" {...props} className={cn(props.className, 'mb-6 text-l')} />
+      <H level="6" {...props} className={cn(props.className, 'text-l mb-6')} />
     )
   },
   blockquote(props: Props) {
     return (
       <blockquote
         {...props}
-        className={cn(props.className, 'mb-6 w-full pl-4 ml-0 italic')}
+        className={cn(props.className, 'mb-6 ml-0 w-full pl-4 italic')}
       />
     )
   },

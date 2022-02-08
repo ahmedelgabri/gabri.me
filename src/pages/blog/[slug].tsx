@@ -98,7 +98,7 @@ export default function Post(props: Props) {
         <Header />
         <H level="2">{title}</H>
         <time
-          className="font-mono block mb-12 italic text-gray-500 text-sm"
+          className="mb-12 block font-mono text-sm italic text-gray-500"
           dateTime={date}
         >
           On {date}

@@ -25,8 +25,7 @@ module.exports = {
     },
     resume: {
       display: 'Resume',
-      url:
-        'https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/export?format=pdf',
+      url: 'https://docs.google.com/document/d/1sxu8gQi_vyz_RnDNTb6qJy3o9cth6_DzAI2zE_HHSnQ/export?format=pdf',
     },
   },
   twitterId: '1512909779',

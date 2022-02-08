@@ -34,11 +34,11 @@ export default function Index({posts}: any) {
         <H level="2" extra="👋">
           Hi.
         </H>
-        <p className="tracking-tight mb-6 text-xl">
+        <p className="mb-6 text-xl tracking-tight">
           I'm a software engineer, specializing in front-end, with over a decade
           of experience in building products & leading/building teams.
         </p>
-        <p className="tracking-tight mb-6 text-xl">
+        <p className="mb-6 text-xl tracking-tight">
           Currently based in Amsterdam, the Netherlands & working as Staff
           Software Engineer at{' '}
           <a target="_blank" rel="noreferrer noopener" href="http://miro.com">
@@ -64,7 +64,7 @@ export default function Index({posts}: any) {
                       <a
                         href={interviews.nullplusplus[1]}
                         target="_blank"
-                        className="lg:p-2 after:content-['_↗']"
+                        className="after:content-['_↗'] lg:p-2"
                         rel="noreferrer noopener"
                       >
                         Null++ Podcast (Arabic)
@@ -83,7 +83,7 @@ export default function Index({posts}: any) {
                         href={interviews.devtomanager[1]}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="lg:p-2 after:content-['_↗']"
+                        className="after:content-['_↗'] lg:p-2"
                       >
                         DevToManager Interview
                       </a>
@@ -105,14 +105,14 @@ export default function Index({posts}: any) {
                           href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`}
                           target="_blank"
                           rel="noreferrer noopener"
-                          className="lg:p-2 after:content-['_↗']"
+                          className="after:content-['_↗'] lg:p-2"
                         >
                           Automating front-end refactoring
                         </a>
                         {' - '}(
                         <a
                           href={talks.AmsterdamJS[0]}
-                          className="lg:p-2 after:content-['_↗']"
+                          className="after:content-['_↗'] lg:p-2"
                           target="_blank"
                           rel="noreferrer noopener"
                         >

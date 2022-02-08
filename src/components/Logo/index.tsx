@@ -6,7 +6,7 @@ export default function Logo() {
   return (
     <Link href="/">
       <a className="block p-3">
-        <h1 className="leading-none text-sm">{author}</h1>
+        <h1 className="text-sm leading-none">{author}</h1>
       </a>
     </Link>
   )
