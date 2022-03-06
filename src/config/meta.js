@@ -1,11 +1,11 @@
 const author = 'Ahmed El Gabri'
-const title = 'Front-end Engineer'
+const title = 'Software Engineer'
 
 module.exports = {
   title,
   author,
   siteUrl: 'https://gabri.me',
-  description: `${author} is a ${title} who like to bring structure where it is lacking, systematizing information & automating processes.`,
+  description: `${author} is a ${title} specialises in frontend & like to bring structure where it is lacking, systematizing information & automating processes.`,
   social: {
     email: {
       display: 'ahmed@gabri.me',

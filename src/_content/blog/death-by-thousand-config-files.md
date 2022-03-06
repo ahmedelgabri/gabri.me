@@ -5,28 +5,28 @@ date: '2017-08-27'
 tags: ['front-end', 'config', 'build tools', 'tooling']
 ---
 
-Today, just a couple of hours ago
+Today, a couple of hours ago
 [Prettier released version `1.6.0`](https://github.com/prettier/prettier/tree/1.6.0)
 with support for `.prettierrc` & `.prettierignore` files. If you follow me on
-twitter you might have noticed how much I love prettier. But in the same time,
+Twitter you might have noticed how much I love prettier. But at the same time,
 you might have noticed my growing pain of the endless stream for `.*rc` &
 `.*ignore` files.
 
 One of the things that I **really** liked about prettier was the lack of config
 _by any means, files, etc..._
 
-### Here is a list of file config files we currently have in our repo that are only related to front-end tools:
+### Here is a list of file config files we currently have in our repo that is only related to front-end tools:
 
 - `.babelrc` - also will support `.js`
 - `.eslintrc.js` - supports `.yaml` & `.js`
 - `.eslintignore`
 - `.npmrc` - Just has `save-exact = true`
 - `.nvmrc` - to make sure everyone is using the same node version
-- `.yarnrc` - has `exact "true"` & `save-prefix ""`. We mainly use `yarn`
+- `.yarnrc` - has `exact "true"` & `save-prefix ""`. We use `yarn`
 - `package.json` - aside from the normal `package.json` stuff, it contains
   `jest` configuration which I could have already kept in a `jest.config.js`.
 - `webpack.config.js` - still a config-ish file, that depends on the loaders
-  that you use can depend on the other `.*rc` files too. For example
+  that you use can depend on the other `.*rc` files too. For example,
   `babel-loader` will pick up the config from `.babelrc`. If you have
   `eslint-loader` it will pick up `.eslintrc`, etc...
 
@@ -66,9 +66,9 @@ will start doing. that's not the main issue.
 - This loop will never end: tomorrow someone comes with a new great tool called
   `X` & they decide they need some config for it & boom we have `.Xrc` &
   `.Xignore` now. This loop will never end this way.
-- They are not really separate. 90% of the time you will need to change a couple
-  of them if you want to add a new tool because all of them relate/work with
-  each other. Which makes it painful to deal with.
+- They are not separate. 90% of the time you will need to change a couple of
+  them if you want to add a new tool because all of them relate/work with each
+  other. Which makes it painful to deal with.
 
 So I have a simple question here.
 
@@ -105,7 +105,7 @@ module.exports = {
 }
 ```
 
-Or event better!
+Or even better!
 
 <blockquote className="twitter-tweet" data-conversation="none" data-lang="en">
   <p lang="en" dir="ltr">
@@ -125,6 +125,6 @@ The answer is, it's not much better but at least we can have these:
 - One place to handle most of the logic (env switching, etc...)
 - Restoring some sanity?
 
-I really do like all of these projects, they are amazing projects made by
-smarter people than I am. But honestly I never felt JavaScript fatigue, but I
-started to feel Config/rc files fatigue.
+I do like all of these projects, they are amazing projects made by smarter
+people than I am. I never felt JavaScript fatigue, but I started to feel
+Config/rc files fatigue.
