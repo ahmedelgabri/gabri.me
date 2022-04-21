@@ -3,11 +3,16 @@ import getConfig from 'next/config'
 
 const isPROD = getConfig()?.publicRuntimeConfig?.isPROD
 
+const GA4_TRACKING_ID = isPROD ? 'G-TDX82ST2HH' : ''
 const GA_TRACKING_ID = isPROD ? 'UA-10517764-2' : ''
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {
   if (isPROD) {
+    window.gtag('config', GA4_TRACKING_ID, {
+      page_path: url,
+      anonymize_ip: true,
+    })
     window.gtag('config', GA_TRACKING_ID, {
       page_path: url,
       anonymize_ip: true,
@@ -41,6 +46,10 @@ export function GA() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+              anonymize_ip: true
+            });
+            gtag('config', '${GA4_TRACKING_ID}', {
               page_path: window.location.pathname,
               anonymize_ip: true
             });
