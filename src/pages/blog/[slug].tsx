@@ -69,6 +69,7 @@ export default function Post(props: Props) {
           On {formattedDate}
         </time>
         <div className="prose dark:prose-light">
+          {/* @ts-ignore */}
           <Component components={MdxComponents} />
         </div>
         <div>
