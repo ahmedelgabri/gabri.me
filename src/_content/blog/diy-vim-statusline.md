@@ -11,9 +11,10 @@ tags: ['vim', 'unix', 'terminal']
 > &
 > [statusline functions](https://github.com/ahmedelgabri/dotfiles/blob/f2b74f6cd4dc8388047af87872621c5176c50306/files/.vim/autoload/statusline.vim)_
 
-<!-- prettier-ignore-start -->
-> _**Update 6 Feb 2021:** I mainly use neovim as my main editor & I have migrated my [statusline](https://github.com/ahmedelgabri/dotfiles/blob/acf6dc587f6b76024fad32391655fa910fc1ae3e/config/.vim/lua/\_/statusline.lua) to lua. Also it's much much minimal now._
-<!-- prettier-ignore-end -->
+> _**Update 6 Feb 2021:** I mainly use neovim as my main editor & I have
+> migrated my
+> [statusline](https://github.com/ahmedelgabri/dotfiles/blob/acf6dc587f6b76024fad32391655fa910fc1ae3e/config/.vim/lua/_/statusline.lua)
+> to lua. Also it's much much minimal now.\_
 
 Nearly two years ago I decided to switch to Vim and move all my work into one
 app. The command line/Terminal or more sepcifically iTerm2. That desicion turns
@@ -42,7 +43,7 @@ that it's blazingly fast to start, nearly instant. So I decided I'll write my
 own customization to emulate what I liked about airline without all the overhead
 of it. I managed to achieve what I want and it turns out to be quite simple.
 
-```viml:.vimrc
+```vim:.vimrc
 " Statusline
 
 " :h mode() to see all modes

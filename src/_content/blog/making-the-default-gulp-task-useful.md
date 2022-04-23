@@ -2,7 +2,7 @@
 title: 'Making the default gulp task useful'
 published: true
 date: '2014-07-26'
-tags: null
+tags: []
 ---
 
 I have been using [gulp](http://gulpjs.com) for a couple of months now &#038; I
