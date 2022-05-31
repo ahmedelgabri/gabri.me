@@ -60,4 +60,4 @@ export default {
   hr(props: Props) {
     return <hr {...props} className={cn(props.className, 'mb-6')} />
   },
-}
+} as unknown as Record<string, React.ReactNode>

@@ -1,9 +1,11 @@
 module.exports = {
-  // experimental: {
-  //   concurrentFeatures: true,
-  //   serverComponents: true,
-  //   reactRoot: true,
-  // },
+  experimental: {
+    // concurrentFeatures: true,
+    // serverComponents: true,
+    // reactRoot: true,
+    legacyBrowsers: false,
+    browsersListForSwc: true,
+  },
   swcMinify: true,
   reactStrictMode: true,
   poweredByHeader: false,
