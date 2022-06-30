@@ -5,6 +5,7 @@ module.exports = {
     // reactRoot: true,
     legacyBrowsers: false,
     browsersListForSwc: true,
+    // runtime: 'experimental-edge',
   },
   swcMinify: true,
   reactStrictMode: true,
