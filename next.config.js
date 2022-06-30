@@ -1,12 +1,14 @@
 const {withContentlayer} = require('next-contentlayer')
 
 module.exports = withContentlayer({
-  // experimental: {
-  //   concurrentFeatures: true,
-  //   serverComponents: true,
-  //   reactRoot: true,
-  // runtime: 'experimental-edge',
-  // },
+  experimental: {
+    // concurrentFeatures: true,
+    // serverComponents: true,
+    // reactRoot: true,
+    legacyBrowsers: false,
+    browsersListForSwc: true,
+    // runtime: 'experimental-edge',
+  },
   swcMinify: true,
   reactStrictMode: true,
   poweredByHeader: false,
