@@ -17,36 +17,36 @@ import meta from '../config/meta'
 const {author, social, talks, interviews, title, siteUrl} = meta
 
 export async function getStaticProps() {
-  return {
-    props: {
-      posts: allPosts.sort(({date: a}, {date: b}) =>
-        compareDesc(new Date(a), new Date(b)),
-      ),
-    },
-  }
+	return {
+		props: {
+			posts: allPosts.sort(({date: a}, {date: b}) =>
+				compareDesc(new Date(a), new Date(b)),
+			),
+		},
+	}
 }
 
 export default function Index({posts}: {posts: Post[]}) {
-  return (
-    <>
-      <Meta title={`${author} | ${title}`} url={siteUrl} />
-      <Layout>
-        <Header />
-        <H level="2" extra="👋">
-          Hi.
-        </H>
-        <p className="mb-6 text-xl tracking-tight">
-          I'm a software engineer, specializing in front-end, with over a decade
-          of experience in building products & leading/building teams.
-        </p>
-        <p className="mb-6 text-xl tracking-tight">
-          Currently based in Amsterdam, the Netherlands & working as Staff
-          Software Engineer at{' '}
-          <a target="_blank" rel="noreferrer noopener" href="http://miro.com">
-            Miro
-          </a>
-          .
-        </p>
+	return (
+		<>
+			<Meta title={`${author} | ${title}`} url={siteUrl} />
+			<Layout>
+				<Header />
+				<H level="2" extra="👋">
+					Hi.
+				</H>
+				<p className="mb-6 text-xl tracking-tight">
+					I'm a software engineer, specializing in front-end, with over a decade
+					of experience in building products & leading/building teams.
+				</p>
+				<p className="mb-6 text-xl tracking-tight">
+					Currently based in Amsterdam, the Netherlands & working as Staff
+					Software Engineer at{' '}
+					<a target="_blank" rel="noreferrer noopener" href="http://miro.com">
+						Miro
+					</a>
+					.
+				</p>
 
 				<Contact social={social} />
 			</Layout>
@@ -130,22 +130,22 @@ export default function Index({posts}: {posts: Post[]}) {
 				</Layout>
 			</div>
 
-      <div>
-        <Layout>
-          <List
-            title="Blog"
-            posts={posts.map((p) => ({
-              date: p.formattedDate,
-              item: (
-                <Link href={p.url}>
-                  <a className="lg:p-2">{p.title}</a>
-                </Link>
-              ),
-            }))}
-          />
-          <Footer />
-        </Layout>
-      </div>
-    </>
-  )
+			<div>
+				<Layout>
+					<List
+						title="Blog"
+						posts={posts.map((p) => ({
+							date: p.formattedDate,
+							item: (
+								<Link href={p.url}>
+									<a className="lg:p-2">{p.title}</a>
+								</Link>
+							),
+						}))}
+					/>
+					<Footer />
+				</Layout>
+			</div>
+		</>
+	)
 }

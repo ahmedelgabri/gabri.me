@@ -49,8 +49,8 @@ code {
 }
 
 blockquote {
-  @apply mb-6 ml-0 w-full pl-4 italic;
-  border-left: 0.75em solid;
+	@apply mb-6 ml-0 w-full pl-4 italic;
+	border-left: 0.75em solid;
 }
 
 blockquote > p {
@@ -63,19 +63,19 @@ blockquote > p {
 
 .remark-code-title,
 .rehype-code-title {
-  @apply m-0 block rounded-t bg-neutral-900 p-2 font-mono text-slate-200 !important;
+	@apply m-0 block rounded-t bg-neutral-900 p-2 font-mono text-slate-200 !important;
 }
 
 .prose p {
-  @apply mb-4;
+	@apply mb-4;
 }
 
 .prose ul {
-  @apply mb-6 list-disc pl-4 md:list-outside md:pl-0;
+	@apply mb-6 list-disc pl-4 md:list-outside md:pl-0;
 }
 
 .prose ol {
-  @apply mb-6 list-decimal pl-4 md:list-outside md:pl-0;
+	@apply mb-6 list-decimal pl-4 md:list-outside md:pl-0;
 }
 
 .prose h3,
@@ -83,7 +83,7 @@ blockquote > p {
 .prose h5,
 .prose h6,
 .prose hr {
-  @apply mb-6;
+	@apply mb-6;
 }
 
 /* .prose h6 { */
@@ -91,5 +91,5 @@ blockquote > p {
 /* } */
 
 .prose img {
-  @apply max-w-full;
+	@apply max-w-full;
 }
