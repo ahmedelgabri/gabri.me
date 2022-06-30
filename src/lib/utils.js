@@ -15,59 +15,59 @@ const postsDirectory = path.resolve(root, './src/_content/blog')
 const getProcessor = remark().use(strip).freeze()
 
 async function stripMarkdown(md) {
-  try {
-    const file = await getProcessor.process(md)
+	try {
+		const file = await getProcessor.process(md)
 
-    return file.contents
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(`Strip Markdown error: ${error}`)
-    throw error
-  }
+		return file.contents
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.error(`Strip Markdown error: ${error}`)
+		throw error
+	}
 }
 
 async function getPostsSlugs() {
-  return (await globby([`${postsDirectory}/*.{md,mdx}`])).map((p) =>
-    path.basename(path.basename(p, '.mdx'), '.md'),
-  )
+	return (await globby([`${postsDirectory}/*.{md,mdx}`])).map((p) =>
+		path.basename(path.basename(p, '.mdx'), '.md'),
+	)
 }
 
 async function getPostBySlug(slug) {
-  const realSlug = slug.replace(/\.mdx?$/, '')
-  // Markdown is the default
-  let fullPath = path.join(postsDirectory, `${realSlug}.md`)
+	const realSlug = slug.replace(/\.mdx?$/, '')
+	// Markdown is the default
+	let fullPath = path.join(postsDirectory, `${realSlug}.md`)
 
-  // add support to .mdx extention
-  // All files will be compiled as .mdx anyway
-  try {
-    const filePath = path.join(postsDirectory, `${realSlug}.mdx`)
-    if (fs.statSync(filePath).isFile()) {
-      fullPath = filePath
-    }
-  } catch (e) {}
+	// add support to .mdx extention
+	// All files will be compiled as .mdx anyway
+	try {
+		const filePath = path.join(postsDirectory, `${realSlug}.mdx`)
+		if (fs.statSync(filePath).isFile()) {
+			fullPath = filePath
+		}
+	} catch (e) {}
 
-  const fileContents = fs.readFileSync(fullPath, 'utf8')
-  const {data, content} = matter(fileContents)
-  const raw = await stripMarkdown(content)
-  const excerpt = truncate(raw, {length: 160})
+	const fileContents = fs.readFileSync(fullPath, 'utf8')
+	const {data, content} = matter(fileContents)
+	const raw = await stripMarkdown(content)
+	const excerpt = truncate(raw, {length: 160})
 
-  return {
-    ...data,
-    content,
-    excerpt,
-    slug: `/blog/${realSlug}`,
-  }
+	return {
+		...data,
+		content,
+		excerpt,
+		slug: `/blog/${realSlug}`,
+	}
 }
 
 async function getAllPosts() {
-  const slugs = await getPostsSlugs()
-  const posts = await Promise.all(
-    slugs.map(async (slug) => await getPostBySlug(slug)),
-  )
+	const slugs = await getPostsSlugs()
+	const posts = await Promise.all(
+		slugs.map(async (slug) => await getPostBySlug(slug)),
+	)
 
-  return posts.sort(
-    ({date: a}, {date: b}) => new Date(b).getTime() - new Date(a).getTime(),
-  )
+	return posts.sort(
+		({date: a}, {date: b}) => new Date(b).getTime() - new Date(a).getTime(),
+	)
 }
 
 module.exports = {getPostsSlugs, getAllPosts, getPostBySlug}

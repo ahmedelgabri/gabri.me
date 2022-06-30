@@ -15,102 +15,102 @@ import {getPostBySlug, getAllPosts} from '../../lib/utils'
 import MdxComponents from '../../components/mdxComponents'
 
 interface Props {
-  post: {
-    title: string
-    date: string
-    content: string
-    mdxContent: MDXRemoteSerializeResult
-    excerpt: string
-  }
+	post: {
+		title: string
+		date: string
+		content: string
+		mdxContent: MDXRemoteSerializeResult
+		excerpt: string
+	}
 }
 
 const {
-  title: siteTitle,
-  author,
-  siteUrl,
-  social: {
-    twitter: {display},
-  },
+	title: siteTitle,
+	author,
+	siteUrl,
+	social: {
+		twitter: {display},
+	},
 } = meta
 
 export async function getStaticProps({params}) {
-  const shiki = require('shiki')
-  const {default: remarkShiki} = await import('@stefanprobst/remark-shiki')
-  const highlighter = await shiki.getHighlighter({theme: 'poimandres'})
-  const post = await getPostBySlug(params.slug)
+	const shiki = require('shiki')
+	const {default: remarkShiki} = await import('@stefanprobst/remark-shiki')
+	const highlighter = await shiki.getHighlighter({theme: 'poimandres'})
+	const post = await getPostBySlug(params.slug)
 
-  const mdxContent = await serialize(post.content, {
-    mdxOptions: {
-      remarkPlugins: [
-        require('remark-autolink-headings'),
-        require('remark-slug'),
-        require('remark-code-titles'),
-        [
-          remarkShiki,
-          {
-            highlighter,
-          },
-        ],
-      ],
-    },
-  })
+	const mdxContent = await serialize(post.content, {
+		mdxOptions: {
+			remarkPlugins: [
+				require('remark-autolink-headings'),
+				require('remark-slug'),
+				require('remark-code-titles'),
+				[
+					remarkShiki,
+					{
+						highlighter,
+					},
+				],
+			],
+		},
+	})
 
-  return {
-    props: {
-      post: {
-        ...post,
-        mdxContent,
-      },
-    },
-  }
+	return {
+		props: {
+			post: {
+				...post,
+				mdxContent,
+			},
+		},
+	}
 }
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts()
+	const posts = await getAllPosts()
 
-  return {
-    paths: posts.map((post) => post.slug),
-    fallback: false,
-  }
+	return {
+		paths: posts.map((post) => post.slug),
+		fallback: false,
+	}
 }
 
 export default function Post(props: Props) {
-  const {
-    post: {mdxContent, date, excerpt, title},
-  } = props
+	const {
+		post: {mdxContent, date, excerpt, title},
+	} = props
 
-  const router = useRouter()
-  const postUrl = `${siteUrl}${router.asPath}`
+	const router = useRouter()
+	const postUrl = `${siteUrl}${router.asPath}`
 
-  return (
-    <>
-      <Meta
-        title={`${title} | ${author} - ${siteTitle}`}
-        excerpt={excerpt}
-        url={postUrl}
-        post
-      />
-      <Script
-        strategy="lazyOnload"
-        src="https://platform.twitter.com/widgets.js"
-      />
-      <Layout>
-        <Header />
-        <H level="2">{title}</H>
-        <time
-          className="mb-12 block font-mono text-sm italic text-gray-500"
-          dateTime={date}
-        >
-          On {date}
-        </time>
-        <div className="prose dark:prose-light">
-          <MDXRemote {...mdxContent} components={MdxComponents} lazy />
-        </div>
-        <div>
-          <TweetButton via={display} title={title} url={postUrl} />
-        </div>
-        <Footer />
-      </Layout>
-    </>
-  )
+	return (
+		<>
+			<Meta
+				title={`${title} | ${author} - ${siteTitle}`}
+				excerpt={excerpt}
+				url={postUrl}
+				post
+			/>
+			<Script
+				strategy="lazyOnload"
+				src="https://platform.twitter.com/widgets.js"
+			/>
+			<Layout>
+				<Header />
+				<H level="2">{title}</H>
+				<time
+					className="mb-12 block font-mono text-sm italic text-gray-500"
+					dateTime={date}
+				>
+					On {date}
+				</time>
+				<div className="prose dark:prose-light">
+					<MDXRemote {...mdxContent} components={MdxComponents} lazy />
+				</div>
+				<div>
+					<TweetButton via={display} title={title} url={postUrl} />
+				</div>
+				<Footer />
+			</Layout>
+		</>
+	)
 }

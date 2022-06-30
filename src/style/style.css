@@ -3,63 +3,63 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark light;
+	color-scheme: dark light;
 }
 
 body {
-  text-size-adjust: 100%;
-  font-feature-settings: 'kern', 'liga', 'dlig', 'hlig', 'cswh';
-  font-kerning: auto;
+	text-size-adjust: 100%;
+	font-feature-settings: 'kern', 'liga', 'dlig', 'hlig', 'cswh';
+	font-kerning: auto;
 }
 
 .twitter-tweet {
-  @apply m-0 mb-6 !important;
+	@apply m-0 mb-6 !important;
 }
 
 a {
-  @apply underline decoration-slate-300 decoration-2 underline-offset-1 duration-150 ease-in-out dark:decoration-slate-700;
+	@apply underline decoration-slate-300 decoration-2 underline-offset-1 duration-150 ease-in-out dark:decoration-slate-700;
 }
 
 a:hover,
 a:focus,
 a:active {
-  @apply bg-slate-300 text-current decoration-blue-400 dark:bg-zinc-800;
+	@apply bg-slate-300 text-current decoration-blue-400 dark:bg-zinc-800;
 }
 
 :focus {
-  @apply ring-2;
+	@apply ring-2;
 }
 
 img {
-  @apply max-w-full;
+	@apply max-w-full;
 }
 
 pre {
-  @apply m-0 mb-6 max-w-full overflow-auto rounded-b p-4 font-mono leading-snug !important;
-  font-size: 0.9rem !important;
+	@apply m-0 mb-6 max-w-full overflow-auto rounded-b p-4 font-mono leading-snug !important;
+	font-size: 0.9rem !important;
 }
 
 pre code {
-  color: inherit;
+	color: inherit;
 }
 
 code {
-  @apply font-mono;
-  font-size: inherit !important;
+	@apply font-mono;
+	font-size: inherit !important;
 }
 
 blockquote {
-  border-left: 0.75em solid;
+	border-left: 0.75em solid;
 }
 
 blockquote > p {
-  @apply mb-0;
+	@apply mb-0;
 }
 
 ::selection {
-  @apply bg-orange-300 text-black !important;
+	@apply bg-orange-300 text-black !important;
 }
 
 .remark-code-title {
-  @apply m-0 block rounded-t bg-neutral-900 p-2 font-mono text-slate-200 !important;
+	@apply m-0 block rounded-t bg-neutral-900 p-2 font-mono text-slate-200 !important;
 }

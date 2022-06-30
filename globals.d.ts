@@ -15,8 +15,8 @@ declare module 'rehype-sanitize'
 declare module 'rehype-stringify'
 declare module 'mdx-prism'
 declare module 'ahmedelgabri' {
-  export function getCard(): string
-  export function getPlainCard(): string
+	export function getCard(): string
+	export function getPlainCard(): string
 }
 
 declare module '*.png'
@@ -27,45 +27,45 @@ declare module '*.jpg'
 declare type Theme = 'dark' | 'light'
 
 interface Window {
-  gtag: any
-  twttr: any
-  __onThemeChange(theme?: Theme): void
-  __theme: Theme
-  __setPreferredTheme(theme: Theme): void
+	gtag: any
+	twttr: any
+	__onThemeChange(theme?: Theme): void
+	__theme: Theme
+	__setPreferredTheme(theme: Theme): void
 }
 
 // Global/Shared Props
 interface PostT {
-  title: string
-  slug: string
-  date: string
+	title: string
+	slug: string
+	date: string
 }
 
 enum ContactT {
-  'twitter',
-  'github',
-  'email',
-  'linkedin',
-  'resume',
+	'twitter',
+	'github',
+	'email',
+	'linkedin',
+	'resume',
 }
 
 interface ActivityT {
-  [key: string]: string[]
+	[key: string]: string[]
 }
 
 interface SocialT {
-  [key in ContactT]: {
-    display: string
-    url: string
-  }
+	[key in ContactT]: {
+		display: string
+		url: string
+	}
 }
 
 interface SiteMetaT {
-  author: string
-  title: string
-  siteUrl: string
-  description: string
-  social: SocialT
-  talks: Activity
-  interviews: Activity
+	author: string
+	title: string
+	siteUrl: string
+	description: string
+	social: SocialT
+	talks: Activity
+	interviews: Activity
 }

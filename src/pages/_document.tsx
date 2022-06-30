@@ -3,30 +3,30 @@ import Document, {Html, Head, Main, NextScript} from 'next/document'
 import {GA} from '../lib/gtag'
 
 export default class MyDocument extends Document {
-  render() {
-    return (
-      <Html lang="en" className="text-xl">
-        <Head>
-          <meta charSet="utf-8" />
-          <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-          <meta name="color-scheme" content="dark light" />
-          <link rel="shortcut icon" href="/favicon.png" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin="true"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-            rel="stylesheet"
-          />
-          <GA />
-        </Head>
-        <body className="bg-slate-200 p-4 text-slate-700 dark:bg-zinc-900 dark:text-slate-400 md:p-8">
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function() {
+	render() {
+		return (
+			<Html lang="en" className="text-xl">
+				<Head>
+					<meta charSet="utf-8" />
+					<meta httpEquiv="x-ua-compatible" content="ie=edge" />
+					<meta name="color-scheme" content="dark light" />
+					<link rel="shortcut icon" href="/favicon.png" />
+					<link rel="preconnect" href="https://fonts.googleapis.com" />
+					<link
+						rel="preconnect"
+						href="https://fonts.gstatic.com"
+						crossOrigin="true"
+					/>
+					<link
+						href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+						rel="stylesheet"
+					/>
+					<GA />
+				</Head>
+				<body className="bg-slate-200 p-4 text-slate-700 dark:bg-zinc-900 dark:text-slate-400 md:p-8">
+					<script
+						dangerouslySetInnerHTML={{
+							__html: `(function() {
   window.__onThemeChange = function() {};
 
   function setTheme(newTheme) {
@@ -57,12 +57,12 @@ export default class MyDocument extends Document {
 
   setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
 })();`,
-            }}
-          />
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+						}}
+					/>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		)
+	}
 }
