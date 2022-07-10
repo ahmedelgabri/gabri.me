@@ -1,6 +1,7 @@
-const siteMeta = require('./src/config/meta')
+import siteMeta from './src/config/meta'
 
-module.exports = {
+/** @type {import('next-sitemap').IConfig} */
+const config = {
 	siteUrl: siteMeta.siteUrl,
 	generateRobotsTxt: true,
 	changefreq: 'yearly',
@@ -18,3 +19,5 @@ module.exports = {
 		}
 	},
 }
+
+export default config

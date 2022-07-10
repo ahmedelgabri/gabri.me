@@ -52,11 +52,4 @@ module.exports = withContentlayer({
 			},
 		]
 	},
-	webpack: (config, {isServer}) => {
-		if (isServer) {
-			require('./scripts/generate-feed')
-		}
-
-		return config
-	},
 })

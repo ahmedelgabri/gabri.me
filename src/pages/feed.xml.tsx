@@ -1,14 +1,13 @@
-const fs = require('fs')
-const RSS = require('rss')
-const truncate = require('lodash.truncate')
-const remark = require('remark')
-const strip = require('strip-markdown')
-const {getAllPosts} = require('../src/lib/utils')
-const siteMeta = require('../src/config/meta')
+import RSS from 'rss'
+import truncate from 'lodash.truncate'
+import {remark} from 'remark'
+import strip from 'strip-markdown'
+import {getAllPosts} from '../lib/utils'
+import siteMeta from '../config/meta'
 
-const {author, title, siteUrl, description} = siteMeta
+export async function getServerSideProps({res}) {
+	const {author, title, siteUrl, description} = siteMeta
 
-;(async () => {
 	const allPosts = (await getAllPosts()).sort(
 		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
 	)
@@ -46,7 +45,19 @@ const {author, title, siteUrl, description} = siteMeta
 		}),
 	)
 
-	const formatted = feed.xml({indent: true})
-	// eslint-disable-next-line no-sync
-	fs.writeFileSync('public/feed.xml', formatted)
-})()
+	res.setHeader('Content-Type', 'text/xml')
+	res.setHeader(
+		'Cache-Control',
+		'public, s-maxage=1200, stale-while-revalidate=600',
+	)
+	res.write(feed.xml({indent: true}))
+	res.end()
+
+	return {
+		props: {},
+	}
+}
+
+export default function RSSFeed() {
+	return null
+}

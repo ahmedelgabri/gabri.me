@@ -1,12 +1,10 @@
-// This file is used in generate-feed.js that's why it's CJS & .js file
-
-const fs = require('fs')
-const path = require('path')
-const matter = require('gray-matter')
-const remark = require('remark')
-const strip = require('strip-markdown')
-const truncate = require('lodash.truncate')
-const globby = require('globby')
+import fs from 'node:fs'
+import path from 'node:path'
+import matter from 'gray-matter'
+import {remark} from 'remark'
+import strip from 'strip-markdown'
+import truncate from 'lodash.truncate'
+import {globby} from 'globby'
 
 const root = process.cwd()
 const postsDirectory = path.resolve(root, './src/_content/blog')
@@ -14,7 +12,7 @@ const postsDirectory = path.resolve(root, './src/_content/blog')
 
 const getProcessor = remark().use(strip).freeze()
 
-async function stripMarkdown(md) {
+async function stripMarkdown(md: string): Promise<string> {
 	try {
 		const file = await getProcessor.process(md)
 
@@ -26,13 +24,21 @@ async function stripMarkdown(md) {
 	}
 }
 
-async function getPostsSlugs() {
+export async function getPostsSlugs(): Promise<string[]> {
 	return (await globby([`${postsDirectory}/*.{md,mdx}`])).map((p) =>
 		path.basename(path.basename(p, '.mdx'), '.md'),
 	)
 }
 
-async function getPostBySlug(slug) {
+type PostData = {
+	title: string
+	content: string
+	excerpt: string
+	slug: string
+	date: string
+}
+
+export async function getPostBySlug(slug: string): Promise<PostData> {
 	const realSlug = slug.replace(/\.mdx?$/, '')
 	// Markdown is the default
 	let fullPath = path.join(postsDirectory, `${realSlug}.md`)
@@ -56,10 +62,10 @@ async function getPostBySlug(slug) {
 		content,
 		excerpt,
 		slug: `/blog/${realSlug}`,
-	}
+	} as PostData
 }
 
-async function getAllPosts() {
+export async function getAllPosts(): Promise<PostData[]> {
 	const slugs = await getPostsSlugs()
 	const posts = await Promise.all(
 		slugs.map(async (slug) => await getPostBySlug(slug)),
@@ -69,5 +75,3 @@ async function getAllPosts() {
 		({date: a}, {date: b}) => new Date(b).getTime() - new Date(a).getTime(),
 	)
 }
-
-module.exports = {getPostsSlugs, getAllPosts, getPostBySlug}
