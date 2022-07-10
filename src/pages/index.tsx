@@ -5,6 +5,7 @@ import {GoDeviceCameraVideo} from 'react-icons/go'
 import {AiFillAudio} from 'react-icons/ai'
 import {RiArticleLine} from 'react-icons/ri'
 import {allPosts, type Post} from 'contentlayer/generated'
+import {pick} from 'contentlayer/client'
 import Meta from '../components/Meta'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
@@ -19,9 +20,9 @@ const {author, social, talks, interviews, title, siteUrl} = siteMeta
 export async function getStaticProps() {
 	return {
 		props: {
-			posts: allPosts.sort(({date: a}, {date: b}) =>
-				compareDesc(new Date(a), new Date(b)),
-			),
+			posts: allPosts
+				.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
+				.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b))),
 		},
 	}
 }

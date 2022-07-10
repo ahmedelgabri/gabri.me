@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Script from 'next/script'
 import {allPosts, type Post} from 'contentlayer/generated'
+import {pick} from 'contentlayer/client'
 import {useMDXComponent} from 'next-contentlayer/hooks'
 import Meta from '../../components/Meta'
 import Header from '../../components/Header'
@@ -27,7 +28,19 @@ const {
 export async function getStaticProps({params}) {
 	return {
 		props: {
-			post: allPosts.find((p) => p.slug === params.slug),
+			post: allPosts
+				.map((p) =>
+					pick(p, [
+						'date',
+						'excerpt',
+						'title',
+						'body',
+						'formattedDate',
+						'url',
+						'slug',
+					]),
+				)
+				.find((p) => p.slug === params.slug),
 		},
 	}
 }
