@@ -63,9 +63,7 @@ here is a demo of the mixin in action
   className="codepen"
 >
   See the Pen{' '}
-  <a href="http://codepen.io/ahmedelgabri/pen/bsIhF/">
-    SASS MIXIN FOR AUTO-NUMBERING WITH CSS
-  </a>{' '}
+  <a href="http://codepen.io/ahmedelgabri/pen/bsIhF/">SASS MIXIN FOR AUTO-NUMBERING WITH CSS</a>
   by Ahmed El Gabri (<a href="http://codepen.io/ahmedelgabri">@ahmedelgabri</a>)
   on <a href="http://codepen.io">CodePen</a>.
 </p>

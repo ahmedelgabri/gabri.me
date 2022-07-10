@@ -2,7 +2,7 @@
 title: 'No more hosts file with dnsmasq'
 published: true
 date: '2013-09-27'
-tags: null
+tags: []
 ---
 
 In my search for the best local development setup on my Mac, I wanted to have

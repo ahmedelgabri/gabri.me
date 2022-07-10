@@ -24,7 +24,7 @@ export default function H({level = '1', children, extra, className}: Props) {
 		// @ts-ignore
 		<Tag
 			className={cn(
-				'mb-8 font-serif font-extrabold !leading-snug tracking-tight lg:mb-12',
+				'mb-8 font-serif font-extrabold !leading-tight tracking-tight lg:mb-12',
 				className,
 				styles[level],
 			)}

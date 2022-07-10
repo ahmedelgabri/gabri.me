@@ -1,27 +1,19 @@
 import * as React from 'react'
-import {useRouter} from 'next/router'
 import Script from 'next/script'
-import {MDXRemote} from 'next-mdx-remote'
-import type {MDXRemoteSerializeResult} from 'next-mdx-remote'
-import {serialize} from 'next-mdx-remote/serialize'
+import {allPosts, type Post} from 'contentlayer/generated'
+import {pick} from 'contentlayer/client'
+import {useMDXComponent} from 'next-contentlayer/hooks'
 import Meta from '../../components/Meta'
 import Header from '../../components/Header'
 import Layout from '../../components/Layout'
 import Footer from '../../components/Footer'
 import TweetButton from '../../components/TweetButton'
 import H from '../../components/Prose/H'
-import meta from '../../config/meta'
-import {getPostBySlug, getAllPosts} from '../../lib/utils'
+import siteMeta from '../../config/siteMeta'
 import MdxComponents from '../../components/mdxComponents'
 
 interface Props {
-	post: {
-		title: string
-		date: string
-		content: string
-		mdxContent: MDXRemoteSerializeResult
-		excerpt: string
-	}
+	post: Post
 }
 
 const {
@@ -31,56 +23,42 @@ const {
 	social: {
 		twitter: {display},
 	},
-} = meta
+} = siteMeta
 
 export async function getStaticProps({params}) {
-	const shiki = require('shiki')
-	const {default: remarkShiki} = await import('@stefanprobst/remark-shiki')
-	const highlighter = await shiki.getHighlighter({theme: 'poimandres'})
-	const post = await getPostBySlug(params.slug)
-
-	const mdxContent = await serialize(post.content, {
-		mdxOptions: {
-			remarkPlugins: [
-				require('remark-autolink-headings'),
-				require('remark-slug'),
-				require('remark-code-titles'),
-				[
-					remarkShiki,
-					{
-						highlighter,
-					},
-				],
-			],
-		},
-	})
-
 	return {
 		props: {
-			post: {
-				...post,
-				mdxContent,
-			},
+			post: allPosts
+				.map((p) =>
+					pick(p, [
+						'date',
+						'excerpt',
+						'title',
+						'body',
+						'formattedDate',
+						'url',
+						'slug',
+					]),
+				)
+				.find((p) => p.slug === params.slug),
 		},
 	}
 }
 
 export async function getStaticPaths() {
-	const posts = await getAllPosts()
-
 	return {
-		paths: posts.map((post) => post.slug),
+		paths: allPosts.map((post) => post.url),
 		fallback: false,
 	}
 }
 
 export default function Post(props: Props) {
 	const {
-		post: {mdxContent, date, excerpt, title},
+		post: {date, excerpt, title, body, formattedDate, url},
 	} = props
 
-	const router = useRouter()
-	const postUrl = `${siteUrl}${router.asPath}`
+	const postUrl = `${siteUrl}${url}`
+	const Component = useMDXComponent(body.code)
 
 	return (
 		<>
@@ -101,10 +79,11 @@ export default function Post(props: Props) {
 					className="mb-12 block font-mono text-sm italic text-gray-500"
 					dateTime={date}
 				>
-					On {date}
+					On {formattedDate}
 				</time>
 				<div className="prose dark:prose-light">
-					<MDXRemote {...mdxContent} components={MdxComponents} lazy />
+					{/* @ts-ignore */}
+					<Component components={MdxComponents} />
 				</div>
 				<div>
 					<TweetButton via={display} title={title} url={postUrl} />

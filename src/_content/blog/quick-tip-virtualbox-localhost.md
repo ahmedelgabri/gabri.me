@@ -2,7 +2,7 @@
 title: 'Quick tip: VirtualBox & localhost'
 published: true
 date: '2013-04-19'
-tags: null
+tags: []
 ---
 
 This is just a quick tip that I found & I thought it might be useful for others.

@@ -1,4 +1,6 @@
-module.exports = {
+const {withContentlayer} = require('next-contentlayer')
+
+module.exports = withContentlayer({
 	experimental: {
 		// concurrentFeatures: true,
 		// serverComponents: true,
@@ -50,11 +52,4 @@ module.exports = {
 			},
 		]
 	},
-	webpack: (config, {isServer}) => {
-		if (isServer) {
-			require('./scripts/generate-feed')
-		}
-
-		return config
-	},
-}
+})

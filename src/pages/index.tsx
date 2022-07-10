@@ -1,8 +1,11 @@
 import * as React from 'react'
 import Link from 'next/link'
+import {compareDesc} from 'date-fns'
 import {GoDeviceCameraVideo} from 'react-icons/go'
 import {AiFillAudio} from 'react-icons/ai'
 import {RiArticleLine} from 'react-icons/ri'
+import {allPosts, type Post} from 'contentlayer/generated'
+import {pick} from 'contentlayer/client'
 import Meta from '../components/Meta'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
@@ -10,22 +13,21 @@ import Contact from '../components/Contact'
 import List from '../components/List'
 import Footer from '../components/Footer'
 import H from '../components/Prose/H'
-import meta from '../config/meta'
-import {getAllPosts} from '../lib/utils'
+import siteMeta from '../config/siteMeta'
 
-const {author, social, talks, interviews, title, siteUrl} = meta
+const {author, social, talks, interviews, title, siteUrl} = siteMeta
 
 export async function getStaticProps() {
-	const posts = await getAllPosts()
-
 	return {
 		props: {
-			posts,
+			posts: allPosts
+				.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
+				.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b))),
 		},
 	}
 }
 
-export default function Index({posts}: any) {
+export default function Index({posts}: {posts: Post[]}) {
 	return (
 		<>
 			<Meta title={`${author} | ${title}`} url={siteUrl} />
@@ -134,9 +136,9 @@ export default function Index({posts}: any) {
 					<List
 						title="Blog"
 						posts={posts.map((p) => ({
-							date: p.date,
+							date: p.formattedDate,
 							item: (
-								<Link href={p.slug}>
+								<Link href={p.url}>
 									<a className="lg:p-2">{p.title}</a>
 								</Link>
 							),

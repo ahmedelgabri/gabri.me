@@ -2,7 +2,7 @@
 title: 'Weekly links v.5'
 published: true
 date: '2014-11-01'
-tags: null
+tags: []
 ---
 
 Here are some of the most interesting links that I have found on the web this

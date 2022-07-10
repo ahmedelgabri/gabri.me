@@ -69,7 +69,7 @@ feed.xml
 
 .vercel
 .mdx-data
-public/sitemap.xml
+public/sitemap*.xml
 public/feed.xml
 
 
@@ -81,3 +81,7 @@ public/feed.xml
 !.yarn/versions
 .pnp.*
 public/robots.txt
+
+
+# Contentlayer
+.contentlayer

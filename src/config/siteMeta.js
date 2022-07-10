@@ -1,7 +1,29 @@
+// A JS file because used inside next-sitemap.config.js
 const author = 'Ahmed El Gabri'
 const title = 'Software Engineer'
 
-module.exports = {
+/**
+ * @type {{
+ *   title: string;
+ *   author: string;
+ *   siteUrl: string;
+ *   description: string;
+ *   social: {
+ *     [k in "email" | "twitter" | "github" | "linkedin" | "resume"]: {
+ *       display: string;
+ *       url: string;
+ *     };
+ *   };
+ *   twitterId: string;
+ *   talks: {
+ *     [k in "AmsterdamJS"]: [string, string];
+ *   };
+ *   interviews: {
+ *     [k in "devtomanager" | "nullplusplus"]: [string, string];
+ *   };
+ * }}
+ */
+const meta = {
 	title,
 	author,
 	siteUrl: 'https://gabri.me',
@@ -43,3 +65,5 @@ module.exports = {
 		],
 	},
 }
+
+export default meta
