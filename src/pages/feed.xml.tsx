@@ -1,15 +1,16 @@
 import RSS from 'rss'
 import truncate from 'lodash.truncate'
 import {remark} from 'remark'
+import {compareDesc} from 'date-fns'
 import strip from 'strip-markdown'
-import {getAllPosts} from '../lib/utils'
+import {allPosts, type Post} from 'contentlayer/generated'
 import siteMeta from '../config/siteMeta'
 
 export async function getServerSideProps({res}) {
 	const {author, title, siteUrl, description} = siteMeta
 
-	const allPosts = (await getAllPosts()).sort(
-		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+	const sortedAllPosts = allPosts.sort(({date: a}, {date: b}) =>
+		compareDesc(new Date(a), new Date(b)),
 	)
 
 	const feed = new RSS({
@@ -29,14 +30,17 @@ export async function getServerSideProps({res}) {
 	})
 
 	await Promise.all(
-		allPosts.map(async ({title, date, content, slug}) => {
-			const stripped = await remark().use(strip).process(content)
+		sortedAllPosts.map(async (post: Post) => {
+			const {title, formattedDate, body, slug} = post
+			const stripped = await remark().use(strip).process(body.raw)
+			const url = `${siteUrl}/blog/${slug}`
 
 			feed.item({
-				title: title,
-				guid: `${siteUrl}${slug}`,
-				date,
-				description: truncate(stripped.contents || '', {length: 500}).replace(
+				title,
+				guid: url,
+				url,
+				date: formattedDate,
+				description: truncate(stripped.value || '', {length: 500}).replace(
 					'*',
 					'',
 				),
