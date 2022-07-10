@@ -12,9 +12,9 @@ import Contact from '../components/Contact'
 import List from '../components/List'
 import Footer from '../components/Footer'
 import H from '../components/Prose/H'
-import meta from '../config/meta'
+import siteMeta from '../config/siteMeta'
 
-const {author, social, talks, interviews, title, siteUrl} = meta
+const {author, social, talks, interviews, title, siteUrl} = siteMeta
 
 export async function getStaticProps() {
 	return {

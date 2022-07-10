@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
-import meta from '../../config/meta'
+import siteMeta from '../../config/siteMeta'
 
 export interface Props {
 	title: string
@@ -17,7 +17,7 @@ const {
 	twitterId,
 	siteUrl,
 	author,
-} = meta
+} = siteMeta
 
 const {url: twitterUrl} = twitter
 

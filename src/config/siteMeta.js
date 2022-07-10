@@ -14,7 +14,7 @@ const title = 'Software Engineer'
  *       url: string;
  *     };
  *   };
- *   twitter: string;
+ *   twitterId: string;
  *   talks: {
  *     [k in "AmsterdamJS"]: [string, string];
  *   };

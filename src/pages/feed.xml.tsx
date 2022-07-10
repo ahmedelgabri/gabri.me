@@ -3,7 +3,7 @@ import truncate from 'lodash.truncate'
 import {remark} from 'remark'
 import strip from 'strip-markdown'
 import {getAllPosts} from '../lib/utils'
-import siteMeta from '../config/meta'
+import siteMeta from '../config/siteMeta'
 
 export async function getServerSideProps({res}) {
 	const {author, title, siteUrl, description} = siteMeta

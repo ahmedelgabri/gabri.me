@@ -1,10 +1,10 @@
 import * as React from 'react'
 import {AiOutlineTwitter} from 'react-icons/ai'
-import meta from '../../config/meta'
+import siteMeta from '../../config/siteMeta'
 
 const {
 	social: {twitter},
-} = meta
+} = siteMeta
 
 export interface Props {
 	via: string

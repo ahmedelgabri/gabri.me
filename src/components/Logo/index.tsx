@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Link from 'next/link'
-import {author} from '../../config/meta'
+import siteMeta from '../../config/siteMeta'
+
+const {author} = siteMeta
 
 export default function Logo() {
 	return (

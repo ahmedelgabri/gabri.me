@@ -1,7 +1,7 @@
 import * as React from 'react'
-import meta from '../../config/meta'
+import siteMeta from '../../config/siteMeta'
 
-const {author} = meta
+const {author} = siteMeta
 
 export default function Footer() {
 	return (

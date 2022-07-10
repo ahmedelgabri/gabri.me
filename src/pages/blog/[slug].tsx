@@ -8,7 +8,7 @@ import Layout from '../../components/Layout'
 import Footer from '../../components/Footer'
 import TweetButton from '../../components/TweetButton'
 import H from '../../components/Prose/H'
-import meta from '../../config/meta'
+import siteMeta from '../../config/siteMeta'
 import MdxComponents from '../../components/mdxComponents'
 
 interface Props {
@@ -22,7 +22,7 @@ const {
 	social: {
 		twitter: {display},
 	},
-} = meta
+} = siteMeta
 
 export async function getStaticProps({params}) {
 	return {
