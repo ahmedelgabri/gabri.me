@@ -1,4 +1,4 @@
-import siteMeta from './src/config/meta'
+const siteMeta = require('./src/config/siteMeta')
 
 /** @type {import('next-sitemap').IConfig} */
 const config = {
@@ -20,4 +20,4 @@ const config = {
 	},
 }
 
-export default config
+module.exports = config

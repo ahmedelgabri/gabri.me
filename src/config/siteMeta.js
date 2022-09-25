@@ -66,4 +66,4 @@ const meta = {
 	},
 }
 
-export default meta
+module.exports = meta
