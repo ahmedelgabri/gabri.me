@@ -5,6 +5,22 @@ date: '2013-08-06'
 tags: ['css', 'front-end']
 ---
 
+> ### Update (2022):
+>
+> I mainly use https://tailwindcss.com/ at this point & highly recommend it.
+>
+> ### Update (2016):
+>
+> Currently I don't use or recommend using BEM with big apps, I prefer
+> functional/atomic CSS, CSS modules or CSS in JS with React. These are useful
+> links:
+>
+> - [http://www.jon.gold/2015/07/functional-css/](https://web.archive.org/web/20150823170213/http://jon.gold/2015/07/functional-css/)
+> - [https://blog.colepeters.com/building-and-shipping-functional-css/](https://web.archive.org/web/20160315192131/https://blog.colepeters.com/building-and-shipping-functional-css/)
+> - https://marcelosomers.com/writing/rationalizing-functional-css/
+> - https://glenmaddern.com/articles/css-modules
+> - http://tachyons.io/
+
 ### The problem
 
 Anyone who worked with `CSS` before knows that one of the biggest problems we
@@ -144,16 +160,3 @@ about this or how can I improve it more.
 - [MindBEMding – getting your head ’round BEM syntax](http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/)
 - [The Evolution Of The BEM Methodology](http://coding.smashingmagazine.com/2013/02/21/the-history-of-the-bem-methodology/)
 - [A New Front-End Methodology: BEM](http://coding.smashingmagazine.com/2012/04/16/a-new-front-end-methodology-bem/)
-
-##### Update #2 (2016):
-
-Currently I don't use or recommend using BEM with big apps, I prefer
-functional/atomic CSS, CSS modules or CSS in JS with React. These are useful
-links:
-
-- http://www.jon.gold/2015/07/functional-css/
-- https://blog.colepeters.com/building-and-shipping-functional-css/
-- https://marcelosomers.com/writing/rationalizing-functional-css/
-- https://glenmaddern.com/articles/css-modules
-- http://www.basscss.com/
-- http://tachyons.io/
