@@ -9,7 +9,6 @@ module.exports = withContentlayer({
 		browsersListForSwc: true,
 		// runtime: 'experimental-edge',
 	},
-	swcMinify: true,
 	reactStrictMode: true,
 	poweredByHeader: false,
 	eslint: {
