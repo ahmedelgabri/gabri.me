@@ -6,10 +6,8 @@ const {author} = siteMeta
 
 export default function Logo() {
 	return (
-		<Link href="/">
-			<a className="block p-3">
-				<h1 className="text-sm leading-none">{author}</h1>
-			</a>
+		<Link href="/" className="block p-3">
+			<h1 className="text-sm leading-none">{author}</h1>
 		</Link>
 	)
 }

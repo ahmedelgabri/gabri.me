@@ -6,7 +6,6 @@ module.exports = withContentlayer({
 		// serverComponents: true,
 		// reactRoot: true,
 		legacyBrowsers: false,
-		browsersListForSwc: true,
 		// runtime: 'experimental-edge',
 	},
 	reactStrictMode: true,

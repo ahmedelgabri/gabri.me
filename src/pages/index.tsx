@@ -63,14 +63,14 @@ export default function Index({posts}: {posts: Post[]}) {
 									<div className="flex items-center">
 										<AiFillAudio title="Podcast" className="mr-2" />
 										<div className="mr-2">
-											<a
+											<Link
 												href={interviews.nullplusplus[1]}
 												target="_blank"
 												className="after:content-['_↗'] lg:p-2"
 												rel="noreferrer noopener"
 											>
 												Null++ Podcast (Arabic)
-											</a>
+											</Link>
 										</div>
 									</div>
 								),
@@ -81,14 +81,14 @@ export default function Index({posts}: {posts: Post[]}) {
 									<div className="flex items-center">
 										<RiArticleLine title="Interview" className="mr-2" />
 										<div className="mr-2">
-											<a
+											<Link
 												href={interviews.devtomanager[1]}
 												target="_blank"
 												rel="noreferrer noopener"
 												className="after:content-['_↗'] lg:p-2"
 											>
 												DevToManager Interview
-											</a>
+											</Link>
 										</div>
 									</div>
 								),
@@ -103,23 +103,23 @@ export default function Index({posts}: {posts: Post[]}) {
 												className="mr-2"
 											/>
 											<div className="mr-2">
-												<a
+												<Link
 													href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`}
 													target="_blank"
 													rel="noreferrer noopener"
 													className="after:content-['_↗'] lg:p-2"
 												>
 													Automating front-end refactoring
-												</a>
+												</Link>
 												{' - '}(
-												<a
+												<Link
 													href={talks.AmsterdamJS[0]}
 													className="after:content-['_↗'] lg:p-2"
 													target="_blank"
 													rel="noreferrer noopener"
 												>
 													slides
-												</a>
+												</Link>
 												)
 											</div>
 										</div>
@@ -138,8 +138,8 @@ export default function Index({posts}: {posts: Post[]}) {
 						posts={posts.map((p) => ({
 							date: p.formattedDate,
 							item: (
-								<Link href={p.url}>
-									<a className="lg:p-2">{p.title}</a>
+								<Link href={p.url} className="lg:p-2">
+									{p.title}
 								</Link>
 							),
 						}))}
