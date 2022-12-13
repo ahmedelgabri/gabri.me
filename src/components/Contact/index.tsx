@@ -1,6 +1,7 @@
 import * as React from 'react'
 import cn from 'classnames'
 import {GoMarkGithub, GoMail} from 'react-icons/go'
+import {FaMastodon} from 'react-icons/fa'
 import {
 	AiOutlineTwitter,
 	AiFillLinkedin,
@@ -18,6 +19,7 @@ const iconsMap = {
 	twitter: AiOutlineTwitter,
 	linkedin: AiFillLinkedin,
 	resume: AiOutlineFileText,
+	mastodon: FaMastodon,
 }
 
 export default function Contact({social}: Props) {

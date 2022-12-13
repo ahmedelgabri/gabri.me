@@ -37,6 +37,10 @@ const meta = {
 			display: '@ahmedelgabri',
 			url: 'http://twitter.com/ahmedelgabri',
 		},
+		mastodon: {
+			display: '@gabri@mastodon.online',
+			url: 'https://mastodon.online/@gabri',
+		},
 		github: {
 			display: 'ahmedelgabri',
 			url: 'https://github.com/ahmedelgabri',
