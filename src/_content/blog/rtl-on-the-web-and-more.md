@@ -79,10 +79,9 @@ Compare this to the next image
       style={{maxWidth: '100%', margin: '0 auto', display: 'block'}}
     />
   </div>
-  <p>
-    This exactly the same as above, but in a software that doesn't support
-    Arabic
-  </p>
+
+This exactly the same as above, but in a software that doesn't support Arabic
+
 </div>
 
 This is one of the most common issues with media tools & people who just trust

@@ -73,11 +73,12 @@ will start doing. that's not the main issue.
 So I have a simple question here.
 
 <blockquote className="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    If we keep adding new `.*rc` files can we at least try &amp; agree on a
-    single `.*rc` file to hold all of these configs? 🤷🏻‍♂️
-  </p>
-  &mdash; Ahmed El Gabri (@AhmedElGabri) <a href="https://twitter.com/AhmedElGabri/status/902236725229101056">August 28, 2017</a>
+  If we keep adding new `.*rc` files can we at least try &amp; agree on a single `.*rc` file to hold all of these configs? 🤷🏻‍♂️
+
+&mdash; Ahmed El Gabri (@AhmedElGabri)
+<a href="https://twitter.com/AhmedElGabri/status/902236725229101056">August 28,
+2017</a>
+
 </blockquote>
 
 I know that not all of these `.*rc` files can be merged into one, but at least
@@ -108,13 +109,12 @@ module.exports = {
 Or even better!
 
 <blockquote className="twitter-tweet" data-conversation="none" data-lang="en">
-  <p lang="en" dir="ltr">
-    exactly. why not just have a `.config` dir in the project root, and put all
-    the stuff in there, so they are out of sight, but there if you need to
-    change something. you set up eslint in `.config/eslint/rc.json` or something
-    similar, and its done, on the side.
-  </p>
-  &mdash; Pavlos Vinieratos (@pvinis) <a href="https://twitter.com/pvinis/status/1056853151540826112?ref_src=twsrc%5Etfw">October 29, 2018</a>
+  exactly. why not just have a `.config` dir in the project root, and put all the stuff in there, so they are out of sight, but there if you need to change something. you set up eslint in `.config/eslint/rc.json` or something similar, and its done, on the side.
+
+&mdash; Pavlos Vinieratos (@pvinis)
+<a href="https://twitter.com/pvinis/status/1056853151540826112?ref_src=twsrc%5Etfw">October
+29, 2018</a>
+
 </blockquote>
 
 ### So people might say & how is this better than having multiple files?
