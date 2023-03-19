@@ -21,7 +21,7 @@
 		"@types/react-dom": "18.0.11",
 		"@types/rss": "0.0.30",
 		"@vercel/node": "2.9.13",
-		"ahmedelgabri": "5.0.2",
+		"ahmedelgabri": "6.0.0",
 		"autoprefixer": "10.4.14",
 		"classnames": "2.3.2",
 		"contentlayer": "^0.3.0",
