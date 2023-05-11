@@ -6,8 +6,8 @@
 	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"license": "MIT",
 	"scripts": {
-		"dev": "NEXT_TELEMETRY_DISABLED=1 next",
-		"build": "NEXT_TELEMETRY_DISABLED=1 next build && next-sitemap --config next-sitemap.config.js",
+		"dev": "contentlayer dev & NEXT_TELEMETRY_DISABLED=1 next",
+		"build": "contentlayer build && NEXT_TELEMETRY_DISABLED=1 next build && next-sitemap --config next-sitemap.config.js",
 		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
 		"lint": "eslint './**/*.{ts,tsx}' && NEXT_TELEMETRY_DISABLED=1 next lint",
 		"type-check": "tsc"
