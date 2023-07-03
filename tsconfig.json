@@ -18,7 +18,13 @@
 		"paths": {
 			"@": ["./*"],
 			"contentlayer/generated": ["./.contentlayer/generated"]
-		}
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"strictNullChecks": true
 	},
 	"exclude": ["node_modules"],
 	"include": [
@@ -26,6 +32,7 @@
 		"globals.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		".contentlayer/generated"
+		".contentlayer/generated",
+		".next/types/**/*.ts"
 	]
 }

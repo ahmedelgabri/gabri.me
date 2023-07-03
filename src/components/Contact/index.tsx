@@ -1,6 +1,7 @@
 import * as React from 'react'
 import cn from 'classnames'
-import {GoMarkGithub, GoMail} from 'react-icons/go'
+import {FaGithub} from 'react-icons/fa'
+import {GoMail} from 'react-icons/go'
 import {FaMastodon} from 'react-icons/fa'
 import {
 	AiOutlineTwitter,
@@ -14,7 +15,7 @@ export interface Props {
 }
 
 const iconsMap = {
-	github: GoMarkGithub,
+	github: FaGithub,
 	email: GoMail,
 	twitter: AiOutlineTwitter,
 	linkedin: AiFillLinkedin,
