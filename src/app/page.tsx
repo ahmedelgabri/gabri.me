@@ -6,7 +6,6 @@ import {AiFillAudio} from 'react-icons/ai'
 import {RiArticleLine} from 'react-icons/ri'
 import {allPosts, type Post} from 'contentlayer/generated'
 import {pick} from 'contentlayer/client'
-import Meta from '../components/Meta'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
 import Contact from '../components/Contact'
@@ -15,22 +14,15 @@ import Footer from '../components/Footer'
 import H from '../components/Prose/H'
 import siteMeta from '../config/siteMeta'
 
-const {author, social, talks, interviews, title, siteUrl} = siteMeta
+const {social, talks, interviews} = siteMeta
 
-export async function getStaticProps() {
-	return {
-		props: {
-			posts: allPosts
-				.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
-				.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b))),
-		},
-	}
-}
+export default function Index() {
+	const posts = allPosts
+		.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
+		.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b)))
 
-export default function Index({posts}: {posts: Post[]}) {
 	return (
 		<>
-			<Meta title={`${author} | ${title}`} url={siteUrl} />
 			<Layout>
 				<Header />
 				<H level="2" extra="👋">

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Script from 'next/script'
 import getConfig from 'next/config'
 
 const isPROD = getConfig()?.publicRuntimeConfig?.isPROD
@@ -16,7 +17,12 @@ export const pageview = (url: string) => {
 }
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({action, category, label, value}) => {
+export const event = ({
+	action,
+	category,
+	label,
+	value,
+}: Record<string, any>) => {
 	if (isPROD) {
 		window.gtag('event', action, {
 			event_category: category,
@@ -30,11 +36,13 @@ export function GA() {
 	return (
 		isPROD && (
 			<>
-				<script
+				<Script
 					async
 					src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}
+					strategy="afterInteractive"
 				/>
-				<script
+				<Script
+					strategy="afterInteractive"
 					dangerouslySetInnerHTML={{
 						__html: `
             window.dataLayer = window.dataLayer || [];

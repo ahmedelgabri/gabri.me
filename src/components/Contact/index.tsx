@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import cn from 'classnames'
 import {FaGithub} from 'react-icons/fa'
@@ -30,6 +32,7 @@ export default function Contact({social}: Props) {
 		<div>
 			<ul className="flex flex-wrap justify-start">
 				{Object.entries(social).map(([site, {url}]) => {
+					// @ts-ignore
 					const Comp = iconsMap[site] || site
 
 					return (

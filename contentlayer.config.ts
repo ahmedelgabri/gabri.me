@@ -38,7 +38,12 @@ const computedFields: ComputedFields = {
 		type: 'json',
 		resolve: (doc) => {
 			const tweetMatches = doc.body.raw.match(/<StaticTweet\sid="[0-9]+"\s\/>/g)
-			const tweetIDs = tweetMatches?.map((tweet) => tweet.match(/[0-9]+/g)[0])
+			const tweetIDs = tweetMatches?.map((tweet: string) => {
+				const match = tweet.match(/[0-9]+/g)
+				if (!match) return ''
+
+				return match[0]
+			})
 			return tweetIDs ?? []
 		},
 	},

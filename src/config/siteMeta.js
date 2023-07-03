@@ -9,7 +9,7 @@ const title = 'Software Engineer'
  *   siteUrl: string;
  *   description: string;
  *   social: {
- *     [k in "email" | "twitter" | "github" | "linkedin" | "resume"]: {
+ *     [k in "email" | "twitter" | "github" | "linkedin" | "resume" | "mastodon"]: {
  *       display: string;
  *       url: string;
  *     };

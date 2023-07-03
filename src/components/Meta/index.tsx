@@ -13,13 +13,11 @@ export interface Props {
 
 const {
 	description,
-	social: {twitter, github, linkedin},
+	social: {twitter, github, linkedin, mastodon},
 	twitterId,
 	siteUrl,
 	author,
 } = siteMeta
-
-const {url: twitterUrl} = twitter
 
 export default function Meta({
 	title,
@@ -47,15 +45,8 @@ export default function Meta({
 				property="og:type"
 				content={post ? 'article' : 'website'}
 			/>
-			<meta key="twitter:title" name="twitter:title" content={title} />
-			<meta
-				key="twitter:description"
-				name="twitter:description"
-				content={excerpt || description}
-			/>
-			<meta key="application-name" name="application-name" content="Gabri.me" />
 
-			{[twitter, github, linkedin].map(({url}) => (
+			{[twitter, github, linkedin, mastodon].map(({url}) => (
 				<link key={url} href={url} rel="me" />
 			))}
 
@@ -69,7 +60,6 @@ export default function Meta({
 				name="msapplication-TileColor"
 				content="#1f2325"
 			/>
-			<meta key="theme-color" name="theme-color" content="#1f2325" />
 			<link
 				rel="apple-touch-icon-precomposed"
 				sizes="114x114"
@@ -94,13 +84,6 @@ export default function Meta({
 				property="twitter:account_id"
 				content={twitterId}
 			/>
-			<meta
-				key="twitter:card"
-				name="twitter:card"
-				content="summary_large_image"
-			/>
-			<meta key="twitter:creator" name="twitter:creator" content={twitterUrl} />
-			<meta key="twitter:domain" name="twitter:domain" content={siteUrl} />
 			{children}
 		</Head>
 	)

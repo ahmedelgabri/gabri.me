@@ -6,7 +6,7 @@ import strip from 'strip-markdown'
 import {allPosts, type Post} from 'contentlayer/generated'
 import siteMeta from '../config/siteMeta'
 
-export async function getServerSideProps({res}) {
+export async function getServerSideProps({res}: {res: any}) {
 	const {author, title, siteUrl, description} = siteMeta
 
 	const sortedAllPosts = allPosts.sort(({date: a}, {date: b}) =>

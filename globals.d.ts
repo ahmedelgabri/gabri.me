@@ -69,3 +69,15 @@ interface SiteMetaT {
 	talks: Activity
 	interviews: Activity
 }
+
+declare type PageProps<T = unknown, V = string> = T extends string
+	? {
+			params: {[K in T]: V}
+			searchParams: {[key: string]: string | string[] | undefined}
+	  }
+	: T extends unknown
+	? {
+			params: {}
+			searchParams: {}
+	  }
+	: never
