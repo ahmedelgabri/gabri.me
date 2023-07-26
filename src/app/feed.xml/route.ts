@@ -4,9 +4,9 @@ import {remark} from 'remark'
 import {compareDesc} from 'date-fns'
 import strip from 'strip-markdown'
 import {allPosts, type Post} from 'contentlayer/generated'
-import siteMeta from '../config/siteMeta'
+import siteMeta from '../../config/siteMeta'
 
-export async function getServerSideProps({res}: {res: any}) {
+export async function GET(req: Request) {
 	const {author, title, siteUrl, description} = siteMeta
 
 	const sortedAllPosts = allPosts.sort(({date: a}, {date: b}) =>
@@ -49,19 +49,13 @@ export async function getServerSideProps({res}: {res: any}) {
 		}),
 	)
 
-	res.setHeader('Content-Type', 'text/xml')
-	res.setHeader(
+	const headers = new Headers(req.headers)
+
+	headers.set(
 		'Cache-Control',
 		'public, s-maxage=1200, stale-while-revalidate=600',
 	)
-	res.write(feed.xml({indent: true}))
-	res.end()
+	headers.set('Content-Type', 'text/xml')
 
-	return {
-		props: {},
-	}
-}
-
-export default function RSSFeed() {
-	return null
+	return new Response(feed.xml({indent: true}), {headers})
 }
