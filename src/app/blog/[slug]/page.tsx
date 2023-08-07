@@ -21,26 +21,20 @@ const {
 	},
 } = siteMeta
 
+const posts = allPosts.map((p) =>
+	pick(p, ['date', 'excerpt', 'title', 'body', 'formattedDate', 'url', 'slug']),
+)
+
 export async function generateStaticParams() {
-	return allPosts.map((post) => post.url)
+	return allPosts.map((post) => {
+		return {slug: post.slug}
+	})
 }
 
 export const dynamicParams = false
 
 export function generateMetadata({params}: PageProps<'slug'>): Metadata {
-	const post = allPosts
-		.map((p) =>
-			pick(p, [
-				'date',
-				'excerpt',
-				'title',
-				'body',
-				'formattedDate',
-				'url',
-				'slug',
-			]),
-		)
-		.find((p) => p.slug === params.slug)
+	const post = posts.find((p) => p.slug === params.slug)
 
 	if (!post) return {}
 
@@ -67,19 +61,7 @@ export function generateMetadata({params}: PageProps<'slug'>): Metadata {
 }
 
 export default function Post({params}: PageProps<'slug'>) {
-	const post = allPosts
-		.map((p) =>
-			pick(p, [
-				'date',
-				'excerpt',
-				'title',
-				'body',
-				'formattedDate',
-				'url',
-				'slug',
-			]),
-		)
-		.find((p) => p.slug === params.slug)
+	const post = posts.find((p) => p.slug === params.slug)
 
 	if (!post) return null
 

@@ -83,7 +83,7 @@ const Post = defineDocumentType(() => ({
 		url: {
 			type: 'string',
 			resolve(doc) {
-				return `/${doc._raw.flattenedPath}`
+				return doc._raw.flattenedPath
 			},
 		},
 	},
@@ -104,7 +104,7 @@ const WeeklyLinks = defineDocumentType(() => ({
 		url: {
 			type: 'string',
 			resolve(doc) {
-				return `/${doc._raw.flattenedPath}`
+				return doc._raw.flattenedPath
 			},
 		},
 	},

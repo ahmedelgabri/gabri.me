@@ -16,11 +16,11 @@ import siteMeta from '../config/siteMeta'
 
 const {social, talks, interviews} = siteMeta
 
-export default function Index() {
-	const posts = allPosts
-		.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
-		.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b)))
+const posts = allPosts
+	.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
+	.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b)))
 
+export default function Index() {
 	return (
 		<>
 			<Layout>
@@ -130,7 +130,7 @@ export default function Index() {
 						posts={posts.map((p) => ({
 							date: p.formattedDate,
 							item: (
-								<Link href={p.url} className="lg:p-2">
+								<Link href={p.url} key={p.url} className="lg:p-2">
 									{p.title}
 								</Link>
 							),

@@ -44,6 +44,7 @@ export default function Contact({social}: Props) {
 								className={cn(
 									'mr-4 flex items-center border-none p-2 text-sm leading-relaxed hover:bg-transparent hover:text-slate-400',
 									{
+										// @TODO: CSS custom props instead to prevent this from being a client component
 										'text-gray-600': theme === 'dark',
 									},
 								)}
