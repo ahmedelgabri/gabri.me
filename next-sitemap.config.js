@@ -4,6 +4,18 @@ const siteMeta = require('./src/config/siteMeta')
 const config = {
 	siteUrl: siteMeta.siteUrl,
 	generateRobotsTxt: true,
+	robotsTxtOptions: {
+		policies: [
+			{
+				userAgent: '*',
+				allow: '/',
+			},
+			{
+				userAgent: 'GPTBot',
+				disallow: ['/'],
+			},
+		],
+	},
 	changefreq: 'yearly',
 	transform: (config, url) => {
 		const isHomepage = url === '/'
