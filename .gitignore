@@ -80,7 +80,6 @@ public/feed.xml
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
-public/robots.txt
 
 
 # Contentlayer
