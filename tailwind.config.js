@@ -20,8 +20,11 @@ module.exports = {
 				my: '65ch',
 			},
 			fontFamily: {
-				serif: ['Playfair Display', ...defaultTheme.fontFamily.serif],
-				sans: ['Inter', ...defaultTheme.fontFamily.sans],
+				serif: [
+					'var(--font-playfair-display)',
+					...defaultTheme.fontFamily.serif,
+				],
+				sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
 				mono: [
 					'"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata',
 					...defaultTheme.fontFamily.mono,

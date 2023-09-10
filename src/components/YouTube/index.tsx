@@ -17,7 +17,7 @@ export default function YouTube(props: Props) {
 			}}
 		>
 			<iframe
-				className="absolute top-0 left-0 h-full w-full"
+				className="absolute left-0 top-0 h-full w-full"
 				width="560"
 				height="315"
 				title={title || id}

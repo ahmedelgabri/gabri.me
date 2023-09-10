@@ -2,9 +2,24 @@ import * as React from 'react'
 /* import Router from 'next/router' */
 import type {Metadata} from 'next'
 import Script from 'next/script'
+import {Inter, Playfair_Display} from 'next/font/google'
 import {Preconnect} from './preconnect'
 import {pageview, GA} from '../lib/gtag'
 import siteMeta from '../config/siteMeta'
+
+const inter = Inter({
+	subsets: ['latin'],
+	display: 'swap',
+	variable: '--font-inter',
+})
+
+const playfairDisplay = Playfair_Display({
+	weight: ['400', '700'],
+	style: ['normal', 'italic'],
+	subsets: ['latin'],
+	display: 'swap',
+	variable: '--font-playfair-display',
+})
 
 import '../style/style.css'
 import '../style/prism-plain.css'
@@ -85,16 +100,15 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="en" className="text-xl">
+		<html
+			lang="en"
+			className={`text-xl ${inter.variable} ${playfairDisplay.variable}`}
+		>
 			<head>
 				<Preconnect />
 				{[twitter, github, linkedin, mastodon].map(({url}) => (
 					<link key={url} href={url} rel="me" />
 				))}
-				<link
-					href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-					rel="stylesheet"
-				/>
 				<GA />
 				<Script
 					strategy="beforeInteractive"
