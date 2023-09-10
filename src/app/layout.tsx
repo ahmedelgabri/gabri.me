@@ -66,7 +66,7 @@ export const metadata: Metadata = {
 	themeColor: '#1f2325',
 	colorScheme: 'dark light',
 	appleWebApp: {
-		title: siteUrl,
+		title: 'Gabri.me',
 		statusBarStyle: 'black-translucent',
 	},
 	twitter: {
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
 		viewportFit: 'cover',
 	},
 	other: {
-		'application-name': siteUrl,
+		'application-name': 'Gabri.me',
 	},
 }
 
