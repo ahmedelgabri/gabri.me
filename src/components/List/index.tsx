@@ -1,7 +1,10 @@
 import * as React from 'react'
 import H from '../Prose/H'
 
-export default function List(props: {title: string; posts: any[]}) {
+export default function List(props: {
+	title: string
+	posts: {date: string; item: React.ReactNode}[]
+}) {
 	const {title, posts} = props
 
 	return (

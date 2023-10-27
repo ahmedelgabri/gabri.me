@@ -47,7 +47,7 @@
 		"tailwindcss": "3.3.5"
 	},
 	"devDependencies": {
-		"@ahmedelgabri/eslint-config": "11.0.1",
+		"@ahmedelgabri/eslint-config": "12.0.0",
 		"@ahmedelgabri/prettier-config": "7.0.0",
 		"@babel/core": "7.23.2",
 		"eslint": "8.52.0",

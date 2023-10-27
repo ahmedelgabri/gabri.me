@@ -4,8 +4,11 @@ import type {Metadata} from 'next'
 import Script from 'next/script'
 import {Inter, Playfair_Display} from 'next/font/google'
 import {Preconnect} from './preconnect'
-import {pageview, GA} from '../lib/gtag'
+import {GA} from '../lib/gtag'
 import siteMeta from '../config/siteMeta'
+
+import '../style/style.css'
+import '../style/prism-plain.css'
 
 const inter = Inter({
 	subsets: ['latin'],
@@ -20,9 +23,6 @@ const playfairDisplay = Playfair_Display({
 	display: 'swap',
 	variable: '--font-playfair-display',
 })
-
-import '../style/style.css'
-import '../style/prism-plain.css'
 
 /* import Router from 'next/router' */
 /* Router.events.on('routeChangeComplete', (url) => pageview(url)) */

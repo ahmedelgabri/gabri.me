@@ -13,8 +13,6 @@ import siteMeta from '../../../config/siteMeta'
 import MdxComponents from '../../../components/mdxComponents'
 
 const {
-	title,
-	author,
 	siteUrl,
 	social: {
 		twitter: {display},
@@ -62,13 +60,12 @@ export function generateMetadata({params}: PageProps<'slug'>): Metadata {
 
 export default function Post({params}: PageProps<'slug'>) {
 	const post = posts.find((p) => p.slug === params.slug)
+	const {date, title, body, formattedDate, url} = post as Post
+	const Component = useMDXComponent(body?.code || '')
 
 	if (!post) return null
 
-	const {date, title, body, formattedDate, url} = post
-
 	const postUrl = `${siteUrl}${url}`
-	const Component = useMDXComponent(body.code)
 
 	return (
 		<>

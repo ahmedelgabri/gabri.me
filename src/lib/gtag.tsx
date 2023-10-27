@@ -22,6 +22,7 @@ export const event = ({
 	category,
 	label,
 	value,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: Record<string, any>) => {
 	if (isPROD) {
 		window.gtag('event', action, {

@@ -2,6 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import YouTube from './YouTube'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Props = Record<string, any> & {children: React.ReactNode}
 
 const components = {
@@ -19,6 +20,7 @@ const components = {
 			)
 		}
 
+		// eslint-disable-next-line jsx-a11y/anchor-has-content
 		return <a target="_blank" rel="noopener noreferrer" {...props} />
 	},
 }

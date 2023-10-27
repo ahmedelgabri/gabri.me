@@ -2,9 +2,8 @@
 
 import * as React from 'react'
 import cn from 'classnames'
-import {FaGithub} from 'react-icons/fa'
+import {FaGithub,FaMastodon} from 'react-icons/fa'
 import {GoMail} from 'react-icons/go'
-import {FaMastodon} from 'react-icons/fa'
 import {
 	AiOutlineTwitter,
 	AiFillLinkedin,
