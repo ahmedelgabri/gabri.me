@@ -4,10 +4,7 @@ const {withContentlayer} = require('next-contentlayer')
 /** @type {import('next').NextConfig} */
 module.exports = withContentlayer({
 	experimental: {
-		// concurrentFeatures: true,
-		// serverComponents: true,
-		// reactRoot: true,
-		// runtime: 'experimental-edge',
+		webpackBuildWorker: true,
 	},
 	reactStrictMode: true,
 	poweredByHeader: false,

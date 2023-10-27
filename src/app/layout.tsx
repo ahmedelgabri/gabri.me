@@ -1,6 +1,6 @@
 import * as React from 'react'
 /* import Router from 'next/router' */
-import type {Metadata} from 'next'
+import type {Metadata, Viewport} from 'next'
 import Script from 'next/script'
 import {Inter, Playfair_Display} from 'next/font/google'
 import {Preconnect} from './preconnect'
@@ -63,8 +63,6 @@ export const metadata: Metadata = {
 	authors: [{name: author, url: siteUrl}],
 	creator: author,
 	publisher: author,
-	themeColor: '#1f2325',
-	colorScheme: 'dark light',
 	appleWebApp: {
 		title: 'Gabri.me',
 		statusBarStyle: 'black-translucent',
@@ -81,15 +79,18 @@ export const metadata: Metadata = {
 		// @ts-ignore
 		domain: siteUrl,
 	},
-	viewport: {
-		width: 'device-width',
-		initialScale: 1,
-		maximumScale: 1,
-		viewportFit: 'cover',
-	},
 	other: {
 		'application-name': 'Gabri.me',
 	},
+}
+
+export const viewport: Viewport = {
+	themeColor: '#1f2325',
+	colorScheme: 'dark light',
+	width: 'device-width',
+	initialScale: 1,
+	maximumScale: 1,
+	viewportFit: 'cover',
 }
 
 export default function RootLayout({
