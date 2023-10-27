@@ -13,14 +13,14 @@
 		"type-check": "tsc"
 	},
 	"dependencies": {
-		"@next/env": "^13.5.3",
+		"@next/env": "^14.0.0",
 		"@tailwindcss/typography": "0.5.10",
-		"@types/lodash.truncate": "4.4.7",
-		"@types/node": "20.8.0",
-		"@types/react": "18.2.23",
-		"@types/react-dom": "18.2.8",
-		"@types/rss": "0.0.30",
-		"@vercel/node": "3.0.6",
+		"@types/lodash.truncate": "4.4.8",
+		"@types/node": "20.8.9",
+		"@types/react": "18.2.33",
+		"@types/react-dom": "18.2.14",
+		"@types/rss": "0.0.31",
+		"@vercel/node": "3.0.7",
 		"ahmedelgabri": "7.0.1",
 		"autoprefixer": "10.4.16",
 		"classnames": "2.3.2",
@@ -43,19 +43,19 @@
 		"remark": "15.0.1",
 		"remark-gfm": "^3.0.1",
 		"rss": "1.2.2",
-		"strip-markdown": "5.0.1",
-		"tailwindcss": "3.3.3"
+		"strip-markdown": "6.0.0",
+		"tailwindcss": "3.3.5"
 	},
 	"devDependencies": {
 		"@ahmedelgabri/eslint-config": "11.0.1",
 		"@ahmedelgabri/prettier-config": "7.0.0",
-		"@babel/core": "7.23.0",
-		"eslint": "8.50.0",
-		"eslint-config-next": "13.5.3",
+		"@babel/core": "7.23.2",
+		"eslint": "8.52.0",
+		"eslint-config-next": "14.0.0",
 		"next-sitemap": "4.2.3",
 		"prettier": "3.0.3",
-		"prettier-plugin-tailwindcss": "^0.5.4",
+		"prettier-plugin-tailwindcss": "^0.5.6",
 		"typescript": "5.2.2",
-		"vercel": "32.3.1"
+		"vercel": "32.5.0"
 	}
 }
