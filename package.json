@@ -7,7 +7,7 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "contentlayer dev & NEXT_TELEMETRY_DISABLED=1 next",
-		"build": "contentlayer build && NEXT_TELEMETRY_DISABLED=1 next build && next-sitemap --config next-sitemap.config.js",
+		"build": "contentlayer build && NEXT_TELEMETRY_DISABLED=1 next build",
 		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
 		"lint": "eslint './**/*.{ts,tsx}' && NEXT_TELEMETRY_DISABLED=1 next lint",
 		"type-check": "tsc"
@@ -52,7 +52,6 @@
 		"@babel/core": "7.23.2",
 		"eslint": "8.52.0",
 		"eslint-config-next": "14.0.0",
-		"next-sitemap": "4.2.3",
 		"prettier": "3.0.3",
 		"prettier-plugin-tailwindcss": "^0.5.6",
 		"typescript": "5.2.2",
