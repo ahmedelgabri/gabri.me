@@ -1,5 +1,5 @@
 import * as React from 'react'
-import cn from 'classnames'
+import cn from 'clsx'
 
 type Props = {
 	level: '1' | '2' | '3' | '4' | '5' | '6'

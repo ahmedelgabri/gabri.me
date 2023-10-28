@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import cn from 'classnames'
-import {FaGithub,FaMastodon} from 'react-icons/fa'
+import cn from 'clsx'
+import {FaGithub, FaMastodon} from 'react-icons/fa'
 import {GoMail} from 'react-icons/go'
 import {
 	AiOutlineTwitter,
