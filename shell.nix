@@ -1,5 +1,19 @@
+let
+  # Grab node version from .nvmrc file
+  nodeVersion =
+    if builtins.pathExists ./.nvmrc then
+      builtins.concatStringsSep
+        "_" [
+        "nodejs"
+        (builtins.head (builtins.splitVersion (builtins.readFile
+          ./.nvmrc)))
+      ] else "nodejs";
+in
 with import <nixpkgs> { };
 mkShell {
   # name = "";
-  buildInputs = [ nodejs-18_x nodePackages.pnpm ];
+  buildInputs = with pkgs; [
+    pkgs.${nodeVersion}
+    nodePackages.pnpm
+  ];
 }
