@@ -1,6 +1,10 @@
 import {getCard} from 'ahmedelgabri'
+import stripAnsi from 'strip-ansi'
 
-export async function GET() {
-	process.env.NO_COLOR = '1'
-	return new Response(getCard(), {status: 200})
+export async function GET(request: Request) {
+	const agent = request.headers.get('User-Agent')
+	const isCurl = agent?.startsWith('curl/')
+	const card = getCard()
+
+	return new Response(isCurl ? card : stripAnsi(card), {status: 200})
 }
