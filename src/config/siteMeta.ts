@@ -12,13 +12,14 @@ export default {
 			url: 'mailto:ahmed+contact@gabri.me?subject=Hi!&body=👋🏼',
 		},
 		twitter: {
+			name: 'twitter/X',
 			display: '@ahmedelgabri',
 			url: 'http://twitter.com/ahmedelgabri',
 		},
-		mastodon: {
-			display: '@gabri@mastodon.online',
-			url: 'https://mastodon.online/@gabri',
-		},
+		// mastodon: {
+		// 	display: '@gabri@mastodon.online',
+		// 	url: 'https://mastodon.online/@gabri',
+		// },
 		github: {
 			display: 'ahmedelgabri',
 			url: 'https://github.com/ahmedelgabri',
@@ -37,6 +38,10 @@ export default {
 		AmsterdamJS: ['http://bit.ly/amsterdamjs-codemods', 'xGjSMbks9vA'],
 	},
 	interviews: {
+		ahmedelemam: [
+			'Staff Engineering path',
+			'https://www.youtube.com/live/jOW1bj9_HFA?feature=shared',
+		],
 		devtomanager: [
 			'Developer to manager blog interview',
 			'https://devtomanager.com/interviews/ahmed-el-gabri/',

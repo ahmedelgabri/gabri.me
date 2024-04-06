@@ -13,7 +13,7 @@ export interface Props {
 
 const {
 	description,
-	social: {twitter, github, linkedin, mastodon},
+	social,
 	twitterId,
 	siteUrl,
 	author,
@@ -46,7 +46,7 @@ export default function Meta({
 				content={post ? 'article' : 'website'}
 			/>
 
-			{[twitter, github, linkedin, mastodon].map(({url}) => (
+			{Object.entries(social).map(([,{url}]) => (
 				<link key={url} href={url} rel="me" />
 			))}
 

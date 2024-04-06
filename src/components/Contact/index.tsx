@@ -4,11 +4,8 @@ import * as React from 'react'
 import cn from 'clsx'
 import {FaGithub, FaMastodon} from 'react-icons/fa'
 import {GoMail} from 'react-icons/go'
-import {
-	AiOutlineTwitter,
-	AiFillLinkedin,
-	AiOutlineFileText,
-} from 'react-icons/ai'
+import {FaSquareXTwitter} from 'react-icons/fa6'
+import {AiFillLinkedin, AiOutlineFileText} from 'react-icons/ai'
 import {useTheme} from '../../hooks'
 
 export interface Props {
@@ -18,7 +15,7 @@ export interface Props {
 const iconsMap = {
 	github: FaGithub,
 	email: GoMail,
-	twitter: AiOutlineTwitter,
+	twitter: FaSquareXTwitter,
 	linkedin: AiFillLinkedin,
 	resume: AiOutlineFileText,
 	mastodon: FaMastodon,
@@ -30,7 +27,7 @@ export default function Contact({social}: Props) {
 	return (
 		<div>
 			<ul className="flex flex-wrap justify-start">
-				{Object.entries(social).map(([site, {url}]) => {
+				{Object.entries(social).map(([site, {url, name}]) => {
 					// @ts-ignore
 					const Comp = iconsMap[site] || site
 
@@ -48,7 +45,7 @@ export default function Contact({social}: Props) {
 									},
 								)}
 							>
-								<Comp className="mr-1" /> {site}
+								<Comp className="mr-1" /> {name || site}
 							</a>
 						</li>
 					)

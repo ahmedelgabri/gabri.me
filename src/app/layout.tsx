@@ -27,14 +27,7 @@ const playfairDisplay = Playfair_Display({
 /* import Router from 'next/router' */
 /* Router.events.on('routeChangeComplete', (url) => pageview(url)) */
 
-const {
-	description,
-	social: {twitter, github, linkedin, mastodon},
-	twitterId,
-	siteUrl,
-	author,
-	title,
-} = siteMeta
+const {description, social, twitterId, siteUrl, author, title} = siteMeta
 
 const fullTitle = `${author} | ${title}`
 
@@ -73,7 +66,7 @@ export const metadata: Metadata = {
 		title: fullTitle,
 		description,
 		siteId: twitterId,
-		creator: twitter.display,
+		creator: social.twitter.display,
 		creatorId: twitterId,
 		images: ['/i/social-image.jpg'],
 		// @ts-ignore
@@ -107,7 +100,7 @@ export default function RootLayout({
 		>
 			<head>
 				<Preconnect />
-				{[twitter, github, linkedin, mastodon].map(({url}) => (
+				{Object.entries(social).map(([, {url}]) => (
 					<link key={url} href={url} rel="me" />
 				))}
 				<GA />

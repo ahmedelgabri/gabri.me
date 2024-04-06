@@ -50,6 +50,27 @@ export default function Index() {
 						title="Talks & Interviews"
 						posts={[
 							{
+								date: '2024-03-03',
+								item: (
+									<div className="flex items-center">
+										<GoDeviceCameraVideo
+											title="Live Podcast"
+											className="mr-2"
+										/>
+										<div className="mr-2">
+											<Link
+												href={interviews.ahmedelemam[1]}
+												target="_blank"
+												className="after:content-['_↗'] lg:p-2"
+												rel="noreferrer noopener"
+											>
+												Staff Engineering path (Arabic)
+											</Link>
+										</div>
+									</div>
+								),
+							},
+							{
 								date: '2021-01-23',
 								item: (
 									<div className="flex items-center">
