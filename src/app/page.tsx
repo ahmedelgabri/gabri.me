@@ -33,8 +33,8 @@ export default function Index() {
 					of experience in building products & leading/building teams.
 				</p>
 				<p className="mb-6 text-xl tracking-tight">
-					Currently based in Amsterdam, the Netherlands & working as Staff
-					Software Engineer at{' '}
+					Currently based in Amsterdam, the Netherlands & working as Senior
+					Staff Software Engineer at{' '}
 					<a target="_blank" rel="noreferrer noopener" href="http://miro.com">
 						Miro
 					</a>
