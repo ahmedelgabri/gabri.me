@@ -33,10 +33,6 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".contentlayer/generated",
-		".next/types/**/*.ts",
-		".eslintrc.js",
-		"next.config.js",
-		"tailwind.config.js",
-		"postcss.config.js"
+		".next/types/**/*.ts"
 	]
 }

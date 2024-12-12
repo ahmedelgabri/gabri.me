@@ -71,7 +71,6 @@ drafts/
 public/sitemap*.xml
 public/feed.xml
 
-
 .yarn/*
 !.yarn/cache
 !.yarn/releases
@@ -80,6 +79,9 @@ public/feed.xml
 !.yarn/versions
 .pnp.*
 
-
 # Contentlayer
 .contentlayer
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
