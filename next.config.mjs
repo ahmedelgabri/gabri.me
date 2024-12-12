@@ -1,18 +1,18 @@
 // @ts-check
-const {withContentlayer} = require('next-contentlayer')
+
+const isDev = process.argv.indexOf('dev') !== -1
+const isBuild = process.argv.indexOf('build') !== -1
+
+if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
+	process.env.VELITE_STARTED = '1'
+	const {build} = await import('velite')
+	await build({watch: isDev, clean: !isDev})
+}
 
 /** @type {import('next').NextConfig} */
-module.exports = withContentlayer({
-	experimental: {
-		webpackBuildWorker: true,
-	},
+const config = {
 	reactStrictMode: true,
 	poweredByHeader: false,
-	eslint: {
-		// Warning: Dangerously allow production builds to successfully complete even if
-		// your project has ESLint errors.
-		ignoreDuringBuilds: true,
-	},
 	publicRuntimeConfig: {
 		isPROD: process.env.NODE_ENV === 'production',
 	},
@@ -48,4 +48,6 @@ module.exports = withContentlayer({
 			},
 		]
 	},
-})
+}
+
+export default config
