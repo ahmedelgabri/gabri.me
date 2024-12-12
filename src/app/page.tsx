@@ -4,8 +4,7 @@ import {compareDesc} from 'date-fns'
 import {GoDeviceCameraVideo} from 'react-icons/go'
 import {AiFillAudio} from 'react-icons/ai'
 import {RiArticleLine} from 'react-icons/ri'
-import {allPosts} from 'contentlayer/generated'
-import {pick} from 'contentlayer/client'
+import {posts as allPosts} from '#site/content'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
 import Contact from '../components/Contact'
@@ -16,9 +15,9 @@ import siteMeta from '../config/siteMeta'
 
 const {social, talks, interviews} = siteMeta
 
-const posts = allPosts
-	.map((p) => pick(p, ['title', 'formattedDate', 'url', 'date']))
-	.sort(({date: a}, {date: b}) => compareDesc(new Date(a), new Date(b)))
+const posts = allPosts.sort(({date: a}, {date: b}) =>
+	compareDesc(new Date(a), new Date(b)),
+)
 
 export default function Index() {
 	return (

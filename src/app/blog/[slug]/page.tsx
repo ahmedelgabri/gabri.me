@@ -1,16 +1,13 @@
 import * as React from 'react'
 import type {Metadata} from 'next'
 import Script from 'next/script'
-import {allPosts, type Post} from 'contentlayer/generated'
-import {pick} from 'contentlayer/client'
-import {useMDXComponent} from 'next-contentlayer/hooks'
+import {posts} from '#site/content'
 import Header from '../../../components/Header'
 import Layout from '../../../components/Layout'
 import Footer from '../../../components/Footer'
 import TweetButton from '../../../components/TweetButton'
 import H from '../../../components/Prose/H'
 import siteMeta from '../../../config/siteMeta'
-import MdxComponents from '../../../components/mdxComponents'
 
 const {
 	siteUrl,
@@ -19,20 +16,19 @@ const {
 	},
 } = siteMeta
 
-const posts = allPosts.map((p) =>
-	pick(p, ['date', 'excerpt', 'title', 'body', 'formattedDate', 'url', 'slug']),
-)
-
 export async function generateStaticParams() {
-	return allPosts.map((post) => {
+	return posts.map((post) => {
 		return {slug: post.slug}
 	})
 }
 
 export const dynamicParams = false
 
-export function generateMetadata({params}: PageProps<'slug'>): Metadata {
-	const post = posts.find((p) => p.slug === params.slug)
+export async function generateMetadata({
+	params,
+}: PageProps<'slug'>): Promise<Metadata> {
+	const slug = (await params).slug
+	const post = posts.find((p) => p.slug === slug)
 
 	if (!post) return {}
 
@@ -58,12 +54,13 @@ export function generateMetadata({params}: PageProps<'slug'>): Metadata {
 	}
 }
 
-export default function Post({params}: PageProps<'slug'>) {
-	const post = posts.find((p) => p.slug === params.slug)
-	const {date, title, body, formattedDate, url} = post as Post
-	const Component = useMDXComponent(body?.code || '')
+export default async function Post({params}: PageProps<'slug'>) {
+	const slug = (await params).slug
+	const post = posts.find((p) => p.slug === slug)
 
 	if (!post) return null
+
+	const {date, title, body, formattedDate, url} = post
 
 	const postUrl = `${siteUrl}${url}`
 
@@ -82,10 +79,10 @@ export default function Post({params}: PageProps<'slug'>) {
 				>
 					On {formattedDate}
 				</time>
-				<div className="prose dark:prose-light">
-					{/* @ts-ignore */}
-					<Component components={MdxComponents} />
-				</div>
+				<div
+					className="prose dark:prose-light"
+					dangerouslySetInnerHTML={{__html: body}}
+				/>
 				<div>
 					<TweetButton via={display} title={title} url={postUrl} />
 				</div>

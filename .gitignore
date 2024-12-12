@@ -81,6 +81,7 @@ public/feed.xml
 
 # Contentlayer
 .contentlayer
+.velite
 
 # typescript
 *.tsbuildinfo

@@ -1,23 +1,21 @@
 {
 	"compilerOptions": {
-		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
 		"strict": true,
-		"forceConsistentCasingInFileNames": true,
 		"noEmit": true,
-		"esModuleInterop": true,
+		"target": "esnext",
 		"module": "esnext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"jsx": "preserve",
-		"baseUrl": ".",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
 		"incremental": true,
+		"allowJs": true,
+		"jsx": "preserve",
+		"lib": ["dom", "dom.iterable", "esnext"],
 		"paths": {
 			"@": ["./*"],
-			"contentlayer/generated": ["./.contentlayer/generated"]
+			"#site/content": ["./.velite"]
 		},
 		"plugins": [
 			{
@@ -32,7 +30,6 @@
 		"globals.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		".contentlayer/generated",
 		".next/types/**/*.ts"
 	]
 }
