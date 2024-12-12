@@ -8,16 +8,10 @@ export interface Props {
 	excerpt?: string
 	post?: boolean
 	img?: string
-	children?: React.ReactChild
+	children?: React.ReactNode
 }
 
-const {
-	description,
-	social,
-	twitterId,
-	siteUrl,
-	author,
-} = siteMeta
+const {description, social, twitterId, siteUrl, author} = siteMeta
 
 export default function Meta({
 	title,
@@ -46,7 +40,7 @@ export default function Meta({
 				content={post ? 'article' : 'website'}
 			/>
 
-			{Object.entries(social).map(([,{url}]) => (
+			{Object.entries(social).map(([, {url}]) => (
 				<link key={url} href={url} rel="me" />
 			))}
 

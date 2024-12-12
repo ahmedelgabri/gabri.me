@@ -72,12 +72,12 @@ interface SiteMetaT {
 
 declare type PageProps<T = unknown, V = string> = T extends string
 	? {
-			params: {[K in T]: V}
-			searchParams: {[key: string]: string | string[] | undefined}
-	  }
+			params: Promise<{[K in T]: V}>
+			searchParams: Promise<{[key: string]: string | string[] | undefined}>
+		}
 	: T extends unknown
-	? {
-			params: {}
-			searchParams: {}
-	  }
-	: never
+		? {
+				params: Record<string, unknown>
+				searchParams: Promise<{[key: string]: string | string[] | undefined}>
+			}
+		: never
