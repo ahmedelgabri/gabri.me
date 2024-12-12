@@ -1,18 +1,9 @@
-// @ts-check
-const {withContentlayer} = require('next-contentlayer')
+import type {NextConfig} from 'next'
+import {withContentlayer} from 'next-contentlayer'
 
-/** @type {import('next').NextConfig} */
-module.exports = withContentlayer({
-	experimental: {
-		webpackBuildWorker: true,
-	},
+const config: NextConfig = withContentlayer({
 	reactStrictMode: true,
 	poweredByHeader: false,
-	eslint: {
-		// Warning: Dangerously allow production builds to successfully complete even if
-		// your project has ESLint errors.
-		ignoreDuringBuilds: true,
-	},
 	publicRuntimeConfig: {
 		isPROD: process.env.NODE_ENV === 'production',
 	},
@@ -49,3 +40,5 @@ module.exports = withContentlayer({
 		]
 	},
 })
+
+export default config
