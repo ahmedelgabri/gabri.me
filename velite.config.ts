@@ -38,7 +38,12 @@ const schema = s
 			rehypePlugins: [
 				rehypeSlug,
 				rehypeCodeTitles,
-				rehypePrism,
+				[
+					rehypePrism,
+					{
+						defaultLanguage: 'txt',
+					},
+				],
 				[
 					rehypeAutolinkHeadings,
 					{
