@@ -3,7 +3,7 @@ import truncate from 'lodash.truncate'
 import {remark} from 'remark'
 import {compareDesc} from 'date-fns'
 import strip from 'strip-markdown'
-import {allPosts, type Post} from 'contentlayer/generated'
+import {posts as allPosts} from '#site/content'
 import siteMeta from '../../config/siteMeta'
 
 export async function GET(req: Request) {
@@ -30,9 +30,9 @@ export async function GET(req: Request) {
 	})
 
 	await Promise.all(
-		sortedAllPosts.map(async (post: Post) => {
-			const {title, formattedDate, body, slug} = post
-			const stripped = await remark().use(strip).process(body.raw)
+		sortedAllPosts.map(async (post) => {
+			const {title, formattedDate, slug, raw} = post
+			const stripped = await remark().use(strip).process(raw)
 			const url = `${siteUrl}/blog/${slug}`
 
 			feed.item({

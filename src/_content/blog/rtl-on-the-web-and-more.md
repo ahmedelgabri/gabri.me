@@ -10,8 +10,10 @@ localization & RTL support in web apps. It's a very nice thread, you should
 check it!
 
 <blockquote className="twitter-tweet" data-lang="en">
-Does your team work on a localized app? One that needs GUI translations, needs RTL layout, and has user content in multiple languages. What localisation-related challenges are you aware of and struggling with?
-
+	Does your team work on a localized app? One that needs GUI translations, needs
+	RTL layout, and has user content in multiple languages. What
+	localisation-related challenges are you aware of and struggling with?
+</blockquote>
 &mdash; Nicolas (@necolas)
 <a href="https://twitter.com/necolas/status/964935779679051776?ref_src=twsrc%5Etfw">February
 17, 2018</a>
@@ -25,8 +27,10 @@ the context of the Web, Web related tool & maybe even some media tools around
 that.
 
 <blockquote className="twitter-tweet" data-lang="en">
-As a Native Arabic speaker I find the latter more legible, the one you mention as legible is using Tahoma Arabic font which IMO very bad in Arabic. Feels like Comic Sans but Arabic version.
-
+	As a Native Arabic speaker I find the latter more legible, the one you mention
+	as legible is using Tahoma Arabic font which IMO very bad in Arabic. Feels
+	like Comic Sans but Arabic version.
+</blockquote>
 &mdash; Ahmed El Gabri (@AhmedElGabri)
 <a href="https://twitter.com/AhmedElGabri/status/964971931614240768?ref_src=twsrc%5Etfw">February
 17, 2018</a>
@@ -61,25 +65,25 @@ have different shapes depends on the position that they are in. As you can see
 in this image from [Wikipedia](https://en.wikipedia.org/wiki/Arabic_alphabet)
 
 <div>
-  <div style={{background: 'white', marginBottom: '.5rem'}}>
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/a/af/Arabic_Language.svg"
-      style={{maxWidth: '100%'}}
-    />
-  </div>
-  <p>This says "The Arabic"</p>
+	<div style="background: white; margin-bottom: 0.5rem">
+		<img
+			src="https://upload.wikimedia.org/wikipedia/commons/a/af/Arabic_Language.svg"
+			style="max-width: 100%"
+		/>
+	</div>
+	<p>This says "The Arabic"</p>
 </div>
 
-Compare this to the next image
+<p>Compare this to the next image</p>
 
 <div>
-  <div style={{background: 'white', padding: '.5rem', marginBottom: '.5rem'}}>
-    <img
-      src="/img/broken-arabic.svg"
-      style={{maxWidth: '100%', margin: '0 auto', display: 'block'}}
-    />
-  </div>
-
+	<div style="background: white; padding: 0.5rem; margin-bottom: 0.5rem">
+		<img
+			src="/img/broken-arabic.svg"
+			style="max-width: 100%; margin: 0 auto; display: block"
+		/>
+	</div>
+</div>
 This exactly the same as above, but in a software that doesn't support Arabic
 
 </div>
@@ -95,8 +99,12 @@ You can see more examples about this in this amazing
 example
 
 <blockquote className="twitter-tweet" data-lang="en">
-My only criticism of Black Panther is the reuse of this shot. You make a movie empowering non-white people, it&#39;d be nice to just spend 0.002% of your VFX budget on fixing your fake Arabic to actually be Arabic.<br /><br />Black Panther remains an incredible, I&#39;d daresay must-see, movie. https://t.co/G1EmC1eFh6
-
+	My only criticism of Black Panther is the reuse of this shot. You make a movie
+	empowering non-white people, it&#39;d be nice to just spend 0.002% of your VFX
+	budget on fixing your fake Arabic to actually be Arabic.<br /><br />Black
+	Panther remains an incredible, I&#39;d daresay must-see, movie.
+	https://t.co/G1EmC1eFh6
+</blockquote>
 &mdash; Rami Ismail (@tha_rami)
 <a href="https://twitter.com/tha_rami/status/964868593535119360?ref_src=twsrc%5Etfw">February
 17, 2018</a>
@@ -121,8 +129,12 @@ installed by default on operating systems so we can have better defaults.
 And Khaled summed it up better than me:
 
 <blockquote className="twitter-tweet" data-lang="en">
-Almost all system fonts were designed decades ago and they were only passable because of the lowres rendering back in the day. Newer ones like Noto and <br /> Segoe UI are better, with the exception of Apple new Arabic UI font which is worse than its predecessor.
-
+	Almost all system fonts were designed decades ago and they were only passable
+	because of the lowres rendering back in the day. Newer ones like Noto and
+	<br />
+	Segoe UI are better, with the exception of Apple new Arabic UI font which is
+	worse than its predecessor.
+</blockquote>
 &mdash; Khaled Hosny (@KhaledGhetas)
 <a href="https://twitter.com/KhaledGhetas/status/965003153438658560?ref_src=twsrc%5Etfw">February
 17, 2018</a>

@@ -74,6 +74,7 @@ export const metadata: Metadata = {
 	},
 	other: {
 		'application-name': 'Gabri.me',
+		'fediverse:creator': '@gabri@mastodon.online',
 	},
 }
 
