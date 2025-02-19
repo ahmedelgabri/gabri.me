@@ -20,9 +20,9 @@
 	],
 	"dependencies": {
 		"@types/lodash.truncate": "4.4.9",
-		"@types/node": "22.13.1",
-		"@types/react": "19.0.8",
-		"@types/react-dom": "19.0.3",
+		"@types/node": "22.13.4",
+		"@types/react": "19.0.10",
+		"@types/react-dom": "19.0.4",
 		"@types/rss": "0.0.32",
 		"ahmedelgabri": "8.0.5",
 		"autoprefixer": "10.4.20",
@@ -32,10 +32,10 @@
 		"gray-matter": "4.0.3",
 		"lodash.truncate": "4.4.2",
 		"next": "15.1.7",
-		"postcss": "8.5.2",
+		"postcss": "8.5.3",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
-		"react-icons": "5.4.0",
+		"react-icons": "5.5.0",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-code-titles": "^1.2.0",
 		"rehype-prism-plus": "^2.0.0",
@@ -47,11 +47,11 @@
 	},
 	"devDependencies": {
 		"@ahmedelgabri/prettier-config": "7.0.0",
-		"@unocss/postcss": "^65.4.3",
-		"oxlint": "^0.15.10",
-		"prettier": "3.5.0",
+		"@unocss/postcss": "^66.0.0",
+		"oxlint": "^0.15.11",
+		"prettier": "3.5.1",
 		"typescript": "5.7.3",
-		"unocss": "^65.4.3",
+		"unocss": "^66.0.0",
 		"velite": "^0.2.2"
 	}
 }
