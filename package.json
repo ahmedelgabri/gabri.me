@@ -21,7 +21,7 @@
 	"dependencies": {
 		"@types/lodash.truncate": "4.4.9",
 		"@types/node": "22.14.1",
-		"@types/react": "19.1.1",
+		"@types/react": "19.1.2",
 		"@types/react-dom": "19.1.2",
 		"@types/rss": "0.0.32",
 		"ahmedelgabri": "8.0.5",
@@ -48,7 +48,7 @@
 	"devDependencies": {
 		"@ahmedelgabri/prettier-config": "7.0.0",
 		"@unocss/postcss": "66.1.0-beta.11",
-		"oxlint": "^0.16.5",
+		"oxlint": "^0.16.6",
 		"prettier": "3.5.3",
 		"typescript": "5.8.3",
 		"unocss": "66.1.0-beta.11",
