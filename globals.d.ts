@@ -41,20 +41,15 @@ interface PostT {
 	date: string
 }
 
-enum ContactT {
-	'twitter',
-	'github',
-	'email',
-	'linkedin',
-	'resume',
-}
+type ContactT = 'twitter' | 'github' | 'email' | 'linkedin' | 'resume'
 
 interface ActivityT {
 	[key: string]: string[]
 }
 
-interface SocialT {
+type SocialT = {
 	[key in ContactT]: {
+		name?: string
 		display: string
 		url: string
 	}
