@@ -20,25 +20,19 @@
           inherit system;
           config.allowUnfree = true;
         };
-        # Grab node version from .nvmrc file if exits otherwise fallback to latest node
-        nodeVersion =
-          if builtins.pathExists ./.nvmrc
-          then
-            builtins.concatStringsSep
-            "_" [
-              "nodejs"
-              (builtins.head (builtins.splitVersion (builtins.readFile
-                    ./.nvmrc)))
-            ]
-          else "nodejs";
       in {
         devShells.default = pkgs.mkShell {
           name = "gabri.me";
           buildInputs = with pkgs; [
-            pkgs.${nodeVersion}
-            nodePackages.pnpm
-            actionlint
+            mise
           ];
+          shellHook =
+            /*
+            bash
+            */
+            ''
+              eval "$(mise activate)"
+            '';
         };
       }
     );
