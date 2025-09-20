@@ -1,26 +1,15 @@
 {
   description = "gabri.me";
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    systems.url = "github:nix-systems/default";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
-    };
   };
 
-  outputs = {
-    nixpkgs,
-    flake-utils,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      in {
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+
+      perSystem = {pkgs, ...}: {
         devShells.default = pkgs.mkShell {
           name = "gabri.me";
           buildInputs = with pkgs; [
@@ -34,6 +23,6 @@
               eval "$(mise activate)"
             '';
         };
-      }
-    );
+      };
+    };
 }
