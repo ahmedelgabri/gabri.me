@@ -1,0 +1,81 @@
+---
+import {getCollection, type CollectionEntry} from 'astro:content'
+import {format} from 'date-fns'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ContentLayout from '../../components/ContentLayout.astro'
+import Header from '../../components/Header.astro'
+import Footer from '../../components/Footer.astro'
+import H from '../../components/H.astro'
+import siteMeta from '../../config/siteMeta'
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts', ({data}) => {
+		return data.published !== false
+	})
+
+	return posts.map((post) => ({
+		params: {slug: post.slug},
+		props: {post},
+	}))
+}
+
+interface Props {
+	post: CollectionEntry<'posts'>
+}
+
+const {post} = Astro.props
+const {Content} = await post.render()
+
+const {
+	siteUrl,
+	social: {
+		twitter: {display},
+	},
+} = siteMeta
+
+const postUrl = `${siteUrl}/blog/${post.slug}/`
+const formattedDate = format(post.data.date, 'yyyy-MM-dd')
+const tweetIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(postUrl)}&via=${display.replace('@', '')}`
+---
+
+<BaseLayout
+	title={post.data.title}
+	description={post.data.excerpt}
+	canonicalURL={postUrl}
+>
+	<ContentLayout>
+		<Header />
+		<H level="2">{post.data.title}</H>
+		<time
+			class="mb-12 block font-mono text-sm italic text-gray-500"
+			datetime={post.data.date.toISOString()}
+		>
+			On {formattedDate}
+		</time>
+		<article class="prose prose-lg dark:prose-invert max-w-none">
+			<Content />
+		</article>
+		<div class="mt-8">
+			<a
+				href={tweetIntent}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-800"
+			>
+				<svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+				</svg>
+				Share on X
+			</a>
+		</div>
+		<Footer />
+	</ContentLayout>
+
+	<script>
+		// Load Twitter widgets script for embedded tweets
+		const script = document.createElement('script')
+		script.src = 'https://platform.twitter.com/widgets.js'
+		script.async = true
+		document.body.appendChild(script)
+	</script>
+</BaseLayout>

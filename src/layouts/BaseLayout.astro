@@ -1,0 +1,133 @@
+---
+import {ViewTransitions} from 'astro:transitions'
+import '../styles/global.css'
+import '../styles/prism.css'
+import siteMeta from '../config/siteMeta'
+
+interface Props {
+	title?: string
+	description?: string
+	image?: string
+	canonicalURL?: string
+}
+
+const {title, description, image, canonicalURL} = Astro.props
+
+const {
+	author,
+	title: siteTitle,
+	siteUrl,
+	description: siteDescription,
+	social,
+	twitterId,
+} = siteMeta
+
+const fullTitle = title ? `${author} | ${siteTitle} - ${title}` : `${author} | ${siteTitle}`
+const metaDescription = description || siteDescription
+const metaImage = image || '/img/fb-image.jpg'
+const canonical = canonicalURL || new URL(Astro.url.pathname, siteUrl).toString()
+---
+
+<!doctype html>
+<html lang="en" class="text-xl">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+		<meta name="theme-color" content="#1f2325" />
+		<meta name="color-scheme" content="dark light" />
+		<link rel="icon" type="image/png" href="/icon.png" />
+		<link rel="canonical" href={canonical} />
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- Primary Meta Tags -->
+		<title>{fullTitle}</title>
+		<meta name="title" content={fullTitle} />
+		<meta name="description" content={metaDescription} />
+		<meta name="author" content={author} />
+		<meta name="application-name" content="Gabri.me" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={metaDescription} />
+		<meta property="og:image" content={new URL(metaImage, siteUrl)} />
+		<meta property="og:site_name" content={author} />
+		<meta property="og:locale" content="en-US" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonical} />
+		<meta property="twitter:title" content={fullTitle} />
+		<meta property="twitter:description" content={metaDescription} />
+		<meta property="twitter:image" content={new URL('/i/social-image.jpg', siteUrl)} />
+		<meta property="twitter:creator" content={social.twitter.display} />
+		<meta property="twitter:creator:id" content={twitterId} />
+		<meta property="twitter:site:id" content={twitterId} />
+		<meta property="twitter:domain" content={siteUrl} />
+
+		<!-- Fediverse -->
+		<meta name="fediverse:creator" content="@gabri@mastodon.online" />
+
+		<!-- Apple Web App -->
+		<meta name="apple-mobile-web-app-title" content="Gabri.me" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<!-- Rel links -->
+		{Object.values(social).map(({url}) => <link rel="me" href={url} />)}
+
+		<!-- Preconnect to Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+
+		<!-- Theme Script (must run before body renders to prevent FOUC) -->
+		<script is:inline>
+			(function() {
+				window.__onThemeChange = function() {};
+
+				function setTheme(newTheme) {
+					window.__theme = newTheme;
+					preferredTheme = newTheme;
+					document.documentElement.classList.remove(newTheme === 'dark' ? 'light' : 'dark');
+					document.documentElement.classList.add(newTheme);
+					window.__onThemeChange(newTheme);
+				}
+
+				var preferredTheme;
+				try {
+					preferredTheme = localStorage.getItem('theme');
+				} catch (err) { }
+
+				window.__setPreferredTheme = function(newTheme) {
+					setTheme(newTheme);
+					try {
+						localStorage.setItem('theme', newTheme);
+					} catch (err) {}
+				}
+
+				var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+				darkQuery.addEventListener('change', function(e) {
+					window.__setPreferredTheme(e.matches ? 'dark' : 'light')
+				});
+
+				setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
+			})();
+		</script>
+
+		<!-- Google Analytics -->
+		<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-PSGFK6V7RD"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-PSGFK6V7RD');
+		</script>
+
+		<ViewTransitions />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

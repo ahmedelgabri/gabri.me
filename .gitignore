@@ -79,7 +79,11 @@ public/feed.xml
 !.yarn/versions
 .pnp.*
 
-# Contentlayer
+# Astro
+.astro
+dist/
+
+# Contentlayer (legacy)
 .contentlayer
 .velite
 

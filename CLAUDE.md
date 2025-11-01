@@ -5,9 +5,9 @@ code in this repository.
 
 ## Project Overview
 
-This is a personal website and blog built with Next.js 15 (App Router),
-featuring blog posts and weekly links collections. Content is managed through
-Markdown files and processed by Velite.
+This is a personal website and blog built with **Astro 4**, featuring blog posts
+and weekly links collections. Content is managed through Astro's native Content
+Collections with Markdown/MDX support.
 
 ## Development Environment
 
@@ -34,17 +34,14 @@ for all package management operations.
 ### Development
 
 ```bash
-# Start development server (Next.js telemetry disabled)
+# Start development server
 pnpm dev
 
-# Build for production (Next.js telemetry disabled)
+# Build for production (includes type checking)
 pnpm build
 
-# Start production server (Next.js telemetry disabled)
-pnpm start
-
-# Generate content from markdown files (runs automatically during dev/build)
-pnpm content
+# Preview production build locally
+pnpm preview
 ```
 
 ### Code Quality
@@ -53,7 +50,7 @@ pnpm content
 # Run linter (oxlint)
 pnpm lint
 
-# Type check
+# Type check (runs as part of build)
 pnpm type-check
 ```
 
@@ -66,45 +63,45 @@ Use `command git` instead of `git` directly to avoid shell function conflicts
 
 ### Content Management
 
-Content is managed through **Velite** (velite.config.ts), which:
+Content is managed through **Astro Content Collections**
+(src/content/config.ts):
 
-- Processes Markdown files from `src/_content/` directory
-- Generates TypeScript types and data at `.velite/` (imported via
-  `#site/content`)
-- Automatically runs during `dev` and `build` via next.config.mjs
-- Uses git timestamps for `updated` field via `git log -1 --format=%cd`
-- Supports two content collections:
-  - **Posts**: `src/_content/blog/**/*.md`
-  - **Weekly Links**: `src/_content/weekly-links/**/*.md`
+- Markdown files stored in `src/content/` directory
+- Type-safe frontmatter validation with Zod schemas
+- Two content collections:
+  - **Posts**: `src/content/posts/**/*.md`
+  - **Weekly Links**: `src/content/weeklyLinks/**/*.md`
+- Access content via `getCollection()` from `astro:content`
 
-Each content item includes: title, date, tags, excerpt, and full Markdown body.
+Each content item includes: title, date, published (boolean), tags (array), and
+optional excerpt.
 
 ### Content Processing Pipeline
 
-Markdown processing uses rehype plugins (configured in velite.config.ts):
+Markdown processing uses rehype plugins (configured in astro.config.mjs):
 
 1. `rehype-slug` - adds IDs to headings
 2. `rehype-code-titles` - adds titles to code blocks
 3. `rehype-prism-plus` - syntax highlighting with Prism
 4. `rehype-autolink-headings` - adds anchor links to headings
 
-### Next.js App Structure
+### Astro Project Structure
 
-Using Next.js 16 App Router with TypeScript and React 19:
+Using Astro 4 with TypeScript:
 
-- React Compiler enabled for automatic optimizations
-- Experimental inline CSS enabled for performance
+- **Pages** (src/pages/):
+  - `index.astro` - Homepage
+  - `blog/[slug].astro` - Dynamic blog post pages
+  - `feed.xml.ts` - RSS feed generation (endpoint)
+  - `robots.txt.ts` - Robots.txt generation (endpoint)
 
-- **App Routes** (src/app/):
-  - `/` - Homepage (page.tsx)
-  - `/blog/[slug]` - Dynamic blog post pages
-  - `/feed.xml` - RSS feed generation
-  - `/card` - Social card generation
-  - Custom 404 (not-found.tsx) and error pages (error.tsx)
+- **Layouts** (src/layouts/):
+  - `BaseLayout.astro` - Root layout with HTML structure, fonts, and theme
+    script
 
 - **Components** (src/components/):
-  - Modular React components (Header, Footer, Layout, etc.)
-  - MDX components for custom Markdown rendering (mdxComponents.tsx)
+  - Astro components (Header, Footer, Logo, etc.)
+  - All components use `.astro` extension
   - Theme switcher for dark/light mode
 
 - **Configuration** (src/config/):
@@ -112,16 +109,16 @@ Using Next.js 16 App Router with TypeScript and React 19:
 
 ### Styling
 
-Uses **UnoCSS** (atomic CSS framework):
+Uses **Tailwind CSS**:
 
-- Configuration: `uno.config.ts`
-- PostCSS integration: `postcss.config.mjs`
+- Configuration: `tailwind.config.mjs`
 - Custom font stacks for serif (Playfair Display), sans (Inter), and monospace
 - Dark mode via class strategy (`dark:` prefix)
 - Custom utilities like `w-my` (65ch width)
-- Base styles in `src/style/style.css` and `src/style/prism-plain.css`
+- `@tailwindcss/typography` for prose styling
+- Base styles in `src/styles/global.css` and `src/styles/prism.css`
 
-Google Fonts loaded in layout.tsx:
+Google Fonts loaded in BaseLayout.astro:
 
 - Inter (sans-serif, variable font)
 - Playfair Display (serif, variable font)
@@ -130,69 +127,78 @@ Google Fonts loaded in layout.tsx:
 
 - Path aliases:
   - `@/*` → project root
-  - `#site/content` → `.velite/` (generated content)
+- Extends `astro/tsconfigs/strict`
 - Strict mode enabled
-- Module resolution: bundler
 
 ### Theme System
 
 Client-side theme switching implemented via:
 
-- Inline script in layout.tsx (prevents flash of unstyled content)
+- Inline script in BaseLayout.astro `<head>` (prevents FOUC)
 - Reads from localStorage and respects `prefers-color-scheme`
-- Custom hook: `src/hooks/useTheme.tsx`
+- Vanilla JavaScript in ThemeSwitcher.astro component
 - Theme classes applied to `<html>` element
 
 ### Metadata & SEO
 
-Comprehensive metadata configured in layout.tsx:
+Comprehensive metadata configured in BaseLayout.astro:
 
 - OpenGraph tags
 - Twitter Card metadata
 - Apple Web App configuration
 - Fediverse creator verification
-- Dynamic metadata per blog post (generateMetadata in [slug]/page.tsx)
+- Dynamic metadata per blog post (passed as props to BaseLayout)
 
 ## Static Site Generation
 
-All blog posts are statically generated at build time:
+All pages are statically generated at build time:
 
-- `generateStaticParams()` creates paths for all posts
-- `dynamicParams = false` disables dynamic route generation
-- Content sourced from Velite-generated data
+- `getStaticPaths()` creates paths for all blog posts
+- Content queried via `getCollection()` from Astro
+- Output: fully static HTML in `dist/` directory
 
 ## Important Files
 
-- `velite.config.ts` - Content processing configuration (includes StaticTweet
-  support)
-- `next.config.mjs` - Next.js configuration with redirects, headers, and Velite
-  integration
-- `uno.config.ts` - Styling configuration
+- `astro.config.mjs` - Astro configuration with integrations (Tailwind, MDX,
+  Sitemap)
+- `tailwind.config.mjs` - Tailwind CSS configuration
+- `src/content/config.ts` - Content collections schema
 - `flake.nix` - Development environment (flake-parts based)
 - `src/config/siteMeta.ts` - Site-wide metadata
-- `globals.d.ts` - Global TypeScript declarations
+- `netlify.toml` - Netlify deployment configuration
 
 ## Content Creation
 
 To add new blog posts:
 
-1. Create `.md` file in `src/_content/blog/`
-2. Include frontmatter: title, date, published (boolean), tags (array)
-3. Content processes automatically via Velite
-4. Git commit date used for `updated` field
+1. Create `.md` file in `src/content/posts/`
+2. Include frontmatter: title, date, published (boolean), tags (array), excerpt
+   (optional)
+3. Content is automatically validated and typed via Zod schema
+4. Access via `getCollection('posts')` in pages
 
 ## Deployment
 
-Deployed to **Netlify** as a Next.js static site.
+Deployed to **Netlify** as an Astro static site.
 
-Key redirects configured in next.config.mjs:
+Configuration in `netlify.toml`:
 
-- `/feed` → `/feed.xml`
-- `/work` → `/`
-- `/blog` → `/`
+- Build command: `pnpm build`
+- Publish directory: `dist`
+- Redirects:
+  - `/feed` → `/feed.xml`
+  - `/work` → `/`
+  - `/blog` → `/`
+- Headers: `Permissions-Policy: interest-cohort=()`
 
 ## Code Style
 
 - Prettier configuration from `@ahmedelgabri/prettier-config`
+- Prettier plugin for Astro syntax
 - Format code before committing
 - TypeScript strict mode enforced
+
+## Migration Notes
+
+This project was migrated from Next.js 16 + UnoCSS to Astro 4 + Tailwind CSS.
+See `MIGRATION.md` for detailed migration documentation.

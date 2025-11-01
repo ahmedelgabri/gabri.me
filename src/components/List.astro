@@ -1,0 +1,34 @@
+---
+import H from './H.astro'
+
+interface ListItem {
+	date: string
+	item: any
+}
+
+interface Props {
+	title: string
+	posts: ListItem[]
+}
+
+const {title, posts} = Astro.props
+---
+
+<>
+	<H level="3">{title}</H>
+	<ul>
+		{posts.map(({date, item}) => (
+			<li class="mb-4 items-start lg:mb-2 lg:flex">
+				<div class="lg:mr-4 lg:text-left">
+					<time
+						class="font-mono text-sm tabular-nums text-gray-600"
+						datetime={date}
+					>
+						{date}
+					</time>
+				</div>
+				{item && <div set:html={item} />}
+			</li>
+		))}
+	</ul>
+</>

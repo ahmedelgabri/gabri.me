@@ -1,0 +1,26 @@
+# ABOUTME: Netlify deployment configuration for Astro static site
+# ABOUTME: Defines build command, publish directory, and redirect rules
+
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/feed"
+  to = "/feed.xml"
+  status = 301
+
+[[redirects]]
+  from = "/work"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/blog"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Permissions-Policy = "interest-cohort=()"

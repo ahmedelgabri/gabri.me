@@ -5,13 +5,13 @@
 	"description": "Some guy on the web",
 	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"license": "MIT",
+	"type": "module",
 	"scripts": {
-		"content": "velite --clean",
-		"dev": "NEXT_TELEMETRY_DISABLED=1 next dev",
-		"build": "NEXT_TELEMETRY_DISABLED=1 next build",
-		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
+		"dev": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
 		"lint": "oxlint .",
-		"type-check": "tsc"
+		"type-check": "astro check"
 	},
 	"browserslist": [
 		">0.25%",
@@ -19,41 +19,26 @@
 		"not ie <= 11"
 	],
 	"dependencies": {
-		"@types/lodash.truncate": "4.4.9",
-		"@types/node": "24.9.2",
-		"@types/react": "19.2.2",
-		"@types/react-dom": "19.2.2",
-		"@types/rss": "0.0.32",
-		"@unocss/reset": "^66.5.4",
-		"ahmedelgabri": "8.0.5",
-		"autoprefixer": "10.4.21",
+		"@astrojs/check": "^0.9.4",
+		"@astrojs/mdx": "^3.1.9",
+		"@astrojs/rss": "^4.0.9",
+		"@astrojs/sitemap": "^3.2.1",
+		"@astrojs/tailwind": "^5.1.2",
+		"@tailwindcss/typography": "^0.5.15",
+		"astro": "^4.16.18",
 		"clsx": "^2.1.1",
 		"date-fns": "^4.1.0",
-		"globby": "15.0.0",
-		"gray-matter": "4.0.3",
-		"lodash.truncate": "4.4.2",
-		"next": "16.0.1",
-		"postcss": "8.5.6",
-		"react": "19.2.0",
-		"react-dom": "19.2.0",
-		"react-icons": "5.5.0",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-code-titles": "^1.2.0",
 		"rehype-prism-plus": "^2.0.1",
 		"rehype-slug": "^6.0.0",
-		"remark": "15.0.1",
-		"rss": "1.2.2",
-		"strip-ansi": "^7.1.2",
-		"strip-markdown": "6.0.0"
+		"tailwindcss": "^3.4.17",
+		"typescript": "^5.9.3"
 	},
 	"devDependencies": {
 		"@ahmedelgabri/prettier-config": "7.0.0",
-		"@unocss/postcss": "66.5.4",
-		"babel-plugin-react-compiler": "^1.0.0",
 		"oxlint": "^1.25.0",
 		"prettier": "3.6.2",
-		"typescript": "5.9.3",
-		"unocss": "66.5.4",
-		"velite": "^0.3.0"
+		"prettier-plugin-astro": "^0.14.1"
 	}
 }

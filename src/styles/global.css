@@ -1,0 +1,21 @@
+/* ABOUTME: Global styles with Tailwind directives and custom font variables */
+/* ABOUTME: Includes base resets, typography, and dark mode prose styling */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--font-inter: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+		--font-playfair-display:
+			'Playfair Display Variable', ui-serif, Georgia, serif;
+	}
+
+	html {
+		@apply text-xl;
+	}
+
+	body {
+		@apply bg-slate-200 p-4 text-slate-700 dark:bg-zinc-900 dark:text-slate-400 md:p-8;
+	}
+}
