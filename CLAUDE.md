@@ -22,8 +22,7 @@ The development environment includes:
 
 - Node.js
 - pnpm (package manager)
-- Vercel CLI
-- actionlint
+- actionlint (GitHub Actions linter)
 
 ## Package Management
 
@@ -35,13 +34,13 @@ for all package management operations.
 ### Development
 
 ```bash
-# Start development server
+# Start development server (Next.js telemetry disabled)
 pnpm dev
 
-# Build for production
+# Build for production (Next.js telemetry disabled)
 pnpm build
 
-# Start production server
+# Start production server (Next.js telemetry disabled)
 pnpm start
 
 # Generate content from markdown files (runs automatically during dev/build)
@@ -91,10 +90,12 @@ Markdown processing uses rehype plugins (configured in velite.config.ts):
 
 ### Next.js App Structure
 
-Using Next.js 15 App Router with TypeScript:
+Using Next.js 16 App Router with TypeScript and React 19:
+
+- React Compiler enabled for automatic optimizations
+- Experimental inline CSS enabled for performance
 
 - **App Routes** (src/app/):
-
   - `/` - Homepage (page.tsx)
   - `/blog/[slug]` - Dynamic blog post pages
   - `/feed.xml` - RSS feed generation
@@ -102,7 +103,6 @@ Using Next.js 15 App Router with TypeScript:
   - Custom 404 (not-found.tsx) and error pages (error.tsx)
 
 - **Components** (src/components/):
-
   - Modular React components (Header, Footer, Layout, etc.)
   - MDX components for custom Markdown rendering (mdxComponents.tsx)
   - Theme switcher for dark/light mode
@@ -163,10 +163,12 @@ All blog posts are statically generated at build time:
 
 ## Important Files
 
-- `velite.config.ts` - Content processing configuration
-- `next.config.mjs` - Next.js configuration with redirects and headers
+- `velite.config.ts` - Content processing configuration (includes StaticTweet
+  support)
+- `next.config.mjs` - Next.js configuration with redirects, headers, and Velite
+  integration
 - `uno.config.ts` - Styling configuration
-- `flake.nix` - Development environment
+- `flake.nix` - Development environment (flake-parts based)
 - `src/config/siteMeta.ts` - Site-wide metadata
 - `globals.d.ts` - Global TypeScript declarations
 
@@ -181,7 +183,13 @@ To add new blog posts:
 
 ## Deployment
 
-Likely deployed to Vercel (Vercel CLI available in Nix shell).
+Deployed to **Netlify** as a Next.js static site.
+
+Key redirects configured in next.config.mjs:
+
+- `/feed` → `/feed.xml`
+- `/work` → `/`
+- `/blog` → `/`
 
 ## Code Style
 
