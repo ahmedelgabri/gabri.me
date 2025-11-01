@@ -13,7 +13,6 @@
         devShells.default = pkgs.mkShell {
           name = "gabri.me";
           buildInputs = with pkgs; [
-            nodePackages.vercel
             nodejs
             actionlint
             pnpm

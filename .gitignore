@@ -87,3 +87,4 @@ public/feed.xml
 *.tsbuildinfo
 next-env.d.ts
 .aider*
+.env
