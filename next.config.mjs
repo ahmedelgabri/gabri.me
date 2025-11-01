@@ -11,11 +11,12 @@ if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
 
 /** @type {import('next').NextConfig} */
 const config = {
+	experimental: {
+		inlineCss: true,
+	},
+	reactCompiler: true,
 	reactStrictMode: true,
 	poweredByHeader: false,
-	publicRuntimeConfig: {
-		isPROD: process.env.NODE_ENV === 'production',
-	},
 	async redirects() {
 		return [
 			{

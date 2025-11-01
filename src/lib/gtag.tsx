@@ -1,14 +1,10 @@
-import * as React from 'react'
 import Script from 'next/script'
-import getConfig from 'next/config'
 
-const isPROD = getConfig()?.publicRuntimeConfig?.isPROD
-
-const GA4_TRACKING_ID = isPROD ? 'G-TDX82ST2HH' : ''
+const GA4_TRACKING_ID = process.env.GA4_TRACKING_ID
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {
-	if (isPROD) {
+	if (GA4_TRACKING_ID) {
 		window.gtag('config', GA4_TRACKING_ID, {
 			page_path: url,
 			anonymize_ip: true,
@@ -22,9 +18,9 @@ export const event = ({
 	category,
 	label,
 	value,
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: Record<string, any>) => {
-	if (isPROD) {
+	if (GA4_TRACKING_ID) {
 		window.gtag('event', action, {
 			event_category: category,
 			event_label: label,
@@ -35,7 +31,7 @@ export const event = ({
 
 export function GA() {
 	return (
-		isPROD && (
+		GA4_TRACKING_ID && (
 			<>
 				<Script
 					async
