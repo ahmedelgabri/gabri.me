@@ -13,15 +13,12 @@
         devShells.default = pkgs.mkShell {
           name = "gabri.me";
           buildInputs = with pkgs; [
-            mise
+            nodePackages.vercel
+            nodejs
+            actionlint
+            pnpm
           ];
-          shellHook =
-            /*
-            bash
-            */
-            ''
-              eval "$(mise activate)"
-            '';
+          shellHook = "";
         };
       };
     };
