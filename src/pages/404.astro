@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import ContentLayout from '../components/ContentLayout.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+
+const title = 'Oops - page not found'
+---
+
+<BaseLayout title={title}>
+	<ContentLayout>
+		<Header />
+		<h2 class="mb-4 text-2xl">Sorry, this page was not found.</h2>
+		<img src="/img/404.gif" alt="404 error" class="max-w-full" />
+		<Footer />
+	</ContentLayout>
+</BaseLayout>
