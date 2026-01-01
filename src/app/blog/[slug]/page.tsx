@@ -77,7 +77,7 @@ export default async function Post({params}: PageProps<'slug'>) {
 					className="mb-12 block font-mono text-sm italic text-gray-500"
 					dateTime={date}
 				>
-					On {formattedDate}
+					<i className="i-tabler:calendar align-[-2px]" /> {formattedDate}
 				</time>
 				<div
 					className="prose dark:prose-light"

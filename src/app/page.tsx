@@ -1,9 +1,5 @@
-import * as React from 'react'
 import Link from 'next/link'
 import {compareDesc} from 'date-fns'
-import {GoDeviceCameraVideo} from 'react-icons/go'
-import {AiFillAudio} from 'react-icons/ai'
-import {RiArticleLine} from 'react-icons/ri'
 import {posts as allPosts} from '#site/content'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
@@ -35,7 +31,7 @@ export default function Index() {
 					Currently based in Amsterdam, the Netherlands & working as Principal
 					Engineer at{' '}
 					<a target="_blank" rel="noreferrer noopener" href="http://miro.com">
-						Miro
+						<i className="i-logos:miro-icon mr-1 align-[-4px]"></i>Miro
 					</a>
 					.
 				</p>
@@ -49,13 +45,14 @@ export default function Index() {
 						title="Talks & Interviews"
 						posts={[
 							{
-								date: '2024-03-03',
+								date: (
+									<>
+										<i className="i-tabler:calendar align-[-2px]" /> 2024-03-03
+									</>
+								),
 								item: (
 									<div className="flex items-center">
-										<GoDeviceCameraVideo
-											title="Live Podcast"
-											className="mr-2"
-										/>
+										<i className="i-tabler:video mr-1" />
 										<div className="mr-2">
 											<Link
 												href={interviews.ahmedelemam[1]}
@@ -70,10 +67,14 @@ export default function Index() {
 								),
 							},
 							{
-								date: '2021-01-23',
+								date: (
+									<>
+										<i className="i-tabler:calendar align-[-2px]" /> 2021-01-23
+									</>
+								),
 								item: (
 									<div className="flex items-center">
-										<AiFillAudio title="Podcast" className="mr-2" />
+										<i className="i-tabler:microphone mr-1" />
 										<div className="mr-2">
 											<Link
 												href={interviews.nullplusplus[1]}
@@ -88,10 +89,14 @@ export default function Index() {
 								),
 							},
 							{
-								date: '2018-12-17',
+								date: (
+									<>
+										<i className="i-tabler:calendar align-[-2px]" /> 2018-12-17
+									</>
+								),
 								item: (
 									<div className="flex items-center">
-										<RiArticleLine title="Interview" className="mr-2" />
+										<i className="i-tabler:article-filled-filled mr-1" />
 										<div className="mr-2">
 											<Link
 												href={interviews.devtomanager[1]}
@@ -106,14 +111,15 @@ export default function Index() {
 								),
 							},
 							{
-								date: '2017-06-08',
+								date: (
+									<>
+										<i className="i-tabler:calendar align-[-2px]" /> 2017-06-08
+									</>
+								),
 								item: (
 									<>
 										<div className="flex items-center">
-											<GoDeviceCameraVideo
-												title="Conference talk"
-												className="mr-2"
-											/>
+											<i className="i-tabler:video mr-1" />
 											<div className="mr-2">
 												<Link
 													href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`}
@@ -148,7 +154,12 @@ export default function Index() {
 					<List
 						title="Blog"
 						posts={posts.map((p) => ({
-							date: p.formattedDate,
+							date: (
+								<>
+									<i className="i-tabler:calendar align-[-2px]" />{' '}
+									{p.formattedDate}
+								</>
+							),
 							item: (
 								<Link href={p.url} key={p.url} className="lg:p-2">
 									{p.title}

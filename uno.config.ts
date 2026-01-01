@@ -1,9 +1,19 @@
-import {defineConfig, presetWind} from 'unocss'
+import {defineConfig, presetWind4, presetIcons} from 'unocss'
 
 export default defineConfig({
 	presets: [
-		presetWind({
+		presetWind4({
+			preflights: {
+				reset: true,
+			},
 			dark: 'class',
+		}),
+		presetIcons({
+			cdn: 'https://esm.sh/',
+			extraProperties: {
+				display: 'inline-block',
+				'vertical-align': 'middle',
+			},
 		}),
 	],
 	rules: [

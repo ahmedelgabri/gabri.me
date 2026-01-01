@@ -1,5 +1,3 @@
-import * as React from 'react'
-import {AiOutlineTwitter} from 'react-icons/ai'
 import siteMeta from '../../config/siteMeta'
 
 const {
@@ -16,7 +14,7 @@ export default function TweetButton({via, title, url}: Props) {
 	return (
 		<div className="mt-8 border-t border-gray-700 pt-8">
 			You can{' '}
-			<AiOutlineTwitter className="inline-block fill-black dark:fill-white" />{' '}
+			<i className="i-tabler:brand-x inline-block fill-black dark:fill-white" />{' '}
 			<a
 				href={`https://twitter.com/share?url=${url}&via=${via.slice(
 					1,
