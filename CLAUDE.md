@@ -5,7 +5,7 @@ code in this repository.
 
 ## Project Overview
 
-This is a personal website and blog built with Next.js 15 (App Router),
+This is a personal website and blog built with Next.js 16 (App Router),
 featuring blog posts and weekly links collections. Content is managed through
 Markdown files and processed by Velite.
 
@@ -50,11 +50,14 @@ pnpm content
 ### Code Quality
 
 ```bash
-# Run linter (oxlint)
+# Run linter (oxlint with type-aware rules)
 pnpm lint
 
 # Type check
 pnpm type-check
+
+# Format code (oxfmt)
+npx oxfmt --write .
 ```
 
 ### Git Commands
@@ -193,6 +196,7 @@ Key redirects configured in next.config.mjs:
 
 ## Code Style
 
-- Prettier configuration from `@ahmedelgabri/prettier-config`
-- Format code before committing
+- Formatting via `oxfmt` (Rust-based formatter)
+- Linting via `oxlint` with type-aware rules and tsgolint plugin
 - TypeScript strict mode enforced
+- Format code before committing

@@ -11,10 +11,10 @@
 		"react-perf",
 		"jsx-a11y",
 		"promise",
-		"vitest"
+		"vitest",
 	],
 	"env": {
-		"browser": true
+		"browser": true,
 	},
 	"settings": {},
 	"rules": {
@@ -30,9 +30,9 @@
 				"ignore": [
 					"contentlayer/generated",
 					"next-contentlayer/hooks",
-					"contentlayer/client"
-				]
-			}
-		]
-	}
+					"contentlayer/client",
+				],
+			},
+		],
+	},
 }

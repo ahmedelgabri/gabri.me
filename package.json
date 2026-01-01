@@ -3,21 +3,17 @@
 	"version": "5.0.0-covid-19",
 	"private": true,
 	"description": "Some guy on the web",
-	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"license": "MIT",
+	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"scripts": {
 		"content": "velite --clean",
 		"dev": "NEXT_TELEMETRY_DISABLED=1 next dev",
 		"build": "NEXT_TELEMETRY_DISABLED=1 next build",
 		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
 		"lint": "oxlint . --type-aware",
+		"format": "oxfmt",
 		"type-check": "tsc"
 	},
-	"browserslist": [
-		">0.25%",
-		"not op_mini all",
-		"not ie <= 11"
-	],
 	"dependencies": {
 		"@types/lodash.truncate": "4.4.9",
 		"@types/node": "24.10.1",
@@ -47,14 +43,18 @@
 		"strip-markdown": "6.0.0"
 	},
 	"devDependencies": {
-		"@ahmedelgabri/prettier-config": "7.0.0",
 		"@unocss/postcss": "66.5.10",
 		"babel-plugin-react-compiler": "^1.0.0",
+		"oxfmt": "^0.21.0",
 		"oxlint": "^1.31.0",
 		"oxlint-tsgolint": "^0.8.3",
-		"prettier": "3.7.4",
 		"typescript": "5.9.3",
 		"unocss": "66.5.10",
 		"velite": "^0.3.0"
-	}
+	},
+	"browserslist": [
+		">0.25%",
+		"not op_mini all",
+		"not ie <= 11"
+	]
 }
