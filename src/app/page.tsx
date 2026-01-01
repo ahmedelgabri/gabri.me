@@ -45,11 +45,7 @@ export default function Index() {
 						title="Talks & Interviews"
 						posts={[
 							{
-								date: (
-									<>
-										<i className="i-tabler:calendar align-[-2px]" /> 2024-03-03
-									</>
-								),
+								date: '2024-03-03',
 								item: (
 									<div className="flex items-center">
 										<i className="i-tabler:video mr-1" />
@@ -67,11 +63,7 @@ export default function Index() {
 								),
 							},
 							{
-								date: (
-									<>
-										<i className="i-tabler:calendar align-[-2px]" /> 2021-01-23
-									</>
-								),
+								date: '2021-01-23',
 								item: (
 									<div className="flex items-center">
 										<i className="i-tabler:microphone mr-1" />
@@ -89,11 +81,7 @@ export default function Index() {
 								),
 							},
 							{
-								date: (
-									<>
-										<i className="i-tabler:calendar align-[-2px]" /> 2018-12-17
-									</>
-								),
+								date: '2018-12-17',
 								item: (
 									<div className="flex items-center">
 										<i className="i-tabler:article-filled-filled mr-1" />
@@ -111,11 +99,7 @@ export default function Index() {
 								),
 							},
 							{
-								date: (
-									<>
-										<i className="i-tabler:calendar align-[-2px]" /> 2017-06-08
-									</>
-								),
+								date: '2017-06-08',
 								item: (
 									<>
 										<div className="flex items-center">
@@ -154,12 +138,7 @@ export default function Index() {
 					<List
 						title="Blog"
 						posts={posts.map((p) => ({
-							date: (
-								<>
-									<i className="i-tabler:calendar align-[-2px]" />{' '}
-									{p.formattedDate}
-								</>
-							),
+							date: p.formattedDate,
 							item: (
 								<Link href={p.url} key={p.url} className="lg:p-2">
 									{p.title}

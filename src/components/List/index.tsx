@@ -18,7 +18,7 @@ export default function List(props: {
 								className="font-mono text-sm tabular-nums text-gray-600"
 								dateTime={date}
 							>
-								{date}
+								<i className="i-tabler:calendar align-[-2px]" /> {date}
 							</time>
 						</div>
 						{item && <div>{item}</div>}
