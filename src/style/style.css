@@ -2,6 +2,60 @@
 
 :root {
 	color-scheme: dark light;
+
+	--link-color: theme('colors.blue.700');
+	--link-decoration: theme('colors.blue.700/30%');
+	--link-hover-bg: theme('colors.blue.100');
+	--link-hover-decoration: theme('colors.blue.700');
+}
+
+.dark {
+	--link-color: theme('colors.blue.400');
+	--link-decoration: theme('colors.blue.400/30%');
+	--link-hover-bg: theme('colors.blue.950');
+	--link-hover-decoration: theme('colors.blue.400');
+}
+
+.color-amber {
+	--link-color: theme('colors.amber.700');
+	--link-decoration: theme('colors.amber.700/30%');
+	--link-hover-bg: theme('colors.amber.100');
+	--link-hover-decoration: theme('colors.amber.700');
+}
+
+.dark.color-amber {
+	--link-color: theme('colors.amber.400');
+	--link-decoration: theme('colors.amber.400/30%');
+	--link-hover-bg: theme('colors.amber.950');
+	--link-hover-decoration: theme('colors.amber.400');
+}
+
+.color-teal {
+	--link-color: theme('colors.teal.700');
+	--link-decoration: theme('colors.teal.700/30%');
+	--link-hover-bg: theme('colors.teal.100');
+	--link-hover-decoration: theme('colors.teal.700');
+}
+
+.dark.color-teal {
+	--link-color: theme('colors.teal.400');
+	--link-decoration: theme('colors.teal.400/30%');
+	--link-hover-bg: theme('colors.teal.950');
+	--link-hover-decoration: theme('colors.teal.400');
+}
+
+.color-purple {
+	--link-color: theme('colors.purple.700');
+	--link-decoration: theme('colors.purple.700/30%');
+	--link-hover-bg: theme('colors.purple.100');
+	--link-hover-decoration: theme('colors.purple.700');
+}
+
+.dark.color-purple {
+	--link-color: theme('colors.purple.400');
+	--link-decoration: theme('colors.purple.400/30%');
+	--link-hover-bg: theme('colors.purple.950');
+	--link-hover-decoration: theme('colors.purple.400');
 }
 
 body {
@@ -13,14 +67,19 @@ body {
 }
 
 a {
-	@apply text-orange-700 underline decoration-wavy decoration-orange-700/30 underline-offset-2 transition-colors duration-150;
-	@apply dark:text-cyan-400 dark:decoration-cyan-400/30;
+	color: var(--link-color);
+	text-decoration: underline;
+	text-decoration-style: wavy;
+	text-decoration-color: var(--link-decoration);
+	text-underline-offset: 2px;
+	@apply transition-colors duration-150;
 }
 
 a:hover,
 a:focus,
 a:active {
-	@apply bg-orange-100 decoration-orange-700 dark:bg-cyan-950 dark:decoration-cyan-400;
+	background-color: var(--link-hover-bg);
+	text-decoration-color: var(--link-hover-decoration);
 }
 
 :focus {

@@ -1,14 +1,15 @@
 'use client'
 
 import * as React from 'react'
-import {useTheme} from '../../hooks'
+import {useColorTheme} from '../../hooks'
 
-const THEME_OPTIONS: ThemeSetting[] = ['dark', 'light', 'system']
+const COLOR_OPTIONS: ColorTheme[] = ['blue', 'amber', 'teal', 'purple']
 
-const icons: Record<ThemeSetting, string> = {
-	dark: 'i-tabler:moon',
-	light: 'i-tabler:sun',
-	system: 'i-tabler:device-desktop',
+const colorClasses: Record<ColorTheme, string> = {
+	blue: 'bg-blue-500',
+	amber: 'bg-amber-500',
+	teal: 'bg-teal-500',
+	purple: 'bg-purple-500',
 }
 
 interface Props {
@@ -16,8 +17,8 @@ interface Props {
 	disabled?: boolean
 }
 
-export function ThemeSwitcher({onHover, disabled}: Props) {
-	const {themeSetting, setTheme} = useTheme()
+export function ColorSwitcher({onHover, disabled}: Props) {
+	const {colorTheme, setColorTheme} = useColorTheme()
 	const [isExpanded, setIsExpanded] = React.useState(false)
 	const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
 
@@ -54,31 +55,27 @@ export function ThemeSwitcher({onHover, disabled}: Props) {
 			onMouseLeave={handleMouseLeave}
 		>
 			<div className="flex items-center">
-				{THEME_OPTIONS.map((theme, index) => {
-					const isSelected = theme === themeSetting
+				{COLOR_OPTIONS.map((color, index) => {
+					const isSelected = color === colorTheme
 					const showWhenCollapsed = isSelected && !isExpanded
 					const showWhenExpanded = isExpanded
 					const isVisible = showWhenCollapsed || showWhenExpanded
 
 					return (
 						<button
-							key={theme}
-							className={`flex h-4 cursor-pointer items-center justify-center transition-all duration-200 ease-out hover:text-neutral-800 dark:hover:text-neutral-200 ${
-								isSelected
-									? 'text-neutral-700 dark:text-neutral-200'
-									: 'text-neutral-400'
-							} ${
-								isVisible
-									? 'w-5 scale-100 opacity-100'
-									: 'w-0 scale-0 opacity-0'
-							}`}
-							onClick={() => setTheme(theme)}
-							aria-label={`Switch to ${theme} theme`}
+							key={color}
+							className={`flex h-4 cursor-pointer items-center justify-center transition-all duration-200 ease-out hover:opacity-100 ${
+								isSelected ? 'opacity-100' : 'opacity-50'
+							} ${isVisible ? 'w-5 scale-100' : 'w-0 scale-0 opacity-0'}`}
+							onClick={() => setColorTheme(color)}
+							aria-label={`Switch to ${color} color`}
 							style={{
 								transitionDelay: isExpanded ? `${index * 30}ms` : '0ms',
 							}}
 						>
-							<i className={`${icons[theme]} shrink-0`} />
+							<span
+								className={`${colorClasses[color]} h-3 w-3 shrink-0 rounded-full`}
+							/>
 						</button>
 					)
 				})}

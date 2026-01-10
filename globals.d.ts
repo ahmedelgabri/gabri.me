@@ -36,13 +36,16 @@ declare module '*.mdx' {
 
 declare type ThemeSetting = 'system' | 'light' | 'dark'
 declare type ResolvedTheme = 'light' | 'dark'
+declare type ColorTheme = 'blue' | 'amber' | 'teal' | 'purple'
 
 interface Window {
 	gtag: any
 	twttr: any
 	__theme: ResolvedTheme
 	__themeSetting: ThemeSetting
+	__colorTheme: ColorTheme
 	__setTheme(setting: ThemeSetting): void
+	__setColorTheme(color: ColorTheme): void
 }
 
 // Global/Shared Props

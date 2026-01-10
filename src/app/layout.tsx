@@ -7,13 +7,18 @@ import '../style/style.css'
 import '../style/prism-plain.css'
 
 const themeScript = `(${(() => {
-	var STORAGE_KEY = 'theme'
+	var THEME_STORAGE_KEY = 'theme'
+	var COLOR_STORAGE_KEY = 'colorTheme'
 	var VALID_THEMES = ['system', 'light', 'dark']
+	var VALID_COLORS = ['blue', 'amber', 'teal', 'purple']
 	var DEFAULT_THEME = 'dark'
+	var DEFAULT_COLOR = 'blue'
 
 	var storedTheme
+	var storedColor
 	try {
-		storedTheme = localStorage.getItem(STORAGE_KEY)
+		storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+		storedColor = localStorage.getItem(COLOR_STORAGE_KEY)
 	} catch (e) {}
 
 	// @ts-ignore
@@ -21,7 +26,14 @@ const themeScript = `(${(() => {
 		? storedTheme
 		: DEFAULT_THEME
 	// @ts-ignore
+	var colorTheme = VALID_COLORS.includes(storedColor)
+		? storedColor
+		: DEFAULT_COLOR
+
+	// @ts-ignore
 	window.__themeSetting = themeSetting
+	// @ts-ignore
+	window.__colorTheme = colorTheme
 
 	function getSystemTheme() {
 		return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -42,14 +54,37 @@ const themeScript = `(${(() => {
 		document.documentElement.classList.add(theme)
 	}
 
+	// @ts-ignore
+	function applyColorTheme(color) {
+		window.__colorTheme = color
+		document.documentElement.classList.remove(
+			'color-blue',
+			'color-amber',
+			'color-teal',
+			'color-purple',
+		)
+		if (color !== 'blue') {
+			document.documentElement.classList.add('color-' + color)
+		}
+	}
+
 	applyTheme(resolveTheme())
+	applyColorTheme(colorTheme)
 
 	window.__setTheme = function (newSetting) {
 		window.__themeSetting = newSetting
 		try {
-			localStorage.setItem(STORAGE_KEY, newSetting)
+			localStorage.setItem(THEME_STORAGE_KEY, newSetting)
 		} catch (e) {}
 		applyTheme(resolveTheme())
+	}
+
+	window.__setColorTheme = function (newColor) {
+		window.__colorTheme = newColor
+		try {
+			localStorage.setItem(COLOR_STORAGE_KEY, newColor)
+		} catch (e) {}
+		applyColorTheme(newColor)
 	}
 
 	window
@@ -131,7 +166,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 				))}
 				<GA />
 			</head>
-			<body className="bg-neutral-100 p-6 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 md:p-8 lg:p-12">
+			<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 text-base leading-relaxed">
 				<div className="w-content">{children}</div>
 			</body>
 		</html>

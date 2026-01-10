@@ -78,6 +78,7 @@ export default async function Post({params}: PageProps<'slug'>) {
 				<header className="mb-8">
 					<H level="1">{title}</H>
 					<time className="text-sm text-neutral-500" dateTime={date}>
+						<i className="i-tabler:calendar mr-1 inline-block align-[-2px]" />
 						{formattedDate}
 					</time>
 				</header>

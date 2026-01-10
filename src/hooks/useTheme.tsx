@@ -4,7 +4,8 @@ import * as React from 'react'
 
 export function useTheme() {
 	const [themeSetting, setThemeSetting] = React.useState<ThemeSetting>('dark')
-	const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>('dark')
+	const [resolvedTheme, setResolvedTheme] =
+		React.useState<ResolvedTheme>('dark')
 
 	React.useEffect(() => {
 		setThemeSetting(window.__themeSetting)
@@ -30,5 +31,23 @@ export function useTheme() {
 		themeSetting,
 		resolvedTheme,
 		setTheme,
+	}
+}
+
+export function useColorTheme() {
+	const [colorTheme, setColorThemeState] = React.useState<ColorTheme>('blue')
+
+	React.useEffect(() => {
+		setColorThemeState(window.__colorTheme)
+	}, [])
+
+	const setColorTheme = React.useCallback((color: ColorTheme) => {
+		window.__setColorTheme(color)
+		setColorThemeState(color)
+	}, [])
+
+	return {
+		colorTheme,
+		setColorTheme,
 	}
 }

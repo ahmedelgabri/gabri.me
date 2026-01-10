@@ -29,6 +29,7 @@ export default async function Index() {
 				<p className="mb-6">
 					Based in Amsterdam, working as Principal Engineer at{' '}
 					<a target="_blank" rel="noreferrer noopener" href="https://miro.com">
+						<i className="i-logos:miro-icon mr-1 inline-block align-[-2px]" />
 						Miro
 					</a>
 					.
@@ -49,6 +50,7 @@ export default async function Index() {
 									rel="noreferrer noopener"
 									className="after:content-['_↗']"
 								>
+									<i className="i-tabler:video mr-1 inline-block align-[-2px]" />
 									Staff Engineering path (Arabic)
 								</Link>
 							),
@@ -62,6 +64,7 @@ export default async function Index() {
 									rel="noreferrer noopener"
 									className="after:content-['_↗']"
 								>
+									<i className="i-tabler:microphone mr-1 inline-block align-[-2px]" />
 									Null++ Podcast (Arabic)
 								</Link>
 							),
@@ -75,6 +78,7 @@ export default async function Index() {
 									rel="noreferrer noopener"
 									className="after:content-['_↗']"
 								>
+									<i className="i-tabler:article mr-1 inline-block align-[-2px]" />
 									DevToManager Interview
 								</Link>
 							),
@@ -89,6 +93,7 @@ export default async function Index() {
 										rel="noreferrer noopener"
 										className="after:content-['_↗']"
 									>
+										<i className="i-tabler:video mr-1 inline-block align-[-2px]" />
 										Automating front-end refactoring
 									</Link>
 									{' ('}
