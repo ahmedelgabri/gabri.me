@@ -67,7 +67,6 @@ drafts/
 .lambda
 
 .vercel
-.mdx-data
 public/sitemap*.xml
 public/feed.xml
 
@@ -78,10 +77,6 @@ public/feed.xml
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
-
-# Contentlayer
-.contentlayer
-.velite
 
 # typescript
 *.tsbuildinfo

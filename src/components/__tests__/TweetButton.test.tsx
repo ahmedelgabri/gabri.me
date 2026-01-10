@@ -17,7 +17,7 @@ describe('TweetButton component', () => {
 	})
 
 	it('should construct correct Twitter share URL', () => {
-		const {container} = render(<TweetButton {...defaultProps} />)
+		render(<TweetButton {...defaultProps} />)
 
 		const tweetLink = screen.getByText('tweet').closest('a')
 		const href = tweetLink?.getAttribute('href')

@@ -20,19 +20,19 @@ const styles = {
 export default function H({level = '1', children, extra, className}: Props) {
 	const Tag = `h${level}`
 
-	return (
-		// @ts-ignore
-		<Tag
-			className={cn(
+	return React.createElement(
+		Tag,
+		{
+			className: cn(
 				'mb-8 font-serif font-extrabold !leading-tight tracking-tight lg:mb-12',
 				className,
 				styles[level],
-			)}
-		>
-			<span className="inline-block bg-gradient-to-br from-slate-500 to-slate-900 bg-clip-text text-transparent dark:bg-gradient-to-b dark:from-slate-500 dark:to-slate-700">
-				{children}
-			</span>{' '}
-			{extra && extra}
-		</Tag>
+			),
+		},
+		<span className="inline-block bg-gradient-to-br from-slate-500 to-slate-900 bg-clip-text text-transparent dark:bg-gradient-to-b dark:from-slate-500 dark:to-slate-700">
+			{children}
+		</span>,
+		' ',
+		extra,
 	)
 }
