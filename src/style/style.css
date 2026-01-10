@@ -179,3 +179,17 @@ blockquote > p {
 .twitter-tweet {
 	@apply m-0 mb-6;
 }
+
+@keyframes geometric-rotate {
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
+}
+
+.islamic-pattern {
+	opacity: 0.2;
+	animation: geometric-rotate 90s linear infinite;
+}
