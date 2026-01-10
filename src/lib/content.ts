@@ -54,7 +54,7 @@ async function parseMdxFile(filePath: string): Promise<PostMetadata> {
 	const url = isWeeklyLinks ? `/weekly-links/${slug}` : `/blog/${slug}`
 
 	// Import the MDX file to get its metadata
-	const mdxModule = await import(`../_content/${relativePath}`)
+	const mdxModule = await import(/* @vite-ignore */ `../_content/${relativePath}`)
 	const metadata = mdxModule.metadata || {}
 
 	// Read file content for excerpt generation if not provided
