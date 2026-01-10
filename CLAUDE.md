@@ -79,7 +79,8 @@ Use `command git` instead of `git` directly to avoid shell function conflicts
 
 ### Content Management
 
-Content is managed through **Next.js native MDX support** with custom processing:
+Content is managed through **Next.js native MDX support** with custom
+processing:
 
 - MDX files stored in `src/_content/` directory
 - Processed using @next/mdx with rehype plugins
@@ -90,7 +91,8 @@ Content is managed through **Next.js native MDX support** with custom processing
   - **Posts**: `src/_content/blog/**/*.mdx`
   - **Weekly Links**: `src/_content/weekly-links/**/*.mdx`
 
-Each MDX file exports metadata including: title, date, tags, excerpt, and published status.
+Each MDX file exports metadata including: title, date, tags, excerpt, and
+published status.
 
 ### Content Processing Pipeline
 
@@ -102,6 +104,7 @@ MDX processing uses rehype plugins (configured in mdx.config.ts):
 4. `rehype-autolink-headings` - adds anchor links to headings
 
 The configuration is shared between:
+
 - Next.js (via next.config.ts using string references)
 - Vitest (via vitest.config.ts using actual imports with @mdx-js/rollup)
 
@@ -180,7 +183,8 @@ All blog posts are statically generated at build time:
 
 ## Important Files
 
-- `mdx.config.ts` - Shared MDX/rehype plugin configuration for Next.js and Vitest
+- `mdx.config.ts` - Shared MDX/rehype plugin configuration for Next.js and
+  Vitest
 - `next.config.ts` - Next.js configuration with MDX, redirects, and headers
 - `mdx-components.tsx` - MDX component customizations (links, YouTube, etc.)
 - `src/lib/content.ts` - Content querying helper functions
@@ -195,9 +199,11 @@ All blog posts are statically generated at build time:
 To add new blog posts:
 
 1. Create `.mdx` file in `src/_content/blog/`
-2. Export metadata object: `export const metadata = { title, date, published, tags, excerpt }`
+2. Export metadata object:
+   `export const metadata = { title, date, published, tags, excerpt }`
 3. Write content in MDX format (supports JSX/React components)
-4. Git commit date automatically used for `updated` field via `src/lib/content.ts`
+4. Git commit date automatically used for `updated` field via
+   `src/lib/content.ts`
 
 ## Deployment
 

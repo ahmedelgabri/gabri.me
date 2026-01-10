@@ -79,11 +79,11 @@ requires an exported metadata object:
 
 ```mdx
 export const metadata = {
-  title: 'Post Title',
-  date: '2024-01-01',
-  published: true,
-  tags: ['tag1', 'tag2'],
-  excerpt: 'A brief description of the post'
+	title: 'Post Title',
+	date: '2024-01-01',
+	published: true,
+	tags: ['tag1', 'tag2'],
+	excerpt: 'A brief description of the post',
 }
 
 Post content here with full MDX support...
