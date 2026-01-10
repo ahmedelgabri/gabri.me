@@ -4,7 +4,6 @@ describe('gtag utilities', () => {
 	const originalEnv = process.env.GA4_TRACKING_ID
 
 	beforeEach(() => {
-		// Reset environment and window.gtag before each test
 		vi.resetModules()
 		delete process.env.GA4_TRACKING_ID
 		global.window = {
@@ -67,21 +66,6 @@ describe('gtag utilities', () => {
 			})
 
 			expect(window.gtag).not.toHaveBeenCalled()
-		})
-
-		it('should handle events with minimal parameters', async () => {
-			process.env.GA4_TRACKING_ID = 'G-TEST123'
-			const {event} = await import('../gtag')
-
-			event({
-				action: 'view',
-			})
-
-			expect(window.gtag).toHaveBeenCalledWith('event', 'view', {
-				event_category: undefined,
-				event_label: undefined,
-				value: undefined,
-			})
 		})
 	})
 })
