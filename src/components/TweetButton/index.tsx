@@ -12,20 +12,19 @@ export interface Props {
 
 export default function TweetButton({via, title, url}: Props) {
 	return (
-		<div className="mt-8 border-t border-gray-700 pt-8">
+		<div className="my-8 border-t border-neutral-300 pt-8 text-sm dark:border-neutral-700">
 			You can{' '}
-			<i className="i-tabler:brand-x inline-block fill-black dark:fill-white" />{' '}
 			<a
-				href={`https://twitter.com/share?url=${url}&via=${via.slice(
-					1,
-				)}&text=${title}`}
+				href={`https://twitter.com/share?url=${url}&via=${via.slice(1)}&text=${title}`}
 				rel="noopener noreferrer"
 				target="_blank"
 			>
+				<i className="i-tabler:brand-x mr-1 inline-block align-[-2px]" />
 				tweet
 			</a>{' '}
-			this post or reach out directly to me{' '}
+			this post or reach out to me on{' '}
 			<a href={twitter.url} rel="noopener noreferrer" target="_blank">
+				<i className="i-tabler:brand-x mr-1 inline-block align-[-2px]" />
 				{twitter.display}
 			</a>
 			.

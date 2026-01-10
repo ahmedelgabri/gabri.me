@@ -3,7 +3,6 @@ import type {Metadata} from 'next'
 import Script from 'next/script'
 import {getAllPosts, getPostBySlug} from '../../../lib/content'
 import Header from '../../../components/Header'
-import Layout from '../../../components/Layout'
 import Footer from '../../../components/Footer'
 import TweetButton from '../../../components/TweetButton'
 import H from '../../../components/Prose/H'
@@ -12,7 +11,7 @@ import siteMeta from '../../../config/siteMeta'
 const {
 	siteUrl,
 	social: {
-		twitter: {display},
+		twitter: {display: twitterDisplay},
 	},
 } = siteMeta
 
@@ -73,23 +72,25 @@ export default async function Post({params}: PageProps<'slug'>) {
 				strategy="lazyOnload"
 				src="https://platform.twitter.com/widgets.js"
 			/>
-			<Layout>
-				<Header />
-				<H level="2">{title}</H>
-				<time
-					className="mb-12 block font-mono text-sm italic text-gray-500"
-					dateTime={date}
-				>
-					<i className="i-tabler:calendar align-[-2px]" /> {formattedDate}
-				</time>
-				<div className="prose dark:prose-light">
+			<Header slug={slug} />
+
+			<article>
+				<header className="mb-8">
+					<H level="1">{title}</H>
+					<time className="text-sm text-neutral-500" dateTime={date}>
+						<i className="i-tabler:calendar mr-1 inline-block align-[-2px]" />
+						{formattedDate}
+					</time>
+				</header>
+
+				<div className="prose">
 					<MDXContent />
 				</div>
-				<div>
-					<TweetButton via={display} title={title} url={postUrl} />
-				</div>
-				<Footer />
-			</Layout>
+
+				<TweetButton via={twitterDisplay} title={title} url={postUrl} />
+			</article>
+
+			<Footer />
 		</>
 	)
 }
