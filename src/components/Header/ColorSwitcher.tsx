@@ -1,9 +1,14 @@
 'use client'
 
-import * as React from 'react'
-import {useColorTheme} from '../../hooks'
+import clsx from 'clsx'
+import {useColorTheme, useHoverExpand, useCycleOption} from '../../hooks'
 
-const COLOR_OPTIONS: ColorTheme[] = ['blue', 'amber', 'teal', 'purple']
+const COLOR_OPTIONS: readonly ColorTheme[] = [
+	'blue',
+	'amber',
+	'teal',
+	'purple',
+] as const
 
 const colorClasses: Record<ColorTheme, string> = {
 	blue: 'bg-blue-500',
@@ -12,69 +17,55 @@ const colorClasses: Record<ColorTheme, string> = {
 	purple: 'bg-purple-500',
 }
 
-interface Props {
-	onHover?: (isHovered: boolean) => void
-	disabled?: boolean
-}
+const delayClasses = ['delay-0', 'delay-[30ms]', 'delay-[60ms]', 'delay-[90ms]']
 
-export function ColorSwitcher({onHover, disabled}: Props) {
+export function ColorSwitcher() {
 	const {colorTheme, setColorTheme} = useColorTheme()
-	const [isExpanded, setIsExpanded] = React.useState(false)
-	const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
-
-	const handleMouseEnter = () => {
-		if (disabled) return
-		if (timeoutRef.current) clearTimeout(timeoutRef.current)
-		setIsExpanded(true)
-		onHover?.(true)
-	}
-
-	const handleMouseLeave = () => {
-		timeoutRef.current = setTimeout(() => {
-			setIsExpanded(false)
-			onHover?.(false)
-		}, 300)
-	}
-
-	React.useEffect(() => {
-		if (disabled && isExpanded) {
-			setIsExpanded(false)
-		}
-	}, [disabled, isExpanded])
-
-	React.useEffect(() => {
-		return () => {
-			if (timeoutRef.current) clearTimeout(timeoutRef.current)
-		}
-	}, [])
+	const {isExpanded, hoverProps} = useHoverExpand()
+	const {cycle, getVisibility} = useCycleOption(
+		COLOR_OPTIONS,
+		colorTheme,
+		setColorTheme,
+	)
 
 	return (
-		<div
-			className="flex items-center"
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-		>
-			<div className="flex items-center">
+		<div className="flex items-center" {...hoverProps}>
+			{/* Mobile: single toggle button */}
+			<button
+				className="flex h-4 w-5 cursor-pointer items-center justify-center md:hidden"
+				onClick={cycle}
+				aria-label="Toggle color"
+			>
+				<span
+					className={clsx(
+						colorClasses[colorTheme],
+						'h-3 w-3 shrink-0 rounded-full',
+					)}
+				/>
+			</button>
+
+			{/* Desktop: expandable options */}
+			<div className="hidden items-center md:flex">
 				{COLOR_OPTIONS.map((color, index) => {
-					const isSelected = color === colorTheme
-					const showWhenCollapsed = isSelected && !isExpanded
-					const showWhenExpanded = isExpanded
-					const isVisible = showWhenCollapsed || showWhenExpanded
+					const {isSelected, isVisible} = getVisibility(color, isExpanded)
 
 					return (
 						<button
 							key={color}
-							className={`flex h-4 cursor-pointer items-center justify-center transition-all duration-200 ease-out hover:opacity-100 ${
-								isSelected ? 'opacity-100' : 'opacity-50'
-							} ${isVisible ? 'w-5 scale-100' : 'w-0 scale-0 opacity-0'}`}
+							className={clsx(
+								'flex h-4 cursor-pointer items-center justify-center transition-all duration-200 ease-out hover:opacity-100',
+								isSelected ? 'opacity-100' : 'opacity-50',
+								isVisible ? 'w-5 scale-100' : 'w-0 scale-0 opacity-0',
+								isExpanded ? delayClasses[index] : 'delay-0',
+							)}
 							onClick={() => setColorTheme(color)}
 							aria-label={`Switch to ${color} color`}
-							style={{
-								transitionDelay: isExpanded ? `${index * 30}ms` : '0ms',
-							}}
 						>
 							<span
-								className={`${colorClasses[color]} h-3 w-3 shrink-0 rounded-full`}
+								className={clsx(
+									colorClasses[color],
+									'h-3 w-3 shrink-0 rounded-full',
+								)}
 							/>
 						</button>
 					)

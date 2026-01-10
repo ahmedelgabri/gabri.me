@@ -17,7 +17,7 @@ describe('ColorSwitcher component', () => {
 		expect(buttons.length).toBeGreaterThan(0)
 	})
 
-	it('should show all color options on hover', () => {
+	it('should show all desktop color options on hover', () => {
 		const {container} = render(<ColorSwitcher />)
 
 		const wrapper = container.querySelector('div')
@@ -25,8 +25,8 @@ describe('ColorSwitcher component', () => {
 
 		fireEvent.mouseEnter(wrapper!)
 
-		const buttons = container.querySelectorAll('button')
-		expect(buttons.length).toBe(4)
+		const desktopButtons = container.querySelectorAll('.md\\:flex button')
+		expect(desktopButtons.length).toBe(4)
 	})
 
 	it('should call setColorTheme when clicking a color option', () => {
@@ -35,30 +35,10 @@ describe('ColorSwitcher component', () => {
 		const wrapper = container.querySelector('div')
 		fireEvent.mouseEnter(wrapper!)
 
-		const buttons = container.querySelectorAll('button')
-		fireEvent.click(buttons[1])
+		const desktopButtons = container.querySelectorAll('.md\\:flex button')
+		fireEvent.click(desktopButtons[1])
 
 		expect(window.__setColorTheme).toHaveBeenCalled()
-	})
-
-	it('should call onHover callback when hovering', () => {
-		const onHover = vi.fn()
-		const {container} = render(<ColorSwitcher onHover={onHover} />)
-
-		const wrapper = container.querySelector('div')
-		fireEvent.mouseEnter(wrapper!)
-
-		expect(onHover).toHaveBeenCalledWith(true)
-	})
-
-	it('should not expand when disabled', () => {
-		const onHover = vi.fn()
-		const {container} = render(<ColorSwitcher onHover={onHover} disabled />)
-
-		const wrapper = container.querySelector('div')
-		fireEvent.mouseEnter(wrapper!)
-
-		expect(onHover).not.toHaveBeenCalled()
 	})
 
 	it('should render color dots with correct classes', () => {
@@ -67,13 +47,23 @@ describe('ColorSwitcher component', () => {
 		const wrapper = container.querySelector('div')
 		fireEvent.mouseEnter(wrapper!)
 
-		const colorDots = container.querySelectorAll('span')
-		expect(colorDots.length).toBe(4)
+		const desktopDots = container.querySelectorAll('.md\\:flex span')
+		expect(desktopDots.length).toBe(4)
 
-		const classNames = Array.from(colorDots).map((dot) => dot.className)
+		const classNames = Array.from(desktopDots).map((dot) => dot.className)
 		expect(classNames.some((c) => c.includes('bg-blue-500'))).toBe(true)
 		expect(classNames.some((c) => c.includes('bg-amber-500'))).toBe(true)
 		expect(classNames.some((c) => c.includes('bg-teal-500'))).toBe(true)
 		expect(classNames.some((c) => c.includes('bg-purple-500'))).toBe(true)
+	})
+
+	it('should have a mobile toggle button that cycles colors', () => {
+		const {container} = render(<ColorSwitcher />)
+
+		const mobileButton = container.querySelector('.md\\:hidden')
+		expect(mobileButton).not.toBeNull()
+
+		fireEvent.click(mobileButton!)
+		expect(window.__setColorTheme).toHaveBeenCalledWith('amber')
 	})
 })

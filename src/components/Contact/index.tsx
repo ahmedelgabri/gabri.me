@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 export interface Props {
 	social: SocialT
 }
@@ -18,7 +20,10 @@ export default function Contact({social}: Props) {
 				<li key={site}>
 					<a href={url} rel="noopener noreferrer me" target="_blank">
 						<i
-							className={`${icons[site] || 'i-tabler:link'} mr-1 inline-block align-[-2px]`}
+							className={clsx(
+								icons[site] || 'i-tabler:link',
+								'mr-1 inline-block align-[-2px]',
+							)}
 						/>
 						{name || site}
 					</a>

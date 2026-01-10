@@ -185,11 +185,11 @@ blockquote > p {
 		transform: translate(-50%, -50%) rotate(0deg);
 	}
 	to {
-		transform: translate(-50%, -50%) rotate(360deg);
+		transform: translate(-50%, -50%) rotate(-360deg);
 	}
 }
 
 .islamic-pattern {
 	opacity: 0.2;
-	animation: geometric-rotate 90s linear infinite;
+	animation: geometric-rotate 60s linear infinite;
 }

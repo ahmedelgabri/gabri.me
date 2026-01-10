@@ -19,7 +19,7 @@ describe('ThemeSwitcher component', () => {
 		expect(buttons.length).toBeGreaterThan(0)
 	})
 
-	it('should show all theme options on hover', () => {
+	it('should show all desktop theme options on hover', () => {
 		const {container} = render(<ThemeSwitcher />)
 
 		const wrapper = container.querySelector('div')
@@ -27,8 +27,8 @@ describe('ThemeSwitcher component', () => {
 
 		fireEvent.mouseEnter(wrapper!)
 
-		const buttons = container.querySelectorAll('button')
-		expect(buttons.length).toBe(3)
+		const desktopButtons = container.querySelectorAll('.md\\:flex button')
+		expect(desktopButtons.length).toBe(3)
 	})
 
 	it('should call setTheme when clicking a theme option', () => {
@@ -37,29 +37,19 @@ describe('ThemeSwitcher component', () => {
 		const wrapper = container.querySelector('div')
 		fireEvent.mouseEnter(wrapper!)
 
-		const buttons = container.querySelectorAll('button')
-		fireEvent.click(buttons[1])
+		const desktopButtons = container.querySelectorAll('.md\\:flex button')
+		fireEvent.click(desktopButtons[1])
 
 		expect(window.__setTheme).toHaveBeenCalled()
 	})
 
-	it('should call onHover callback when hovering', () => {
-		const onHover = vi.fn()
-		const {container} = render(<ThemeSwitcher onHover={onHover} />)
+	it('should have a mobile toggle button that cycles themes', () => {
+		const {container} = render(<ThemeSwitcher />)
 
-		const wrapper = container.querySelector('div')
-		fireEvent.mouseEnter(wrapper!)
+		const mobileButton = container.querySelector('.md\\:hidden')
+		expect(mobileButton).not.toBeNull()
 
-		expect(onHover).toHaveBeenCalledWith(true)
-	})
-
-	it('should not expand when disabled', () => {
-		const onHover = vi.fn()
-		const {container} = render(<ThemeSwitcher onHover={onHover} disabled />)
-
-		const wrapper = container.querySelector('div')
-		fireEvent.mouseEnter(wrapper!)
-
-		expect(onHover).not.toHaveBeenCalled()
+		fireEvent.click(mobileButton!)
+		expect(window.__setTheme).toHaveBeenCalledWith('light')
 	})
 })
