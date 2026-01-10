@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import {compareDesc} from 'date-fns'
-import {posts as allPosts} from '#site/content'
+import {getAllPosts} from '../lib/content'
 import Layout from '../components/Layout'
 import Header from '../components/Header'
 import Contact from '../components/Contact'
@@ -11,11 +11,12 @@ import siteMeta from '../config/siteMeta'
 
 const {social, talks, interviews} = siteMeta
 
-const posts = allPosts.sort(({date: a}, {date: b}) =>
-	compareDesc(new Date(a), new Date(b)),
-)
+export default async function Index() {
+	const allPosts = await getAllPosts()
+	const posts = allPosts.sort(({date: a}, {date: b}) =>
+		compareDesc(new Date(a), new Date(b)),
+	)
 
-export default function Index() {
 	return (
 		<>
 			<Layout>

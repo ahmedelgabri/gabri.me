@@ -6,7 +6,6 @@
 	"license": "MIT",
 	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"scripts": {
-		"content": "velite --clean",
 		"dev": "NEXT_TELEMETRY_DISABLED=1 next dev --turbopack",
 		"build": "oxlint --type-aware && NEXT_TELEMETRY_DISABLED=1 next build",
 		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
@@ -15,6 +14,9 @@
 		"type-check": "tsc"
 	},
 	"dependencies": {
+		"@mdx-js/loader": "^3.1.1",
+		"@mdx-js/react": "^3.1.1",
+		"@next/mdx": "^16.1.1",
 		"@types/lodash.truncate": "4.4.9",
 		"@types/node": "25.0.5",
 		"@types/react": "19.2.8",
@@ -47,8 +49,7 @@
 		"oxlint": "^1.38.0",
 		"oxlint-tsgolint": "^0.11.0",
 		"typescript": "5.9.3",
-		"unocss": "66.5.12",
-		"velite": "^0.3.1"
+		"unocss": "66.5.12"
 	},
 	"browserslist": [
 		">0.25%",

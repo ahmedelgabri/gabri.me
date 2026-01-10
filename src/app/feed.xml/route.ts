@@ -3,12 +3,13 @@ import truncate from 'lodash.truncate'
 import {remark} from 'remark'
 import {compareDesc} from 'date-fns'
 import strip from 'strip-markdown'
-import {posts as allPosts} from '#site/content'
+import {getAllPosts} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
 
 export async function GET(req: Request) {
 	const {author, title, siteUrl, description} = siteMeta
 
+	const allPosts = await getAllPosts()
 	const sortedAllPosts = allPosts.sort(({date: a}, {date: b}) =>
 		compareDesc(new Date(a), new Date(b)),
 	)

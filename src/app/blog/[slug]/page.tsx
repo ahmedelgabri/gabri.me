@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type {Metadata} from 'next'
 import Script from 'next/script'
-import {posts} from '#site/content'
+import {getAllPosts, getPostBySlug} from '../../../lib/content'
 import Header from '../../../components/Header'
 import Layout from '../../../components/Layout'
 import Footer from '../../../components/Footer'
@@ -17,9 +17,10 @@ const {
 } = siteMeta
 
 export async function generateStaticParams() {
-	return posts.map((post) => {
-		return {slug: post.slug}
-	})
+	const posts = await getAllPosts()
+	return posts.map((post) => ({
+		slug: post.slug,
+	}))
 }
 
 export const dynamicParams = false
@@ -28,7 +29,7 @@ export async function generateMetadata({
 	params,
 }: PageProps<'slug'>): Promise<Metadata> {
 	const slug = (await params).slug
-	const post = posts.find((p) => p.slug === slug)
+	const post = await getPostBySlug(slug, 'blog')
 
 	if (!post) return {}
 
@@ -56,13 +57,14 @@ export async function generateMetadata({
 
 export default async function Post({params}: PageProps<'slug'>) {
 	const slug = (await params).slug
-	const post = posts.find((p) => p.slug === slug)
+	const post = await getPostBySlug(slug, 'blog')
 
 	if (!post) return null
 
-	const {date, title, body, formattedDate, url} = post
-
+	const {date, title, formattedDate, url} = post
 	const postUrl = `${siteUrl}${url}`
+
+	const MDXContent = (await import(`../../../_content/blog/${slug}.md`)).default
 
 	return (
 		<>
@@ -79,10 +81,9 @@ export default async function Post({params}: PageProps<'slug'>) {
 				>
 					<i className="i-tabler:calendar align-[-2px]" /> {formattedDate}
 				</time>
-				<div
-					className="prose dark:prose-light"
-					dangerouslySetInnerHTML={{__html: body}}
-				/>
+				<div className="prose dark:prose-light">
+					<MDXContent />
+				</div>
 				<div>
 					<TweetButton via={display} title={title} url={postUrl} />
 				</div>

@@ -1,19 +1,11 @@
-// @ts-check
+import type {NextConfig} from 'next'
+import createMDX from '@next/mdx'
 
-const isDev = process.argv.indexOf('dev') !== -1
-const isBuild = process.argv.indexOf('build') !== -1
-
-if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
-	process.env.VELITE_STARTED = '1'
-	const {build} = await import('velite')
-	await build({watch: isDev, clean: !isDev})
-}
-
-/** @type {import('next').NextConfig} */
-const config = {
+const config: NextConfig = {
 	experimental: {
 		inlineCss: true,
 	},
+	pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 	reactCompiler: true,
 	reactStrictMode: true,
 	poweredByHeader: false,
@@ -51,4 +43,28 @@ const config = {
 	},
 }
 
-export default config
+const withMDX = createMDX({
+	extension: /\.mdx?$/,
+	options: {
+		rehypePlugins: [
+			'rehype-slug',
+			'rehype-code-titles',
+			[
+				'rehype-prism-plus',
+				{
+					defaultLanguage: 'txt',
+				},
+			],
+			[
+				'rehype-autolink-headings',
+				{
+					properties: {
+						className: ['anchor'],
+					},
+				},
+			],
+		],
+	},
+})
+
+export default withMDX(config)
