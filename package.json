@@ -6,15 +6,20 @@
 	"license": "MIT",
 	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"scripts": {
-		"content": "velite --clean",
 		"dev": "NEXT_TELEMETRY_DISABLED=1 next dev --turbopack",
 		"build": "oxlint --type-aware && NEXT_TELEMETRY_DISABLED=1 next build",
 		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
-		"lint": "oxlint --type-aware",
+		"lint": "oxlint --type-aware --type-check",
 		"format": "oxfmt",
-		"type-check": "tsc"
+		"type-check": "tsc",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:run": "vitest run"
 	},
 	"dependencies": {
+		"@mdx-js/loader": "^3.1.1",
+		"@mdx-js/react": "^3.1.1",
+		"@next/mdx": "^16.1.1",
 		"@types/lodash.truncate": "4.4.9",
 		"@types/node": "25.0.5",
 		"@types/react": "19.2.8",
@@ -41,14 +46,19 @@
 		"strip-markdown": "6.0.0"
 	},
 	"devDependencies": {
+		"@mdx-js/rollup": "^3.1.1",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.1",
 		"@unocss/postcss": "66.5.10",
+		"@vitest/ui": "^4.0.16",
 		"babel-plugin-react-compiler": "^1.0.0",
+		"happy-dom": "^20.1.0",
 		"oxfmt": "^0.23.0",
 		"oxlint": "^1.38.0",
 		"oxlint-tsgolint": "^0.11.0",
 		"typescript": "5.9.3",
 		"unocss": "66.5.12",
-		"velite": "^0.3.1"
+		"vitest": "^4.0.16"
 	},
 	"browserslist": [
 		">0.25%",

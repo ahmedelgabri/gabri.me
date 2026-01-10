@@ -7,7 +7,7 @@ code in this repository.
 
 This is a personal website and blog built with Next.js 16 (App Router),
 featuring blog posts and weekly links collections. Content is managed through
-Markdown files and processed by Velite.
+MDX files using Next.js native MDX support.
 
 ## Development Environment
 
@@ -42,9 +42,19 @@ pnpm build
 
 # Start production server (Next.js telemetry disabled)
 pnpm start
+```
 
-# Generate content from markdown files (runs automatically during dev/build)
-pnpm content
+### Testing
+
+```bash
+# Run tests in watch mode
+pnpm test
+
+# Run tests with UI
+pnpm test:ui
+
+# Run tests once (for CI)
+pnpm test:run
 ```
 
 ### Code Quality
@@ -69,27 +79,34 @@ Use `command git` instead of `git` directly to avoid shell function conflicts
 
 ### Content Management
 
-Content is managed through **Velite** (velite.config.ts), which:
+Content is managed through **Next.js native MDX support** with custom
+processing:
 
-- Processes Markdown files from `src/_content/` directory
-- Generates TypeScript types and data at `.velite/` (imported via
-  `#site/content`)
-- Automatically runs during `dev` and `build` via next.config.mjs
+- MDX files stored in `src/_content/` directory
+- Processed using @next/mdx with rehype plugins
+- Metadata extracted via export statement in each MDX file
+- Content helper functions in `src/lib/content.ts` for querying posts
 - Uses git timestamps for `updated` field via `git log -1 --format=%cd`
 - Supports two content collections:
-  - **Posts**: `src/_content/blog/**/*.md`
-  - **Weekly Links**: `src/_content/weekly-links/**/*.md`
+  - **Posts**: `src/_content/blog/**/*.mdx`
+  - **Weekly Links**: `src/_content/weekly-links/**/*.mdx`
 
-Each content item includes: title, date, tags, excerpt, and full Markdown body.
+Each MDX file exports metadata including: title, date, tags, excerpt, and
+published status.
 
 ### Content Processing Pipeline
 
-Markdown processing uses rehype plugins (configured in velite.config.ts):
+MDX processing uses rehype plugins (configured in mdx.config.ts):
 
 1. `rehype-slug` - adds IDs to headings
 2. `rehype-code-titles` - adds titles to code blocks
 3. `rehype-prism-plus` - syntax highlighting with Prism
 4. `rehype-autolink-headings` - adds anchor links to headings
+
+The configuration is shared between:
+
+- Next.js (via next.config.ts using string references)
+- Vitest (via vitest.config.ts using actual imports with @mdx-js/rollup)
 
 ### Next.js App Structure
 
@@ -133,9 +150,9 @@ Google Fonts loaded in layout.tsx:
 
 - Path aliases:
   - `@/*` → project root
-  - `#site/content` → `.velite/` (generated content)
 - Strict mode enabled
 - Module resolution: bundler
+- MDX type declarations in globals.d.ts for .md and .mdx files
 
 ### Theme System
 
@@ -162,33 +179,37 @@ All blog posts are statically generated at build time:
 
 - `generateStaticParams()` creates paths for all posts
 - `dynamicParams = false` disables dynamic route generation
-- Content sourced from Velite-generated data
+- Content sourced from MDX files via `src/lib/content.ts` helper functions
 
 ## Important Files
 
-- `velite.config.ts` - Content processing configuration (includes StaticTweet
-  support)
-- `next.config.mjs` - Next.js configuration with redirects, headers, and Velite
-  integration
+- `mdx.config.ts` - Shared MDX/rehype plugin configuration for Next.js and
+  Vitest
+- `next.config.ts` - Next.js configuration with MDX, redirects, and headers
+- `mdx-components.tsx` - MDX component customizations (links, YouTube, etc.)
+- `src/lib/content.ts` - Content querying helper functions
+- `vitest.config.ts` - Vitest test configuration with MDX support
 - `uno.config.ts` - Styling configuration
 - `flake.nix` - Development environment (flake-parts based)
 - `src/config/siteMeta.ts` - Site-wide metadata
-- `globals.d.ts` - Global TypeScript declarations
+- `globals.d.ts` - Global TypeScript declarations including MDX types
 
 ## Content Creation
 
 To add new blog posts:
 
-1. Create `.md` file in `src/_content/blog/`
-2. Include frontmatter: title, date, published (boolean), tags (array)
-3. Content processes automatically via Velite
-4. Git commit date used for `updated` field
+1. Create `.mdx` file in `src/_content/blog/`
+2. Export metadata object:
+   `export const metadata = { title, date, published, tags, excerpt }`
+3. Write content in MDX format (supports JSX/React components)
+4. Git commit date automatically used for `updated` field via
+   `src/lib/content.ts`
 
 ## Deployment
 
 Deployed to **Netlify** as a Next.js static site.
 
-Key redirects configured in next.config.mjs:
+Key redirects configured in next.config.ts:
 
 - `/feed` → `/feed.xml`
 - `/work` → `/`

@@ -1,14 +1,13 @@
 import RSS from 'rss'
 import truncate from 'lodash.truncate'
-import {remark} from 'remark'
 import {compareDesc} from 'date-fns'
-import strip from 'strip-markdown'
-import {posts as allPosts} from '#site/content'
+import {getAllPosts} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
 
 export async function GET(req: Request) {
 	const {author, title, siteUrl, description} = siteMeta
 
+	const allPosts = await getAllPosts()
 	const sortedAllPosts = allPosts.sort(({date: a}, {date: b}) =>
 		compareDesc(new Date(a), new Date(b)),
 	)
@@ -29,25 +28,19 @@ export async function GET(req: Request) {
 		],
 	})
 
-	await Promise.all(
-		sortedAllPosts.map(async (post) => {
-			const {title, formattedDate, slug, raw} = post
-			const stripped = await remark().use(strip).process(raw)
-			const url = `${siteUrl}/blog/${slug}`
+	sortedAllPosts.forEach((post) => {
+		const {title, formattedDate, slug, excerpt} = post
+		const url = `${siteUrl}/blog/${slug}`
 
-			feed.item({
-				title,
-				guid: url,
-				url,
-				date: formattedDate,
-				description: truncate(stripped.value || '', {length: 500}).replace(
-					'*',
-					'',
-				),
-				author,
-			})
-		}),
-	)
+		feed.item({
+			title,
+			guid: url,
+			url,
+			date: formattedDate,
+			description: truncate(excerpt, {length: 500}),
+			author,
+		})
+	})
 
 	const headers = new Headers(req.headers)
 

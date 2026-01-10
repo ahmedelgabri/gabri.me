@@ -23,6 +23,16 @@ declare module '*.png'
 declare module '*.svg'
 declare module '*.gif'
 declare module '*.jpg'
+declare module '*.md' {
+	import type {MDXProps} from 'mdx/types'
+	export default function MDXContent(props: MDXProps): JSX.Element
+	export const frontmatter: Record<string, any>
+}
+declare module '*.mdx' {
+	import type {MDXProps} from 'mdx/types'
+	export default function MDXContent(props: MDXProps): JSX.Element
+	export const frontmatter: Record<string, any>
+}
 
 declare type Theme = 'dark' | 'light'
 

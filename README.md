@@ -9,8 +9,9 @@ links collections.
 
 - **Framework**: Next.js 16 (App Router) with React 19
 - **Styling**: UnoCSS (atomic CSS)
-- **Content**: Markdown processed via Velite
+- **Content**: MDX with Next.js native MDX support
 - **Language**: TypeScript (strict mode)
+- **Testing**: Vitest with React Testing Library
 - **Environment**: Nix flakes
 - **Deployment**: Netlify
 
@@ -48,8 +49,11 @@ pnpm type-check
 # Lint
 pnpm lint
 
-# Generate content from markdown
-pnpm content
+# Run tests
+pnpm test
+
+# Run tests (CI)
+pnpm test:run
 ```
 
 **Note**: This project uses `pnpm`, not `npm` or `yarn`.
@@ -58,33 +62,37 @@ pnpm content
 
 ```
 src/
-├── _content/           # Markdown content
-│   ├── blog/          # Blog posts
-│   └── weekly-links/  # Weekly links collections
+├── _content/           # MDX content
+│   ├── blog/          # Blog posts (.mdx)
+│   └── weekly-links/  # Weekly links collections (.mdx)
 ├── app/               # Next.js app routes
 ├── components/        # React components
 ├── config/            # Site configuration
-└── hooks/             # Custom React hooks
+├── hooks/             # Custom React hooks
+└── lib/               # Utility functions (content querying, etc.)
 ```
 
 ## Content Management
 
-Blog posts are written in Markdown and stored in `src/_content/blog/`. Each post
-requires frontmatter:
+Blog posts are written in MDX and stored in `src/_content/blog/`. Each post
+requires an exported metadata object:
 
-```markdown
----
-title: 'Post Title'
-date: '2024-01-01'
-published: true
-tags: ['tag1', 'tag2']
----
+```mdx
+export const metadata = {
+	title: 'Post Title',
+	date: '2024-01-01',
+	published: true,
+	tags: ['tag1', 'tag2'],
+	excerpt: 'A brief description of the post',
+}
 
-Post content here...
+Post content here with full MDX support...
+
+<YouTube id="dQw4w9WgXcQ" />
 ```
 
-Content is automatically processed by Velite during `dev` and `build`,
-generating TypeScript types and data.
+Content is processed using Next.js native MDX support with custom rehype plugins
+for syntax highlighting, heading anchors, and more.
 
 ## License
 
