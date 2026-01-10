@@ -54,20 +54,6 @@ export default function Meta({
 				name="msapplication-TileColor"
 				content="#1f2325"
 			/>
-			<link
-				rel="apple-touch-icon-precomposed"
-				sizes="114x114"
-				href="apple-touch-icon-114x114-precomposed.png"
-			/>
-			<link
-				rel="apple-touch-icon-precomposed"
-				sizes="72x72"
-				href="apple-touch-icon-72x72-precomposed.png"
-			/>
-			<link
-				rel="apple-touch-icon-precomposed"
-				href="apple-touch-icon-57x57-precomposed.png"
-			/>
 			<meta
 				key="apple-mobile-web-app-title"
 				name="apple-mobile-web-app-title"
