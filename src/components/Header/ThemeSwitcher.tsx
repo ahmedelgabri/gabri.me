@@ -1,19 +1,24 @@
 'use client'
 
-import cn from 'clsx'
 import {useTheme} from '../../hooks'
 
+const THEME_OPTIONS: ThemeSetting[] = ['dark', 'light', 'system']
+
+function getNextTheme(current: ThemeSetting): ThemeSetting {
+	const index = THEME_OPTIONS.indexOf(current)
+	return THEME_OPTIONS[(index + 1) % THEME_OPTIONS.length]
+}
+
 export function ThemeSwitcher() {
-	const {toggleTheme, theme} = useTheme()
+	const {themeSetting, setTheme} = useTheme()
 
 	return (
-		<button className="cursor-pointer p-2" onClick={toggleTheme}>
-			<i
-				className={cn({
-					'i-tabler:sun-low-filled hover:text-yellow-200': theme === 'dark',
-					'i-tabler:moon-filled hover:text-sky-600': theme !== 'dark',
-				})}
-			/>
+		<button
+			className="cursor-pointer text-neutral-500 transition-colors hover:text-neutral-800 dark:hover:text-neutral-200"
+			onClick={() => setTheme(getNextTheme(themeSetting))}
+			aria-label={`Theme: ${themeSetting}. Click to switch.`}
+		>
+			[{themeSetting}]
 		</button>
 	)
 }

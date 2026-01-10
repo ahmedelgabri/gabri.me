@@ -1,31 +1,65 @@
 import * as React from 'react'
-/* import Router from 'next/router' */
 import type {Metadata, Viewport} from 'next'
-import Script from 'next/script'
-import {Inter, Playfair_Display} from 'next/font/google'
-import {Preconnect} from './preconnect'
 import {GA} from '../lib/gtag'
 import siteMeta from '../config/siteMeta'
 
 import '../style/style.css'
 import '../style/prism-plain.css'
 
-const inter = Inter({
-	subsets: ['latin'],
-	display: 'swap',
-	variable: '--font-inter',
-})
+const themeScript = `(${(() => {
+	var STORAGE_KEY = 'theme'
+	var VALID_THEMES = ['system', 'light', 'dark']
+	var DEFAULT_THEME = 'dark'
 
-const playfairDisplay = Playfair_Display({
-	weight: ['400', '700'],
-	style: ['normal', 'italic'],
-	subsets: ['latin'],
-	display: 'swap',
-	variable: '--font-playfair-display',
-})
+	var storedTheme
+	try {
+		storedTheme = localStorage.getItem(STORAGE_KEY)
+	} catch (e) {}
 
-/* import Router from 'next/router' */
-/* Router.events.on('routeChangeComplete', (url) => pageview(url)) */
+	// @ts-ignore
+	var themeSetting = VALID_THEMES.includes(storedTheme)
+		? storedTheme
+		: DEFAULT_THEME
+	// @ts-ignore
+	window.__themeSetting = themeSetting
+
+	function getSystemTheme() {
+		return window.matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light'
+	}
+
+	function resolveTheme() {
+		return window.__themeSetting === 'system'
+			? getSystemTheme()
+			: window.__themeSetting
+	}
+
+	// @ts-ignore
+	function applyTheme(theme) {
+		window.__theme = theme
+		document.documentElement.classList.remove('light', 'dark')
+		document.documentElement.classList.add(theme)
+	}
+
+	applyTheme(resolveTheme())
+
+	window.__setTheme = function (newSetting) {
+		window.__themeSetting = newSetting
+		try {
+			localStorage.setItem(STORAGE_KEY, newSetting)
+		} catch (e) {}
+		applyTheme(resolveTheme())
+	}
+
+	window
+		.matchMedia('(prefers-color-scheme: dark)')
+		.addEventListener('change', function () {
+			if (window.__themeSetting === 'system') {
+				applyTheme(resolveTheme())
+			}
+		})
+}).toString()})()`
 
 const {description, social, twitterId, siteUrl, author, title} = siteMeta
 
@@ -87,63 +121,18 @@ export const viewport: Viewport = {
 	viewportFit: 'cover',
 }
 
-export default function RootLayout({
-	// Layouts must accept a children prop.
-	// This will be populated with nested layouts or pages
-	children,
-}: {
-	children: React.ReactNode
-}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
-		<html
-			lang="en"
-			className={`text-xl ${inter.variable} ${playfairDisplay.variable}`}
-		>
+		<html lang="en" className="dark font-mono" suppressHydrationWarning>
 			<head>
-				<Preconnect />
+				<script dangerouslySetInnerHTML={{__html: themeScript}} />
 				{Object.entries(social).map(([, {url}]) => (
 					<link key={url} href={url} rel="me" />
 				))}
 				<GA />
-				<Script
-					strategy="beforeInteractive"
-					dangerouslySetInnerHTML={{
-						__html: `(function() {
-  window.__onThemeChange = function() {};
-
-  function setTheme(newTheme) {
-    window.__theme = newTheme;
-    preferredTheme = newTheme;
-    document.documentElement.classList.remove(newTheme === 'dark' ? 'light' : 'dark');
-    document.documentElement.classList.add(newTheme);
-    window.__onThemeChange(newTheme);
-  }
-
-  var preferredTheme;
-  try {
-    preferredTheme = localStorage.getItem('theme');
-  } catch (err) { }
-
-  window.__setPreferredTheme = function(newTheme) {
-    setTheme(newTheme);
-    try {
-      localStorage.setItem('theme', newTheme);
-    } catch (err) {}
-  }
-
-  var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-  darkQuery.addListener(function(e) {
-    window.__setPreferredTheme(e.matches ? 'dark' : 'light')
-  });
-
-  setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
-})();`,
-					}}
-				/>
 			</head>
-			<body className="bg-slate-200 p-4 text-slate-700 dark:bg-zinc-900 dark:text-slate-400 md:p-8">
-				{children}
+			<body className="bg-neutral-100 p-6 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 md:p-8 lg:p-12">
+				<div className="w-content">{children}</div>
 			</body>
 		</html>
 	)

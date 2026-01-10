@@ -10,17 +10,15 @@ export default function List(props: {
 	return (
 		<>
 			<H level="3">{title}</H>
-			<ul>
+			<ul className="space-y-4 md:space-y-2">
 				{posts.map(({date, item}, i) => (
-					<li key={`${date}-${i}`} className="mb-4 items-start lg:mb-2 lg:flex">
-						<div className="lg:mr-4 lg:text-left">
-							<time
-								className="font-mono text-sm tabular-nums text-gray-600"
-								dateTime={date}
-							>
-								<i className="i-tabler:calendar align-[-2px]" /> {date}
-							</time>
-						</div>
+					<li key={`${date}-${i}`} className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
+						<time
+							className="shrink-0 text-sm tabular-nums text-neutral-500"
+							dateTime={date}
+						>
+							{date}
+						</time>
 						{item && <div>{item}</div>}
 					</li>
 				))}

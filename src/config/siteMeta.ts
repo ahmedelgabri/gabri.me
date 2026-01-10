@@ -7,19 +7,6 @@ export default {
 	siteUrl: 'https://gabri.me',
 	description: `${author} is a ${title} specialises in frontend & like to bring structure where it is lacking, systematizing information & automating processes.`,
 	social: {
-		email: {
-			display: 'ahmed@gabri.me',
-			url: 'mailto:ahmed+contact@gabri.me?subject=Hi!&body=👋🏼',
-		},
-		twitter: {
-			name: 'twitter/X',
-			display: '@ahmedelgabri',
-			url: 'http://twitter.com/ahmedelgabri',
-		},
-		// mastodon: {
-		// 	display: '@gabri@mastodon.online',
-		// 	url: 'https://mastodon.online/@gabri',
-		// },
 		github: {
 			display: 'ahmedelgabri',
 			url: 'https://github.com/ahmedelgabri',
@@ -27,6 +14,19 @@ export default {
 		linkedin: {
 			display: 'ahmedelgabri',
 			url: 'https://www.linkedin.com/in/ahmedelgabri/',
+		},
+		twitter: {
+			name: 'X',
+			display: '@ahmedelgabri',
+			url: 'http://twitter.com/ahmedelgabri',
+		},
+		// mastodon: {
+		// 	display: '@gabri@mastodon.online',
+		// 	url: 'https://mastodon.online/@gabri',
+		// },
+		email: {
+			display: 'ahmed@gabri.me',
+			url: 'mailto:ahmed+contact@gabri.me?subject=Hi!&body=👋🏼',
 		},
 		resume: {
 			display: 'Resume',
