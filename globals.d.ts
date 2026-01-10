@@ -34,14 +34,18 @@ declare module '*.mdx' {
 	export const frontmatter: Record<string, any>
 }
 
-declare type Theme = 'dark' | 'light'
+declare type ThemeSetting = 'system' | 'light' | 'dark'
+declare type ResolvedTheme = 'light' | 'dark'
+declare type ColorTheme = 'blue' | 'amber' | 'teal' | 'purple'
 
 interface Window {
 	gtag: any
 	twttr: any
-	__onThemeChange(theme?: Theme): void
-	__theme: Theme
-	__setPreferredTheme(theme: Theme): void
+	__theme: ResolvedTheme
+	__themeSetting: ThemeSetting
+	__colorTheme: ColorTheme
+	__setTheme(setting: ThemeSetting): void
+	__setColorTheme(color: ColorTheme): void
 }
 
 // Global/Shared Props

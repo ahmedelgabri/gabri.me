@@ -5,8 +5,8 @@ const {author} = siteMeta
 
 export default function Footer() {
 	return (
-		<p className="py-12 text-sm text-gray-300 dark:text-gray-500">
+		<footer className="border-t border-neutral-300 pt-6 text-sm text-neutral-500 dark:border-neutral-700">
 			© {new Date().getFullYear()} {author}
-		</p>
+		</footer>
 	)
 }

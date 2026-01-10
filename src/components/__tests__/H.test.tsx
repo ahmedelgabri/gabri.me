@@ -33,15 +33,11 @@ describe('H component', () => {
 		expect(h1?.className).toContain('custom-class')
 	})
 
-	it('should render extra content when provided', () => {
-		const {container} = render(
-			<H level="2" extra={<span>Extra</span>}>
-				Main
-			</H>,
-		)
+	it('should apply font-bold class', () => {
+		const {container} = render(<H level="2">Main</H>)
 
 		const h2 = container.querySelector('h2')
 		expect(h2?.textContent).toContain('Main')
-		expect(h2?.textContent).toContain('Extra')
+		expect(h2?.className).toContain('font-bold')
 	})
 })
