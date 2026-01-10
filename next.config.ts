@@ -1,5 +1,6 @@
 import type {NextConfig} from 'next'
 import createMDX from '@next/mdx'
+import {rehypePluginsForNext} from './mdx.config'
 
 const config: NextConfig = {
 	experimental: {
@@ -46,24 +47,7 @@ const config: NextConfig = {
 const withMDX = createMDX({
 	extension: /\.mdx?$/,
 	options: {
-		rehypePlugins: [
-			'rehype-slug',
-			'rehype-code-titles',
-			[
-				'rehype-prism-plus',
-				{
-					defaultLanguage: 'txt',
-				},
-			],
-			[
-				'rehype-autolink-headings',
-				{
-					properties: {
-						className: ['anchor'],
-					},
-				},
-			],
-		],
+		rehypePlugins: rehypePluginsForNext,
 	},
 })
 

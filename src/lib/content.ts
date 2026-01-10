@@ -68,6 +68,7 @@ async function parseMdxFile(filePath: string): Promise<PostMetadata> {
 	const updated = await getGitTimestamp(filePath)
 
 	return {
+		...metadata,
 		title: metadata.title || '',
 		date: metadata.date || '',
 		published: metadata.published !== false,
@@ -82,18 +83,14 @@ async function parseMdxFile(filePath: string): Promise<PostMetadata> {
 }
 
 export async function getAllPosts(): Promise<PostMetadata[]> {
-	const files = await globby([
-		path.join(CONTENT_DIR, 'blog/**/*.mdx'),
-	])
+	const files = await globby([path.join(CONTENT_DIR, 'blog/**/*.mdx')])
 
 	const posts = await Promise.all(files.map(parseMdxFile))
 	return posts.filter((post) => post.published)
 }
 
 export async function getAllWeeklyLinks(): Promise<PostMetadata[]> {
-	const files = await globby([
-		path.join(CONTENT_DIR, 'weekly-links/**/*.mdx'),
-	])
+	const files = await globby([path.join(CONTENT_DIR, 'weekly-links/**/*.mdx')])
 
 	const posts = await Promise.all(files.map(parseMdxFile))
 	return posts.filter((post) => post.published)
