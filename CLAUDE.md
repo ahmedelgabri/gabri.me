@@ -67,7 +67,7 @@ pnpm lint
 pnpm type-check
 
 # Format code (oxfmt)
-npx oxfmt --write .
+npx format
 ```
 
 ### Git Commands
