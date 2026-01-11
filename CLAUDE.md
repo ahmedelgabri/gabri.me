@@ -82,7 +82,8 @@ Use `command git` instead of `git` directly to avoid shell function conflicts
 Content is managed through **Next.js native MDX support** with custom
 processing:
 
-- Content organized in folder structure: `src/_content/{collection}/{slug}/post.mdx`
+- Content organized in folder structure:
+  `src/_content/{collection}/{slug}/post.mdx`
 - Processed using @next/mdx with rehype plugins
 - Metadata extracted via export statement in each MDX file
 - Content helper functions in `src/lib/content.ts` for querying posts
