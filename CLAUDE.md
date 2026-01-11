@@ -82,14 +82,14 @@ Use `command git` instead of `git` directly to avoid shell function conflicts
 Content is managed through **Next.js native MDX support** with custom
 processing:
 
-- MDX files stored in `src/_content/` directory
+- Content organized in folder structure: `src/_content/{collection}/{slug}/post.mdx`
 - Processed using @next/mdx with rehype plugins
 - Metadata extracted via export statement in each MDX file
 - Content helper functions in `src/lib/content.ts` for querying posts
 - Uses git timestamps for `updated` field via `git log -1 --format=%cd`
 - Supports two content collections:
-  - **Posts**: `src/_content/blog/**/*.mdx`
-  - **Weekly Links**: `src/_content/weekly-links/**/*.mdx`
+  - **Posts**: `src/_content/blog/{slug}/post.mdx`
+  - **Weekly Links**: `src/_content/weekly-links/{slug}/post.mdx`
 
 Each MDX file exports metadata including: title, date, tags, excerpt, and
 published status.
@@ -124,7 +124,7 @@ Using Next.js 16 App Router with TypeScript and React 19:
 
 - **Components** (src/components/):
   - Modular React components (Header, Footer, Layout, etc.)
-  - MDX components for custom Markdown rendering (mdxComponents.tsx)
+  - Tweet component for embedding tweets via react-tweet
   - Theme switcher for dark/light mode
 
 - **Configuration** (src/config/):
@@ -198,11 +198,12 @@ All blog posts are statically generated at build time:
 
 To add new blog posts:
 
-1. Create `.mdx` file in `src/_content/blog/`
-2. Export metadata object:
+1. Create folder in `src/_content/blog/{slug}/`
+2. Create `post.mdx` inside the folder
+3. Export metadata object:
    `export const metadata = { title, date, published, tags, excerpt }`
-3. Write content in MDX format (supports JSX/React components)
-4. Git commit date automatically used for `updated` field via
+4. Write content in MDX format (supports JSX/React components)
+5. Git commit date automatically used for `updated` field via
    `src/lib/content.ts`
 
 ## Deployment

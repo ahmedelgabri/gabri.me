@@ -49,7 +49,8 @@ function generateExcerptFromMdx(content: string, maxLength = 160): string {
 
 async function parseMdxFile(filePath: string): Promise<PostMetadata> {
 	const relativePath = path.relative(CONTENT_DIR, filePath)
-	const slug = path.basename(filePath, path.extname(filePath))
+	// Extract slug from folder name (e.g., "blog/my-post/post.mdx" -> "my-post")
+	const slug = path.basename(path.dirname(filePath))
 	const isWeeklyLinks = relativePath.startsWith('weekly-links')
 	const url = isWeeklyLinks ? `/weekly-links/${slug}` : `/blog/${slug}`
 
@@ -103,7 +104,7 @@ export async function getPostBySlug(
 	collection: 'blog' | 'weekly-links' = 'blog',
 ): Promise<PostMetadata | null> {
 	const files = await globby([
-		path.join(CONTENT_DIR, `${collection}/${slug}.mdx`),
+		path.join(CONTENT_DIR, `${collection}/${slug}/post.mdx`),
 	])
 
 	if (files.length === 0) {

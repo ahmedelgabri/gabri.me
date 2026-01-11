@@ -62,7 +62,7 @@ export default async function Post({params}: PageProps<'slug'>) {
 	const {date, title, formattedDate, url} = post
 	const postUrl = `${siteUrl}${url}`
 
-	const MDXContent = (await import(`../../../_content/blog/${slug}.mdx`))
+	const MDXContent = (await import(`../../../_content/blog/${slug}/post.mdx`))
 		.default
 
 	return (
