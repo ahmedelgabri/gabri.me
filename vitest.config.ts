@@ -22,6 +22,10 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, '.'),
+			'next-view-transitions': path.resolve(
+				__dirname,
+				'./src/__mocks__/next-view-transitions.tsx',
+			),
 		},
 	},
 })

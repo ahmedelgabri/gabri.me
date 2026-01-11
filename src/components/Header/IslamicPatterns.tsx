@@ -71,7 +71,7 @@ export function IslamicPattern() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="islamic-pattern pointer-events-none fixed left-15 top-15 -z-1"
+			className="islamic-pattern pointer-events-none fixed top-10 left-15 md:top-15 -z-1"
 			width="240"
 			height="240"
 			viewBox="0 0 200 200"
