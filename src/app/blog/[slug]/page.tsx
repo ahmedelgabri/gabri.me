@@ -1,6 +1,5 @@
 import * as React from 'react'
 import type {Metadata} from 'next'
-import Script from 'next/script'
 import {getAllPosts, getPostBySlug} from '../../../lib/content'
 import Header from '../../../components/Header'
 import Footer from '../../../components/Footer'
@@ -68,10 +67,6 @@ export default async function Post({params}: PageProps<'slug'>) {
 
 	return (
 		<>
-			<Script
-				strategy="lazyOnload"
-				src="https://platform.twitter.com/widgets.js"
-			/>
 			<Header slug={slug} />
 
 			<article>

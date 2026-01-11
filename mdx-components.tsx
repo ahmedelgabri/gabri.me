@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import YouTube from './src/components/YouTube'
+import Tweet from './src/components/Tweet'
 
 type MDXComponents = {
 	[key: string]: React.ComponentType<any>
@@ -9,6 +10,7 @@ type MDXComponents = {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
 	return {
 		YouTube,
+		Tweet,
 		a: (props: React.ComponentPropsWithoutRef<'a'>) => {
 			const href = props.href
 			const isInternalLink =
