@@ -71,7 +71,9 @@ export default async function Post({params}: PageProps<'slug'>) {
 
 			<article>
 				<header className="mb-8">
-					<H level="1">{title}</H>
+					<H level="1" style={{viewTransitionName: `post-title-${slug}`}}>
+						{title}
+					</H>
 					<time className="text-sm text-neutral-500" dateTime={date}>
 						<i className="i-tabler:calendar mr-1 inline-block align-[-2px]" />
 						{formattedDate}

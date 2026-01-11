@@ -1,6 +1,8 @@
 import * as React from 'react'
 import type {Metadata, Viewport} from 'next'
+import {ViewTransitions} from 'next-view-transitions'
 import {GA} from '../lib/gtag'
+import {IslamicPattern} from '../components/Header/IslamicPatterns'
 import siteMeta from '../config/siteMeta'
 
 import '../style/style.css'
@@ -158,17 +160,20 @@ export const viewport: Viewport = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
 	return (
-		<html lang="en" className="dark font-mono" suppressHydrationWarning>
-			<head>
-				<script dangerouslySetInnerHTML={{__html: themeScript}} />
-				{Object.entries(social).map(([, {url}]) => (
-					<link key={url} href={url} rel="me" />
-				))}
-				<GA />
-			</head>
-			<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12">
-				<div className="w-content">{children}</div>
-			</body>
-		</html>
+		<ViewTransitions>
+			<html lang="en" className="dark font-mono" suppressHydrationWarning>
+				<head>
+					<script dangerouslySetInnerHTML={{__html: themeScript}} />
+					{Object.entries(social).map(([, {url}]) => (
+						<link key={url} href={url} rel="me" />
+					))}
+					<GA />
+				</head>
+				<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12">
+					<IslamicPattern />
+					<div className="w-content">{children}</div>
+				</body>
+			</html>
+		</ViewTransitions>
 	)
 }

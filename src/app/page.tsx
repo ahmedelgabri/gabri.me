@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import {Link} from 'next-view-transitions'
 import {compareDesc} from 'date-fns'
 import {getAllPosts} from '../lib/content'
 import Header from '../components/Header'
@@ -121,7 +121,11 @@ export default async function Index() {
 					posts={posts.map((p) => ({
 						date: p.formattedDate,
 						item: (
-							<Link href={p.url} key={p.url}>
+							<Link
+								href={p.url}
+								key={p.url}
+								style={{viewTransitionName: `post-title-${p.slug}`}}
+							>
 								{p.title}
 							</Link>
 						),

@@ -5,6 +5,7 @@ type Props = {
 	level: '1' | '2' | '3' | '4' | '5' | '6'
 	children: React.ReactNode
 	className?: string
+	style?: React.CSSProperties
 }
 
 const styles = {
@@ -16,7 +17,7 @@ const styles = {
 	6: 'text-base',
 }
 
-export default function H({level = '1', children, className}: Props) {
+export default function H({level = '1', children, className, style}: Props) {
 	const Tag = `h${level}`
 
 	return React.createElement(
@@ -27,6 +28,7 @@ export default function H({level = '1', children, className}: Props) {
 				className,
 				styles[level],
 			),
+			style,
 		},
 		children,
 	)

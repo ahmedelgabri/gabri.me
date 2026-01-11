@@ -172,7 +172,7 @@ blockquote > p {
 	@apply rounded;
 }
 
-.prose pre {
+.prose pre[class*='language-'] {
 	@apply mt-0;
 }
 
@@ -194,4 +194,11 @@ blockquote > p {
 .islamic-pattern {
 	opacity: 0.2;
 	animation: geometric-rotate 60s linear infinite;
+}
+
+/* View transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 150ms;
+	animation-timing-function: ease-in-out;
 }

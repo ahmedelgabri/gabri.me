@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Link from 'next/link'
+import {Link} from 'next-view-transitions'
 import YouTube from './src/components/YouTube'
 import Tweet from './src/components/Tweet'
 
