@@ -4,6 +4,8 @@ import {compareDesc} from 'date-fns'
 import {getAllPosts} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
 
+export const dynamic = 'force-static'
+
 export async function GET(req: Request) {
 	const {author, title, siteUrl, description} = siteMeta
 
