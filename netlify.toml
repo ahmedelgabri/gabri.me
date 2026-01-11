@@ -1,0 +1,6 @@
+[build]
+command = "pnpm build"
+publish = ".next"
+
+# Skip automatic builds on main branch - production deploys handled by GitHub Actions
+ignore = "[ \"$BRANCH\" = \"main\" ]"
