@@ -58,14 +58,15 @@
 	--link-hover-decoration: theme('colors.purple.400');
 }
 
+/* Base typography */
 body {
-	text-size-adjust: 100%;
-	font-feature-settings: 'kern', 'liga', 'calt';
-	font-kerning: auto;
 	font-size: 1rem;
 	line-height: 1.6;
+	text-size-adjust: 100%;
+	font-feature-settings: 'kern', 'liga', 'calt';
 }
 
+/* Links */
 a {
 	color: var(--link-color);
 	text-decoration: underline;
@@ -86,35 +87,35 @@ a:active {
 	@apply outline-2 outline-offset-2 outline-cyan-500;
 }
 
+/* Images */
 img {
 	@apply max-w-full;
 }
 
-pre {
-	@apply mb-6 max-w-full overflow-auto rounded border border-neutral-300 p-4 leading-snug dark:border-neutral-700;
-	font-size: 0.875rem;
-}
-
-pre code {
-	color: inherit;
-}
-
+/* Code */
 code {
 	@apply rounded bg-neutral-200 px-1 py-0.5 text-sm dark:bg-neutral-800;
 }
 
-pre code {
-	@apply bg-transparent p-0;
+pre {
+	@apply mb-6 max-w-full overflow-auto rounded border border-neutral-300 p-4 text-sm leading-snug dark:border-neutral-700;
 }
 
+pre code {
+	@apply bg-transparent p-0;
+	color: inherit;
+}
+
+/* Blockquotes */
 blockquote {
-	@apply mb-6 ml-0 border-l-4 border-neutral-400 pl-4 italic text-neutral-600 dark:border-neutral-600 dark:text-neutral-400;
+	@apply mb-6 border-l-4 border-neutral-400 pl-4 italic text-neutral-600 dark:border-neutral-600 dark:text-neutral-400;
 }
 
 blockquote > p {
 	@apply mb-0;
 }
 
+/* Selection */
 ::selection {
 	@apply bg-cyan-300 text-black;
 }
@@ -123,7 +124,7 @@ blockquote > p {
 	@apply bg-cyan-700 text-white;
 }
 
-.remark-code-title,
+/* Code block titles */
 .rehype-code-title {
 	@apply mb-0 block rounded-t border border-b-0 border-neutral-300 bg-neutral-200 px-4 py-2 text-sm dark:border-neutral-700 dark:bg-neutral-800;
 }
@@ -132,6 +133,7 @@ blockquote > p {
 	@apply mt-0 rounded-t-none;
 }
 
+/* Prose (MDX content) */
 .prose p {
 	@apply mb-4;
 }
@@ -150,9 +152,7 @@ blockquote > p {
 
 .prose h2,
 .prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
+.prose h4 {
 	@apply mb-4 mt-8 font-bold;
 }
 
@@ -169,17 +169,19 @@ blockquote > p {
 }
 
 .prose img {
-	@apply max-w-full rounded;
+	@apply rounded;
 }
 
-.prose pre[class*='language-'] {
+.prose pre {
 	@apply mt-0;
 }
 
+/* Twitter embeds */
 .twitter-tweet {
 	@apply m-0 mb-6;
 }
 
+/* Islamic pattern animation */
 @keyframes geometric-rotate {
 	from {
 		transform: translate(-50%, -50%) rotate(0deg);
