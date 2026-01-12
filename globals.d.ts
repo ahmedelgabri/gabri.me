@@ -13,7 +13,6 @@ declare module 'remark-rehype'
 declare module 'rehype-raw'
 declare module 'rehype-sanitize'
 declare module 'rehype-stringify'
-declare module 'mdx-prism'
 declare module 'ahmedelgabri' {
 	export function getCard(): string
 	export function getPlainCard(): string

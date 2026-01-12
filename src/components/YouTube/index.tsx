@@ -13,7 +13,7 @@ export default function YouTube(props: Props) {
 			className="relative h-0"
 			style={{
 				paddingBottom: '56.25%', // 16:9
-				paddingTop: '25px',
+				paddingTop: '1.5625rem',
 			}}
 		>
 			<iframe

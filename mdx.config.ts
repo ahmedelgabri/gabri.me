@@ -1,18 +1,23 @@
 import rehypeSlug from 'rehype-slug'
 import rehypeCodeTitles from 'rehype-code-titles'
-import rehypePrism from 'rehype-prism-plus'
+import rehypeShiki from '@shikijs/rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import plainLight from './src/lib/plain-light.json'
+import plainDark from './src/lib/plain-dark.json'
 
-// String references for Next.js (it resolves them automatically)
+const shikiOptions = {
+	themes: {
+		light: plainLight,
+		dark: plainDark,
+	},
+	defaultLanguage: 'txt',
+}
+
+// String references for Next.js Turbopack (serializable)
 export const rehypePluginsForNext = [
 	'rehype-slug',
 	'rehype-code-titles',
-	[
-		'rehype-prism-plus',
-		{
-			defaultLanguage: 'txt',
-		},
-	],
+	['@shikijs/rehype', shikiOptions],
 	[
 		'rehype-autolink-headings',
 		{
@@ -24,15 +29,10 @@ export const rehypePluginsForNext = [
 ]
 
 // Actual imports for @mdx-js/rollup (used in Vitest)
-export const rehypePluginsForRollup = [
+export const rehypePlugins = [
 	rehypeSlug,
 	rehypeCodeTitles,
-	[
-		rehypePrism,
-		{
-			defaultLanguage: 'txt',
-		},
-	],
+	[rehypeShiki, shikiOptions],
 	[
 		rehypeAutolinkHeadings,
 		{

@@ -22,4 +22,22 @@ export default defineConfig({
 		},
 	},
 	rules: [['w-content', {width: 'min(80ch, 100%)'}]],
+	postprocess: [
+		(util) => {
+			util.entries.forEach((entry) => {
+				const prop = entry[0]
+				const value = entry[1]
+				if (
+					typeof value === 'string' &&
+					prop?.includes('border') &&
+					value.endsWith('px')
+				) {
+					const px = parseFloat(value)
+					if (!isNaN(px)) {
+						entry[1] = `${px / 16}rem`
+					}
+				}
+			})
+		},
+	],
 })

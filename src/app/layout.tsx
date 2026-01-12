@@ -6,7 +6,6 @@ import {IslamicPattern} from '../components/Header/IslamicPatterns'
 import siteMeta from '../config/siteMeta'
 
 import '../style/style.css'
-import '../style/prism-plain.css'
 
 const themeScript = `(${(() => {
 	var THEME_STORAGE_KEY = 'theme'
@@ -169,7 +168,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 					))}
 					<GA />
 				</head>
-				<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12">
+				<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg">
 					<IslamicPattern />
 					<div className="w-content">{children}</div>
 				</body>
