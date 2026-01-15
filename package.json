@@ -6,15 +6,16 @@
 	"license": "MIT",
 	"author": "Ahmed El Gabri <ahmed@gabri.me>",
 	"scripts": {
+		"generate-manifest": "npx tsx scripts/generate-content-manifest.ts",
 		"dev": "NEXT_TELEMETRY_DISABLED=1 next dev --turbopack",
-		"build": "NEXT_TELEMETRY_DISABLED=1 next build",
+		"build": "pnpm generate-manifest && NEXT_TELEMETRY_DISABLED=1 next build",
 		"start": "NEXT_TELEMETRY_DISABLED=1 next start",
 		"lint": "oxlint --quiet --type-aware --type-check",
 		"format": "oxfmt",
 		"type-check": "tsc",
-		"test": "vitest",
-		"test:ui": "vitest --ui",
-		"test:run": "vitest run"
+		"test": "pnpm generate-manifest && vitest",
+		"test:ui": "pnpm generate-manifest && vitest --ui",
+		"test:run": "pnpm generate-manifest && vitest run"
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.1.1",

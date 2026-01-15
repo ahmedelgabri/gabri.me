@@ -83,3 +83,6 @@ public/feed.xml
 next-env.d.ts
 .aider*
 .env
+
+# generated content manifest
+src/lib/content-manifest.json
