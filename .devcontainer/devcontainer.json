@@ -3,8 +3,7 @@
 	"image": "mcr.microsoft.com/devcontainers/base:debian",
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/jdx/devcontainer-feature/mise:1": {},
-		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+		"ghcr.io/jdx/devcontainer-feature/mise:1": {}
 	},
 	"postCreateCommand": "mise trust && mise install && pnpm install",
 	"customizations": {
