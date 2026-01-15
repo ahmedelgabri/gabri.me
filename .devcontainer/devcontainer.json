@@ -8,18 +8,5 @@
 		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
 	},
 	"postCreateCommand": "mise trust && mise install && pnpm install",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"dbaeumer.vscode-eslint",
-				"esbenp.prettier-vscode",
-				"bradlc.vscode-tailwindcss",
-				"antfu.unocss"
-			],
-			"settings": {
-				"editor.formatOnSave": true
-			}
-		}
-	},
 	"remoteUser": "vscode"
 }
