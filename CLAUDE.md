@@ -17,7 +17,8 @@ with [mise](https://mise.jdx.dev/) managing tool versions (configured in
 
 ### VS Code / Cursor
 
-1. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+1. Install the
+   [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 2. Open the project
 3. When prompted, click "Reopen in Container"
 4. Or use Command Palette: "Dev Containers: Reopen in Container"
