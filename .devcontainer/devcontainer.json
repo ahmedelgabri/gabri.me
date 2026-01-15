@@ -10,6 +10,5 @@
 		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
 	},
 	"forwardPorts": [3000],
-	"postCreateCommand": "mise trust && mise install && pnpm install",
-	"remoteUser": "vscode"
+	"postCreateCommand": "mise trust && mise install && pnpm install"
 }
