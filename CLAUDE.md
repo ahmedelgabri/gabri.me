@@ -11,16 +11,50 @@ MDX files using Next.js native MDX support.
 
 ## Development Environment
 
-This project uses Nix for environment management via `flake.nix`. Enter the
-development shell with:
+This project uses [Dev Containers](https://containers.dev/) for development,
+with [mise](https://mise.jdx.dev/) managing tool versions (configured in
+`.mise.toml`).
+
+### VS Code / Cursor
+
+1. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+2. Open the project
+3. When prompted, click "Reopen in Container"
+4. Or use Command Palette: "Dev Containers: Reopen in Container"
+
+### GitHub Codespaces
+
+Click "Code" > "Codespaces" > "Create codespace on main" in the GitHub UI.
+
+### CLI (devcontainer CLI)
+
+The devcontainer CLI is included via mise. After running `mise install`:
 
 ```bash
-nix develop
+# Build and start the container
+devcontainer up --workspace-folder .
+
+# Run a command inside the container
+devcontainer exec --workspace-folder . pnpm dev
+
+# Open a shell inside the container
+devcontainer exec --workspace-folder . bash
 ```
 
-The development environment includes:
+### Local Development (without containers)
 
-- Node.js
+Install [mise](https://mise.jdx.dev/) and run:
+
+```bash
+mise trust && mise install
+pnpm install
+```
+
+### Required Tools
+
+The development environment provides:
+
+- Node.js 24
 - pnpm (package manager)
 - actionlint (GitHub Actions linter)
 
@@ -191,7 +225,8 @@ All blog posts are statically generated at build time:
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration with MDX support
 - `uno.config.ts` - Styling configuration
-- `flake.nix` - Development environment (flake-parts based)
+- `.mise.toml` - mise tool version configuration
+- `.devcontainer/devcontainer.json` - Dev Container configuration
 - `src/config/siteMeta.ts` - Site-wide metadata
 - `globals.d.ts` - Global TypeScript declarations including MDX types
 

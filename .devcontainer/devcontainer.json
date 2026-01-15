@@ -1,0 +1,23 @@
+{
+	"name": "gabri.me",
+	"image": "mcr.microsoft.com/devcontainers/base:debian",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/jdx/devcontainer-feature/mise:1": {}
+	},
+	"postCreateCommand": "mise trust && mise install && pnpm install",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+				"antfu.unocss"
+			],
+			"settings": {
+				"editor.formatOnSave": true
+			}
+		}
+	},
+	"remoteUser": "vscode"
+}
