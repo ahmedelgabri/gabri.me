@@ -168,7 +168,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 					))}
 					<GA />
 				</head>
-				<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg">
+				<body className="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
 					<IslamicPattern />
 					<div className="w-content">{children}</div>
 				</body>
