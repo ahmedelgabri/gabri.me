@@ -2,6 +2,4 @@
 node = "24"
 pnpm = "latest"
 actionlint = "latest"
-neovim = "latest"
 "npm:@devcontainers/cli" = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"
