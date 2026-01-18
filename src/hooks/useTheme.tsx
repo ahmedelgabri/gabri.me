@@ -51,3 +51,21 @@ export function useColorTheme() {
 		setColorTheme,
 	}
 }
+
+export function useFontTheme() {
+	const [fontTheme, setFontThemeState] = React.useState<FontTheme>('mono')
+
+	React.useEffect(() => {
+		setFontThemeState(window.__fontTheme)
+	}, [])
+
+	const setFontTheme = React.useCallback((font: FontTheme) => {
+		window.__setFontTheme(font)
+		setFontThemeState(font)
+	}, [])
+
+	return {
+		fontTheme,
+		setFontTheme,
+	}
+}

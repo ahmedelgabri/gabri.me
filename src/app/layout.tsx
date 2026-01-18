@@ -10,16 +10,21 @@ import '../style/style.css'
 const themeScript = `(${(() => {
 	var THEME_STORAGE_KEY = 'theme'
 	var COLOR_STORAGE_KEY = 'colorTheme'
+	var FONT_STORAGE_KEY = 'fontTheme'
 	var VALID_THEMES = ['system', 'light', 'dark']
 	var VALID_COLORS = ['blue', 'amber', 'teal', 'purple']
+	var VALID_FONTS = ['mono', 'serif', 'sans']
 	var DEFAULT_THEME = 'dark'
 	var DEFAULT_COLOR = 'blue'
+	var DEFAULT_FONT = 'mono'
 
 	var storedTheme
 	var storedColor
+	var storedFont
 	try {
 		storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
 		storedColor = localStorage.getItem(COLOR_STORAGE_KEY)
+		storedFont = localStorage.getItem(FONT_STORAGE_KEY)
 	} catch (e) {}
 
 	// @ts-ignore
@@ -30,11 +35,15 @@ const themeScript = `(${(() => {
 	var colorTheme = VALID_COLORS.includes(storedColor)
 		? storedColor
 		: DEFAULT_COLOR
+	// @ts-ignore
+	var fontTheme = VALID_FONTS.includes(storedFont) ? storedFont : DEFAULT_FONT
 
 	// @ts-ignore
 	window.__themeSetting = themeSetting
 	// @ts-ignore
 	window.__colorTheme = colorTheme
+	// @ts-ignore
+	window.__fontTheme = fontTheme
 
 	function getSystemTheme() {
 		return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -69,8 +78,20 @@ const themeScript = `(${(() => {
 		}
 	}
 
+	// @ts-ignore
+	function applyFontTheme(font) {
+		window.__fontTheme = font
+		document.documentElement.classList.remove(
+			'font-mono',
+			'font-serif',
+			'font-sans',
+		)
+		document.documentElement.classList.add('font-' + font)
+	}
+
 	applyTheme(resolveTheme())
 	applyColorTheme(colorTheme)
+	applyFontTheme(fontTheme)
 
 	window.__setTheme = function (newSetting) {
 		window.__themeSetting = newSetting
@@ -86,6 +107,14 @@ const themeScript = `(${(() => {
 			localStorage.setItem(COLOR_STORAGE_KEY, newColor)
 		} catch (e) {}
 		applyColorTheme(newColor)
+	}
+
+	window.__setFontTheme = function (newFont) {
+		window.__fontTheme = newFont
+		try {
+			localStorage.setItem(FONT_STORAGE_KEY, newFont)
+		} catch (e) {}
+		applyFontTheme(newFont)
 	}
 
 	window
