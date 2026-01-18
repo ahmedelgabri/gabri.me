@@ -7,8 +7,12 @@
 			"activate": true
 		},
 		"ghcr.io/devcontainers-extra/features/neovim:1": {},
-		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
+		"ghcr.io/devcontainers-community/features/ripgrep:1": {},
+		"ghcr.io/devcontainers-community/features/fd:1": {},
+		"ghcr.io/kreemer/features/stow:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {}
 	},
-	"forwardPorts": [3000],
+	"forwardPorts": [3000, 2222],
 	"postCreateCommand": "mise trust && mise install && pnpm install"
 }

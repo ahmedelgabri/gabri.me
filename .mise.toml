@@ -2,4 +2,3 @@
 node = "24"
 pnpm = "latest"
 actionlint = "latest"
-"npm:@devcontainers/cli" = "latest"
