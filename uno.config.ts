@@ -19,7 +19,8 @@ export default defineConfig({
 	theme: {
 		font: {
 			mono: '"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-			serif: '"Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, ui-serif, serif',
+			serif:
+				'"Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, ui-serif, serif',
 			sans: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 		},
 	},
