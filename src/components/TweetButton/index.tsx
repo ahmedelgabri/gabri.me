@@ -19,12 +19,12 @@ export default function TweetButton({via, title, url}: Props) {
 				rel="noopener noreferrer"
 				target="_blank"
 			>
-				<i className="i-tabler:brand-x mr-1 inline-block align-[-2px]" />
+				<i className="i-tabler:brand-twitter mr-1 inline-block align-[-2px]" />
 				tweet
 			</a>{' '}
 			this post or reach out to me on{' '}
 			<a href={twitter.url} rel="noopener noreferrer" target="_blank">
-				<i className="i-tabler:brand-x mr-1 inline-block align-[-2px]" />
+				<i className="i-tabler:brand-twitter mr-1 inline-block align-[-2px]" />
 				{twitter.display}
 			</a>
 			.

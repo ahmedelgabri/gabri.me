@@ -7,7 +7,7 @@ export interface Props {
 const icons: Record<string, string> = {
 	github: 'i-tabler:brand-github',
 	email: 'i-tabler:mail',
-	twitter: 'i-tabler:brand-x',
+	twitter: 'i-tabler:brand-twitter',
 	linkedin: 'i-tabler:brand-linkedin',
 	mastodon: 'i-tabler:brand-mastodon',
 	bluesky: 'i-tabler:brand-bluesky',

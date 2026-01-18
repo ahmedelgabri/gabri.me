@@ -16,7 +16,7 @@ export default {
 			url: 'https://www.linkedin.com/in/ahmedelgabri/',
 		},
 		twitter: {
-			name: 'X',
+			name: 'twitter',
 			display: '@ahmedelgabri',
 			url: 'http://twitter.com/ahmedelgabri',
 		},
