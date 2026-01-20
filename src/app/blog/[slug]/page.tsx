@@ -71,7 +71,14 @@ export default async function Post({params}: PageProps<'slug'>) {
 
 			<article>
 				<header className="mb-8">
-					<H level="1" style={{viewTransitionName: `post-title-${slug}`}}>
+					<H
+						level="2"
+						style={{
+							viewTransitionName: `post-title-${slug}`,
+							fontSize: 'var(--text-2xl-fontSize)',
+							lineHeight: 'var(--un-leading, var(--text-2xl-lineHeight))',
+						}}
+					>
 						{title}
 					</H>
 					<time className="text-sm text-neutral-500" dateTime={date}>
