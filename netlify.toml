@@ -4,7 +4,7 @@ publish = "dist"
 
 # Explicitly set no framework to prevent Next.js auto-detection
 [build.environment]
-NODE_VERSION = "20"
+NODE_VERSION = "22"
 
 # Skip automatic builds on main branch - production deploys handled by GitHub Actions
 ignore = "[ \"$BRANCH\" = \"main\" ]"
