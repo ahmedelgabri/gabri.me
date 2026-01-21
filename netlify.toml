@@ -2,8 +2,21 @@
 command = "pnpm build"
 publish = "dist"
 
+# Explicitly set no framework to prevent Next.js auto-detection
+[build.environment]
+NODE_VERSION = "20"
+
 # Skip automatic builds on main branch - production deploys handled by GitHub Actions
 ignore = "[ \"$BRANCH\" = \"main\" ]"
+
+# Disable Next.js plugin (we migrated to Astro)
+[context.production]
+[context.production.environment]
+NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[context.deploy-preview]
+[context.deploy-preview.environment]
+NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 # Redirects for Astro
 [[redirects]]
