@@ -111,7 +111,7 @@ const icons: Record<string, string> = {
 				<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
 					<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime={p.date}>{p.formattedDate}</time>
 					<div>
-						<a href={p.url} style={`view-transition-name: post-title-${p.slug}`}>
+						<a href={p.url} transition:name={`post-title-${p.slug}`}>
 							{p.title}
 						</a>
 					</div>
