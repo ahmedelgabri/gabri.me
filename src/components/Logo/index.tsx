@@ -25,10 +25,7 @@ export default function Logo({slug}: {slug?: string}) {
 	}
 
 	return (
-		<a
-			href="/"
-			className="text-neutral-800 no-underline dark:text-neutral-200"
-		>
+		<a href="/" className="text-neutral-800 no-underline dark:text-neutral-200">
 			<h1>
 				<span className="text-neutral-500">~/</span>
 				{authorSlug}

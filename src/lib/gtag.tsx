@@ -1,4 +1,5 @@
-const GA4_TRACKING_ID = import.meta.env?.GA4_TRACKING_ID || process.env.GA4_TRACKING_ID
+const GA4_TRACKING_ID =
+	import.meta.env?.GA4_TRACKING_ID || process.env.GA4_TRACKING_ID
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {

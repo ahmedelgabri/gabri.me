@@ -157,7 +157,8 @@ Client-side theme switching implemented via:
 - Reads from localStorage and respects `prefers-color-scheme`
 - Custom hooks: `src/hooks/useTheme.tsx`
 - Theme classes applied to `<html>` element
-- Three customizable aspects: theme (light/dark/system), color (blue/amber/teal/purple), font (mono/serif/sans)
+- Three customizable aspects: theme (light/dark/system), color
+  (blue/amber/teal/purple), font (mono/serif/sans)
 
 ### Metadata & SEO
 
@@ -179,7 +180,8 @@ All blog posts are statically generated at build time:
 
 ## Important Files
 
-- `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React integrations
+- `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
+  integrations
 - `mdx.config.ts` - Shared MDX/rehype plugin configuration
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration with MDX support

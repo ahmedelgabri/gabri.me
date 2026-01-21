@@ -2,10 +2,10 @@
 	"name": "gabri.me",
 	"version": "7.0.0",
 	"private": true,
-	"type": "module",
 	"description": "Some guy on the web",
 	"license": "MIT",
 	"author": "Ahmed El Gabri <ahmed@gabri.me>",
+	"type": "module",
 	"scripts": {
 		"generate-manifest": "npx tsx scripts/generate-content-manifest.ts",
 		"dev": "pnpm generate-manifest && astro dev",
