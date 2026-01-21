@@ -50,11 +50,11 @@ const icons: Record<string, string> = {
 			, Amsterdam.
 		</p>
 		<ul class="flex flex-wrap gap-4 text-sm">
-			{Object.entries(social).map(([site, {url, name}]) => (
+			{Object.entries(social).map(([site, entry]) => (
 				<li>
-					<a href={url} rel="noopener noreferrer me" target="_blank">
+					<a href={entry.url} rel="noopener noreferrer me" target="_blank">
 						<i class={`${icons[site] || 'i-tabler:link'} mr-1 inline-block align-[-2px]`}></i>
-						{name || site}
+						{'name' in entry ? entry.name : site}
 					</a>
 				</li>
 			))}
