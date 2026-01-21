@@ -6,7 +6,7 @@ import {rehypePlugins} from './mdx.config'
 export default defineConfig({
 	plugins: [
 		mdx({
-			rehypePlugins: rehypePlugins,
+			rehypePlugins: rehypePlugins as any,
 		}),
 	],
 	test: {

@@ -27,11 +27,11 @@ export default defineConfig({
 	markdown: {
 		syntaxHighlight: false,
 		rehypePlugins: [
-			rehypeSlug,
-			rehypeCodeTitles,
-			[rehypeShiki, shikiOptions],
+			rehypeSlug as any,
+			rehypeCodeTitles as any,
+			[rehypeShiki as any, shikiOptions],
 			[
-				rehypeAutolinkHeadings,
+				rehypeAutolinkHeadings as any,
 				{
 					properties: {
 						className: ['anchor'],
