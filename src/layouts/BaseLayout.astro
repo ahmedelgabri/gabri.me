@@ -1,5 +1,5 @@
 ---
-import {ViewTransitions} from 'astro:transitions'
+import {ClientRouter} from 'astro:transitions'
 import siteMeta from '../config/siteMeta'
 import {IslamicPattern} from '../components/Header/IslamicPatterns'
 import '../style/style.css'
@@ -20,7 +20,7 @@ const {
 	ogType = 'website',
 } = Astro.props
 
-const {author, siteUrl, social, twitterId} = siteMeta
+const {author, siteUrl, social} = siteMeta
 
 const fullTitle = title
 	? `${author} | ${siteMeta.title} - ${title}`
@@ -208,13 +208,18 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 			</>
 		)}
 
-		<!-- View Transitions -->
-		<ViewTransitions />
+		<!-- Client-side Router for View Transitions -->
+		<ClientRouter />
 		<style is:global>
 			::view-transition-old(root),
 			::view-transition-new(root) {
-				animation-duration: 150ms;
-				animation-timing-function: ease-in-out;
+				animation-duration: 200ms;
+				animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+			}
+
+			/* Named view transitions for post titles */
+			[style*="view-transition-name"] {
+				contain: layout;
 			}
 		</style>
 	</head>

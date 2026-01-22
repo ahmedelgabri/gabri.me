@@ -3,7 +3,6 @@ import {getAllPosts, getPostBySlug} from '../../lib/content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Logo from '../../components/Logo'
 import {SettingsPopover} from '../../components/Header/SettingsPopover'
-import Tweet from '../../components/Tweet'
 import YouTube from '../../components/YouTube'
 import siteMeta from '../../config/siteMeta'
 
@@ -34,7 +33,6 @@ const {
 const MDXContent = (await import(`../../_content/blog/${slug}/post.mdx`)).default
 
 const components = {
-	Tweet,
 	YouTube,
 }
 ---
