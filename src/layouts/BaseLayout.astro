@@ -221,6 +221,17 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 			[style*="view-transition-name"] {
 				contain: layout;
 			}
+
+			/* Override Astro's default reduced-motion handling - always animate */
+			@media (prefers-reduced-motion: reduce) {
+				::view-transition-group(*),
+				::view-transition-old(*),
+				::view-transition-new(*) {
+					animation: auto !important;
+					animation-duration: 200ms !important;
+					animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+				}
+			}
 		</style>
 	</head>
 	<body class="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
