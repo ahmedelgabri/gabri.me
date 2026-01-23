@@ -1,8 +1,8 @@
 ---
-import {ClientRouter} from 'astro:transitions'
-import siteMeta from '../config/siteMeta'
-import {IslamicPattern} from '../components/Header/IslamicPatterns'
 import '../style/style.css'
+
+import siteMeta from '../config/siteMeta'
+import IslamicPattern from '../components/Header/IslamicPattern.astro'
 
 interface Props {
 	title?: string
@@ -209,36 +209,9 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 			</>
 		)}
 
-		<!-- Client-side Router for View Transitions -->
-		<ClientRouter />
-		<style is:global>
-			::view-transition-old(root),
-			::view-transition-new(root) {
-				animation-duration: 200ms;
-				animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-			}
-
-			/* Named view transitions for post titles */
-			[style*="view-transition-name"] {
-				contain: layout;
-			}
-
-			/* Override Astro's default reduced-motion handling - always animate */
-			@media (prefers-reduced-motion) {
-				::view-transition-group(*),
-				::view-transition-old(*),
-				::view-transition-new(*) {
-					animation: revert !important;
-				}
-
-				[data-astro-transition-scope] {
-					animation: revert !important;
-				}
-			}
-		</style>
 	</head>
 	<body class="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
-		<IslamicPattern client:load />
+		<IslamicPattern />
 		<div class="w-content">
 			<slot />
 		</div>
