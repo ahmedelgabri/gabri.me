@@ -19,7 +19,10 @@ function getSlugFromId(id: string): string {
 	return id.replace(/\/post$/, '')
 }
 
-export function generateExcerpt(body: string | undefined, maxLength = 160): string {
+export function generateExcerpt(
+	body: string | undefined,
+	maxLength = 160,
+): string {
 	if (!body) return ''
 
 	const stripped = body

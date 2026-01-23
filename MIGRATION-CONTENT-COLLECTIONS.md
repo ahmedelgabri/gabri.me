@@ -1,16 +1,21 @@
 # Migration to Astro Content Collections
 
-This document summarizes the migration from a custom manifest-based content system to Astro's native Content Collections API.
+This document summarizes the migration from a custom manifest-based content
+system to Astro's native Content Collections API.
 
 ## Overview
 
-The site previously used a build-time manifest generation approach where a script (`scripts/generate-content-manifest.ts`) would:
+The site previously used a build-time manifest generation approach where a
+script (`scripts/generate-content-manifest.ts`) would:
+
 1. Scan MDX files in `src/_content/`
 2. Extract metadata from `export const metadata = {...}` statements
 3. Generate `src/lib/content-manifest.json` with all post metadata
-4. This manifest was then imported by `src/lib/content.ts` to serve content queries
+4. This manifest was then imported by `src/lib/content.ts` to serve content
+   queries
 
 This has been replaced with Astro's Content Collections, which provides:
+
 - Native integration with Astro's build system
 - Type-safe content querying via `getCollection()` and `getEntry()`
 - Built-in schema validation with Zod
@@ -24,10 +29,13 @@ This has been replaced with Astro's Content Collections, which provides:
 
 ### Modified Files
 
-- `src/_content/**/*.mdx` - Converted from `export const metadata` to YAML frontmatter
+- `src/_content/**/*.mdx` - Converted from `export const metadata` to YAML
+  frontmatter
 - `src/lib/content.ts` - Rewritten to use `astro:content` API
-- `src/pages/blog/[slug].astro` - Updated to use `render()` from Content Collections
-- `src/lib/__tests__/content.test.ts` - Removed (content API requires Astro context)
+- `src/pages/blog/[slug].astro` - Updated to use `render()` from Content
+  Collections
+- `src/lib/__tests__/content.test.ts` - Removed (content API requires Astro
+  context)
 - `package.json` - Removed `generate-manifest` script from build commands
 
 ### Removed Files
@@ -35,11 +43,13 @@ This has been replaced with Astro's Content Collections, which provides:
 - `scripts/generate-content-manifest.ts` - No longer needed
 - `scripts/convert-to-frontmatter.ts` - One-time migration script
 - `src/lib/content-manifest.json` - No longer needed
-- `scripts/__tests__/generate-content-manifest.test.ts` - Tests for removed script
+- `scripts/__tests__/generate-content-manifest.test.ts` - Tests for removed
+  script
 
 ## Content Format Change
 
 ### Before (export statement)
+
 ```javascript
 export const metadata = {
   title: 'Post Title',
@@ -52,6 +62,7 @@ Content here...
 ```
 
 ### After (YAML frontmatter)
+
 ```yaml
 ---
 title: Post Title
@@ -59,13 +70,13 @@ date: 2024-01-01
 published: true
 tags: [tag1, tag2]
 ---
-
 Content here...
 ```
 
 ## API Changes
 
 The `PostMetadata` interface was simplified:
+
 - Removed: `updated` (git timestamp) - was not used in rendering
 - Removed: `filePath` - was not used in rendering
 
@@ -75,11 +86,11 @@ Both `blog` and `weeklyLinks` collections use the same schema:
 
 ```typescript
 z.object({
-  title: z.string(),
-  date: z.coerce.date(),
-  published: z.boolean().default(true),
-  tags: z.array(z.string()).default([]),
-  excerpt: z.string().optional(),
+	title: z.string(),
+	date: z.coerce.date(),
+	published: z.boolean().default(true),
+	tags: z.array(z.string()).default([]),
+	excerpt: z.string().optional(),
 })
 ```
 

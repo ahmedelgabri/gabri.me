@@ -18,11 +18,7 @@ const shikiOptions = {
 }
 export default defineConfig({
 	site: 'https://gabri.me',
-	integrations: [
-		UnoCSS(),
-		react(),
-		mdx(),
-	],
+	integrations: [UnoCSS(), react(), mdx()],
 	markdown: {
 		syntaxHighlight: false,
 		rehypePlugins: [
