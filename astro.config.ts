@@ -1,7 +1,7 @@
 import {defineConfig} from 'astro/config'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
-import UnoCSS from 'unocss/astro'
+import UnoCSS from '@unocss/astro'
 import rehypeSlug from 'rehype-slug'
 import rehypeCodeTitles from 'rehype-code-titles'
 import rehypeShiki from '@shikijs/rehype'
@@ -16,10 +16,13 @@ const shikiOptions = {
 	},
 	defaultLanguage: 'txt',
 }
-
 export default defineConfig({
 	site: 'https://gabri.me',
-	integrations: [UnoCSS(), react(), mdx()],
+	integrations: [
+		UnoCSS(),
+		react(),
+		mdx(),
+	],
 	markdown: {
 		syntaxHighlight: false,
 		rehypePlugins: [

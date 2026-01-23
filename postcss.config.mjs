@@ -1,8 +1,5 @@
+import UnoCSS from '@unocss/postcss'
+
 export default {
-	plugins: {
-		'@unocss/postcss': {
-			content: ['**/*.{html,js,ts,jsx,tsx,mdx,astro}'],
-		},
-		autoprefixer: {},
-	},
+	plugins: [UnoCSS()],
 }

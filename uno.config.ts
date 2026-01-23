@@ -1,6 +1,9 @@
 import {defineConfig, presetWind4, presetIcons} from 'unocss'
 
 export default defineConfig({
+	content: {
+		filesystem: ['**/*.{html,js,ts,jsx,tsx,vue,svelte,mdx,astro,marko}'],
+	},
 	presets: [
 		presetWind4({
 			preflights: {
