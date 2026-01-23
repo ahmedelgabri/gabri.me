@@ -1,5 +1,7 @@
 ---
-import {getAllPosts, getPostBySlug} from '../../lib/content'
+import {render} from 'astro:content'
+import {format} from 'date-fns'
+import {getAllBlogEntries, getBlogEntry, generateExcerpt} from '../../lib/content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import Logo from '../../components/Logo'
 import {SettingsPopover} from '../../components/Header/SettingsPopover'
@@ -7,20 +9,23 @@ import YouTube from '../../components/YouTube'
 import siteMeta from '../../config/siteMeta'
 
 export async function getStaticPaths() {
-	const posts = await getAllPosts()
-	return posts.map((post) => ({
-		params: {slug: post.slug},
+	const entries = await getAllBlogEntries()
+	return entries.map((entry) => ({
+		params: {slug: entry.id.replace(/\/post$/, '')},
 	}))
 }
 
 const {slug} = Astro.params
-const post = await getPostBySlug(slug!, 'blog')
+const entry = await getBlogEntry(slug!)
 
-if (!post) {
+if (!entry || !entry.data.published) {
 	return Astro.redirect('/404')
 }
 
-const {date, title, formattedDate, url, excerpt} = post
+const {title, date} = entry.data
+const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
+const formattedDate = format(date, 'yyyy-MM-dd')
+const url = `/blog/${slug}`
 const postUrl = `${siteMeta.siteUrl}${url}`
 
 const {
@@ -29,8 +34,7 @@ const {
 	},
 } = siteMeta
 
-// Dynamic MDX import
-const MDXContent = (await import(`../../_content/blog/${slug}/post.mdx`)).default
+const {Content} = await render(entry)
 
 const components = {
 	YouTube,
@@ -58,14 +62,14 @@ const components = {
 			>
 				{title}
 			</h2>
-			<time class="text-sm text-neutral-500" datetime={date}>
+			<time class="text-sm text-neutral-500" datetime={date.toISOString()}>
 				<i class="i-tabler:calendar mr-1 inline-block align-[-2px]"></i>
 				{formattedDate}
 			</time>
 		</header>
 
 		<div class="prose">
-			<MDXContent components={components} />
+			<Content components={components} />
 		</div>
 
 		<div class="my-8 border-t border-neutral-300 pt-8 text-sm dark:border-neutral-700">
