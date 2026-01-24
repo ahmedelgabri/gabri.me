@@ -12,7 +12,7 @@ export const GET: APIRoute = async ({request}) => {
 	return new Response(isCurl ? card : stripAnsi(card), {
 		status: 200,
 		headers: {
-			'Content-Type': 'text/plain',
+			'Content-Type': 'text/plain; charset=utf-8',
 		},
 	})
 }
