@@ -14,6 +14,7 @@ interface Props {
 	ogImage?: string
 	ogType?: 'website' | 'article'
 	slug?: string
+	publishedTime?: Date
 }
 
 const {
@@ -23,9 +24,10 @@ const {
 	ogImage = '/img/fb-image.jpg',
 	ogType = 'website',
 	slug,
+	publishedTime,
 } = Astro.props
 
-const {author, siteUrl, social} = siteMeta
+const {author, siteUrl, social, twitterId} = siteMeta
 
 const fullTitle = title
 	? `${author} | ${siteMeta.title} - ${title}`
@@ -52,27 +54,37 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 		<link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
 
 		<!-- OpenGraph -->
-		<meta property="og:title" content={fullTitle} />
+		<meta property="og:title" content={title || fullTitle} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
-		<meta property="og:image" content={`${siteUrl}${ogImage}`} />
-		<meta property="og:type" content={ogType} />
 		<meta property="og:site_name" content={author} />
 		<meta property="og:locale" content="en-US" />
+		<meta property="og:image" content={`${siteUrl}${ogImage}`} />
+		<meta property="og:type" content={ogType} />
+		{ogType === 'article' && publishedTime && (
+			<meta property="article:published_time" content={publishedTime.toISOString()} />
+		)}
+		{ogType === 'article' && (
+			<meta property="article:author" content={author} />
+		)}
 
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={fullTitle} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:site" content={social.twitter.display} />
+		<meta name="twitter:site:id" content={twitterId} />
 		<meta name="twitter:creator" content={social.twitter.display} />
-		<meta name="twitter:image" content={`${siteUrl}/i/social-image.jpg`} />
+		<meta name="twitter:creator:id" content={twitterId} />
+		<meta name="twitter:title" content={title || fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
 
 		<!-- Authors -->
-		<meta name="author" content={author} />
 		<link rel="author" href={siteUrl} />
+		<meta name="author" content={author} />
+		<meta name="creator" content={author} />
+		<meta name="publisher" content={author} />
 		<meta name="application-name" content="Gabri.me" />
 		<meta name="fediverse:creator" content="@gabri@mastodon.online" />
+		<meta name="mobile-web-app-capable" content="yes" />
 
 		<!-- Apple -->
 		<meta name="apple-mobile-web-app-title" content="Gabri.me" />
