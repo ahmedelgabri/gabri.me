@@ -12,6 +12,8 @@ import netlify from '@astrojs/netlify'
 
 import compressor from 'astro-compressor'
 
+import frontendistahtmlMinify from '@frontendista/astro-html-minify'
+
 const shikiOptions = {
 	themes: {
 		light: plainLight,
@@ -21,7 +23,13 @@ const shikiOptions = {
 }
 export default defineConfig({
 	site: 'https://gabri.me',
-	integrations: [UnoCSS(), react(), mdx(), compressor()],
+	integrations: [
+		UnoCSS(),
+		react(),
+		mdx(),
+		compressor(),
+		frontendistahtmlMinify(),
+	],
 
 	markdown: {
 		syntaxHighlight: false,
