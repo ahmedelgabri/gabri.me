@@ -1,5 +1,7 @@
 import type {APIRoute, GetStaticPaths} from 'astro'
 import type {ReactNode} from 'react'
+import {readFileSync} from 'node:fs'
+import {join} from 'node:path'
 import satori from 'satori'
 import {html} from 'satori-html'
 import {Resvg} from '@resvg/resvg-js'
@@ -9,6 +11,10 @@ import siteMeta from '../../config/siteMeta'
 const WIDTH = 1200
 const HEIGHT = 630
 
+const avatarPath = join(process.cwd(), 'src/assets/avatar.jpg')
+const avatarBuffer = readFileSync(avatarPath)
+const avatarBase64 = `data:image/jpeg;base64,${avatarBuffer.toString('base64')}`
+
 export const getStaticPaths: GetStaticPaths = async () => {
 	const entries = await getAllBlogEntries()
 	return entries.map((entry) => ({
@@ -16,7 +22,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	}))
 }
 
-async function loadGoogleFont(font: string, weight: number): Promise<ArrayBuffer> {
+async function loadGoogleFont(
+	font: string,
+	weight: number,
+): Promise<ArrayBuffer> {
 	const url = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&display=swap`
 	const css = await fetch(url).then((res) => res.text())
 	const fontUrl = css.match(/src: url\(([^)]+)\)/)?.[1]
@@ -61,7 +70,7 @@ export const GET: APIRoute = async ({params}) => {
 				<div style="font-size: ${titleFontSize}; font-weight: 700; line-height: 1.2; max-width: 900px;">${escapeHtml(title)}</div>
 			</div>
 			<div style="display: flex; align-items: center; gap: 16px;">
-				<div style="width: 48px; height: 48px; border-radius: 24px; background-color: #3b82f6; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">AG</div>
+				<img src="${avatarBase64}" style="width: 48px; height: 48px; border-radius: 24px;" />
 				<div style="display: flex; flex-direction: column;">
 					<div style="font-size: 20px; font-weight: 600;">${escapeHtml(author)}</div>
 					<div style="font-size: 16px; color: #a3a3a3;">Software Engineer</div>
