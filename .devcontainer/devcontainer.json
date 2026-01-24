@@ -1,0 +1,19 @@
+{
+	"name": "gabri.me",
+	"image": "mcr.microsoft.com/devcontainers/base:debian",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {},
+		"ghcr.io/devcontainers/features/nix:1": {
+			"flakes": true
+		}
+	},
+	"appPort": ["3000:3000", "2222:2222"],
+	"remoteUser": "root",
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/tmp/host-ssh,type=bind,readonly"
+	],
+	"postCreateCommand": ".devcontainer/setup.sh",
+	"postStartCommand": "sudo /etc/init.d/ssh start"
+}

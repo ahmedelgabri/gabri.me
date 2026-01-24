@@ -86,3 +86,4 @@ next-env.d.ts
 
 # generated content manifest
 src/lib/content-manifest.json
+.pnpm-store

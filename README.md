@@ -12,7 +12,7 @@ links collections.
 - **Content**: MDX with Next.js native MDX support
 - **Language**: TypeScript (strict mode)
 - **Testing**: Vitest with React Testing Library
-- **Environment**: Nix flakes
+- **Environment**: Dev Containers with mise
 - **Deployment**: Netlify
 
 ## Features
@@ -21,17 +21,33 @@ links collections.
 - Dark/light theme switching
 - RSS feed (`/feed.xml`)
 - Social card generation (`/card`)
-- Syntax highlighting with Prism
+- Syntax highlighting with Shiki
 - SEO optimized with OpenGraph and Twitter Card metadata
 
 ## Development
 
-### Prerequisites
+### Using Dev Containers (Recommended)
 
-This project uses Nix for environment management. Enter the development shell:
+**VS Code / Cursor**: Install the
+[Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers),
+open the project, and click "Reopen in Container" when prompted.
+
+**GitHub Codespaces**: Click "Code" > "Codespaces" > "Create codespace on main".
+
+**CLI**: With the devcontainer CLI installed:
 
 ```bash
-nix develop
+devcontainer up --workspace-folder .
+devcontainer exec --workspace-folder . pnpm dev
+```
+
+### Local Development (without containers)
+
+Install [mise](https://mise.jdx.dev/) and run:
+
+```bash
+mise trust && mise install
+pnpm install
 ```
 
 ### Commands
