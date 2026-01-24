@@ -19,6 +19,7 @@ const shikiOptions = {
 export default defineConfig({
 	site: 'https://gabri.me',
 	integrations: [UnoCSS(), react(), mdx()],
+
 	markdown: {
 		syntaxHighlight: false,
 		rehypePlugins: [
@@ -35,11 +36,13 @@ export default defineConfig({
 			],
 		],
 	},
+
 	redirects: {
 		'/feed': '/feed.xml',
 		'/work': '/',
 		'/blog': '/',
 	},
+
 	vite: {
 		resolve: {
 			alias: {
