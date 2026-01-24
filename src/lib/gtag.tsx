@@ -1,6 +1,4 @@
-import Script from 'next/script'
-
-const GA4_TRACKING_ID = process.env.GA4_TRACKING_ID
+const GA4_TRACKING_ID = import.meta.env?.GA4_TRACKING_ID || process.env.GA4_TRACKING_ID
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {
@@ -18,7 +16,6 @@ export const event = ({
 	category,
 	label,
 	value,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: Record<string, any>) => {
 	if (GA4_TRACKING_ID) {
 		window.gtag('event', action, {
@@ -27,32 +24,4 @@ export const event = ({
 			value: value,
 		})
 	}
-}
-
-export function GA() {
-	return (
-		GA4_TRACKING_ID && (
-			<>
-				<Script
-					async
-					src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}
-					strategy="afterInteractive"
-				/>
-				<Script
-					strategy="afterInteractive"
-					dangerouslySetInnerHTML={{
-						__html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA4_TRACKING_ID}', {
-              page_path: window.location.pathname,
-              anonymize_ip: true
-            });
-          `,
-					}}
-				/>
-			</>
-		)
-	)
 }

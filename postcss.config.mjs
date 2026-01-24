@@ -1,8 +1,7 @@
 export default {
 	plugins: {
 		'@unocss/postcss': {
-			// Optional
-			content: ['**/*.{html,js,ts,jsx,tsx,mdx}'],
+			content: ['**/*.{html,js,ts,jsx,tsx,mdx,astro}'],
 		},
 		autoprefixer: {},
 	},

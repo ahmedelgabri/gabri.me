@@ -1,5 +1,3 @@
-'use client'
-
 const strokeProps = {
 	stroke: 'currentColor',
 	strokeWidth: 0.5,

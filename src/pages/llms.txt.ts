@@ -1,10 +1,9 @@
+import type {APIRoute} from 'astro'
 import {compareDesc} from 'date-fns'
-import {getAllPosts} from '../../lib/content'
-import siteMeta from '../../config/siteMeta'
+import {getAllPosts} from '../lib/content'
+import siteMeta from '../config/siteMeta'
 
-export const dynamic = 'force-static'
-
-export async function GET(req: Request) {
+export const GET: APIRoute = async () => {
 	const {author, siteUrl, description, social, talks, interviews} = siteMeta
 
 	const allPosts = await getAllPosts()
@@ -47,13 +46,10 @@ export async function GET(req: Request) {
 		'',
 	]
 
-	const headers = new Headers(req.headers)
-
-	headers.set(
-		'Cache-Control',
-		'public, s-maxage=1200, stale-while-revalidate=600',
-	)
-	headers.set('Content-Type', 'text/plain; charset=utf-8')
-
-	return new Response(lines.join('\n'), {headers})
+	return new Response(lines.join('\n'), {
+		headers: {
+			'Content-Type': 'text/plain; charset=utf-8',
+			'Cache-Control': 'public, s-maxage=1200, stale-while-revalidate=600',
+		},
+	})
 }

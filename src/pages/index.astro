@@ -1,0 +1,126 @@
+---
+import {compareDesc} from 'date-fns'
+import {getAllPosts} from '../lib/content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Logo from '../components/Logo'
+import {SettingsPopover} from '../components/Header/SettingsPopover'
+import H from '../components/H.astro'
+import siteMeta from '../config/siteMeta'
+
+const {social, talks, interviews} = siteMeta
+
+const allPosts = await getAllPosts()
+const posts = allPosts.sort(({date: a}, {date: b}) =>
+	compareDesc(new Date(a), new Date(b)),
+)
+
+const icons: Record<string, string> = {
+	github: 'i-tabler:brand-github',
+	email: 'i-tabler:mail',
+	twitter: 'i-tabler:brand-twitter',
+	linkedin: 'i-tabler:brand-linkedin',
+	mastodon: 'i-tabler:brand-mastodon',
+	bluesky: 'i-tabler:brand-bluesky',
+	resume: 'i-tabler:file-text',
+}
+---
+
+<BaseLayout>
+	<header class="mb-12 flex items-center justify-between gap-4">
+		<div class="min-w-0 flex-1">
+			<Logo />
+		</div>
+		<SettingsPopover client:load />
+	</header>
+
+	<section class="mb-12">
+		<H level="2">about</H>
+		<p class="mb-4">
+			Software engineer with 15+ years of experience across Product,
+			Platform, and Developer Experience. I focus on clarity,
+			maintainability, and helping teams and individuals grow steadily over
+			time.
+		</p>
+		<p class="mb-6">
+			Principal Engineer at
+			<a target="_blank" rel="noreferrer noopener" href="https://miro.com">
+				<i class="i-logos:miro-icon mr-1 inline-block align-[-2px]"></i>
+				Miro
+			</a>
+			, Amsterdam.
+		</p>
+		<ul class="flex flex-wrap gap-4 text-sm">
+			{Object.entries(social).map(([site, {url, name}]) => (
+				<li>
+					<a href={url} rel="noopener noreferrer me" target="_blank">
+						<i class={`${icons[site] || 'i-tabler:link'} mr-1 inline-block align-[-2px]`}></i>
+						{name || site}
+					</a>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<section class="mb-12">
+		<H level="3">talks & interviews</H>
+		<ul class="space-y-4 md:space-y-2">
+			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
+				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2024-03-03">2024-03-03</time>
+				<div>
+					<a href={interviews.ahmedelemam[1]} target="_blank" rel="noreferrer noopener" class="after:content-['_↗']">
+						<i class="i-tabler:video mr-1 inline-block align-[-2px]"></i>
+						Staff Engineering path (Arabic)
+					</a>
+				</div>
+			</li>
+			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
+				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2021-01-23">2021-01-23</time>
+				<div>
+					<a href={interviews.nullplusplus[1]} target="_blank" rel="noreferrer noopener" class="after:content-['_↗']">
+						<i class="i-tabler:microphone mr-1 inline-block align-[-2px]"></i>
+						Null++ Podcast (Arabic)
+					</a>
+				</div>
+			</li>
+			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
+				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2018-12-17">2018-12-17</time>
+				<div>
+					<a href={interviews.devtomanager[1]} target="_blank" rel="noreferrer noopener" class="after:content-['_↗']">
+						<i class="i-tabler:article mr-1 inline-block align-[-2px]"></i>
+						DevToManager Interview
+					</a>
+				</div>
+			</li>
+			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
+				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2017-06-08">2017-06-08</time>
+				<div>
+					<a href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`} target="_blank" rel="noreferrer noopener" class="after:content-['_↗']">
+						<i class="i-tabler:video mr-1 inline-block align-[-2px]"></i>
+						Automating front-end refactoring
+					</a>
+					(<a href={talks.AmsterdamJS[0]} target="_blank" rel="noreferrer noopener" class="after:content-['_↗']">slides</a>)
+				</div>
+			</li>
+		</ul>
+	</section>
+
+	<section class="mb-12">
+		<H level="3">blog</H>
+		<ul class="space-y-4 md:space-y-2">
+			{posts.map((p) => (
+				<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
+					<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime={p.date}>{p.formattedDate}</time>
+					<div>
+						<a href={p.url} style={`view-transition-name: post-title-${p.slug}`}>
+							{p.title}
+						</a>
+					</div>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<footer class="border-t border-neutral-300 pt-6 text-sm text-neutral-500 dark:border-neutral-700">
+		&copy; {new Date().getFullYear()} {siteMeta.author}
+	</footer>
+</BaseLayout>

@@ -1,12 +1,11 @@
+import type {APIRoute} from 'astro'
 import RSS from 'rss'
 import truncate from 'lodash.truncate'
 import {compareDesc} from 'date-fns'
-import {getAllPosts} from '../../lib/content'
-import siteMeta from '../../config/siteMeta'
+import {getAllPosts} from '../lib/content'
+import siteMeta from '../config/siteMeta'
 
-export const dynamic = 'force-static'
-
-export async function GET(req: Request) {
+export const GET: APIRoute = async () => {
 	const {author, title, siteUrl, description} = siteMeta
 
 	const allPosts = await getAllPosts()
@@ -44,13 +43,10 @@ export async function GET(req: Request) {
 		})
 	})
 
-	const headers = new Headers(req.headers)
-
-	headers.set(
-		'Cache-Control',
-		'public, s-maxage=1200, stale-while-revalidate=600',
-	)
-	headers.set('Content-Type', 'text/xml')
-
-	return new Response(feed.xml({indent: true}), {headers})
+	return new Response(feed.xml({indent: true}), {
+		headers: {
+			'Content-Type': 'text/xml',
+			'Cache-Control': 'public, s-maxage=1200, stale-while-revalidate=600',
+		},
+	})
 }

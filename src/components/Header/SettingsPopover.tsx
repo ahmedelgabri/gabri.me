@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import clsx from 'clsx'
 import {useTheme, useColorTheme, useFontTheme} from '../../hooks'

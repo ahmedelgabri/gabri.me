@@ -1,0 +1,228 @@
+---
+import siteMeta from '../config/siteMeta'
+import {IslamicPattern} from '../components/Header/IslamicPatterns'
+import '../style/style.css'
+
+interface Props {
+	title?: string
+	description?: string
+	canonicalUrl?: string
+	ogImage?: string
+	ogType?: 'website' | 'article'
+}
+
+const {
+	title,
+	description = siteMeta.description,
+	canonicalUrl,
+	ogImage = '/img/fb-image.jpg',
+	ogType = 'website',
+} = Astro.props
+
+const {author, siteUrl, social, twitterId} = siteMeta
+
+const fullTitle = title
+	? `${author} | ${siteMeta.title} - ${title}`
+	: `${author} | ${siteMeta.title}`
+
+const canonical = canonicalUrl || Astro.url.href
+
+const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
+---
+
+<!doctype html>
+<html lang="en" class="dark font-mono">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+		<meta name="theme-color" content="#1f2325" />
+		<meta name="color-scheme" content="dark light" />
+
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" type="image/svg+xml" href="/icon.svg" />
+
+		<!-- OpenGraph -->
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={`${siteUrl}${ogImage}`} />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:site_name" content={author} />
+		<meta property="og:locale" content="en-US" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:site" content={social.twitter.display} />
+		<meta name="twitter:creator" content={social.twitter.display} />
+		<meta name="twitter:image" content={`${siteUrl}/i/social-image.jpg`} />
+
+		<!-- Authors -->
+		<meta name="author" content={author} />
+		<link rel="author" href={siteUrl} />
+		<meta name="application-name" content="Gabri.me" />
+		<meta name="fediverse:creator" content="@gabri@mastodon.online" />
+
+		<!-- Apple -->
+		<meta name="apple-mobile-web-app-title" content="Gabri.me" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<!-- RSS -->
+		<link rel="alternate" type="application/rss+xml" title={`${author} RSS Feed`} href="/feed.xml" />
+
+		<!-- Social links -->
+		{Object.entries(social).map(([, {url}]) => (
+			<link href={url} rel="me" />
+		))}
+
+		<!-- Theme script (runs before render to prevent flash) -->
+		<script is:inline>
+			(function() {
+				var THEME_STORAGE_KEY = 'theme'
+				var COLOR_STORAGE_KEY = 'colorTheme'
+				var FONT_STORAGE_KEY = 'fontTheme'
+				var VALID_THEMES = ['system', 'light', 'dark']
+				var VALID_COLORS = ['blue', 'amber', 'teal', 'purple']
+				var VALID_FONTS = ['mono', 'serif', 'sans']
+				var DEFAULT_THEME = 'dark'
+				var DEFAULT_COLOR = 'blue'
+				var DEFAULT_FONT = 'mono'
+
+				var storedTheme
+				var storedColor
+				var storedFont
+				try {
+					storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+					storedColor = localStorage.getItem(COLOR_STORAGE_KEY)
+					storedFont = localStorage.getItem(FONT_STORAGE_KEY)
+				} catch (e) {}
+
+				var themeSetting = VALID_THEMES.includes(storedTheme)
+					? storedTheme
+					: DEFAULT_THEME
+				var colorTheme = VALID_COLORS.includes(storedColor)
+					? storedColor
+					: DEFAULT_COLOR
+				var fontTheme = VALID_FONTS.includes(storedFont) ? storedFont : DEFAULT_FONT
+
+				window.__themeSetting = themeSetting
+				window.__colorTheme = colorTheme
+				window.__fontTheme = fontTheme
+
+				function getSystemTheme() {
+					return window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light'
+				}
+
+				function resolveTheme() {
+					return window.__themeSetting === 'system'
+						? getSystemTheme()
+						: window.__themeSetting
+				}
+
+				function applyTheme(theme) {
+					window.__theme = theme
+					document.documentElement.classList.remove('light', 'dark')
+					document.documentElement.classList.add(theme)
+				}
+
+				function applyColorTheme(color) {
+					window.__colorTheme = color
+					document.documentElement.classList.remove(
+						'color-blue',
+						'color-amber',
+						'color-teal',
+						'color-purple',
+					)
+					if (color !== 'blue') {
+						document.documentElement.classList.add('color-' + color)
+					}
+				}
+
+				function applyFontTheme(font) {
+					window.__fontTheme = font
+					document.documentElement.classList.remove(
+						'font-mono',
+						'font-serif',
+						'font-sans',
+					)
+					document.documentElement.classList.add('font-' + font)
+				}
+
+				applyTheme(resolveTheme())
+				applyColorTheme(colorTheme)
+				applyFontTheme(fontTheme)
+
+				window.__setTheme = function (newSetting) {
+					window.__themeSetting = newSetting
+					try {
+						localStorage.setItem(THEME_STORAGE_KEY, newSetting)
+					} catch (e) {}
+					applyTheme(resolveTheme())
+				}
+
+				window.__setColorTheme = function (newColor) {
+					window.__colorTheme = newColor
+					try {
+						localStorage.setItem(COLOR_STORAGE_KEY, newColor)
+					} catch (e) {}
+					applyColorTheme(newColor)
+				}
+
+				window.__setFontTheme = function (newFont) {
+					window.__fontTheme = newFont
+					try {
+						localStorage.setItem(FONT_STORAGE_KEY, newFont)
+					} catch (e) {}
+					applyFontTheme(newFont)
+				}
+
+				window
+					.matchMedia('(prefers-color-scheme: dark)')
+					.addEventListener('change', function () {
+						if (window.__themeSetting === 'system') {
+							applyTheme(resolveTheme())
+						}
+					})
+			})()
+		</script>
+
+		{GA4_TRACKING_ID && (
+			<>
+				<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}></script>
+				<script is:inline define:vars={{GA4_TRACKING_ID}}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					gtag('config', GA4_TRACKING_ID, {
+						page_path: window.location.pathname,
+						anonymize_ip: true
+					});
+				</script>
+			</>
+		)}
+
+		<!-- View Transitions -->
+		<style is:global>
+			@view-transition {
+				navigation: auto;
+			}
+			::view-transition-old(root),
+			::view-transition-new(root) {
+				animation-duration: 150ms;
+				animation-timing-function: ease-in-out;
+			}
+		</style>
+	</head>
+	<body class="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
+		<IslamicPattern client:load />
+		<div class="w-content">
+			<slot />
+		</div>
+	</body>
+</html>

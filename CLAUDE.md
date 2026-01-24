@@ -5,9 +5,9 @@ code in this repository.
 
 ## Project Overview
 
-This is a personal website and blog built with Next.js 16 (App Router),
-featuring blog posts and weekly links collections. Content is managed through
-MDX files using Next.js native MDX support.
+This is a personal website and blog built with **Astro**, featuring blog posts
+and weekly links collections. Content is managed through MDX files using Astro's
+native MDX integration.
 
 ## Development Environment
 
@@ -34,14 +34,14 @@ for all package management operations.
 ### Development
 
 ```bash
-# Start development server (Next.js telemetry disabled)
+# Start development server
 pnpm dev
 
-# Build for production (Next.js telemetry disabled)
+# Build for production
 pnpm build
 
-# Start production server (Next.js telemetry disabled)
-pnpm start
+# Preview production build
+pnpm preview
 ```
 
 ### Testing
@@ -79,12 +79,11 @@ Use `command git` instead of `git` directly to avoid shell function conflicts
 
 ### Content Management
 
-Content is managed through **Next.js native MDX support** with custom
-processing:
+Content is managed through **Astro's MDX integration** with custom processing:
 
 - Content organized in folder structure:
   `src/_content/{collection}/{slug}/post.mdx`
-- Processed using @next/mdx with rehype plugins
+- Processed using @astrojs/mdx with rehype plugins
 - Metadata extracted via export statement in each MDX file
 - Content helper functions in `src/lib/content.ts` for querying posts
 - Uses git timestamps for `updated` field via `git log -1 --format=%cd`
@@ -97,36 +96,35 @@ published status.
 
 ### Content Processing Pipeline
 
-MDX processing uses rehype plugins (configured in mdx.config.ts):
+MDX processing uses rehype plugins (configured in astro.config.ts):
 
 1. `rehype-slug` - adds IDs to headings
 2. `rehype-code-titles` - adds titles to code blocks
-3. `rehype-prism-plus` - syntax highlighting with Prism
+3. `@shikijs/rehype` - syntax highlighting with Shiki (dual theme support)
 4. `rehype-autolink-headings` - adds anchor links to headings
 
-The configuration is shared between:
+### Astro Structure
 
-- Next.js (via next.config.ts using string references)
-- Vitest (via vitest.config.ts using actual imports with @mdx-js/rollup)
+Using Astro with TypeScript and React for interactive components:
 
-### Next.js App Structure
-
-Using Next.js 16 App Router with TypeScript and React 19:
-
-- React Compiler enabled for automatic optimizations
-- Experimental inline CSS enabled for performance
-
-- **App Routes** (src/app/):
-  - `/` - Homepage (page.tsx)
+- **Pages** (src/pages/):
+  - `/` - Homepage (index.astro)
   - `/blog/[slug]` - Dynamic blog post pages
   - `/feed.xml` - RSS feed generation
-  - `/card` - Social card generation
-  - Custom 404 (not-found.tsx) and error pages (error.tsx)
+  - `/sitemap.xml` - Sitemap generation
+  - `/card` - Terminal card endpoint
+  - `/llms.txt` - LLM manifest endpoint
+  - `/robots.txt` - Robots file
+  - `/404` - Custom 404 page
+
+- **Layouts** (src/layouts/):
+  - `BaseLayout.astro` - Main layout with theme script and metadata
 
 - **Components** (src/components/):
-  - Modular React components (Header, Footer, Layout, etc.)
+  - Astro components for static content
+  - React components (with client:load) for interactive elements
   - Tweet component for embedding tweets via react-tweet
-  - Theme switcher for dark/light mode
+  - Settings popover for theme/color/font switching
 
 - **Configuration** (src/config/):
   - `siteMeta.ts` - Site metadata, social links, author info
@@ -137,63 +135,58 @@ Uses **UnoCSS** (atomic CSS framework):
 
 - Configuration: `uno.config.ts`
 - PostCSS integration: `postcss.config.mjs`
-- Custom font stacks for serif (Playfair Display), sans (Inter), and monospace
+- Custom font stacks for serif, sans, and monospace
 - Dark mode via class strategy (`dark:` prefix)
-- Custom utilities like `w-my` (65ch width)
-- Base styles in `src/style/style.css` and `src/style/prism-plain.css`
-
-Google Fonts loaded in layout.tsx:
-
-- Inter (sans-serif, variable font)
-- Playfair Display (serif, variable font)
+- Custom utilities like `w-content` (70ch max-width)
+- Base styles in `src/style/style.css`
+- Icons via @iconify-json/tabler and @iconify-json/logos
 
 ### TypeScript Configuration
 
+- Extends Astro's strict tsconfig
 - Path aliases:
   - `@/*` → project root
 - Strict mode enabled
 - Module resolution: bundler
-- MDX type declarations in globals.d.ts for .md and .mdx files
 
 ### Theme System
 
 Client-side theme switching implemented via:
 
-- Inline script in layout.tsx (prevents flash of unstyled content)
+- Inline script in BaseLayout.astro (prevents flash of unstyled content)
 - Reads from localStorage and respects `prefers-color-scheme`
-- Custom hook: `src/hooks/useTheme.tsx`
+- Custom hooks: `src/hooks/useTheme.tsx`
 - Theme classes applied to `<html>` element
+- Three customizable aspects: theme (light/dark/system), color (blue/amber/teal/purple), font (mono/serif/sans)
 
 ### Metadata & SEO
 
-Comprehensive metadata configured in layout.tsx:
+Comprehensive metadata configured in BaseLayout.astro:
 
 - OpenGraph tags
 - Twitter Card metadata
 - Apple Web App configuration
 - Fediverse creator verification
-- Dynamic metadata per blog post (generateMetadata in [slug]/page.tsx)
+- Dynamic metadata per blog post
 
 ## Static Site Generation
 
 All blog posts are statically generated at build time:
 
-- `generateStaticParams()` creates paths for all posts
-- `dynamicParams = false` disables dynamic route generation
+- `getStaticPaths()` creates paths for all posts
 - Content sourced from MDX files via `src/lib/content.ts` helper functions
+- Output is a fully static site (no server required)
 
 ## Important Files
 
-- `mdx.config.ts` - Shared MDX/rehype plugin configuration for Next.js and
-  Vitest
-- `next.config.ts` - Next.js configuration with MDX, redirects, and headers
-- `mdx-components.tsx` - MDX component customizations (links, YouTube, etc.)
+- `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React integrations
+- `mdx.config.ts` - Shared MDX/rehype plugin configuration
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration with MDX support
 - `uno.config.ts` - Styling configuration
 - `flake.nix` - Development environment (flake-parts based)
 - `src/config/siteMeta.ts` - Site-wide metadata
-- `globals.d.ts` - Global TypeScript declarations including MDX types
+- `globals.d.ts` - Global TypeScript declarations
 
 ## Content Creation
 
@@ -209,9 +202,9 @@ To add new blog posts:
 
 ## Deployment
 
-Deployed to **Netlify** as a Next.js static site.
+Deployed to **Netlify** as a static site.
 
-Key redirects configured in next.config.ts:
+Key redirects configured in astro.config.ts:
 
 - `/feed` → `/feed.xml`
 - `/work` → `/`

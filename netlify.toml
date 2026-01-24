@@ -1,6 +1,22 @@
 [build]
 command = "pnpm build"
-publish = ".next"
+publish = "dist"
 
 # Skip automatic builds on main branch - production deploys handled by GitHub Actions
 ignore = "[ \"$BRANCH\" = \"main\" ]"
+
+# Redirects for Astro
+[[redirects]]
+from = "/feed"
+to = "/feed.xml"
+status = 301
+
+[[redirects]]
+from = "/work"
+to = "/"
+status = 301
+
+[[redirects]]
+from = "/blog"
+to = "/"
+status = 301

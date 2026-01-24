@@ -9,7 +9,6 @@ export default defineConfig({
 			dark: 'class',
 		}),
 		presetIcons({
-			cdn: 'https://esm.sh/',
 			extraProperties: {
 				display: 'inline-block',
 				'vertical-align': 'middle',
