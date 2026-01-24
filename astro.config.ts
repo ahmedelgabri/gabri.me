@@ -10,6 +10,8 @@ import plainLight from './src/lib/plain-light.json'
 import plainDark from './src/lib/plain-dark.json'
 import netlify from '@astrojs/netlify'
 
+import compressor from 'astro-compressor'
+
 const shikiOptions = {
 	themes: {
 		light: plainLight,
@@ -19,7 +21,7 @@ const shikiOptions = {
 }
 export default defineConfig({
 	site: 'https://gabri.me',
-	integrations: [UnoCSS(), react(), mdx()],
+	integrations: [UnoCSS(), react(), mdx(), compressor()],
 
 	markdown: {
 		syntaxHighlight: false,

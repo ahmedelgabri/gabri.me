@@ -53,6 +53,9 @@ importers:
       astro:
         specifier: ^5.16.14
         version: 5.16.14(@netlify/blobs@10.5.0)(@types/node@25.0.10)(jiti@2.6.1)(rollup@4.56.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2)
+      astro-compressor:
+        specifier: ^1.2.0
+        version: 1.2.0
       astro-tweet:
         specifier: ^0.0.6
         version: 0.0.6(astro@5.16.14(@netlify/blobs@10.5.0)(@types/node@25.0.10)(jiti@2.6.1)(rollup@4.56.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))(prettier@3.8.1)
@@ -2138,6 +2141,10 @@ packages:
   astring@1.9.0:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
     hasBin: true
+
+  astro-compressor@1.2.0:
+    resolution: {integrity: sha512-Y0UWW/AjyLcHlRhCK9yUqy0kg4qZHd54kDIMY4C/1huS6pSVZNsMY7a3Jk7o5RjytIkVaLDDkcUzR8SgipBH8g==}
+    engines: {node: '>=22'}
 
   astro-tweet@0.0.6:
     resolution: {integrity: sha512-NCpoXb/Aek7Dklwo8ppmtN9pwB7ux469xIqbVeY+50/biO7mdGjp0yUZ93E2TDlOAlSy39vh50JkhInTQlGniQ==}
@@ -7212,6 +7219,8 @@ snapshots:
   ast-module-types@6.0.1: {}
 
   astring@1.9.0: {}
+
+  astro-compressor@1.2.0: {}
 
   astro-tweet@0.0.6(astro@5.16.14(@netlify/blobs@10.5.0)(@types/node@25.0.10)(jiti@2.6.1)(rollup@4.56.0)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.2))(prettier@3.8.1):
     dependencies:

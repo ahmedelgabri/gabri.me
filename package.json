@@ -33,6 +33,7 @@
 		"@unocss/reset": "^66.6.0",
 		"ahmedelgabri": "8.1.0",
 		"astro": "^5.16.14",
+		"astro-compressor": "^1.2.0",
 		"astro-tweet": "^0.0.6",
 		"autoprefixer": "10.4.23",
 		"clsx": "^2.1.1",
