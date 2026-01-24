@@ -1,6 +1,7 @@
 ---
 import '../style/style.css'
 
+import {ClientRouter} from 'astro:transitions'
 import siteMeta from '../config/siteMeta'
 import IslamicPattern from '../components/Header/IslamicPattern.astro'
 import Logo from '../components/Logo'
@@ -238,6 +239,7 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 			</>
 		)}
 
+		<ClientRouter />
 	</head>
 	<body class="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
 		<IslamicPattern />
