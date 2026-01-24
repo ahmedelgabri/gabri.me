@@ -3,8 +3,6 @@ import {render} from 'astro:content'
 import {format} from 'date-fns'
 import {getAllBlogEntries, getBlogEntry, generateExcerpt} from '../../lib/content'
 import BaseLayout from '../../layouts/BaseLayout.astro'
-import Logo from '../../components/Logo'
-import {SettingsPopover} from '../../components/Header/SettingsPopover'
 import YouTube from '../../components/YouTube'
 import siteMeta from '../../config/siteMeta'
 
@@ -46,14 +44,8 @@ const components = {
 	description={excerpt}
 	canonicalUrl={postUrl}
 	ogType="article"
+	slug={slug}
 >
-	<header class="mb-12 flex items-center justify-between gap-4">
-		<div class="min-w-0 flex-1">
-			<Logo slug={slug} />
-		</div>
-		<SettingsPopover client:load />
-	</header>
-
 	<article>
 		<header class="mb-8">
 			<h2
@@ -89,8 +81,4 @@ const components = {
 			</a>.
 		</div>
 	</article>
-
-	<footer class="border-t border-neutral-300 pt-6 text-sm text-neutral-500 dark:border-neutral-700">
-		&copy; {new Date().getFullYear()} {siteMeta.author}
-	</footer>
 </BaseLayout>

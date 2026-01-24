@@ -1,22 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Logo from '../components/Logo'
-import {SettingsPopover} from '../components/Header/SettingsPopover'
-import siteMeta from '../config/siteMeta'
 ---
 
 <BaseLayout title="Oops - page not found">
-	<header class="mb-12 flex items-center justify-between gap-4">
-		<div class="min-w-0 flex-1">
-			<Logo />
-		</div>
-		<SettingsPopover client:load />
-	</header>
-
 	<h2>Sorry! This page was not found.</h2>
 	<img src="/img/404.gif" alt="" style="max-width: 100%;" />
-
-	<footer class="border-t border-neutral-300 pt-6 text-sm text-neutral-500 dark:border-neutral-700">
-		© {new Date().getFullYear()} {siteMeta.author}
-	</footer>
 </BaseLayout>

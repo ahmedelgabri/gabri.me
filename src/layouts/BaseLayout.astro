@@ -3,6 +3,8 @@ import '../style/style.css'
 
 import siteMeta from '../config/siteMeta'
 import IslamicPattern from '../components/Header/IslamicPattern.astro'
+import Logo from '../components/Logo'
+import {SettingsPopover} from '../components/Header/SettingsPopover'
 
 interface Props {
 	title?: string
@@ -10,6 +12,7 @@ interface Props {
 	canonicalUrl?: string
 	ogImage?: string
 	ogType?: 'website' | 'article'
+	slug?: string
 }
 
 const {
@@ -18,6 +21,7 @@ const {
 	canonicalUrl,
 	ogImage = '/img/fb-image.jpg',
 	ogType = 'website',
+	slug,
 } = Astro.props
 
 const {author, siteUrl, social} = siteMeta
@@ -238,7 +242,18 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 	<body class="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
 		<IslamicPattern />
 		<div class="w-content">
+			<header class="mb-12 flex items-center justify-between gap-4">
+				<div class="min-w-0 flex-1">
+					<Logo slug={slug} client:load />
+				</div>
+				<SettingsPopover client:load />
+			</header>
+
 			<slot />
+
+			<footer class="border-t border-neutral-300 pt-6 text-sm text-neutral-500 dark:border-neutral-700">
+				&copy; {new Date().getFullYear()} {author}
+			</footer>
 		</div>
 	</body>
 </html>
