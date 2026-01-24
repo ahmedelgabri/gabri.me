@@ -3,11 +3,9 @@ import type {ReactNode} from 'react'
 import {readFileSync} from 'node:fs'
 import {join} from 'node:path'
 import satori from 'satori'
-import {html} from 'satori-html'
 import {Resvg} from '@resvg/resvg-js'
 import {getAllBlogEntries, getBlogEntry} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
-import {escapeHtml} from '../../lib/og'
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -56,23 +54,90 @@ export const GET: APIRoute = async ({params}) => {
 		loadGoogleFont('Inter', 700),
 	])
 
-	const markup = html`
-		<div style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 60px; background-color: #1f2325; color: #f5f5f5; font-family: Inter;">
-			<div style="display: flex; flex-direction: column; gap: 24px;">
-				<div style="font-size: 24px; color: #3b82f6; font-weight: 400;">gabri.me</div>
-				<div style="font-size: ${titleFontSize}; font-weight: 700; line-height: 1.2; max-width: 900px;">${escapeHtml(title)}</div>
-			</div>
-			<div style="display: flex; align-items: center; gap: 16px;">
-				<img src="${avatarBase64}" style="width: 48px; height: 48px; border-radius: 24px;" />
-				<div style="display: flex; flex-direction: column;">
-					<div style="font-size: 20px; font-weight: 600;">${escapeHtml(author)}</div>
-					<div style="font-size: 16px; color: #a3a3a3;">Software Engineer</div>
-				</div>
-			</div>
-		</div>
-	`
+	const markup: ReactNode = {
+		type: 'div',
+		props: {
+			style: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'space-between',
+				padding: '60px',
+				backgroundColor: '#1f2325',
+				color: '#f5f5f5',
+				fontFamily: 'Inter',
+			},
+			children: [
+				{
+					type: 'div',
+					props: {
+						style: {display: 'flex', flexDirection: 'column', gap: '24px'},
+						children: [
+							{
+								type: 'div',
+								props: {
+									style: {fontSize: '24px', color: '#3b82f6', fontWeight: 400},
+									children: 'gabri.me',
+								},
+							},
+							{
+								type: 'div',
+								props: {
+									style: {
+										fontSize: titleFontSize,
+										fontWeight: 700,
+										lineHeight: 1.2,
+										maxWidth: '900px',
+									},
+									children: title,
+								},
+							},
+						],
+					},
+				},
+				{
+					type: 'div',
+					props: {
+						style: {display: 'flex', alignItems: 'center', gap: '16px'},
+						children: [
+							{
+								type: 'img',
+								props: {
+									src: avatarBase64,
+									style: {width: '48px', height: '48px', borderRadius: '24px'},
+								},
+							},
+							{
+								type: 'div',
+								props: {
+									style: {display: 'flex', flexDirection: 'column'},
+									children: [
+										{
+											type: 'div',
+											props: {
+												style: {fontSize: '20px', fontWeight: 600},
+												children: author,
+											},
+										},
+										{
+											type: 'div',
+											props: {
+												style: {fontSize: '16px', color: '#a3a3a3'},
+												children: 'Software Engineer',
+											},
+										},
+									],
+								},
+							},
+						],
+					},
+				},
+			],
+		},
+	}
 
-	const svg = await satori(markup as ReactNode, {
+	const svg = await satori(markup, {
 		width: WIDTH,
 		height: HEIGHT,
 		fonts: [
