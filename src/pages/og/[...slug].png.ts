@@ -1,5 +1,4 @@
 import type {APIRoute, GetStaticPaths} from 'astro'
-import type {ReactNode} from 'react'
 import {readFileSync} from 'node:fs'
 import {join} from 'node:path'
 import satori from 'satori'
@@ -54,7 +53,7 @@ export const GET: APIRoute = async ({params}) => {
 		loadGoogleFont('Inter', 700),
 	])
 
-	const markup: ReactNode = {
+	const markup = {
 		type: 'div',
 		props: {
 			style: {
@@ -137,7 +136,7 @@ export const GET: APIRoute = async ({params}) => {
 		},
 	}
 
-	const svg = await satori(markup, {
+	const svg = await satori(markup as React.ReactNode, {
 		width: WIDTH,
 		height: HEIGHT,
 		fonts: [
