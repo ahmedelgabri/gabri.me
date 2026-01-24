@@ -7,6 +7,7 @@ import {html} from 'satori-html'
 import {Resvg} from '@resvg/resvg-js'
 import {getAllBlogEntries, getBlogEntry} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
+import {escapeHtml} from '../../lib/og'
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -33,14 +34,6 @@ async function loadGoogleFont(
 		throw new Error(`Could not find font URL for ${font}`)
 	}
 	return fetch(fontUrl).then((res) => res.arrayBuffer())
-}
-
-function escapeHtml(str: string): string {
-	return str
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/"/g, '&quot;')
 }
 
 export const GET: APIRoute = async ({params}) => {

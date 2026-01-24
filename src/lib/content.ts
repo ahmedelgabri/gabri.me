@@ -1,5 +1,8 @@
 import {getCollection, getEntry, type CollectionEntry} from 'astro:content'
 import {format} from 'date-fns'
+import {generateExcerpt} from './excerpt'
+
+export {generateExcerpt}
 
 export interface PostMetadata {
 	title: string
@@ -17,29 +20,6 @@ type WeeklyLinksEntry = CollectionEntry<'weeklyLinks'>
 
 function getSlugFromId(id: string): string {
 	return id.replace(/\/post$/, '')
-}
-
-export function generateExcerpt(
-	body: string | undefined,
-	maxLength = 160,
-): string {
-	if (!body) return ''
-
-	const stripped = body
-		.replace(/^---[\s\S]*?---\n*/, '')
-		.replace(/import\s+.*?from\s+['"].*?['"]\n*/g, '')
-		.replace(/#+\s/g, '')
-		.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-		.replace(/<[^>]+>/g, '')
-		.replace(/[*_`]/g, '')
-		.replace(/\n+/g, ' ')
-		.trim()
-
-	if (stripped.length <= maxLength) {
-		return stripped
-	}
-
-	return stripped.slice(0, maxLength).trim() + '...'
 }
 
 function formatPostDate(date: Date): string {

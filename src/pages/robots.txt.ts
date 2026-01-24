@@ -1,14 +1,9 @@
 import type {APIRoute} from 'astro'
 import siteMeta from '../config/siteMeta'
+import {generateRobotsTxt} from '../lib/robots'
 
 export const GET: APIRoute = () => {
-	const robotsTxt = `User-agent: *
-Allow: /
-
-Sitemap: ${siteMeta.siteUrl}/sitemap.xml
-`
-
-	return new Response(robotsTxt, {
+	return new Response(generateRobotsTxt(siteMeta.siteUrl), {
 		headers: {
 			'Content-Type': 'text/plain',
 		},
