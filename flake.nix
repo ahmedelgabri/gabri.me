@@ -16,6 +16,7 @@
             nodejs
             actionlint
             pnpm
+            netlify-cli
           ];
           shellHook = "";
         };
