@@ -67,7 +67,6 @@ metadata.json
 drafts/
 .lambda
 
-.vercel
 public/sitemap*.xml
 public/feed.xml
 
@@ -81,7 +80,6 @@ public/feed.xml
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 .aider*
 .env
 
