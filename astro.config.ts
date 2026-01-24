@@ -8,6 +8,7 @@ import rehypeShiki from '@shikijs/rehype'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import plainLight from './src/lib/plain-light.json'
 import plainDark from './src/lib/plain-dark.json'
+import netlify from '@astrojs/netlify'
 
 const shikiOptions = {
 	themes: {
@@ -50,4 +51,6 @@ export default defineConfig({
 			},
 		},
 	},
+
+	adapter: netlify(),
 })
