@@ -124,6 +124,31 @@ const themeScript = `(${(() => {
 				applyTheme(resolveTheme())
 			}
 		})
+
+	// Watch for class attribute changes and re-apply our theme classes
+	// This handles React hydration and view transitions that may reset classes
+	var observer = new MutationObserver(function (mutations) {
+		mutations.forEach(function (mutation) {
+			if (mutation.attributeName === 'class') {
+				var html = document.documentElement
+				var resolved = resolveTheme()
+				var hasCorrectTheme = html.classList.contains(resolved)
+				var hasCorrectFont = html.classList.contains(
+					'font-' + window.__fontTheme,
+				)
+				var hasCorrectColor =
+					window.__colorTheme === 'blue' ||
+					html.classList.contains('color-' + window.__colorTheme)
+
+				if (!hasCorrectTheme || !hasCorrectFont || !hasCorrectColor) {
+					applyTheme(resolved)
+					applyColorTheme(window.__colorTheme)
+					applyFontTheme(window.__fontTheme)
+				}
+			}
+		})
+	})
+	observer.observe(document.documentElement, {attributes: true})
 }).toString()})()`
 
 const {description, social, twitterId, siteUrl, author, title} = siteMeta
