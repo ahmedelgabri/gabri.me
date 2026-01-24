@@ -1,9 +1,16 @@
-import {defineConfig, presetWind4, presetIcons} from 'unocss'
+import {
+	defineConfig,
+	presetWind4,
+	presetIcons,
+	transformerDirectives,
+} from 'unocss'
 
 export default defineConfig({
-	content: {
-		filesystem: ['**/*.{html,js,ts,jsx,tsx,vue,svelte,mdx,astro,marko}'],
+	layers: {
+		'my-layer': -200,
 	},
+	outputToCssLayers: true,
+	transformers: [transformerDirectives()],
 	presets: [
 		presetWind4({
 			preflights: {
