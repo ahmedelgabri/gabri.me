@@ -1,0 +1,259 @@
+---
+import '../style/style.css'
+
+import {ClientRouter} from 'astro:transitions'
+import siteMeta from '../config/siteMeta'
+import IslamicPattern from '../components/Header/IslamicPattern.astro'
+import Logo from '../components/Logo'
+import {SettingsPopover} from '../components/Header/SettingsPopover'
+
+interface Props {
+	title?: string
+	description?: string
+	canonicalUrl?: string
+	ogImage?: string
+	ogType?: 'website' | 'article'
+	slug?: string
+	publishedTime?: Date
+}
+
+const {
+	title,
+	description = siteMeta.description,
+	canonicalUrl,
+	ogImage = '/img/fb-image.jpg',
+	ogType = 'website',
+	slug,
+	publishedTime,
+} = Astro.props
+
+const {author, siteUrl, social, twitterId} = siteMeta
+
+const fullTitle = title
+	? `${author} | ${siteMeta.title} - ${title}`
+	: `${author} | ${siteMeta.title}`
+
+const canonical = canonicalUrl || Astro.url.href
+
+const resolvedOgImage = ogType === 'article' && slug
+	? `/og/${slug}.png`
+	: ogImage
+
+const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
+---
+
+<!doctype html>
+<html lang="en" class="dark font-mono">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+		<meta name="theme-color" content="#1f2325" />
+		<meta name="color-scheme" content="dark light" />
+
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
+		<link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
+
+		<!-- OpenGraph -->
+		<meta property="og:title" content={title || fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:site_name" content={author} />
+		<meta property="og:locale" content="en-US" />
+		<meta property="og:image" content={`${siteUrl}${resolvedOgImage}`} />
+		<meta property="og:type" content={ogType} />
+		{ogType === 'article' && publishedTime && (
+			<meta property="article:published_time" content={publishedTime.toISOString()} />
+		)}
+		{ogType === 'article' && (
+			<meta property="article:author" content={author} />
+		)}
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site:id" content={twitterId} />
+		<meta name="twitter:creator" content={social.twitter.display} />
+		<meta name="twitter:creator:id" content={twitterId} />
+		<meta name="twitter:title" content={title || fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={`${siteUrl}${resolvedOgImage}`} />
+
+		<!-- Authors -->
+		<link rel="author" href={siteUrl} />
+		<meta name="author" content={author} />
+		<meta name="creator" content={author} />
+		<meta name="publisher" content={author} />
+		<meta name="application-name" content="Gabri.me" />
+		<meta name="fediverse:creator" content="@gabri@mastodon.online" />
+		<meta name="mobile-web-app-capable" content="yes" />
+
+		<!-- Apple -->
+		<meta name="apple-mobile-web-app-title" content="Gabri.me" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<!-- RSS -->
+		<link rel="alternate" type="application/rss+xml" title={`${author} RSS Feed`} href={new URL("feed.xml", Astro.site)} />
+
+		<!-- Social links -->
+		{Object.entries(social).map(([, {url}]) => (
+			<link href={url} rel="me" />
+		))}
+
+		<!-- Theme script (runs before render to prevent flash) -->
+		<script is:inline>
+			(function() {
+				var THEME_STORAGE_KEY = 'theme'
+				var COLOR_STORAGE_KEY = 'colorTheme'
+				var FONT_STORAGE_KEY = 'fontTheme'
+				var VALID_THEMES = ['system', 'light', 'dark']
+				var VALID_COLORS = ['blue', 'amber', 'teal', 'purple']
+				var VALID_FONTS = ['mono', 'serif', 'sans']
+				var DEFAULT_THEME = 'dark'
+				var DEFAULT_COLOR = 'blue'
+				var DEFAULT_FONT = 'mono'
+
+				var storedTheme
+				var storedColor
+				var storedFont
+				try {
+					storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+					storedColor = localStorage.getItem(COLOR_STORAGE_KEY)
+					storedFont = localStorage.getItem(FONT_STORAGE_KEY)
+				} catch (e) {}
+
+				var themeSetting = VALID_THEMES.includes(storedTheme)
+					? storedTheme
+					: DEFAULT_THEME
+				var colorTheme = VALID_COLORS.includes(storedColor)
+					? storedColor
+					: DEFAULT_COLOR
+				var fontTheme = VALID_FONTS.includes(storedFont) ? storedFont : DEFAULT_FONT
+
+				window.__themeSetting = themeSetting
+				window.__colorTheme = colorTheme
+				window.__fontTheme = fontTheme
+
+				function getSystemTheme() {
+					return window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light'
+				}
+
+				function resolveTheme() {
+					return window.__themeSetting === 'system'
+						? getSystemTheme()
+						: window.__themeSetting
+				}
+
+				function applyTheme(theme) {
+					window.__theme = theme
+					document.documentElement.classList.remove('light', 'dark')
+					document.documentElement.classList.add(theme)
+				}
+
+				function applyColorTheme(color) {
+					window.__colorTheme = color
+					document.documentElement.classList.remove(
+						'color-blue',
+						'color-amber',
+						'color-teal',
+						'color-purple',
+					)
+					if (color !== 'blue') {
+						document.documentElement.classList.add('color-' + color)
+					}
+				}
+
+				function applyFontTheme(font) {
+					window.__fontTheme = font
+					document.documentElement.classList.remove(
+						'font-mono',
+						'font-serif',
+						'font-sans',
+					)
+					document.documentElement.classList.add('font-' + font)
+				}
+
+				applyTheme(resolveTheme())
+				applyColorTheme(colorTheme)
+				applyFontTheme(fontTheme)
+
+				window.__setTheme = function (newSetting) {
+					window.__themeSetting = newSetting
+					try {
+						localStorage.setItem(THEME_STORAGE_KEY, newSetting)
+					} catch (e) {}
+					applyTheme(resolveTheme())
+				}
+
+				window.__setColorTheme = function (newColor) {
+					window.__colorTheme = newColor
+					try {
+						localStorage.setItem(COLOR_STORAGE_KEY, newColor)
+					} catch (e) {}
+					applyColorTheme(newColor)
+				}
+
+				window.__setFontTheme = function (newFont) {
+					window.__fontTheme = newFont
+					try {
+						localStorage.setItem(FONT_STORAGE_KEY, newFont)
+					} catch (e) {}
+					applyFontTheme(newFont)
+				}
+
+				window
+					.matchMedia('(prefers-color-scheme: dark)')
+					.addEventListener('change', function () {
+						if (window.__themeSetting === 'system') {
+							applyTheme(resolveTheme())
+						}
+					})
+
+				// Re-apply theme classes after view transitions swap in new content
+				document.addEventListener('astro:after-swap', function () {
+					applyTheme(resolveTheme())
+					applyColorTheme(window.__colorTheme)
+					applyFontTheme(window.__fontTheme)
+				})
+			})()
+		</script>
+
+		{GA4_TRACKING_ID && (
+			<>
+				<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}></script>
+				<script is:inline define:vars={{GA4_TRACKING_ID}}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					gtag('config', GA4_TRACKING_ID, {
+						page_path: window.location.pathname,
+						anonymize_ip: true
+					});
+				</script>
+			</>
+		)}
+
+		<ClientRouter />
+	</head>
+	<body class="bg-light-800 p-6 text-dark-950 dark:bg-dark-900 dark:text-light-950 md:p-8 lg:p-12 xl:text-lg 2xl:text-xl">
+		<IslamicPattern />
+		<div class="w-content">
+			<header class="mb-12 flex items-center justify-between gap-4">
+				<div class="min-w-0 flex-1">
+					<Logo slug={slug} client:load />
+				</div>
+				<SettingsPopover client:load />
+			</header>
+
+			<slot />
+
+			<footer class="border-t border-neutral-300 pt-6 text-sm text-neutral-500 dark:border-neutral-700">
+				&copy; {new Date().getFullYear()} {author}
+			</footer>
+		</div>
+	</body>
+</html>

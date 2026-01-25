@@ -6,7 +6,7 @@ import {rehypePlugins} from './mdx.config'
 export default defineConfig({
 	plugins: [
 		mdx({
-			rehypePlugins: rehypePlugins,
+			rehypePlugins: rehypePlugins as any,
 		}),
 	],
 	test: {
@@ -22,10 +22,6 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, '.'),
-			'next-view-transitions': path.resolve(
-				__dirname,
-				'./src/__mocks__/next-view-transitions.tsx',
-			),
 		},
 	},
 })

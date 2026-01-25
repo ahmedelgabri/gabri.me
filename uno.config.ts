@@ -1,6 +1,16 @@
-import {defineConfig, presetWind4, presetIcons} from 'unocss'
+import {
+	defineConfig,
+	presetWind4,
+	presetIcons,
+	transformerDirectives,
+} from 'unocss'
 
 export default defineConfig({
+	layers: {
+		'my-layer': -200,
+	},
+	outputToCssLayers: true,
+	transformers: [transformerDirectives()],
 	presets: [
 		presetWind4({
 			preflights: {
@@ -9,7 +19,6 @@ export default defineConfig({
 			dark: 'class',
 		}),
 		presetIcons({
-			cdn: 'https://esm.sh/',
 			extraProperties: {
 				display: 'inline-block',
 				'vertical-align': 'middle',

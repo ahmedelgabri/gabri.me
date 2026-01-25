@@ -1,214 +1,216 @@
-@unocss all;
+@layer my-layer {
+	:root {
+		color-scheme: dark light;
 
-:root {
-	color-scheme: dark light;
-
-	--link-color: theme('colors.blue.700');
-	--link-decoration: theme('colors.blue.700/30%');
-	--link-hover-bg: theme('colors.blue.100');
-	--link-hover-decoration: theme('colors.blue.700');
-}
-
-.dark {
-	--link-color: theme('colors.blue.400');
-	--link-decoration: theme('colors.blue.400/30%');
-	--link-hover-bg: theme('colors.blue.950');
-	--link-hover-decoration: theme('colors.blue.400');
-}
-
-.color-amber {
-	--link-color: theme('colors.amber.700');
-	--link-decoration: theme('colors.amber.700/30%');
-	--link-hover-bg: theme('colors.amber.100');
-	--link-hover-decoration: theme('colors.amber.700');
-}
-
-.dark.color-amber {
-	--link-color: theme('colors.amber.400');
-	--link-decoration: theme('colors.amber.400/30%');
-	--link-hover-bg: theme('colors.amber.950');
-	--link-hover-decoration: theme('colors.amber.400');
-}
-
-.color-teal {
-	--link-color: theme('colors.teal.700');
-	--link-decoration: theme('colors.teal.700/30%');
-	--link-hover-bg: theme('colors.teal.100');
-	--link-hover-decoration: theme('colors.teal.700');
-}
-
-.dark.color-teal {
-	--link-color: theme('colors.teal.400');
-	--link-decoration: theme('colors.teal.400/30%');
-	--link-hover-bg: theme('colors.teal.950');
-	--link-hover-decoration: theme('colors.teal.400');
-}
-
-.color-purple {
-	--link-color: theme('colors.purple.700');
-	--link-decoration: theme('colors.purple.700/30%');
-	--link-hover-bg: theme('colors.purple.100');
-	--link-hover-decoration: theme('colors.purple.700');
-}
-
-.dark.color-purple {
-	--link-color: theme('colors.purple.400');
-	--link-decoration: theme('colors.purple.400/30%');
-	--link-hover-bg: theme('colors.purple.950');
-	--link-hover-decoration: theme('colors.purple.400');
-}
-
-/* Base typography */
-html {
-	text-size-adjust: 100%;
-	font-feature-settings: 'kern', 'liga', 'calt';
-}
-
-/* Links */
-a {
-	color: var(--link-color);
-	text-decoration: none;
-	@apply transition-colors duration-150;
-}
-
-a:hover,
-a:focus,
-a:active {
-	background-color: var(--link-hover-bg);
-}
-
-:focus {
-	@apply outline-2 outline-offset-2 outline-cyan-500;
-}
-
-/* Images */
-img {
-	@apply max-w-full;
-}
-
-/* Code */
-code {
-	@apply rounded bg-neutral-200 px-1 py-0.5 dark:bg-neutral-800;
-}
-
-pre {
-	@apply mb-6 max-w-full overflow-auto rounded border border-neutral-300 p-4 leading-snug dark:border-neutral-700;
-	line-height: 1.375;
-	tab-size: 4;
-}
-
-pre code {
-	@apply p-0;
-	background-color: transparent !important;
-	color: inherit;
-}
-
-/* Shiki dual theme support - dark mode override */
-.dark .shiki {
-	background-color: var(--shiki-dark-bg) !important;
-}
-
-.dark .shiki,
-.dark .shiki span {
-	color: var(--shiki-dark) !important;
-	font-style: var(--shiki-dark-font-style) !important;
-	font-weight: var(--shiki-dark-font-weight) !important;
-	text-decoration: var(--shiki-dark-text-decoration) !important;
-}
-
-/* Blockquotes */
-blockquote {
-	@apply mb-6 border-l-4 border-neutral-400 pl-4 italic text-neutral-600 dark:border-neutral-600 dark:text-neutral-400;
-}
-
-blockquote > p {
-	@apply mb-0;
-}
-
-/* Selection */
-::selection {
-	@apply bg-cyan-300 text-black;
-}
-
-.dark ::selection {
-	@apply bg-cyan-700 text-white;
-}
-
-/* Code block titles */
-.rehype-code-title {
-	@apply mb-0 block rounded-t border border-b-0 border-neutral-300 bg-neutral-200 px-4 py-2 dark:border-neutral-700 dark:bg-neutral-800;
-}
-
-.rehype-code-title + pre {
-	@apply mt-0 rounded-t-none;
-}
-
-/* Prose (MDX content) */
-.prose p {
-	@apply mb-4;
-}
-
-.prose ul {
-	@apply mb-6 list-disc pl-6;
-}
-
-.prose ol {
-	@apply mb-6 list-decimal pl-6;
-}
-
-.prose li {
-	@apply mb-1;
-}
-
-.prose h2,
-.prose h3,
-.prose h4 {
-	@apply mb-4 mt-8 font-bold;
-}
-
-.prose h2 {
-	@apply text-xl;
-}
-
-.prose h3 {
-	@apply text-lg;
-}
-
-.prose hr {
-	@apply my-8 border-neutral-300 dark:border-neutral-700;
-}
-
-.prose img {
-	@apply rounded;
-}
-
-.prose pre {
-	@apply mt-0;
-}
-
-/* Twitter embeds */
-.twitter-tweet {
-	@apply m-0 mb-6;
-}
-
-/* Islamic pattern animation */
-@keyframes geometric-rotate {
-	from {
-		transform: translate(-50%, -50%) rotate(0deg);
+		--link-color: theme('colors.blue.700');
+		--link-decoration: theme('colors.blue.700/30%');
+		--link-hover-bg: theme('colors.blue.100');
+		--link-hover-decoration: theme('colors.blue.700');
 	}
-	to {
-		transform: translate(-50%, -50%) rotate(-360deg);
+
+	.dark {
+		--link-color: theme('colors.blue.400');
+		--link-decoration: theme('colors.blue.400/30%');
+		--link-hover-bg: theme('colors.blue.950');
+		--link-hover-decoration: theme('colors.blue.400');
 	}
-}
 
-.islamic-pattern {
-	opacity: 0.2;
-	animation: geometric-rotate 60s linear infinite;
-}
+	.color-amber {
+		--link-color: theme('colors.amber.700');
+		--link-decoration: theme('colors.amber.700/30%');
+		--link-hover-bg: theme('colors.amber.100');
+		--link-hover-decoration: theme('colors.amber.700');
+	}
 
-/* View transitions */
-::view-transition-old(root),
-::view-transition-new(root) {
-	animation-duration: 150ms;
-	animation-timing-function: ease-in-out;
+	.dark.color-amber {
+		--link-color: theme('colors.amber.400');
+		--link-decoration: theme('colors.amber.400/30%');
+		--link-hover-bg: theme('colors.amber.950');
+		--link-hover-decoration: theme('colors.amber.400');
+	}
+
+	.color-teal {
+		--link-color: theme('colors.teal.700');
+		--link-decoration: theme('colors.teal.700/30%');
+		--link-hover-bg: theme('colors.teal.100');
+		--link-hover-decoration: theme('colors.teal.700');
+	}
+
+	.dark.color-teal {
+		--link-color: theme('colors.teal.400');
+		--link-decoration: theme('colors.teal.400/30%');
+		--link-hover-bg: theme('colors.teal.950');
+		--link-hover-decoration: theme('colors.teal.400');
+	}
+
+	.color-purple {
+		--link-color: theme('colors.purple.700');
+		--link-decoration: theme('colors.purple.700/30%');
+		--link-hover-bg: theme('colors.purple.100');
+		--link-hover-decoration: theme('colors.purple.700');
+	}
+
+	.dark.color-purple {
+		--link-color: theme('colors.purple.400');
+		--link-decoration: theme('colors.purple.400/30%');
+		--link-hover-bg: theme('colors.purple.950');
+		--link-hover-decoration: theme('colors.purple.400');
+	}
+
+	/* Base typography */
+	html {
+		text-size-adjust: 100%;
+		font-feature-settings: 'kern', 'liga', 'calt';
+	}
+
+	/* Links */
+	a {
+		color: var(--link-color);
+		--uno-apply: text-decoration-none transition-colors duration-150;
+	}
+
+	a:hover,
+	a:focus,
+	a:active {
+		background-color: var(--link-hover-bg);
+	}
+
+	:focus {
+		--uno-apply: outline-2 outline-offset-2 outline-cyan-500;
+	}
+
+	/* Images */
+	img {
+		--uno-apply: max-w-full;
+	}
+
+	/* Code */
+	code {
+		--uno-apply: rounded bg-neutral-200 px-1 py-0.5 'dark:bg-neutral-800';
+	}
+
+	pre {
+		--uno-apply: mb-6 max-w-full overflow-auto rounded border border-neutral-300
+			p-4 'dark:border-neutral-700';
+		line-height: 1.375;
+		tab-size: 4;
+	}
+
+	pre code {
+		--uno-apply: p-0;
+		background-color: transparent !important;
+		color: inherit;
+	}
+
+	/* Shiki dual theme support - dark mode override */
+	.dark .shiki {
+		background-color: var(--shiki-dark-bg) !important;
+	}
+
+	.dark .shiki,
+	.dark .shiki span {
+		color: var(--shiki-dark) !important;
+		font-style: var(--shiki-dark-font-style) !important;
+		font-weight: var(--shiki-dark-font-weight) !important;
+		text-decoration: var(--shiki-dark-text-decoration) !important;
+	}
+
+	/* Blockquotes */
+	blockquote {
+		--uno-apply: mb-6 border-l-4 border-neutral-400 pl-4 italic text-neutral-600
+			'dark:border-neutral-600' 'dark:text-neutral-400';
+	}
+
+	blockquote > p {
+		--uno-apply: mb-0;
+	}
+
+	/* Selection */
+	::selection {
+		--uno-apply: bg-cyan-300 text-black;
+	}
+
+	.dark ::selection {
+		--uno-apply: bg-cyan-700 text-white;
+	}
+
+	/* Code block titles */
+	.rehype-code-title {
+		--uno-apply: mb-0 block rounded-t border border-b-0 border-neutral-300
+			bg-neutral-200 px-4 py-2 'dark:border-neutral-700' 'dark:bg-neutral-800';
+	}
+
+	.rehype-code-title + pre {
+		--uno-apply: mt-0 rounded-t-none;
+	}
+
+	/* Prose (MDX content) */
+	.prose p {
+		--uno-apply: mb-4;
+	}
+
+	.prose ul {
+		--uno-apply: mb-6 list-disc pl-6;
+	}
+
+	.prose ol {
+		--uno-apply: mb-6 list-decimal pl-6;
+	}
+
+	.prose li {
+		--uno-apply: mb-1;
+	}
+
+	.prose h2,
+	.prose h3,
+	.prose h4 {
+		--uno-apply: mb-4 mt-8 font-bold;
+	}
+
+	.prose h2 {
+		--uno-apply: text-xl;
+	}
+
+	.prose h3 {
+		--uno-apply: text-lg;
+	}
+
+	.prose hr {
+		--uno-apply: my-8 border-neutral-300 'dark:border-neutral-700';
+	}
+
+	.prose img {
+		--uno-apply: rounded;
+	}
+
+	.prose pre {
+		--uno-apply: mt-0;
+	}
+
+	/* Twitter embeds */
+	.twitter-tweet {
+		--uno-apply: m-0 mb-6;
+	}
+
+	/* Islamic pattern animation */
+	@keyframes geometric-rotate {
+		from {
+			transform: translate(-50%, -50%) rotate(0deg);
+		}
+		to {
+			transform: translate(-50%, -50%) rotate(-360deg);
+		}
+	}
+
+	.islamic-pattern {
+		opacity: 0.2;
+		animation: geometric-rotate 60s linear infinite;
+	}
+
+	/* View transitions */
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: 150ms;
+		animation-timing-function: ease-in-out;
+	}
 }

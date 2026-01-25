@@ -1,0 +1,85 @@
+---
+import {render} from 'astro:content'
+import {format} from 'date-fns'
+import {getAllBlogEntries, getBlogEntry, generateExcerpt} from '../../lib/content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import YouTube from '../../components/YouTube'
+import siteMeta from '../../config/siteMeta'
+
+export async function getStaticPaths() {
+	const entries = await getAllBlogEntries()
+	return entries.map((entry) => ({
+		params: {slug: entry.id.replace(/\/post$/, '')},
+	}))
+}
+
+const {slug} = Astro.params
+const entry = await getBlogEntry(slug!)
+
+if (!entry || !entry.data.published) {
+	return Astro.redirect('/404')
+}
+
+const {title, date} = entry.data
+const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
+const formattedDate = format(date, 'yyyy-MM-dd')
+const url = `/blog/${slug}`
+const postUrl = `${siteMeta.siteUrl}${url}`
+
+const {
+	social: {
+		twitter: {display: twitterDisplay, url: twitterUrl},
+	},
+} = siteMeta
+
+const {Content} = await render(entry)
+
+const components = {
+	YouTube,
+}
+---
+
+<BaseLayout
+	title={title}
+	description={excerpt}
+	canonicalUrl={postUrl}
+	ogType="article"
+	slug={slug}
+	publishedTime={date}
+>
+	<article>
+		<header class="mb-8">
+			<h2
+				class="mb-4 font-bold text-neutral-900 dark:text-neutral-100 text-2xl"
+				transition:name={`post-title-${slug}`}
+			>
+				{title}
+			</h2>
+			<time class="text-sm text-neutral-500" datetime={date.toISOString()}>
+				<i class="i-tabler:calendar mr-1 inline-block align-[-2px]"></i>
+				{formattedDate}
+			</time>
+		</header>
+
+		<div class="prose">
+			<Content components={components} />
+		</div>
+
+		<div class="my-8 border-t border-neutral-300 pt-8 text-sm dark:border-neutral-700">
+			You can
+			<a
+				href={`https://twitter.com/share?url=${postUrl}&via=${twitterDisplay.slice(1)}&text=${title}`}
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				<i class="i-tabler:brand-twitter mr-1 inline-block align-[-2px]"></i>
+				tweet
+			</a>
+			this post or reach out to me on
+			<a href={twitterUrl} rel="noopener noreferrer" target="_blank">
+				<i class="i-tabler:brand-twitter mr-1 inline-block align-[-2px]"></i>
+				{twitterDisplay}
+			</a>.
+		</div>
+	</article>
+</BaseLayout>

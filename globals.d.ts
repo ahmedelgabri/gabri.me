@@ -7,12 +7,6 @@
 // And to shim assets, use (one file extension per `declare`):
 // declare module "*.png"
 
-declare module 'unified'
-declare module 'remark-parse'
-declare module 'remark-rehype'
-declare module 'rehype-raw'
-declare module 'rehype-sanitize'
-declare module 'rehype-stringify'
 declare module 'ahmedelgabri' {
 	export function getCard(): string
 	export function getPlainCard(): string
@@ -22,16 +16,6 @@ declare module '*.png'
 declare module '*.svg'
 declare module '*.gif'
 declare module '*.jpg'
-declare module '*.md' {
-	import type {MDXProps} from 'mdx/types'
-	export default function MDXContent(props: MDXProps): JSX.Element
-	export const frontmatter: Record<string, any>
-}
-declare module '*.mdx' {
-	import type {MDXProps} from 'mdx/types'
-	export default function MDXContent(props: MDXProps): JSX.Element
-	export const frontmatter: Record<string, any>
-}
 
 declare type ThemeSetting = 'system' | 'light' | 'dark'
 declare type ResolvedTheme = 'light' | 'dark'
@@ -77,18 +61,6 @@ interface SiteMetaT {
 	siteUrl: string
 	description: string
 	social: SocialT
-	talks: Activity
-	interviews: Activity
+	talks: ActivityT
+	interviews: ActivityT
 }
-
-declare type PageProps<T = unknown, V = string> = T extends string
-	? {
-			params: Promise<{[K in T]: V}>
-			searchParams: Promise<{[key: string]: string | string[] | undefined}>
-		}
-	: T extends unknown
-		? {
-				params: Record<string, unknown>
-				searchParams: Promise<{[key: string]: string | string[] | undefined}>
-			}
-		: never

@@ -1,4 +1,8 @@
-import manifest from './content-manifest.json'
+import {getCollection, getEntry, type CollectionEntry} from 'astro:content'
+import {format} from 'date-fns'
+import {generateExcerpt} from './excerpt'
+
+export {generateExcerpt}
 
 export interface PostMetadata {
 	title: string
@@ -9,33 +13,97 @@ export interface PostMetadata {
 	slug: string
 	url: string
 	formattedDate: string
-	updated: string
-	filePath: string
 }
 
-const typedManifest = manifest as {
-	posts: PostMetadata[]
-	weeklyLinks: PostMetadata[]
-	generatedAt: string
+type BlogEntry = CollectionEntry<'blog'>
+type WeeklyLinksEntry = CollectionEntry<'weeklyLinks'>
+
+function getSlugFromId(id: string): string {
+	return id.replace(/\/post$/, '')
+}
+
+function formatPostDate(date: Date): string {
+	return format(date, 'yyyy-MM-dd')
+}
+
+function entryToPostMetadata(
+	entry: BlogEntry | WeeklyLinksEntry,
+	collection: 'blog' | 'weekly-links',
+): PostMetadata {
+	const slug = getSlugFromId(entry.id)
+	const url = `/${collection}/${slug}`
+	const date = entry.data.date
+	const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
+
+	return {
+		title: entry.data.title,
+		date: date.toISOString(),
+		published: entry.data.published,
+		tags: entry.data.tags,
+		excerpt,
+		slug,
+		url,
+		formattedDate: formatPostDate(date),
+	}
+}
+
+function isPublished(entry: {data: {published: boolean}}): boolean {
+	return entry.data.published
 }
 
 export async function getAllPosts(): Promise<PostMetadata[]> {
-	return typedManifest.posts
+	const entries = await getCollection('blog', isPublished)
+	return entries.map((entry: BlogEntry) => entryToPostMetadata(entry, 'blog'))
 }
 
 export async function getAllWeeklyLinks(): Promise<PostMetadata[]> {
-	return typedManifest.weeklyLinks
+	const entries = await getCollection('weeklyLinks', isPublished)
+	return entries.map((entry: WeeklyLinksEntry) =>
+		entryToPostMetadata(entry, 'weekly-links'),
+	)
 }
 
 export async function getPostBySlug(
 	slug: string,
 	collection: 'blog' | 'weekly-links' = 'blog',
 ): Promise<PostMetadata | null> {
-	const posts =
-		collection === 'blog' ? typedManifest.posts : typedManifest.weeklyLinks
-	return posts.find((post) => post.slug === slug) || null
+	const id = `${slug}/post`
+	const collectionName = collection === 'weekly-links' ? 'weeklyLinks' : 'blog'
+	const entry = await getEntry(collectionName, id)
+
+	if (!entry || !entry.data.published) {
+		return null
+	}
+
+	return entryToPostMetadata(entry, collection)
 }
 
 export async function getAllContent(): Promise<PostMetadata[]> {
-	return [...typedManifest.posts, ...typedManifest.weeklyLinks]
+	const [posts, weeklyLinks] = await Promise.all([
+		getAllPosts(),
+		getAllWeeklyLinks(),
+	])
+	return [...posts, ...weeklyLinks]
+}
+
+export async function getBlogEntry(
+	slug: string,
+): Promise<BlogEntry | undefined> {
+	const id = `${slug}/post`
+	return getEntry('blog', id)
+}
+
+export async function getWeeklyLinksEntry(
+	slug: string,
+): Promise<WeeklyLinksEntry | undefined> {
+	const id = `${slug}/post`
+	return getEntry('weeklyLinks', id)
+}
+
+export async function getAllBlogEntries(): Promise<BlogEntry[]> {
+	return getCollection('blog', isPublished)
+}
+
+export async function getAllWeeklyLinksEntries(): Promise<WeeklyLinksEntry[]> {
+	return getCollection('weeklyLinks', isPublished)
 }

@@ -1,0 +1,51 @@
+---
+const strokeProps = {
+	stroke: 'currentColor',
+	'stroke-width': 0.5,
+}
+
+function getSmallShamsaRects(cx: number, cy: number, size: number, opacity: number = 1) {
+	const half = size / 2
+	const x = cx - half
+	const y = cy - half
+	return { x, y, cx, cy, size, opacity }
+}
+
+const center = 100
+const radius = 50
+const count = 12
+const smallSize = 30
+
+const satellites = Array.from({ length: count }, (_, i) => {
+	const angle = (i * 360) / count
+	const rad = (angle * Math.PI) / 180
+	const cx = center + radius * Math.cos(rad)
+	const cy = center + radius * Math.sin(rad)
+	return getSmallShamsaRects(cx, cy, smallSize, 0.4)
+})
+
+const centerShamsa = getSmallShamsaRects(center, center, 50, 1)
+---
+
+<svg
+	aria-hidden="true"
+	class="islamic-pattern pointer-events-none fixed top-10 left-15 md:top-15 -z-1"
+	width="240"
+	height="240"
+	viewBox="0 0 200 200"
+	fill="none"
+	style="color: var(--link-color)"
+>
+	{satellites.map((s) => (
+		<g opacity={s.opacity}>
+			<rect x={s.x} y={s.y} width={s.size} height={s.size} {...strokeProps} />
+			<rect x={s.x} y={s.y} width={s.size} height={s.size} {...strokeProps} transform={`rotate(30 ${s.cx} ${s.cy})`} />
+			<rect x={s.x} y={s.y} width={s.size} height={s.size} {...strokeProps} transform={`rotate(60 ${s.cx} ${s.cy})`} />
+		</g>
+	))}
+	<g opacity={centerShamsa.opacity}>
+		<rect x={centerShamsa.x} y={centerShamsa.y} width={centerShamsa.size} height={centerShamsa.size} {...strokeProps} />
+		<rect x={centerShamsa.x} y={centerShamsa.y} width={centerShamsa.size} height={centerShamsa.size} {...strokeProps} transform={`rotate(30 ${centerShamsa.cx} ${centerShamsa.cy})`} />
+		<rect x={centerShamsa.x} y={centerShamsa.y} width={centerShamsa.size} height={centerShamsa.size} {...strokeProps} transform={`rotate(60 ${centerShamsa.cx} ${centerShamsa.cy})`} />
+	</g>
+</svg>

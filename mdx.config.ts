@@ -5,7 +5,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import plainLight from './src/lib/plain-light.json'
 import plainDark from './src/lib/plain-dark.json'
 
-const shikiOptions = {
+export const shikiOptions = {
 	themes: {
 		light: plainLight,
 		dark: plainDark,
@@ -13,22 +13,7 @@ const shikiOptions = {
 	defaultLanguage: 'txt',
 }
 
-// String references for Next.js Turbopack (serializable)
-export const rehypePluginsForNext = [
-	'rehype-slug',
-	'rehype-code-titles',
-	['@shikijs/rehype', shikiOptions],
-	[
-		'rehype-autolink-headings',
-		{
-			properties: {
-				className: ['anchor'],
-			},
-		},
-	],
-]
-
-// Actual imports for @mdx-js/rollup (used in Vitest)
+// Rehype plugins for MDX processing (used in Astro and Vitest)
 export const rehypePlugins = [
 	rehypeSlug,
 	rehypeCodeTitles,

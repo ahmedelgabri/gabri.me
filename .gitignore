@@ -50,7 +50,8 @@ Thumbs.db
 node_modules/
 .gems/
 .bundle/
-.next/
+.astro/
+dist/
 .cache/
 
 # vim       #
@@ -66,7 +67,6 @@ metadata.json
 drafts/
 .lambda
 
-.vercel
 public/sitemap*.xml
 public/feed.xml
 
@@ -80,9 +80,11 @@ public/feed.xml
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 .aider*
 .env
 
 # generated content manifest
 src/lib/content-manifest.json
+
+# Local Netlify folder
+.netlify
