@@ -207,10 +207,4 @@
 		animation: geometric-rotate 60s linear infinite;
 	}
 
-	/* View transitions */
-	::view-transition-old(root),
-	::view-transition-new(root) {
-		animation-duration: 150ms;
-		animation-timing-function: ease-in-out;
-	}
 }
