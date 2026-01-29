@@ -31,7 +31,7 @@ export const GET: APIRoute = async () => {
 
 	sortedAllPosts.forEach((post) => {
 		const {title, formattedDate, slug, excerpt} = post
-		const url = `${siteUrl}/blog/${slug}`
+		const url = `${siteUrl}/blog/${slug}/`
 
 		feed.item({
 			title,
