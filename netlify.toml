@@ -18,6 +18,13 @@ NETLIFY_NEXT_PLUGIN_SKIP = "true"
 [context.deploy-preview.environment]
 NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
+# Disable Netlify's default trailing slash behavior (Pretty URLs)
+[build.processing]
+skip_processing = false
+
+[build.processing.html]
+pretty_urls = false
+
 # Redirects for Astro
 [[redirects]]
 from = "/feed"

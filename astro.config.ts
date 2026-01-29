@@ -23,7 +23,7 @@ const shikiOptions = {
 }
 export default defineConfig({
 	site: 'https://gabri.me',
-	trailingSlash: 'always',
+	trailingSlash: 'never',
 	integrations: [
 		UnoCSS(),
 		react(),

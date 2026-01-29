@@ -31,7 +31,7 @@ function entryToPostMetadata(
 	collection: 'blog' | 'weekly-links',
 ): PostMetadata {
 	const slug = getSlugFromId(entry.id)
-	const url = `/${collection}/${slug}/`
+	const url = `/${collection}/${slug}`
 	const date = entry.data.date
 	const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
 

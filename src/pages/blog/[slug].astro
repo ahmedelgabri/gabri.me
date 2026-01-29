@@ -23,7 +23,7 @@ if (!entry || !entry.data.published) {
 const {title, date} = entry.data
 const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
 const formattedDate = format(date, 'yyyy-MM-dd')
-const url = `/blog/${slug}/`
+const url = `/blog/${slug}`
 const postUrl = `${siteMeta.siteUrl}${url}`
 
 const {
