@@ -36,11 +36,9 @@
 		"astro": "^5.16.14",
 		"astro-compressor": "^1.2.0",
 		"astro-tweet": "^0.0.6",
-		"autoprefixer": "10.4.23",
 		"clsx": "^2.1.1",
 		"date-fns": "^4.1.0",
 		"lodash.truncate": "4.4.2",
-		"postcss": "8.5.6",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"rehype-autolink-headings": "^7.1.0",
@@ -50,7 +48,6 @@
 		"satori": "^0.19.1",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.34.5",
-		"shiki": "^3.21.0",
 		"strip-ansi": "^7.1.2"
 	},
 	"devDependencies": {
