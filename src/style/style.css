@@ -124,8 +124,9 @@
 
 	/* Blockquotes */
 	blockquote {
-		--uno-apply: my-6 border-l-4 border-neutral-400 py-1 pl-5 italic
-			text-neutral-600 'dark:border-neutral-600' 'dark:text-neutral-400';
+		--uno-apply: my-6 rounded border-l-4 border-neutral-400 bg-neutral-100 py-4
+			pl-5 pr-4 italic text-neutral-600 'dark:border-neutral-600'
+			'dark:bg-neutral-800/50' 'dark:text-neutral-400';
 	}
 
 	blockquote > p {
