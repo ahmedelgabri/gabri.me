@@ -137,6 +137,10 @@
 		--uno-apply: mt-4;
 	}
 
+	blockquote > *:last-child {
+		--uno-apply: mb-0;
+	}
+
 	/* Selection */
 	::selection {
 		--uno-apply: bg-cyan-300 text-black;
