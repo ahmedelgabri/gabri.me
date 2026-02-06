@@ -138,7 +138,7 @@
 		--uno-apply: mt-4;
 	}
 
-	blockquote > *:last-child {
+	.prose blockquote > *:last-child {
 		--uno-apply: mb-0;
 	}
 
