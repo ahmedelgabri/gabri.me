@@ -91,8 +91,9 @@
 
 	/* Code */
 	code {
-		--uno-apply: rounded bg-neutral-200 px-1 py-0.5 font-mono text-[0.9em]
-			leading-none 'dark:bg-neutral-800';
+		--uno-apply: rounded border border-neutral-300 bg-neutral-200 px-1 py-0.5
+			font-mono text-[0.9em] leading-none 'dark:border-neutral-700'
+			'dark:bg-neutral-800';
 		word-break: keep-all;
 	}
 
@@ -104,7 +105,7 @@
 	}
 
 	pre code {
-		--uno-apply: p-0 text-sm leading-none;
+		--uno-apply: border-0 p-0 text-sm leading-none;
 		background-color: transparent !important;
 		color: inherit;
 	}
@@ -244,11 +245,12 @@
 
 	/* Tables */
 	.prose table {
-		--uno-apply: mb-6 w-full border-collapse text-sm;
+		--uno-apply: mb-6 w-full border-collapse rounded border border-neutral-300
+			text-sm 'dark:border-neutral-700';
 	}
 
 	.prose th {
-		--uno-apply: border-b-2 border-r border-neutral-300 bg-neutral-100 px-3 py-2
+		--uno-apply: border-b-2 border-r border-neutral-300 bg-neutral-200 px-3 py-2
 			text-left font-semibold 'dark:border-neutral-600' 'dark:bg-neutral-800';
 	}
 
@@ -257,7 +259,7 @@
 	}
 
 	.prose td {
-		--uno-apply: border-b border-r border-neutral-200 px-3 py-2
+		--uno-apply: border-b border-r border-neutral-300 px-3 py-2
 			'dark:border-neutral-700';
 	}
 
@@ -269,8 +271,12 @@
 		--uno-apply: border-b-0;
 	}
 
+	.prose tbody tr:nth-child(even) {
+		--uno-apply: bg-neutral-100 'dark:bg-neutral-800/30';
+	}
+
 	.prose tbody tr:hover {
-		--uno-apply: bg-neutral-50 'dark:bg-neutral-800/50';
+		--uno-apply: bg-neutral-300/70 'dark:bg-neutral-700/50';
 	}
 
 	/* Twitter embeds */
