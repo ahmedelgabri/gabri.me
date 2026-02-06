@@ -1,0 +1,231 @@
+---
+title: 'Introducing git-wt: Worktrees Simplified'
+date: 2026-02-04
+published: true
+tags: [git, unix, worktrees, open_source, productivity]
+---
+
+import {Image} from 'astro:assets'
+import light from '../../../assets/logo-light.svg'
+import dark from '../../../assets/logo-dark.svg'
+
+<center>
+	<Image class="dark:hidden" src={light} alt="Logo" />
+	<Image class="light:hidden" src={dark} alt="Logo" />
+</center>
+
+In my [previous post](/blog/git-worktrees-done-right), I explained why the bare
+repo pattern makes git worktrees actually pleasant to use. But setting it up
+manually requires 10+ commands. And the day-to-day friction - upstream tracking,
+orphaned branches, missing fetches - adds up.
+
+So I built [`git-wt`](https://github.com/ahmedelgabri/git-wt) to handle the
+tedious parts.
+
+> **How custom git commands work:** Any executable named `git-<cmd>` in your
+> `$PATH` becomes `git cmd`. Git's own commands work this way - run
+> `ls $(git --exec-path)` to see them all.
+
+## The Problem with Native Worktrees
+
+Even with the bare repo pattern, native `git worktree` has friction:
+
+**No upstream tracking.** Create a worktree from `origin/feature`, your first
+push fails with "no upstream configured." Every single time.
+
+**Orphaned branches.** Remove a worktree, the local branch stays. Six months
+later, `git branch` scrolls for pages.
+
+**Manual fetching.** Forget to fetch before creating a worktree? You're working
+with stale refs.
+
+**Setup dance.** Want the bare repo structure? Memorize 10 commands or dig
+through notes.
+
+## What git-wt Does
+
+| Command   | What it does                                       |
+| --------- | -------------------------------------------------- |
+| `clone`   | Sets up bare structure automatically               |
+| `migrate` | Converts existing repos (preserves all your work)  |
+| `add`     | Creates worktrees with auto-fetch and upstream     |
+| `remove`  | Removes worktree AND cleans up the local branch    |
+| `destroy` | Nuclear: worktree + local branch + remote branch   |
+| `update`  | Fetches everything, fast-forwards default branch   |
+| `switch`  | Interactive picker (fzf) to jump between worktrees |
+
+Everything else passes through to `git worktree` - `list`, `prune`, `lock` all
+work.
+
+## Clone with Structure
+
+```bash
+git wt clone https://github.com/user/repo.git
+```
+
+That's it. Three things in your folder: `.bare/`, `.git`, and a `main/`
+worktree. Compare to the 10 manual commands from the previous post.
+
+The result:
+
+```
+my-project/
+├── .bare/            # all git data lives here
+├── .git              # pointer file
+└── main/             # worktree: main branch
+```
+
+## Add a Worktree (Interactive Mode)
+
+```bash
+git wt add
+```
+
+Fetches first. Shows branches in [fzf](https://github.com/junegunn/fzf) with a
+commit preview pane. Pick the branch, worktree created, upstream configured.
+Done.
+
+## Add a Worktree (Direct Mode)
+
+```bash
+git wt add feature-auth origin/feature-auth # existing branch
+git wt add -b my-feature my-feature         # new branch
+```
+
+Both modes auto-configure upstream tracking. Your first push just works.
+
+## Clean Up Properly
+
+```bash
+git wt remove feature-payments
+```
+
+Removes the worktree directory AND deletes the local branch. No more orphans.
+
+## Go Nuclear
+
+```bash
+git wt destroy old-experiment
+```
+
+Removes worktree, local branch, AND remote branch. Shows you exactly what will
+be deleted. Requires typing the branch name to confirm - no accidental
+destruction.
+
+## Migrate Existing Repos
+
+> ⚠️ **Experimental**: This command restructures your repository. It has worked
+> on repos I've tested, but as a destructive action, proceed with caution until
+> more users have validated it.
+
+Already have a repo cloned the normal way?
+
+```bash
+cd my-repo
+git wt migrate
+```
+
+Converts your existing clone to the bare structure. Preserves all your branches,
+stashes, and history. Your current working directory becomes a worktree.
+
+## Update Everything
+
+```bash
+git wt update
+```
+
+Fetches all remotes, fast-forwards the default branch (main/master) if possible.
+Run this periodically to keep your worktrees current.
+
+## Switch Between Worktrees
+
+```bash
+git wt switch
+```
+
+Interactive fzf picker showing all worktrees. Select one and it prints the path.
+Pair with `cd $(git wt switch)` or bind to a shell function.
+
+you can add this to your `.bashrc` or `.zshrc`:
+
+```bash
+# Jump to a worktree
+wt() {
+	local dir
+	dir=$(git wt switch)
+	[[ -n "$dir" ]] && cd "$dir"
+}
+```
+
+Now `wt` gives you an interactive picker that drops you into the selected
+worktree.
+
+## Installation
+
+### Homebrew
+
+```bash
+brew tap ahmedelgabri/git-wt
+brew install git-wt
+```
+
+### Nix
+
+```bash
+nix run github:ahmedelgabri/git-wt
+```
+
+Or add to your flake:
+
+```nix
+{
+  inputs.git-wt.url = "github:ahmedelgabri/git-wt";
+}
+```
+
+Then use `inputs.git-wt.packages.${system}.default`.
+
+### Manual
+
+Copy the `git-wt` script somewhere in your `$PATH`. It's a single bash file with
+no dependencies beyond git and standard unix tools (fzf for interactive mode).
+
+## Shell Completion
+
+Includes completions for zsh, bash, and fish. (_installed automatically with
+Homebrew and Nix_)
+
+## Why a Wrapper?
+
+The bare repo pattern is powerful but has sharp edges. `git-wt` smooths them:
+
+- **Correct setup by default**: `clone` and `migrate` handle all the config
+- **Upstream tracking**: `add` sets it up automatically
+- **Clean deletion**: `remove` and `destroy` prevent orphans
+- **Discoverability**: Commands match mental model ("add a worktree", not "add a
+  worktree and also set upstream and also remember to fetch first")
+
+The goal is making worktrees feel as natural as `git checkout` - but with full
+isolation.
+
+## [Try It](https://github.com/ahmedelgabri/git-wt)
+
+```bash
+# New project
+git wt clone https://github.com/some/repo.git
+cd repo/main
+
+# Existing project
+cd existing-repo
+git wt migrate
+```
+
+Work like this for a week. The friction disappears.
+
+---
+
+**Links:**
+
+- [git-wt on GitHub](https://github.com/ahmedelgabri/git-wt)
+- [Git Worktrees Done Right](/blog/git-worktrees-done-right) - the bare repo
+  pattern explained
