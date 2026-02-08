@@ -33,6 +33,8 @@ export default defineConfig({
 	],
 
 	markdown: {
+		// Disabled so @shikijs/rehype can be used as a manual rehype plugin,
+		// giving us control over execution order (e.g. after rehype-code-titles).
 		syntaxHighlight: false,
 		rehypePlugins: [
 			rehypeSlug as any,
@@ -56,12 +58,16 @@ export default defineConfig({
 	},
 
 	vite: {
-		resolve: {
-			alias: {
-				'@': new URL('./', import.meta.url).pathname,
+		server: {
+			watch: {
+				ignored: ['**/.claude/**'],
 			},
 		},
 	},
 
 	adapter: netlify(),
+
+	devToolbar: {
+		enabled: false,
+	},
 })
