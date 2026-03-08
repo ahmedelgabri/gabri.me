@@ -47,11 +47,6 @@ describe('siteMeta', () => {
 			expect(siteMeta.social.email.display).toContain('@gabri.me')
 			expect(siteMeta.social.email.url).toMatch(/^mailto:/)
 		})
-
-		it('has resume with Google Docs export URL', () => {
-			expect(siteMeta.social.resume.display).toBe('Resume')
-			expect(siteMeta.social.resume.url).toMatch(/docs\.google\.com/)
-		})
 	})
 
 	describe('talks', () => {

@@ -41,7 +41,7 @@ interface PostT {
 	date: string
 }
 
-type ContactT = 'twitter' | 'github' | 'email' | 'linkedin' | 'resume'
+type ContactT = 'twitter' | 'github' | 'email' | 'linkedin'
 
 interface ActivityT {
 	[key: string]: string[]

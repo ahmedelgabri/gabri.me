@@ -28,7 +28,6 @@ export const GET: APIRoute = async () => {
 		`- LinkedIn: [${social.linkedin.display}](${social.linkedin.url})`,
 		`- ${social.twitter.name}: [${social.twitter.display}](${social.twitter.url})`,
 		`- Email: [${social.email.display}](${social.email.url})`,
-		`- [${social.resume.display}](${social.resume.url})`,
 		'',
 		'## Talks & Interviews',
 		'',
