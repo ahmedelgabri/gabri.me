@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import H from '../components/Prose/H'
 import siteMeta from '../config/siteMeta'
 
-const {social, talks, interviews} = siteMeta
+const {social, talks, interviews, projects} = siteMeta
 
 const allPosts = await getAllPosts()
 const posts = allPosts.sort(({date: a}, {date: b}) =>
@@ -46,6 +46,21 @@ const icons: Record<string, string> = {
 						<i class={`${icons[site] || 'i-tabler:link'} mr-1 inline-block align-[-2px]`}></i>
 						{'name' in entry ? entry.name : site}
 					</a>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<section class="mb-12">
+		<H level="3">projects</H>
+		<ul class="space-y-4 md:space-y-2">
+			{projects.map((project) => (
+				<li>
+					<a href={project.url} target="_blank" rel="noreferrer noopener" class="after:content-['_↗︎']">
+						<i class="i-tabler:brand-github mr-1 inline-block align-[-2px]"></i>
+						{project.name}
+					</a>
+					<span class="text-sm text-neutral-500"> — {project.description}</span>
 				</li>
 			))}
 		</ul>
