@@ -56,9 +56,10 @@ const icons: Record<string, string> = {
 		<ul class="space-y-4 md:space-y-2">
 			{projects.map((project) => (
 				<li>
-					<a href={project.url} target="_blank" rel="noreferrer noopener" class="after:content-['↗'] after:ml-1 after:text-[0.7em] after:opacity-50">
+					<a href={project.url} target="_blank" rel="noreferrer noopener">
 						<i class="i-tabler:brand-github mr-1 inline-block align-[-2px]"></i>
 						{project.name}
+						<i class="i-tabler:arrow-up-right ml-0.5 inline-block align-[-2px] text-[0.85em] opacity-50"></i>
 					</a>
 					<span class="text-sm text-neutral-500"> — {project.description}</span>
 				</li>
@@ -72,38 +73,42 @@ const icons: Record<string, string> = {
 			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
 				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2024-03-03">2024-03-03</time>
 				<div>
-					<a href={interviews.ahmedelemam[1]} target="_blank" rel="noreferrer noopener" class="after:content-['↗'] after:ml-1 after:text-[0.7em] after:opacity-50">
+					<a href={interviews.ahmedelemam[1]} target="_blank" rel="noreferrer noopener">
 						<i class="i-tabler:video mr-1 inline-block align-[-2px]"></i>
 						Staff Engineering path (Arabic)
+						<i class="i-tabler:arrow-up-right ml-0.5 inline-block align-[-2px] text-[0.85em] opacity-50"></i>
 					</a>
 				</div>
 			</li>
 			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
 				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2021-01-23">2021-01-23</time>
 				<div>
-					<a href={interviews.nullplusplus[1]} target="_blank" rel="noreferrer noopener" class="after:content-['↗'] after:ml-1 after:text-[0.7em] after:opacity-50">
+					<a href={interviews.nullplusplus[1]} target="_blank" rel="noreferrer noopener">
 						<i class="i-tabler:microphone mr-1 inline-block align-[-2px]"></i>
 						Null++ Podcast (Arabic)
+						<i class="i-tabler:arrow-up-right ml-0.5 inline-block align-[-2px] text-[0.85em] opacity-50"></i>
 					</a>
 				</div>
 			</li>
 			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
 				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2018-12-17">2018-12-17</time>
 				<div>
-					<a href={interviews.devtomanager[1]} target="_blank" rel="noreferrer noopener" class="after:content-['↗'] after:ml-1 after:text-[0.7em] after:opacity-50">
+					<a href={interviews.devtomanager[1]} target="_blank" rel="noreferrer noopener">
 						<i class="i-tabler:article mr-1 inline-block align-[-2px]"></i>
 						DevToManager Interview
+						<i class="i-tabler:arrow-up-right ml-0.5 inline-block align-[-2px] text-[0.85em] opacity-50"></i>
 					</a>
 				</div>
 			</li>
 			<li class="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-4">
 				<time class="shrink-0 text-sm tabular-nums text-neutral-500" datetime="2017-06-08">2017-06-08</time>
 				<div>
-					<a href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`} target="_blank" rel="noreferrer noopener" class="after:content-['↗'] after:ml-1 after:text-[0.7em] after:opacity-50">
+					<a href={`https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`} target="_blank" rel="noreferrer noopener">
 						<i class="i-tabler:video mr-1 inline-block align-[-2px]"></i>
 						Automating front-end refactoring
+						<i class="i-tabler:arrow-up-right ml-0.5 inline-block align-[-2px] text-[0.85em] opacity-50"></i>
 					</a>
-					(<a href={talks.AmsterdamJS[0]} target="_blank" rel="noreferrer noopener" class="after:content-['↗'] after:ml-1 after:text-[0.7em] after:opacity-50">slides</a>)
+					(<a href={talks.AmsterdamJS[0]} target="_blank" rel="noreferrer noopener">slides<i class="i-tabler:arrow-up-right ml-0.5 inline-block align-[-2px] text-[0.85em] opacity-50"></i></a>)
 				</div>
 			</li>
 		</ul>
