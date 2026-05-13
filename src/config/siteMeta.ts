@@ -34,7 +34,7 @@ export default {
 			name: 'git-wt',
 			url: 'https://github.com/ahmedelgabri/git-wt',
 			description:
-				'A git custom command that enhances Git\'s native worktree functionality with interactive features, automation, and repository migration capabilities.',
+				"A git custom command that enhances Git's native worktree functionality with interactive features, automation, and repository migration capabilities.",
 		},
 		{
 			name: 'ccpeek',
