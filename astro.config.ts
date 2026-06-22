@@ -1,26 +1,15 @@
 import {defineConfig} from 'astro/config'
+import {unified} from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import UnoCSS from '@unocss/astro'
-import rehypeSlug from 'rehype-slug'
-import rehypeCodeTitles from 'rehype-code-titles'
-import rehypeShiki from '@shikijs/rehype'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import plainLight from './src/lib/plain-light.json'
-import plainDark from './src/lib/plain-dark.json'
 import netlify from '@astrojs/netlify'
+import {rehypePlugins} from './mdx.config'
 
 import compressor from 'astro-compressor'
 
 import frontendistahtmlMinify from '@frontendista/astro-html-minify'
 
-const shikiOptions = {
-	themes: {
-		light: plainLight,
-		dark: plainDark,
-	},
-	defaultLanguage: 'txt',
-}
 export default defineConfig({
 	site: 'https://gabri.me',
 	trailingSlash: 'never',
@@ -36,19 +25,9 @@ export default defineConfig({
 		// Disabled so @shikijs/rehype can be used as a manual rehype plugin,
 		// giving us control over execution order (e.g. after rehype-code-titles).
 		syntaxHighlight: false,
-		rehypePlugins: [
-			rehypeSlug as any,
-			rehypeCodeTitles as any,
-			[rehypeShiki as any, shikiOptions],
-			[
-				rehypeAutolinkHeadings as any,
-				{
-					properties: {
-						className: ['anchor'],
-					},
-				},
-			],
-		],
+		processor: unified({
+			rehypePlugins: rehypePlugins as any,
+		}),
 	},
 
 	redirects: {

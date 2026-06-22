@@ -216,7 +216,7 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 
 		{GA4_TRACKING_ID && (
 			<>
-				<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}></script>
+				<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}></script>
 				<script is:inline define:vars={{GA4_TRACKING_ID}}>
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}

@@ -12,6 +12,15 @@ export default defineConfig({
 	test: {
 		globals: true,
 		environment: 'happy-dom',
+		environmentOptions: {
+			happyDOM: {
+				settings: {
+					navigation: {
+						disableChildFrameNavigation: true,
+					},
+				},
+			},
+		},
 		exclude: [
 			'**/node_modules/**',
 			'**/dist/**',

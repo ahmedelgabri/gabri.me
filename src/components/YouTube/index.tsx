@@ -17,12 +17,11 @@ export default function YouTube(props: Props) {
 			}}
 		>
 			<iframe
-				className="absolute left-0 top-0 h-full w-full"
+				className="absolute left-0 top-0 h-full w-full border-0"
 				width="560"
 				height="315"
 				title={title || id}
 				src={`https://www.youtube.com/embed/${id}?rel=0`}
-				frameBorder="0"
 				allowFullScreen
 			/>
 		</div>
