@@ -1,10 +1,9 @@
 import {defineConfig} from 'astro/config'
-import {unified} from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import UnoCSS from '@unocss/astro'
 import netlify from '@astrojs/netlify'
-import {rehypePlugins} from './mdx.config'
+import {shikiOptions} from './markdown.config'
 
 import compressor from 'astro-compressor'
 
@@ -22,12 +21,7 @@ export default defineConfig({
 	],
 
 	markdown: {
-		// Disabled so @shikijs/rehype can be used as a manual rehype plugin,
-		// giving us control over execution order (e.g. after rehype-code-titles).
-		syntaxHighlight: false,
-		processor: unified({
-			rehypePlugins: rehypePlugins as any,
-		}),
+		shikiConfig: shikiOptions,
 	},
 
 	redirects: {

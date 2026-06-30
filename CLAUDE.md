@@ -83,7 +83,7 @@ Content is managed through **Astro's MDX integration** with custom processing:
 
 - Content organized in folder structure:
   `src/_content/{collection}/{slug}/post.mdx`
-- Processed using @astrojs/mdx with rehype plugins
+- Processed using @astrojs/mdx with Astro's Sätteri Markdown/MDX pipeline
 - Metadata extracted via export statement in each MDX file
 - Content helper functions in `src/lib/content.ts` for querying posts
 - Uses git timestamps for `updated` field via `git log -1 --format=%cd`
@@ -96,12 +96,10 @@ published status.
 
 ### Content Processing Pipeline
 
-MDX processing uses rehype plugins (configured in astro.config.ts):
-
-1. `rehype-slug` - adds IDs to headings
-2. `rehype-code-titles` - adds titles to code blocks
-3. `@shikijs/rehype` - syntax highlighting with Shiki (dual theme support)
-4. `rehype-autolink-headings` - adds anchor links to headings
+MDX processing uses Astro's default Sätteri processor. `markdown.config.ts`
+configures Shiki dual-theme syntax highlighting and a custom Shiki transformer
+that renders code fence `filename=`/`title=` metadata as code block title bars.
+Heading IDs are provided by the Sätteri/Astro pipeline.
 
 ### Astro Structure
 
@@ -182,9 +180,9 @@ All blog posts are statically generated at build time:
 
 - `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
   integrations
-- `mdx.config.ts` - Shared MDX/rehype plugin configuration
+- `markdown.config.ts` - Shared Markdown/Shiki configuration
 - `src/lib/content.ts` - Content querying helper functions
-- `vitest.config.ts` - Vitest test configuration with MDX support
+- `vitest.config.ts` - Vitest test configuration
 - `uno.config.ts` - Styling configuration
 - `flake.nix` - Development environment (flake-parts based)
 - `src/config/siteMeta.ts` - Site-wide metadata

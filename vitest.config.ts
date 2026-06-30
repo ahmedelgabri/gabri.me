@@ -1,14 +1,7 @@
 import {defineConfig} from 'vitest/config'
 import path from 'node:path'
-import mdx from '@mdx-js/rollup'
-import {rehypePlugins} from './mdx.config'
 
 export default defineConfig({
-	plugins: [
-		mdx({
-			rehypePlugins: rehypePlugins as any,
-		}),
-	],
 	test: {
 		globals: true,
 		environment: 'happy-dom',
