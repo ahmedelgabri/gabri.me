@@ -15,11 +15,13 @@ RTL-on-the-web writing. Three specific references do the work:
 - **Ibn Tulun's mosque** for the two-centred pointed arch that crowns post
   titles — computed, not traced: each half is a circular arc whose centre is
   offset from the axis so the two arcs meet in a true point.
-- **Mamluk Cairo geometric ornament** for the star-and-cross girih system.
-  Everything derives from one construction in `src/designs/zellij/geometry.ts`:
-  the khatam, the eight-point star that is the union of two squares rotated 45°
-  against each other, plus the cross tile that fills the gaps when khatams are
-  laid on a square lattice.
+- **Mamluk Cairo geometric ornament** for the star-and-cross girih system in the
+  page furniture. It derives from one construction in
+  `src/designs/zellij/geometry.ts`: the khatam, the eight-point star that is the
+  union of two squares rotated 45° against each other, plus the cross tile that
+  fills the gaps when khatams are laid on a square lattice.
+- **Alhambra-lineage Andalusian rosettes** for the background lattice and the
+  marginal shamsa — the breath-of-the-compass figure, described below.
 - **The Blue Quran** (9th–10th century, gold Kufic on indigo-dyed vellum) for
   dark mode. Dark mode is not an inverted light theme; it is a different
   manuscript.
@@ -41,14 +43,35 @@ stroke re-themes without a second code path.
 | `--zj-text`       | `#26221A` kohl           | `#EDE3CB` parchment       | body text                               |
 | `--zj-text-muted` | `#5A5142`                | `#A99E85`                 | dates, captions, metadata               |
 | `--zj-accent`     | `#1D3A6E` lapis          | `#D9B44A` gold            | links, the Arabic masthead, focus rings |
-| `--zj-gild`       | `#C29228` saffron        | `#D9B44A` gold            | gilding only — hairlines and ornament   |
+| `--zj-gild`       | `#A97C14` bronze gold    | `#D9B44A` gold            | gilding only — hairlines and ornament   |
 | `--zj-glaze`      | `#2A7268` glaze teal     | `#6FB3A8` light glaze     | post tags                               |
 | `--zj-geo`        | `#1D3A6E` lapis          | `#C8BCA0` oxidised silver | SVG geometry strokes                    |
 
-Saffron and gold are gilding: they never carry body text in either theme. Every
+Bronze and gold are gilding: they never carry body text in either theme. Every
 body-text pair clears WCAG AA — parchment on indigo is 12.1:1, gold on indigo
-7.8:1, muted parchment on indigo 5.8:1, and the light theme is unchanged from
-the version the palette was checked against.
+7.8:1, muted parchment on indigo 5.8:1.
+
+The light theme's gilding was reviewed as "sometimes hard to distinguish" and
+deepened. Ratios against the `#F5EEDF` ivory ground:
+
+| Gilded layer                     | Was                           | Now                           |
+| -------------------------------- | ----------------------------- | ----------------------------- |
+| `--zj-gild`                      | `#C29228`, 2.44:1             | `#A97C14`, 3.26:1             |
+| `--zj-hairline`                  | `rgba(194,146,40,.42)` 1.42:1 | `rgba(169,124,20,.72)` 2.26:1 |
+| `--zj-selection`                 | `rgba(194,146,40,.3)` 1.28:1  | `rgba(169,124,20,.32)` 1.40:1 |
+| `.zj-frieze-square` (light only) | gild at 0.6, 1.67:1           | gild at 0.8, 2.50:1           |
+
+The new gild is the same hue as the old saffron (42° against 41°) and more
+saturated, so it stays gold rather than drifting brown. Every other consumer —
+the carpet frame's double rule, the corner khatams, the star dividers, the entry
+star markers and title underlines, the arch imposts, the blockquote bar, the
+theme toggle, the prose link hover — reads `--zj-gild` or `--zj-hairline` and
+picks the change up without its own rule.
+
+One consumer deliberately does not follow the page: the design switcher sits on
+its own dark ink chip in both themes, so it wears the Blue Quran gold, where the
+selected label holds 8.0:1 (the deepened bronze would put it at 4.2:1). Dark mode
+was already legible and its values are untouched.
 
 ### Type
 
@@ -67,6 +90,56 @@ star-and-cross section dividers, star list markers that rotate onto themselves
 on hover, khatam corner marks on the manuscript carpet-page frame, and the
 two-centred arch over post titles.
 
+### The background lattice
+
+The tile behind the carpet page is a computed Andalusian rosette pattern, 240px
+square and seamless, inlined per theme as a `--zj-screen` data URI (identical
+geometry, kohl stroke in light, gold in dark). It is not a girih star-and-cross
+tile; it is the Alhambra's own figure.
+
+**Lattice.** Rosette centres sit on a centred square lattice — `(0,0)` and
+`(120,120)` repeating on 240 — so each rosette has four nearest neighbours on
+the diagonals at `120√2 = 169.71`. The rosette radius is `120/√2 = 84.85`,
+exactly half that, so diagonal neighbours are tangent and kiss at `(60,60)`. The
+lattice's deep holes — `(120,0)` and `(0,120)` and their translates — lie 120
+from four centres, leaving a diamond of free radius `120 − 84.85 = 35.15`.
+
+**Rosette.** The breath-of-the-compass construction. Sixteen points are stepped
+round a circle of radius R and joined as the `{16/6}` star polygon; the figure
+that falls out is drawn in two weights:
+
+- the ring of sixteen petals, tips at R and valleys at
+  `R·cos(6π/16)/cos(5π/16) = 0.68881 R`, at structure weight;
+- the nested ring that interlocks with it, tips on those valleys and valleys on
+  the polygon that the `{16/6}`'s own innermost intersections describe,
+  `R·cos(6π/16)/cos(π/16) = 0.39018 R`, at infill weight;
+- that inner circle, at infill weight;
+- a khatam inscribed in it, at structure weight.
+
+Each layer is defined by the previous layer's intersections rather than chosen
+by eye.
+
+**Strapwork.** Every hole carries an eight-point khatam of radius 35.15. Its
+four axial tips land exactly on four rosette tips; its four diagonal tips launch
+straps onto the tangency points, where each strap meets two rosette petal tips
+and the strap from the neighbouring hole. Nothing is left loose. The straps are
+lozenges rather than lines: a straight strap would be collinear with the next
+hole's and the pair would chain into an unbroken diagonal across the whole
+plane, which reads as a wireframe grid laid over the pattern rather than as
+strapwork.
+
+**Weights.** Structure strokes are 1, infill 0.55 — enough separation that the
+rosette silhouettes read first and the inner construction sits behind them.
+
+**Seams.** Every rosette and interstitial whose content can reach the tile is
+drawn, including the copies centred outside it, and the SVG clips at the
+viewBox — so a stroke cut at one edge is completed by its neighbour. Verified by
+rendering the shipped data URI as a 3×3 tiling with the tile boundaries drawn
+in, at full strength and at working opacity.
+
+The marginal shamsa (`--zj-medallion`) is the same rosette at R = 96, rimmed by
+two circles and a ring of sixteen cells.
+
 ## Feedback-driven changes (v2)
 
 The first pass was reviewed and reworked:
@@ -75,11 +148,12 @@ The first pass was reviewed and reworked:
   anchored in named Cairo references (above) instead of a contemporary museum
   register, and dark mode became the Blue Quran.
 - **"The background seems empty and dull on large screens."** — from 1200px up,
-  a faint khatam star-and-cross lattice tiles the page ground outside the carpet
-  frame like a mashrabiya screen (120px tile, kohl at 5% in light, gold at 7% in
+  a faint Andalusian rosette lattice tiles the page ground outside the carpet
+  frame like a mashrabiya screen (240px tile, kohl at 6% in light, gold at 8% in
   dark), masked so it fades out well before the reading column and drifting one
-  tile every 180s. From 1536px up, a single shamsa outline sits in the left
-  margin at 3.5–5%, right where the lattice has already faded.
+  tile every 360s. From 1536px up, a single shamsa in the same language sits in
+  the left margin at 3.5–5%, right where the lattice has already faded. The
+  construction is described under [The background lattice](#the-background-lattice).
 - **"Add subtle animations, and don't respect reduce-motion."** — every
   `prefers-reduced-motion` gate was removed from the design on purpose; the
   animations always run. See the inventory below.
@@ -87,9 +161,16 @@ The first pass was reviewed and reworked:
   `/1/weekly-links/` routes.
 - **Talks & interviews moved to the end** of the home page.
 - **External links are marked.** Every `target="_blank"` link gets a small
-  raised `↗` through `::after` — muted ink on ivory, muted parchment on indigo —
-  in the site chrome and in rendered post bodies alike. Internal links never get
-  one.
+  raised mark through `::after`: an arrow pointing north-east whose head is a
+  four-point diamond star — the khatam's four-fold cousin — on a thin shaft
+  running back along the same diagonal. The star's outer points sit on the
+  diagonals with the north-east one stretched so it leads the arrow, its inner
+  points on the axes; the SVG's viewBox is the mark's exact bounding box so the
+  glyph fills its 0.6em box instead of floating inside padding. It is applied as
+  a `mask-image` over `background-color: var(--zj-text-muted)`, so one shape
+  serves both themes — muted ink on ivory, muted parchment on indigo — in the
+  site chrome and in rendered post bodies alike. Internal links never get one,
+  and the mark is suppressed on image-only links and inside embedded tweets.
 - **Dark mode is switchable** from a button in the masthead corner whose glyph
   names the theme it switches to: a crescent by day, a five-pointed star by
   night, crossfading on toggle.
@@ -104,7 +185,7 @@ The first pass was reviewed and reworked:
 | Entry hover        | star marker rotates 22.5° (its own symmetry angle) and the title underline slides in, 200ms |
 | Prose links        | gilded underline grows from the left, 180ms                                                 |
 | Theme toggle       | 300ms colour/background crossfade on the major surfaces                                     |
-| Background lattice | 180s linear background-position drift                                                       |
+| Background lattice | 360s linear background-position drift — exactly one 240px tile, so the loop never shows     |
 
 No parallax, no scroll-triggered libraries, no layout shift.
 

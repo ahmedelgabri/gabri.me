@@ -121,19 +121,7 @@ const year = new Date().getFullYear()
 				>
 					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
 				</svg>
-				<svg
-					class="zj-toggle-glyph zj-toggle-sun"
-					viewBox="0 0 24 24"
-					width="19"
-					height="19"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.5"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<polygon points="12,3 14.02,9.22 20.56,9.22 15.27,13.06 17.29,19.28 12,15.44 6.71,19.28 8.73,13.06 3.44,9.22 9.98,9.22" />
-				</svg>
+				<Star class="zj-toggle-glyph zj-toggle-sun" size={19} />
 				<span class="zj-toggle-label">Switch to dark theme</span>
 			</button>
 
@@ -205,6 +193,16 @@ const year = new Date().getFullYear()
 		--z-font-mono: 'PragmataPro Mono Liga', 'PragmataPro Liga', 'PragmataPro',
 			'Iosevka', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 		--zj-page-pad-x: clamp(1.1rem, 4.5vw, 3.25rem);
+		/*
+		 * The external-link mark: an arrow pointing north-east whose head is a
+		 * four-point diamond star — the khatam's four-fold cousin — on a thin
+		 * shaft running back along the same diagonal. The star's outer points
+		 * sit on the diagonals with the north-east one stretched so it leads;
+		 * its inner points sit on the axes. The viewBox is the mark's exact
+		 * bounding box, so the glyph fills its box rather than floating in
+		 * padding. Carried as a mask so one shape serves both themes.
+		 */
+		--zj-extlink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16.97 16.97'%3E%3Cpath d='M0.71 16.26L9.9 7.07' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M16.97 0L12.3 7.07L14.28 11.45L9.9 9.47L5.52 11.45L7.5 7.07L5.52 2.69L9.9 4.67Z'/%3E%3C/svg%3E");
 	}
 
 	/* ————— Light: qishani ivory ————— */
@@ -216,24 +214,42 @@ const year = new Date().getFullYear()
 		--zj-text-muted: #5a5142;
 		/* Links, the Arabic masthead and focus rings — always text-grade contrast */
 		--zj-accent: #1d3a6e;
-		/* Gilding only: hairlines, ornament, markers. Never body text */
-		--zj-gild: #c29228;
+		/*
+		 * Gilding only: hairlines, ornament, markers. Never body text.
+		 * A bronze-gold deep enough to hold 3.26:1 on the ivory ground — a
+		 * lighter saffron leaves the hairlines below 1.5:1 and they vanish.
+		 */
+		--zj-gild: #a97c14;
 		--zj-glaze: #2a7268;
 		/* Geometry strokes: lapis in daylight, oxidised silver on the indigo ground */
 		--zj-geo: #1d3a6e;
-		--zj-hairline: rgba(194, 146, 40, 0.42);
+		/* 2.26:1 on ivory — the lighter of the two gilded rules, still legible */
+		--zj-hairline: rgba(169, 124, 20, 0.72);
 		/* Structural rules that carry meaning need more weight than the ornamental hairline */
 		--zj-rule: rgba(90, 81, 66, 0.5);
 		--zj-panel-edge: rgba(38, 34, 26, 0.16);
 		--zj-panel-edge-soft: rgba(38, 34, 26, 0.1);
 		--zj-underline-rest: rgba(29, 58, 110, 0.35);
-		--zj-selection: rgba(194, 146, 40, 0.3);
-		--zj-screen-opacity: 0.05;
+		--zj-selection: rgba(169, 124, 20, 0.32);
+		--zj-screen-opacity: 0.06;
 		--zj-medallion-opacity: 0.035;
-		/* Khatam star-and-cross tile, built from the geometry in ./geometry.ts */
-		--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cpolygon id='c' points='0,-60 17.57,-42.43 17.57,-17.57 42.43,-17.57 60,0 42.43,17.57 17.57,17.57 17.57,42.43 0,60 -17.57,42.43 -17.57,17.57 -42.43,17.57 -60,0 -42.43,-17.57 -17.57,-17.57 -17.57,-42.43'/%3E%3C/defs%3E%3Cg fill='none' stroke='%2326221A' stroke-width='1'%3E%3Cuse href='%23c'/%3E%3Cuse href='%23c' x='120'/%3E%3Cuse href='%23c' y='120'/%3E%3Cuse href='%23c' x='120' y='120'/%3E%3Cpolygon points='120,60 102.43,77.57 102.43,102.43 77.57,102.43 60,120 42.43,102.43 17.57,102.43 17.57,77.57 0,60 17.57,42.43 17.57,17.57 42.43,17.57 60,0 77.57,17.57 102.43,17.57 102.43,42.43'/%3E%3C/g%3E%3C/svg%3E");
-		/* Marginal shamsa: rim circles, two rotated octagons, the khatam's two squares, a central star */
-		--zj-medallion: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2326221A' stroke-width='1.4'%3E%3Ccircle cx='120' cy='120' r='112'/%3E%3Ccircle cx='120' cy='120' r='105'/%3E%3Cpolygon points='212.39,158.27 158.27,212.39 81.73,212.39 27.61,158.27 27.61,81.73 81.73,27.61 158.27,27.61 212.39,81.73'/%3E%3Cpolygon points='220,120 190.71,190.71 120,220 49.29,190.71 20,120 49.29,49.29 120,20 190.71,49.29'/%3E%3Ccircle cx='120' cy='120' r='68'/%3E%3Cpolygon points='184,120 120,184 56,120 120,56'/%3E%3Cpolygon points='165.25,165.25 74.75,165.25 74.75,74.75 165.25,74.75'/%3E%3Ccircle cx='120' cy='120' r='24'/%3E%3Cpolygon points='140,120 134.14,125.86 134.14,134.14 125.86,134.14 120,140 114.14,134.14 105.86,134.14 105.86,125.86 100,120 105.86,114.14 105.86,105.86 114.14,105.86 120,100 125.86,105.86 134.14,105.86 134.14,114.14'/%3E%3C/g%3E%3C/svg%3E");
+		/*
+		 * Andalusian rosette tile, 240px, seamless. Rosettes of radius
+		 * 120/sqrt(2) sit on a centred square lattice — (0,0) and (120,120) —
+		 * so diagonal neighbours are exactly tangent. Each rosette is the
+		 * breath-of-the-compass figure: sixteen petals cut by the {16/6} star
+		 * polygon on a circle of that radius, a nested ring on the petals'
+		 * valleys, and a khatam inscribed in the polygon the {16/6}'s own
+		 * innermost intersections describe. The lattice's holes carry an
+		 * eight-point khatam whose axial tips land on four rosette tips and
+		 * whose diagonal tips launch lozenge straps onto the tangency points —
+		 * waisted, because a straight strap would be collinear with the next
+		 * hole's and the two would chain into an endless diagonal.
+		 * Structure strokes are 1, infill 0.55.
+		 */
+		--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cdefs%3E%3Cg id='r'%3E%3Cpath d='M84.85 0L57.32 11.4L78.39 32.47L48.6 32.47L60 60L32.47 48.6L32.47 78.39L11.4 57.32L0 84.85L-11.4 57.32L-32.47 78.39L-32.47 48.6L-60 60L-48.6 32.47L-78.39 32.47L-57.32 11.4L-84.85 0L-57.32 -11.4L-78.39 -32.47L-48.6 -32.47L-60 -60L-32.47 -48.6L-32.47 -78.39L-11.4 -57.32L0 -84.85L11.4 -57.32L32.47 -78.39L32.47 -48.6L60 -60L48.6 -32.47L78.39 -32.47L57.32 -11.4Z'/%3E%3Cpath d='M33.11 0L23.41 9.7L23.41 23.41L9.7 23.41L0 33.11L-9.7 23.41L-23.41 23.41L-23.41 9.7L-33.11 0L-23.41 -9.7L-23.41 -23.41L-9.7 -23.41L0 -33.11L9.7 -23.41L23.41 -23.41L23.41 -9.7Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M57.32 11.4L30.59 12.67L48.6 32.47L23.41 23.41L32.47 48.6L12.67 30.59L11.4 57.32L0 33.11L-11.4 57.32L-12.67 30.59L-32.47 48.6L-23.41 23.41L-48.6 32.47L-30.59 12.67L-57.32 11.4L-33.11 0L-57.32 -11.4L-30.59 -12.67L-48.6 -32.47L-23.41 -23.41L-32.47 -48.6L-12.67 -30.59L-11.4 -57.32L0 -33.11L11.4 -57.32L12.67 -30.59L32.47 -48.6L23.41 -23.41L48.6 -32.47L30.59 -12.67L57.32 -11.4L33.11 0Z'/%3E%3Ccircle r='33.11'/%3E%3C/g%3E%3C/g%3E%3Cg id='x'%3E%3Cpath d='M35.15 0L17.57 7.28L24.85 24.85L7.28 17.57L0 35.15L-7.28 17.57L-24.85 24.85L-17.57 7.28L-35.15 0L-17.57 -7.28L-24.85 -24.85L-7.28 -17.57L0 -35.15L7.28 -17.57L24.85 -24.85L17.57 -7.28Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M24.85 24.85L38.18 46.67L60 60L46.67 38.18ZM-24.85 24.85L-46.67 38.18L-60 60L-38.18 46.67ZM-24.85 -24.85L-38.18 -46.67L-60 -60L-46.67 -38.18ZM24.85 -24.85L46.67 -38.18L60 -60L38.18 -46.67Z'/%3E%3Ccircle r='19.02'/%3E%3C/g%3E%3C/g%3E%3C/defs%3E%3Cg fill='none' stroke='%2326221A' stroke-width='1'%3E%3Cuse href='%23r' x='0' y='0'/%3E%3Cuse href='%23r' x='240' y='0'/%3E%3Cuse href='%23r' x='0' y='240'/%3E%3Cuse href='%23r' x='240' y='240'/%3E%3Cuse href='%23r' x='120' y='120'/%3E%3Cuse href='%23x' x='120' y='0'/%3E%3Cuse href='%23x' x='120' y='240'/%3E%3Cuse href='%23x' x='0' y='120'/%3E%3Cuse href='%23x' x='240' y='120'/%3E%3C/g%3E%3C/svg%3E");
+		/* Marginal shamsa: the same rosette, rimmed by two circles and a ring of sixteen cells */
+		--zj-medallion: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2326221A' stroke-width='1.4' transform='translate(120 120)'%3E%3Ccircle r='118'/%3E%3Ccircle r='110'/%3E%3Cpath d='M107.89 21.46L88.69 36.74L91.46 61.11L67.88 67.88L61.11 91.46L36.74 88.69L21.46 107.89L0 96L-21.46 107.89L-36.74 88.69L-61.11 91.46L-67.88 67.88L-91.46 61.11L-88.69 36.74L-107.89 21.46L-96 0L-107.89 -21.46L-88.69 -36.74L-91.46 -61.11L-67.88 -67.88L-61.11 -91.46L-36.74 -88.69L-21.46 -107.89L0 -96L21.46 -107.89L36.74 -88.69L61.11 -91.46L67.88 -67.88L91.46 -61.11L88.69 -36.74L107.89 -21.46L96 0Z'/%3E%3Cpath d='M96 0L64.86 12.9L88.69 36.74L54.98 36.74L67.88 67.88L36.74 54.98L36.74 88.69L12.9 64.86L0 96L-12.9 64.86L-36.74 88.69L-36.74 54.98L-67.88 67.88L-54.98 36.74L-88.69 36.74L-64.86 12.9L-96 0L-64.86 -12.9L-88.69 -36.74L-54.98 -36.74L-67.88 -67.88L-36.74 -54.98L-36.74 -88.69L-12.9 -64.86L0 -96L12.9 -64.86L36.74 -88.69L36.74 -54.98L67.88 -67.88L54.98 -36.74L88.69 -36.74L64.86 -12.9Z'/%3E%3Cpath d='M37.46 0L26.49 10.97L26.49 26.49L10.97 26.49L0 37.46L-10.97 26.49L-26.49 26.49L-26.49 10.97L-37.46 0L-26.49 -10.97L-26.49 -26.49L-10.97 -26.49L0 -37.46L10.97 -26.49L26.49 -26.49L26.49 -10.97Z'/%3E%3Cg stroke-width='.8'%3E%3Cpath d='M64.86 12.9L34.61 14.33L54.98 36.74L26.49 26.49L36.74 54.98L14.33 34.61L12.9 64.86L0 37.46L-12.9 64.86L-14.33 34.61L-36.74 54.98L-26.49 26.49L-54.98 36.74L-34.61 14.33L-64.86 12.9L-37.46 0L-64.86 -12.9L-34.61 -14.33L-54.98 -36.74L-26.49 -26.49L-36.74 -54.98L-14.33 -34.61L-12.9 -64.86L0 -37.46L12.9 -64.86L14.33 -34.61L36.74 -54.98L26.49 -26.49L54.98 -36.74L34.61 -14.33L64.86 -12.9L37.46 0Z'/%3E%3Ccircle r='37.46'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 		color-scheme: light;
 	}
 
@@ -254,10 +270,10 @@ const year = new Date().getFullYear()
 		--zj-panel-edge-soft: rgba(217, 180, 74, 0.28);
 		--zj-underline-rest: rgba(217, 180, 74, 0.4);
 		--zj-selection: rgba(217, 180, 74, 0.28);
-		--zj-screen-opacity: 0.07;
+		--zj-screen-opacity: 0.08;
 		--zj-medallion-opacity: 0.05;
-		--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3Cpolygon id='c' points='0,-60 17.57,-42.43 17.57,-17.57 42.43,-17.57 60,0 42.43,17.57 17.57,17.57 17.57,42.43 0,60 -17.57,42.43 -17.57,17.57 -42.43,17.57 -60,0 -42.43,-17.57 -17.57,-17.57 -17.57,-42.43'/%3E%3C/defs%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1'%3E%3Cuse href='%23c'/%3E%3Cuse href='%23c' x='120'/%3E%3Cuse href='%23c' y='120'/%3E%3Cuse href='%23c' x='120' y='120'/%3E%3Cpolygon points='120,60 102.43,77.57 102.43,102.43 77.57,102.43 60,120 42.43,102.43 17.57,102.43 17.57,77.57 0,60 17.57,42.43 17.57,17.57 42.43,17.57 60,0 77.57,17.57 102.43,17.57 102.43,42.43'/%3E%3C/g%3E%3C/svg%3E");
-		--zj-medallion: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1.4'%3E%3Ccircle cx='120' cy='120' r='112'/%3E%3Ccircle cx='120' cy='120' r='105'/%3E%3Cpolygon points='212.39,158.27 158.27,212.39 81.73,212.39 27.61,158.27 27.61,81.73 81.73,27.61 158.27,27.61 212.39,81.73'/%3E%3Cpolygon points='220,120 190.71,190.71 120,220 49.29,190.71 20,120 49.29,49.29 120,20 190.71,49.29'/%3E%3Ccircle cx='120' cy='120' r='68'/%3E%3Cpolygon points='184,120 120,184 56,120 120,56'/%3E%3Cpolygon points='165.25,165.25 74.75,165.25 74.75,74.75 165.25,74.75'/%3E%3Ccircle cx='120' cy='120' r='24'/%3E%3Cpolygon points='140,120 134.14,125.86 134.14,134.14 125.86,134.14 120,140 114.14,134.14 105.86,134.14 105.86,125.86 100,120 105.86,114.14 105.86,105.86 114.14,105.86 120,100 125.86,105.86 134.14,105.86 134.14,114.14'/%3E%3C/g%3E%3C/svg%3E");
+		--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cdefs%3E%3Cg id='r'%3E%3Cpath d='M84.85 0L57.32 11.4L78.39 32.47L48.6 32.47L60 60L32.47 48.6L32.47 78.39L11.4 57.32L0 84.85L-11.4 57.32L-32.47 78.39L-32.47 48.6L-60 60L-48.6 32.47L-78.39 32.47L-57.32 11.4L-84.85 0L-57.32 -11.4L-78.39 -32.47L-48.6 -32.47L-60 -60L-32.47 -48.6L-32.47 -78.39L-11.4 -57.32L0 -84.85L11.4 -57.32L32.47 -78.39L32.47 -48.6L60 -60L48.6 -32.47L78.39 -32.47L57.32 -11.4Z'/%3E%3Cpath d='M33.11 0L23.41 9.7L23.41 23.41L9.7 23.41L0 33.11L-9.7 23.41L-23.41 23.41L-23.41 9.7L-33.11 0L-23.41 -9.7L-23.41 -23.41L-9.7 -23.41L0 -33.11L9.7 -23.41L23.41 -23.41L23.41 -9.7Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M57.32 11.4L30.59 12.67L48.6 32.47L23.41 23.41L32.47 48.6L12.67 30.59L11.4 57.32L0 33.11L-11.4 57.32L-12.67 30.59L-32.47 48.6L-23.41 23.41L-48.6 32.47L-30.59 12.67L-57.32 11.4L-33.11 0L-57.32 -11.4L-30.59 -12.67L-48.6 -32.47L-23.41 -23.41L-32.47 -48.6L-12.67 -30.59L-11.4 -57.32L0 -33.11L11.4 -57.32L12.67 -30.59L32.47 -48.6L23.41 -23.41L48.6 -32.47L30.59 -12.67L57.32 -11.4L33.11 0Z'/%3E%3Ccircle r='33.11'/%3E%3C/g%3E%3C/g%3E%3Cg id='x'%3E%3Cpath d='M35.15 0L17.57 7.28L24.85 24.85L7.28 17.57L0 35.15L-7.28 17.57L-24.85 24.85L-17.57 7.28L-35.15 0L-17.57 -7.28L-24.85 -24.85L-7.28 -17.57L0 -35.15L7.28 -17.57L24.85 -24.85L17.57 -7.28Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M24.85 24.85L38.18 46.67L60 60L46.67 38.18ZM-24.85 24.85L-46.67 38.18L-60 60L-38.18 46.67ZM-24.85 -24.85L-38.18 -46.67L-60 -60L-46.67 -38.18ZM24.85 -24.85L46.67 -38.18L60 -60L38.18 -46.67Z'/%3E%3Ccircle r='19.02'/%3E%3C/g%3E%3C/g%3E%3C/defs%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1'%3E%3Cuse href='%23r' x='0' y='0'/%3E%3Cuse href='%23r' x='240' y='0'/%3E%3Cuse href='%23r' x='0' y='240'/%3E%3Cuse href='%23r' x='240' y='240'/%3E%3Cuse href='%23r' x='120' y='120'/%3E%3Cuse href='%23x' x='120' y='0'/%3E%3Cuse href='%23x' x='120' y='240'/%3E%3Cuse href='%23x' x='0' y='120'/%3E%3Cuse href='%23x' x='240' y='120'/%3E%3C/g%3E%3C/svg%3E");
+		--zj-medallion: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1.4' transform='translate(120 120)'%3E%3Ccircle r='118'/%3E%3Ccircle r='110'/%3E%3Cpath d='M107.89 21.46L88.69 36.74L91.46 61.11L67.88 67.88L61.11 91.46L36.74 88.69L21.46 107.89L0 96L-21.46 107.89L-36.74 88.69L-61.11 91.46L-67.88 67.88L-91.46 61.11L-88.69 36.74L-107.89 21.46L-96 0L-107.89 -21.46L-88.69 -36.74L-91.46 -61.11L-67.88 -67.88L-61.11 -91.46L-36.74 -88.69L-21.46 -107.89L0 -96L21.46 -107.89L36.74 -88.69L61.11 -91.46L67.88 -67.88L91.46 -61.11L88.69 -36.74L107.89 -21.46L96 0Z'/%3E%3Cpath d='M96 0L64.86 12.9L88.69 36.74L54.98 36.74L67.88 67.88L36.74 54.98L36.74 88.69L12.9 64.86L0 96L-12.9 64.86L-36.74 88.69L-36.74 54.98L-67.88 67.88L-54.98 36.74L-88.69 36.74L-64.86 12.9L-96 0L-64.86 -12.9L-88.69 -36.74L-54.98 -36.74L-67.88 -67.88L-36.74 -54.98L-36.74 -88.69L-12.9 -64.86L0 -96L12.9 -64.86L36.74 -88.69L36.74 -54.98L67.88 -67.88L54.98 -36.74L88.69 -36.74L64.86 -12.9Z'/%3E%3Cpath d='M37.46 0L26.49 10.97L26.49 26.49L10.97 26.49L0 37.46L-10.97 26.49L-26.49 26.49L-26.49 10.97L-37.46 0L-26.49 -10.97L-26.49 -26.49L-10.97 -26.49L0 -37.46L10.97 -26.49L26.49 -26.49L26.49 -10.97Z'/%3E%3Cg stroke-width='.8'%3E%3Cpath d='M64.86 12.9L34.61 14.33L54.98 36.74L26.49 26.49L36.74 54.98L14.33 34.61L12.9 64.86L0 37.46L-12.9 64.86L-14.33 34.61L-36.74 54.98L-26.49 26.49L-54.98 36.74L-34.61 14.33L-64.86 12.9L-37.46 0L-64.86 -12.9L-34.61 -14.33L-54.98 -36.74L-26.49 -26.49L-36.74 -54.98L-14.33 -34.61L-12.9 -64.86L0 -37.46L12.9 -64.86L14.33 -34.61L36.74 -54.98L26.49 -26.49L54.98 -36.74L34.61 -14.33L64.86 -12.9L37.46 0Z'/%3E%3Ccircle r='37.46'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 		color-scheme: dark;
 	}
 
@@ -302,7 +318,7 @@ const year = new Date().getFullYear()
 			inset: 0;
 			background-image: var(--zj-screen);
 			background-repeat: repeat;
-			background-size: 120px 120px;
+			background-size: 240px 240px;
 			background-position: 0 0;
 			opacity: var(--zj-screen-opacity);
 			/* The lattice dies away before it reaches the reading column */
@@ -324,7 +340,7 @@ const year = new Date().getFullYear()
 				#000 calc(50% + 31rem),
 				#000 100%
 			);
-			animation: zj-drift 180s linear infinite;
+			animation: zj-drift 360s linear infinite;
 		}
 	}
 
@@ -347,9 +363,10 @@ const year = new Date().getFullYear()
 		}
 	}
 
+	/* Exactly one tile, so the loop point is invisible; 360s keeps the old pace */
 	@keyframes zj-drift {
 		to {
-			background-position: 120px 120px;
+			background-position: 240px 240px;
 		}
 	}
 
@@ -537,6 +554,11 @@ const year = new Date().getFullYear()
 		opacity: 0.6;
 	}
 
+	/* Gold on indigo carries 0.6 easily; bronze on ivory needs the extra weight */
+	.design-zellij.light .zj-frieze-square {
+		opacity: 0.8;
+	}
+
 	.design-zellij .zj-frieze-cross {
 		stroke: var(--zj-geo);
 		stroke-width: 1;
@@ -576,14 +598,20 @@ const year = new Date().getFullYear()
 
 	/* Every link that leaves the site says so, in chrome and in prose alike */
 	.design-zellij a[target='_blank']::after {
-		content: ' ↗' / '';
+		content: '';
 		display: inline-block;
-		white-space: pre;
-		font-size: 0.55em;
-		line-height: 1;
-		vertical-align: 0.32em;
-		color: var(--zj-text-muted);
-		text-decoration: none;
+		width: 0.6em;
+		height: 0.6em;
+		margin-left: 0.22em;
+		vertical-align: 0.08em;
+		/* The mark is a mask, so it takes the muted ink of whichever theme is on */
+		background-color: var(--zj-text-muted);
+		-webkit-mask-image: var(--zj-extlink);
+		mask-image: var(--zj-extlink);
+		-webkit-mask-size: 100% 100%;
+		mask-size: 100% 100%;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
 	}
 
 	/* ————— Home sections ————— */
@@ -1172,13 +1200,18 @@ const year = new Date().getFullYear()
 
 	/* ————— Design switcher theming ————— */
 
+	/*
+	 * The switcher sits on its own dark ink chip in both themes, so its gilding
+	 * follows the chip rather than the page: the light theme's bronze gild would
+	 * put the selected label at 4.2:1 on gold, where this gold holds 8:1.
+	 */
 	.design-zellij .design-switcher {
 		--ds-bg: rgba(38, 34, 26, 0.92);
 		--ds-fg: rgba(245, 238, 223, 0.78);
-		--ds-border: rgba(194, 146, 40, 0.45);
-		--ds-hover-bg: rgba(194, 146, 40, 0.18);
+		--ds-border: rgba(217, 180, 74, 0.45);
+		--ds-hover-bg: rgba(217, 180, 74, 0.18);
 		--ds-hover-fg: #f5eedf;
-		--ds-accent: #c29228;
+		--ds-accent: #d9b44a;
 		--ds-accent-fg: #26221a;
 		--ds-font: var(--z-font-body);
 		--ds-radius: 2px;
@@ -1188,10 +1221,7 @@ const year = new Date().getFullYear()
 	.design-zellij.dark .design-switcher {
 		--ds-bg: rgba(19, 35, 71, 0.92);
 		--ds-fg: rgba(237, 227, 203, 0.82);
-		--ds-border: rgba(217, 180, 74, 0.45);
-		--ds-hover-bg: rgba(217, 180, 74, 0.18);
 		--ds-hover-fg: #ede3cb;
-		--ds-accent: #d9b44a;
 		--ds-accent-fg: #132347;
 	}
 
