@@ -107,3 +107,14 @@ export async function getAllBlogEntries(): Promise<BlogEntry[]> {
 export async function getAllWeeklyLinksEntries(): Promise<WeeklyLinksEntry[]> {
 	return getCollection('weeklyLinks', isPublished)
 }
+
+interface SlugStaticPath {
+	params: {slug: string}
+}
+
+export async function getBlogStaticPaths(): Promise<SlugStaticPath[]> {
+	const entries = await getAllBlogEntries()
+	return entries.map((entry) => ({
+		params: {slug: getSlugFromId(entry.id)},
+	}))
+}

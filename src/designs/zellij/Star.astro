@@ -1,0 +1,29 @@
+---
+import {starPoints} from './geometry'
+
+interface Props {
+	size?: number
+	fill?: string
+	class?: string
+}
+
+const {size = 12, fill = 'none', class: className} = Astro.props
+
+const points = starPoints(12, 12, 10)
+---
+
+<svg
+	class={className}
+	width={size}
+	height={size}
+	viewBox="0 0 24 24"
+	aria-hidden="true"
+>
+	<polygon
+		points={points}
+		fill={fill}
+		stroke="currentColor"
+		stroke-width="1"
+		vector-effect="non-scaling-stroke"
+	/>
+</svg>

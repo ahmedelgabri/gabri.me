@@ -1,0 +1,32 @@
+---
+import {starPoints} from './geometry'
+
+/*
+ * A condensed star-and-cross strip used between sections: three khatam
+ * stars alternating with the rotated squares the tiling is built from.
+ */
+const stars = [
+	{cx: 14, r: 9},
+	{cx: 50, r: 11},
+	{cx: 86, r: 9},
+]
+const diamonds = [32, 68]
+const side = 7
+---
+
+<div class="zj-divider" role="presentation">
+	<svg width="100" height="28" viewBox="0 0 100 28" aria-hidden="true">
+		{stars.map((star) => (
+			<polygon points={starPoints(star.cx, 14, star.r)} />
+		))}
+		{diamonds.map((cx) => (
+			<rect
+				x={cx - side / 2}
+				y={14 - side / 2}
+				width={side}
+				height={side}
+				transform={`rotate(45 ${cx} 14)`}
+			/>
+		))}
+	</svg>
+</div>

@@ -1,0 +1,62 @@
+---
+import {starPoints, crossPoints} from './geometry'
+
+/*
+ * Star-and-cross band. Khatam stars sit on a square lattice with spacing
+ * 2√2·a (a = half-side of the generating squares), which makes neighbouring
+ * stars touch tip to tip, and the leftover gaps on the half-lattice are
+ * exactly the cross tiles. Cropping that tiling to a single row of stars
+ * leaves half-crosses along both edges of the band — the classic frieze.
+ */
+const unit = 40
+const a = unit / (2 * Math.SQRT2)
+const r = unit / 2
+const count = 26
+const width = count * unit
+
+const stars = Array.from({length: count}, (_, i) => {
+	const cx = i * unit + r
+	return {
+		cx,
+		outline: starPoints(cx, r, r),
+		square: {x: cx - a, y: r - a, size: 2 * a},
+	}
+})
+
+const crosses = Array.from({length: count + 1}, (_, i) => i * unit).flatMap(
+	(cx) => [crossPoints(cx, 0, r), crossPoints(cx, unit, r)],
+)
+---
+
+<svg
+	class="zj-frieze"
+	viewBox={`0 0 ${width} ${unit}`}
+	preserveAspectRatio="xMidYMid slice"
+	aria-hidden="true"
+>
+	{crosses.map((points) => (
+		<polygon class="zj-frieze-cross" points={points} pathLength="1" />
+	))}
+	{stars.map((star) => (
+		<g>
+			<rect
+				class="zj-frieze-square"
+				x={star.square.x}
+				y={star.square.y}
+				width={star.square.size}
+				height={star.square.size}
+				pathLength="1"
+			/>
+			<rect
+				class="zj-frieze-square"
+				x={star.square.x}
+				y={star.square.y}
+				width={star.square.size}
+				height={star.square.size}
+				transform={`rotate(45 ${star.cx} ${r})`}
+				pathLength="1"
+			/>
+			<polygon class="zj-frieze-star" points={star.outline} pathLength="1" />
+		</g>
+	))}
+</svg>

@@ -1,0 +1,61 @@
+---
+/*
+ * Two-centred drop arch. Each half is a circular arc whose centre sits on
+ * the springing line, offset from the axis toward the opposite side; the
+ * offset makes the arcs meet at the apex in a true point (this requires
+ * rise > half-span). The viewBox crops the band to the crown — the
+ * springing line itself lies below the visible area — and short impost
+ * hairlines ground the arcs where they exit the frame.
+ */
+const mid = 360
+const halfSpan = 270
+const rise = 300
+const springY = 320
+const cropHeight = 210
+const gap = 12
+
+const offset = (rise * rise - halfSpan * halfSpan) / (2 * halfSpan)
+const outerR = halfSpan + offset
+const innerR = outerR - gap
+
+const apexY = springY - rise
+const innerApexY = springY - Math.sqrt(innerR * innerR - offset * offset)
+const innerSpringX = mid + offset - innerR
+
+const impostY = cropHeight - 1.5
+const outerExitX =
+	mid + offset - Math.sqrt(outerR * outerR - (springY - impostY) ** 2)
+
+const r2 = (n: number) => Math.round(n * 100) / 100
+
+const outerPath = [
+	`M ${mid - halfSpan} ${springY}`,
+	`A ${r2(outerR)} ${r2(outerR)} 0 0 1 ${mid} ${apexY}`,
+	`A ${r2(outerR)} ${r2(outerR)} 0 0 1 ${mid + halfSpan} ${springY}`,
+].join(' ')
+
+const innerPath = [
+	`M ${r2(innerSpringX)} ${springY}`,
+	`A ${r2(innerR)} ${r2(innerR)} 0 0 1 ${mid} ${r2(innerApexY)}`,
+	`A ${r2(innerR)} ${r2(innerR)} 0 0 1 ${r2(2 * mid - innerSpringX)} ${springY}`,
+].join(' ')
+---
+
+<svg class="zj-arch" viewBox={`0 0 720 ${cropHeight}`} aria-hidden="true">
+	<line
+		class="zj-arch-impost"
+		x1="0"
+		y1={impostY}
+		x2={r2(outerExitX)}
+		y2={impostY}
+	/>
+	<line
+		class="zj-arch-impost"
+		x1={r2(2 * mid - outerExitX)}
+		y1={impostY}
+		x2="720"
+		y2={impostY}
+	/>
+	<path class="zj-arch-inner" d={innerPath}></path>
+	<path class="zj-arch-outer" d={outerPath}></path>
+</svg>

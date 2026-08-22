@@ -1,0 +1,15 @@
+---
+import type {HTMLAttributes} from 'astro/types'
+
+type Props = HTMLAttributes<'a'>
+
+const {href, ...rest} = Astro.props
+
+/* Post bodies link to the live site's paths; keep those hops inside this design */
+const designHref =
+	typeof href === 'string' && /^\/(blog|weekly-links)\//.test(href)
+		? `/1${href}`
+		: href
+---
+
+<a href={designHref} {...rest}><slot /></a>

@@ -4,6 +4,7 @@ import '../style/style.css'
 import siteMeta from '../config/siteMeta'
 import IslamicPattern from '../components/Header/IslamicPattern.astro'
 import Logo from '../components/Logo'
+import DesignSwitcher from '../components/DesignSwitcher.astro'
 import {SettingsPopover} from '../components/Header/SettingsPopover'
 
 interface Props {
@@ -246,5 +247,6 @@ const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 				&copy; {new Date().getFullYear()} {author}
 			</footer>
 		</div>
+		<DesignSwitcher />
 	</body>
 </html>

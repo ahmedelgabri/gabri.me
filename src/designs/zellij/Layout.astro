@@ -1,0 +1,789 @@
+---
+import DesignHead from '../../components/DesignHead.astro'
+import DesignSwitcher from '../../components/DesignSwitcher.astro'
+import siteMeta from '../../config/siteMeta'
+import GirihFrieze from './GirihFrieze.astro'
+import Star from './Star.astro'
+
+interface Props {
+	title: string
+	description?: string
+	hero?: boolean
+}
+
+const {title, description, hero = false} = Astro.props
+
+const fontsHref =
+	'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;600&family=Spectral:ital,wght@0,400;0,600;1,400;1,600&display=swap'
+
+const year = new Date().getFullYear()
+---
+
+<!doctype html>
+<html lang="en" class="design-zellij light">
+	<head>
+		<DesignHead
+			title={`Ahmed El Gabri — ${title} · Zellij design`}
+			description={description}
+			fontsHref={fontsHref}
+			themeColor="#F5EEDF"
+		/>
+	</head>
+	<body>
+		<div class="zj-page">
+			<Star class="zj-corner zj-corner-tl" size={18} fill="var(--zj-ivory)" />
+			<Star class="zj-corner zj-corner-tr" size={18} fill="var(--zj-ivory)" />
+			<Star class="zj-corner zj-corner-bl" size={18} fill="var(--zj-ivory)" />
+			<Star class="zj-corner zj-corner-br" size={18} fill="var(--zj-ivory)" />
+
+			<header class:list={['zj-masthead', {'zj-masthead-compact': !hero}]}>
+				{
+					hero ? (
+						<h1 class="zj-name">Ahmed El Gabri</h1>
+					) : (
+						<p class="zj-name">
+							<a href="/1">Ahmed El Gabri</a>
+						</p>
+					)
+				}
+				<p class="zj-name-ar" lang="ar" dir="rtl">أحمد الجابري</p>
+				{hero && <p class="zj-role">{siteMeta.title}</p>}
+				<div class="zj-frieze-band">
+					<GirihFrieze />
+				</div>
+			</header>
+
+			<main class="zj-main">
+				<slot />
+			</main>
+
+			<footer class="zj-footer">
+				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a></p>
+			</footer>
+		</div>
+		<DesignSwitcher />
+	</body>
+</html>
+
+<style is:global>
+	.design-zellij {
+		--zj-ivory: #f5eedf;
+		--zj-kohl: #26221a;
+		--zj-lapis: #1d3a6e;
+		--zj-saffron: #c29228;
+		--zj-glaze: #2a7268;
+		--zj-ink-muted: #5a5142;
+		--zj-hairline: rgba(194, 146, 40, 0.42);
+		/* Structural rules that carry meaning need more weight than the ornamental hairline */
+		--zj-rule: rgba(90, 81, 66, 0.5);
+		--zj-parchment-deep: #ece3cc;
+		--zj-page-pad-x: clamp(1.1rem, 4.5vw, 3.25rem);
+		--zj-serif: 'Spectral', 'Iowan Old Style', Georgia, serif;
+		--zj-display: 'Amiri', 'Times New Roman', serif;
+		--zj-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+		color-scheme: light;
+	}
+
+	.design-zellij body {
+		margin: 0;
+		background: var(--zj-ivory);
+		color: var(--zj-kohl);
+		font-family: var(--zj-serif);
+		font-size: 1.0625rem;
+		line-height: 1.75;
+		/* Bottom padding keeps the fixed design switcher clear of the footer */
+		padding: clamp(0.875rem, 3vw, 2.5rem) clamp(0.875rem, 3vw, 2rem) 6.5rem;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	.design-zellij ::selection {
+		background: rgba(194, 146, 40, 0.3);
+	}
+
+	.design-zellij :focus-visible {
+		outline: 2px solid var(--zj-lapis);
+		outline-offset: 3px;
+	}
+
+	/* ————— The carpet-page frame ————— */
+
+	.design-zellij .zj-page {
+		position: relative;
+		max-width: 47rem;
+		margin: 0 auto;
+		border: 1px solid var(--zj-saffron);
+		outline: 1px solid var(--zj-hairline);
+		outline-offset: 4px;
+		padding: clamp(1.25rem, 4vw, 2.75rem) var(--zj-page-pad-x) 2.25rem;
+	}
+
+	.design-zellij .zj-corner {
+		position: absolute;
+		display: block;
+		color: var(--zj-saffron);
+	}
+
+	.design-zellij .zj-corner-tl {
+		top: -3px;
+		left: -3px;
+		transform: translate(-50%, -50%);
+	}
+
+	.design-zellij .zj-corner-tr {
+		top: -3px;
+		right: -3px;
+		transform: translate(50%, -50%);
+	}
+
+	.design-zellij .zj-corner-bl {
+		bottom: -3px;
+		left: -3px;
+		transform: translate(-50%, 50%);
+	}
+
+	.design-zellij .zj-corner-br {
+		bottom: -3px;
+		right: -3px;
+		transform: translate(50%, 50%);
+	}
+
+	/* ————— Masthead ————— */
+
+	.design-zellij .zj-masthead {
+		text-align: center;
+	}
+
+	.design-zellij .zj-name {
+		margin: 0;
+		font-family: var(--zj-display);
+		font-weight: 700;
+		font-size: clamp(2.1rem, 6vw, 3.15rem);
+		line-height: 1.2;
+		letter-spacing: 0.01em;
+	}
+
+	.design-zellij .zj-name a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.design-zellij .zj-name a:hover {
+		color: var(--zj-lapis);
+	}
+
+	.design-zellij .zj-name-ar {
+		margin: 0.1rem 0 0;
+		font-family: var(--zj-display);
+		font-size: clamp(1.15rem, 3vw, 1.5rem);
+		line-height: 1.7;
+		color: var(--zj-lapis);
+	}
+
+	.design-zellij .zj-role {
+		margin: 0.7rem 0 0;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.24em;
+		text-transform: uppercase;
+		color: var(--zj-ink-muted);
+	}
+
+	.design-zellij .zj-masthead-compact .zj-name {
+		font-size: 1.55rem;
+	}
+
+	.design-zellij .zj-masthead-compact .zj-name-ar {
+		font-size: 1.05rem;
+	}
+
+	/* ————— Girih frieze band ————— */
+
+	.design-zellij .zj-frieze-band {
+		margin: 1.4rem calc(-1 * var(--zj-page-pad-x)) 0;
+		border-block: 1px solid var(--zj-hairline);
+		line-height: 0;
+	}
+
+	.design-zellij .zj-frieze {
+		display: block;
+		width: 100%;
+		height: 40px;
+		fill: none;
+	}
+
+	.design-zellij .zj-frieze-star {
+		stroke: var(--zj-lapis);
+		stroke-width: 1.2;
+	}
+
+	.design-zellij .zj-frieze-square {
+		stroke: var(--zj-saffron);
+		stroke-width: 0.75;
+		opacity: 0.6;
+	}
+
+	.design-zellij .zj-frieze-cross {
+		stroke: var(--zj-lapis);
+		stroke-width: 1;
+		opacity: 0.35;
+	}
+
+	.design-zellij .zj-frieze polygon,
+	.design-zellij .zj-frieze rect {
+		stroke-dasharray: 1;
+		stroke-dashoffset: 0;
+		animation: zj-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+	}
+
+	@keyframes zj-draw {
+		from {
+			stroke-dashoffset: 1;
+		}
+	}
+
+	/* ————— Links ————— */
+
+	.design-zellij a {
+		color: var(--zj-lapis);
+		text-decoration: underline;
+		text-decoration-color: rgba(29, 58, 110, 0.35);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.16em;
+		transition:
+			text-decoration-color 150ms ease,
+			color 150ms ease;
+	}
+
+	.design-zellij a:hover {
+		text-decoration-color: var(--zj-saffron);
+		text-decoration-thickness: 2px;
+	}
+
+	/* ————— Home sections ————— */
+
+	.design-zellij .zj-main {
+		padding-top: 2.25rem;
+	}
+
+	.design-zellij .zj-section {
+		max-width: 68ch;
+		margin-inline: auto;
+	}
+
+	.design-zellij .zj-section-title {
+		margin: 0 0 1.3rem;
+		font-family: var(--zj-display);
+		font-weight: 700;
+		font-size: 1.55rem;
+		line-height: 1.3;
+		text-align: center;
+	}
+
+	.design-zellij .zj-lead {
+		margin: 0 0 1.2em;
+	}
+
+	.design-zellij .zj-divider {
+		display: flex;
+		align-items: center;
+		gap: 1.1rem;
+		max-width: 68ch;
+		margin: 2.6rem auto;
+		color: var(--zj-saffron);
+	}
+
+	.design-zellij .zj-divider::before,
+	.design-zellij .zj-divider::after {
+		content: '';
+		flex: 1;
+		border-top: 1px solid var(--zj-hairline);
+	}
+
+	.design-zellij .zj-divider svg {
+		display: block;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1;
+	}
+
+	.design-zellij .zj-social {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.7rem;
+		margin: 1.4rem 0 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.design-zellij .zj-social a {
+		text-decoration: none;
+	}
+
+	.design-zellij .zj-social a:hover {
+		text-decoration: underline;
+		text-decoration-color: var(--zj-saffron);
+	}
+
+	/* ————— Entry lists ————— */
+
+	.design-zellij .zj-entries {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.design-zellij .zj-entry {
+		display: grid;
+		grid-template-columns: 0.95rem 1fr;
+		grid-template-areas:
+			'star title'
+			'.    date'
+			'.    desc';
+		column-gap: 0.85rem;
+		row-gap: 0;
+		padding-block: 0.7rem;
+	}
+
+	.design-zellij .zj-entry + .zj-entry {
+		border-top: 1px solid var(--zj-rule);
+	}
+
+	.design-zellij .zj-entry-star {
+		grid-area: star;
+		margin-top: 0.55rem;
+		color: var(--zj-saffron);
+	}
+
+	.design-zellij .zj-entry-star svg {
+		display: block;
+	}
+
+	.design-zellij .zj-entry-weekly .zj-entry-star {
+		color: var(--zj-glaze);
+	}
+
+	.design-zellij .zj-entry-title {
+		grid-area: title;
+	}
+
+	.design-zellij .zj-entry-date {
+		grid-area: date;
+		font-size: 0.9rem;
+		color: var(--zj-ink-muted);
+		font-variant-numeric: oldstyle-nums;
+		letter-spacing: 0.02em;
+	}
+
+	.design-zellij .zj-entry-desc {
+		grid-area: desc;
+		margin: 0;
+		font-size: 0.9375rem;
+		color: var(--zj-ink-muted);
+	}
+
+	.design-zellij .zj-entry-extra {
+		font-size: 0.9375rem;
+		color: var(--zj-ink-muted);
+	}
+
+	@media (min-width: 40em) {
+		.design-zellij .zj-entry-dated {
+			grid-template-columns: 0.95rem 6.5rem 1fr;
+			grid-template-areas:
+				'star date title'
+				'.    .    desc';
+			align-items: baseline;
+		}
+
+		.design-zellij .zj-entry-dated .zj-entry-star {
+			align-self: start;
+		}
+	}
+
+	/* ————— Article pages ————— */
+
+	.design-zellij .zj-article {
+		max-width: 68ch;
+		margin-inline: auto;
+	}
+
+	.design-zellij .zj-article-header {
+		text-align: center;
+		margin-bottom: 2.5rem;
+	}
+
+	.design-zellij .zj-arch {
+		display: block;
+		width: min(100%, 26rem);
+		height: auto;
+		margin: 0 auto 1.1rem;
+	}
+
+	.design-zellij .zj-arch path {
+		fill: none;
+	}
+
+	.design-zellij .zj-arch-outer {
+		stroke: var(--zj-lapis);
+		stroke-width: 2.25;
+	}
+
+	.design-zellij .zj-arch-inner {
+		stroke: var(--zj-lapis);
+		stroke-width: 1;
+		opacity: 0.5;
+	}
+
+	.design-zellij .zj-arch-impost {
+		stroke: var(--zj-saffron);
+		stroke-width: 1.25;
+	}
+
+	.design-zellij .zj-article-kicker {
+		margin: 0 0 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.26em;
+		text-transform: uppercase;
+		color: var(--zj-ink-muted);
+	}
+
+	.design-zellij .zj-article-kicker-weekly {
+		color: var(--zj-glaze);
+	}
+
+	.design-zellij .zj-article-title {
+		margin: 0;
+		font-family: var(--zj-display);
+		font-weight: 700;
+		font-size: clamp(1.7rem, 5vw, 2.4rem);
+		line-height: 1.25;
+	}
+
+	.design-zellij .zj-article-meta {
+		margin: 0.8rem 0 0;
+		font-size: 0.9rem;
+		color: var(--zj-ink-muted);
+		font-variant-numeric: oldstyle-nums;
+	}
+
+	.design-zellij .zj-article-tags {
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--zj-glaze);
+	}
+
+	.design-zellij .zj-article-nav {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.9rem;
+		font-size: 0.9375rem;
+	}
+
+	.design-zellij .zj-nav-label {
+		display: block;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--zj-ink-muted);
+	}
+
+	/* The spacer for a missing older/newer post only earns a cell in the wide layout */
+	.design-zellij .zj-article-nav > span:empty {
+		display: none;
+	}
+
+	.design-zellij .zj-article-nav a {
+		text-decoration: none;
+	}
+
+	.design-zellij .zj-article-nav a:hover {
+		text-decoration: underline;
+		text-decoration-color: var(--zj-saffron);
+	}
+
+	@media (min-width: 40em) {
+		.design-zellij .zj-article-nav {
+			grid-template-columns: 1fr auto 1fr;
+			gap: 1.5rem;
+		}
+
+		.design-zellij .zj-article-nav > span:empty {
+			display: block;
+		}
+
+		.design-zellij .zj-nav-newer {
+			text-align: right;
+		}
+
+		.design-zellij .zj-nav-index {
+			align-self: start;
+		}
+	}
+
+	/* ————— Prose (rendered MDX) ————— */
+
+	.design-zellij .zj-prose {
+		overflow-wrap: break-word;
+	}
+
+	.design-zellij .zj-prose > p:first-child {
+		font-size: 1.125rem;
+	}
+
+	.design-zellij .zj-prose p {
+		margin: 0 0 1.35em;
+	}
+
+	.design-zellij .zj-prose h2,
+	.design-zellij .zj-prose h3,
+	.design-zellij .zj-prose h4,
+	.design-zellij .zj-prose h5,
+	.design-zellij .zj-prose h6 {
+		font-family: var(--zj-display);
+		font-weight: 700;
+		line-height: 1.3;
+		margin: 1.9em 0 0.6em;
+	}
+
+	.design-zellij .zj-prose h2 {
+		font-size: 1.6rem;
+	}
+
+	.design-zellij .zj-prose h3 {
+		font-size: 1.3rem;
+	}
+
+	.design-zellij .zj-prose h4 {
+		font-size: 1.1rem;
+	}
+
+	.design-zellij .zj-prose h5 {
+		font-size: 1rem;
+	}
+
+	.design-zellij .zj-prose h6 {
+		font-size: 0.9rem;
+	}
+
+	.design-zellij .zj-prose ul,
+	.design-zellij .zj-prose ol {
+		margin: 0 0 1.35em;
+		padding-left: 1.5rem;
+	}
+
+	/* The global preflight strips list styling; restore it for prose */
+	.design-zellij .zj-prose ul {
+		list-style: disc outside;
+	}
+
+	.design-zellij .zj-prose ol {
+		list-style: decimal outside;
+	}
+
+	.design-zellij .zj-prose li {
+		margin-bottom: 0.35em;
+	}
+
+	/* Saffron is reserved for ornament — list numerals are text and need real contrast */
+	.design-zellij .zj-prose li::marker {
+		color: var(--zj-ink-muted);
+	}
+
+	/* Spectral is loaded at 400/600 only — keep bold text on a real weight */
+	.design-zellij .zj-prose strong,
+	.design-zellij .zj-prose b {
+		font-weight: 600;
+	}
+
+	.design-zellij .zj-prose blockquote {
+		margin: 0 0 1.35em;
+		padding: 0.1rem 0 0.1rem 1.25rem;
+		border-left: 2px solid var(--zj-saffron);
+		font-style: italic;
+	}
+
+	.design-zellij .zj-prose blockquote p:last-child {
+		margin-bottom: 0;
+	}
+
+	/* Italicised monospace identifiers are hard to scan */
+	.design-zellij .zj-prose blockquote code {
+		font-style: normal;
+	}
+
+	.design-zellij .zj-prose hr {
+		width: 60%;
+		margin: 2.5rem auto;
+		border: none;
+		border-top: 1px solid var(--zj-rule);
+	}
+
+	.design-zellij .zj-prose table {
+		width: 100%;
+		margin: 0 0 1.5em;
+		border-collapse: collapse;
+		font-size: 0.9375rem;
+	}
+
+	.design-zellij .zj-prose th,
+	.design-zellij .zj-prose td {
+		padding: 0.5rem 0.75rem;
+		border-bottom: 1px solid var(--zj-rule);
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.design-zellij .zj-prose th {
+		font-weight: 600;
+		font-size: 0.8125rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--zj-ink-muted);
+	}
+
+	.design-zellij .zj-prose img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	/* An anchor wrapping only an image would drag a link underline across the artwork */
+	.design-zellij .zj-prose a:has(> img) {
+		text-decoration: none;
+	}
+
+	.design-zellij .zj-prose figure {
+		margin: 2rem 0;
+	}
+
+	.design-zellij .zj-prose figcaption {
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		font-style: italic;
+		text-align: center;
+		color: var(--zj-ink-muted);
+	}
+
+	.design-zellij .zj-prose iframe {
+		max-width: 100%;
+		border: 0;
+	}
+
+	.design-zellij .zj-prose [class*='tweet'] {
+		max-width: min(100%, 32rem);
+		margin-inline: auto;
+	}
+
+	/* The embedded card ships its own link colours; stop the design from repainting them */
+	.design-zellij .zj-prose [class*='tweet'] a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.design-zellij .zj-prose [class*='tweet'] a:hover {
+		text-decoration: underline;
+	}
+
+	.design-zellij .zj-prose code {
+		font-family: var(--zj-mono);
+		font-size: 0.86em;
+		background: var(--zj-parchment-deep);
+		border: 1px solid rgba(38, 34, 26, 0.1);
+		border-radius: 2px;
+		padding: 0.08em 0.32em;
+	}
+
+	/* ————— Shiki code blocks ————— */
+
+	.design-zellij .astro-code {
+		overflow-x: auto;
+		margin: 0 0 1.5em;
+		padding: 1.15rem 1.3rem;
+		tab-size: 4;
+		font-family: var(--zj-mono);
+		font-size: 0.85rem;
+		line-height: 1.65;
+		border: 1px solid rgba(38, 34, 26, 0.16);
+	}
+
+	/* Shiki inlines a cool grey background; the block shares the parchment of its title bar */
+	.design-zellij .astro-code,
+	.design-zellij .astro-code-themes {
+		background-color: var(--zj-parchment-deep) !important;
+	}
+
+	.design-zellij .astro-code code {
+		font-family: inherit;
+		font-size: inherit;
+		background: none;
+		border: none;
+		border-radius: 0;
+		padding: 0;
+	}
+
+	.design-zellij .code-title {
+		padding: 0.45rem 1.3rem;
+		font-family: var(--zj-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		color: var(--zj-ink-muted);
+		background: var(--zj-parchment-deep);
+		border: 1px solid rgba(38, 34, 26, 0.16);
+		border-bottom: none;
+	}
+
+	.design-zellij .code-title + pre {
+		margin-top: 0;
+	}
+
+	/* ————— Footer ————— */
+
+	.design-zellij .zj-footer {
+		margin-top: 3rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--zj-rule);
+		text-align: center;
+		font-size: 0.875rem;
+		color: var(--zj-ink-muted);
+	}
+
+	.design-zellij .zj-footer p {
+		margin: 0;
+	}
+
+	/* ————— Design switcher theming ————— */
+
+	.design-zellij .design-switcher {
+		--ds-bg: rgba(38, 34, 26, 0.92);
+		--ds-fg: rgba(245, 238, 223, 0.78);
+		--ds-border: rgba(194, 146, 40, 0.45);
+		--ds-hover-bg: rgba(194, 146, 40, 0.18);
+		--ds-hover-fg: #f5eedf;
+		--ds-accent: #c29228;
+		--ds-accent-fg: #26221a;
+		--ds-font: 'Spectral', Georgia, serif;
+		--ds-radius: 2px;
+		--ds-item-radius: 2px;
+	}
+
+	/* ————— Motion ————— */
+
+	@media (prefers-reduced-motion: reduce) {
+		.design-zellij .zj-frieze polygon,
+		.design-zellij .zj-frieze rect {
+			animation: none;
+		}
+
+		.design-zellij a,
+		.design-zellij .zj-name a {
+			transition: none;
+		}
+	}
+</style>
