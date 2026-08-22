@@ -1,0 +1,307 @@
+---
+import {compareDesc} from 'date-fns'
+import {getAllPosts} from '../../lib/content'
+import siteMeta from '../../config/siteMeta'
+import Layout from '../../designs/zellij/Layout.astro'
+import Star from '../../designs/zellij/Star.astro'
+import StarDivider from '../../designs/zellij/StarDivider.astro'
+
+interface Pairing {
+	id: string
+	name: string
+	display: string
+	body: string
+	why: string
+}
+
+/*
+ * The ids match the zf-* classes in the zellij Layout, which is where the two
+ * font variables of each pairing are declared.
+ */
+const pairings: Pairing[] = [
+	{
+		id: 'a',
+		name: 'Qalam',
+		display: 'Amiri',
+		body: 'Spectral',
+		why: 'Qalam, the reed pen: one hand for both scripts, since Amiri’s Latin was drawn beside its naskh. Spectral keeps a long column even and quiet underneath it.',
+	},
+	{
+		id: 'b',
+		name: 'Andalus',
+		display: 'Cormorant Garamond',
+		body: 'EB Garamond',
+		why: 'The lightest of the four. Cormorant’s high-contrast cut carries the display line like an inscription, and EB Garamond keeps the text warm and old-style below it.',
+	},
+	{
+		id: 'c',
+		name: 'Scriptorium',
+		display: 'Amiri',
+		body: 'Cardo',
+		why: 'Cardo was cut for classical and medieval scholarship, so the page reads as an edition of something rather than a portfolio.',
+	},
+	{
+		id: 'd',
+		name: 'Matbaa',
+		display: 'Amiri',
+		body: 'Literata',
+		why: 'Matbaa, the printing house: Literata is drawn for screens, so the ceremony stays in the Amiri display line while the body text stays comfortable at small sizes.',
+	},
+]
+
+const posts = (await getAllPosts()).sort(({date: a}, {date: b}) =>
+	compareDesc(new Date(a), new Date(b)),
+)
+const latest = posts[0]
+
+/* Three real lines from the geometry that draws every star on this page */
+const codeSample = `export const INNER_RATIO = Math.sqrt(2 - Math.SQRT2)
+const angle = (k * Math.PI) / 8
+const radius = k % 2 === 0 ? r : r * INNER_RATIO`
+---
+
+<Layout
+	title="Typography"
+	description="Four Latin pairings for the Zellij design, set side by side."
+>
+	<section class="zj-section" aria-labelledby="typography">
+		<h1 class="zj-section-title" id="typography">Typography</h1>
+		<p class="zj-lead">
+			Four Latin pairings, each specimen set in its own faces so the page
+			shows all of them at once. The Arabic is Amiri in every pairing — it is
+			the one face this design will not trade — and the monospace stack never
+			moves either.
+		</p>
+		<p class="zj-lead">
+			Choosing a pairing applies it to the whole design and remembers it in
+			this browser.
+		</p>
+	</section>
+
+	{
+		pairings.map((pairing) => (
+			<>
+				<StarDivider />
+				<section class="zj-section zt-specimen" aria-labelledby={`pairing-${pairing.id}`}>
+					<h2 class="zj-section-title" id={`pairing-${pairing.id}`}>
+						<span class="zt-letter">{pairing.id}</span> — {pairing.name}
+					</h2>
+					<p class="zt-faces">
+						{pairing.display} display · {pairing.body} body · Amiri Arabic
+					</p>
+					<p class="zt-why">{pairing.why}</p>
+
+					<div class={`zt-sheet zf-${pairing.id}`}>
+						<p class="zj-name">Ahmed El Gabri</p>
+						<p class="zj-name-ar" lang="ar" dir="rtl">أحمد الجابري</p>
+						<h3 class="zj-section-title">Talks &amp; Interviews</h3>
+						<p class="zj-lead">{siteMeta.description}</p>
+						{latest && <p class="zj-lead">{latest.excerpt}</p>}
+						{latest && (
+							<ul class="zj-entries">
+								<li class="zj-entry zj-entry-dated">
+									<span class="zj-entry-star" aria-hidden="true"><Star size={10} /></span>
+									<time class="zj-entry-date" datetime={latest.date}>{latest.formattedDate}</time>
+									<span class="zj-entry-title">
+										<a href={`/1/blog/${latest.slug}`}>{latest.title}</a>
+										{latest.tags.length > 0 && (
+											<span class="zj-article-tags">{' · '}{latest.tags.join(' · ')}</span>
+										)}
+									</span>
+								</li>
+							</ul>
+						)}
+						<p class="zj-lead">
+							Inline code such as <code>getAllPosts()</code> has to sit level
+							with the body face:
+						</p>
+						<pre class="zt-code"><code>{codeSample}</code></pre>
+					</div>
+
+					<p class="zt-actions">
+						<button class="zt-apply" type="button" data-pairing={pairing.id} aria-pressed="false">
+							<span class="zt-apply-mark" aria-hidden="true"><Star size={11} /></span>
+							Use this pairing
+						</button>
+					</p>
+				</section>
+			</>
+		))
+	}
+
+	<script is:inline>
+		;(function () {
+			var buttons = document.querySelectorAll('.zt-apply')
+
+			function sync() {
+				buttons.forEach(function (button) {
+					button.setAttribute(
+						'aria-pressed',
+						button.dataset.pairing === window.__zjFonts ? 'true' : 'false',
+					)
+				})
+			}
+
+			/* The layout script has already resolved the stored pairing by now */
+			sync()
+			window.addEventListener('zj:fonts', sync)
+
+			buttons.forEach(function (button) {
+				button.addEventListener('click', function () {
+					window.__zjSetFonts(button.dataset.pairing)
+				})
+			})
+		})()
+	</script>
+</Layout>
+
+<style is:global>
+	/* ————— Typography specimens ————— */
+
+	.design-zellij .zt-specimen > .zj-section-title {
+		margin-bottom: 0.45rem;
+	}
+
+	.design-zellij .zt-letter {
+		font-family: var(--z-font-mono);
+		font-size: 0.62em;
+		letter-spacing: 0.1em;
+		color: var(--zj-gild);
+	}
+
+	.design-zellij .zt-faces {
+		margin: 0;
+		text-align: center;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--zj-text-muted);
+	}
+
+	.design-zellij .zt-why {
+		margin: 0.9rem auto 0;
+		max-width: 52ch;
+		text-align: center;
+		font-size: 0.9375rem;
+		color: var(--zj-text-muted);
+	}
+
+	/* A leaf of the same manuscript: gold hairline, page ground, nothing else */
+	.design-zellij .zt-sheet {
+		margin-top: 1.5rem;
+		padding: 1.7rem clamp(1rem, 4vw, 2.1rem) 1.8rem;
+		border: 1px solid var(--zj-hairline);
+		transition: border-color 300ms ease;
+	}
+
+	.design-zellij .zt-sheet > .zj-name {
+		text-align: center;
+		font-size: clamp(1.8rem, 5vw, 2.15rem);
+	}
+
+	.design-zellij .zt-sheet > .zj-name-ar {
+		text-align: center;
+		font-size: 1.3rem;
+	}
+
+	.design-zellij .zt-sheet > .zj-section-title {
+		margin: 1.7rem 0 1rem;
+		font-size: 1.35rem;
+	}
+
+	.design-zellij .zt-sheet .zj-entries {
+		margin: 1.4rem 0;
+		border-block: 1px solid var(--zj-rule);
+	}
+
+	.design-zellij .zt-sheet p code {
+		font-family: var(--z-font-mono);
+		font-size: 0.86em;
+		background: var(--zj-panel);
+		border: 1px solid var(--zj-panel-edge-soft);
+		border-radius: 2px;
+		padding: 0.08em 0.32em;
+		transition:
+			background-color 300ms ease,
+			border-color 300ms ease;
+	}
+
+	.design-zellij .zt-code {
+		overflow-x: auto;
+		margin: 0;
+		padding: 1rem 1.15rem;
+		tab-size: 4;
+		font-family: var(--z-font-mono);
+		font-size: 0.85rem;
+		line-height: 1.65;
+		background: var(--zj-panel);
+		border: 1px solid var(--zj-panel-edge);
+		transition:
+			background-color 300ms ease,
+			border-color 300ms ease;
+	}
+
+	.design-zellij .zt-code code {
+		font: inherit;
+	}
+
+	/* Without the layout script the buttons have nothing to write to */
+	.design-zellij .zt-actions {
+		display: none;
+		margin: 1.2rem 0 0;
+		text-align: center;
+	}
+
+	.design-zellij.zj-js .zt-actions {
+		display: block;
+	}
+
+	.design-zellij .zt-apply {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		padding: 0.45rem 1.1rem;
+		border: 1px solid var(--zj-hairline);
+		background: none;
+		color: var(--zj-accent);
+		font-family: inherit;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition:
+			background-color 200ms ease,
+			border-color 200ms ease,
+			color 200ms ease;
+	}
+
+	.design-zellij .zt-apply:hover {
+		border-color: var(--zj-gild);
+		background: var(--zj-panel);
+	}
+
+	.design-zellij .zt-apply[aria-pressed='true'] {
+		border-color: var(--zj-gild);
+		background: var(--zj-panel);
+		color: var(--zj-text);
+		cursor: default;
+	}
+
+	/* The gilded star keeps its space so the row never shifts between pairings */
+	.design-zellij .zt-apply-mark {
+		display: inline-flex;
+		color: var(--zj-gild);
+		opacity: 0;
+		transition: opacity 200ms ease;
+	}
+
+	.design-zellij .zt-apply[aria-pressed='true'] .zt-apply-mark {
+		opacity: 1;
+	}
+
+	.design-zellij .zt-apply[aria-pressed='true'] .zt-apply-mark polygon {
+		fill: currentColor;
+	}
+</style>

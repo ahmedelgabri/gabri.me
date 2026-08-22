@@ -13,14 +13,30 @@ interface Props {
 
 const {title, description, hero = false} = Astro.props
 
-const fontsHref =
-	'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;600&family=Spectral:ital,wght@0,400;0,600;1,400;1,600&display=swap'
+/*
+ * Every candidate family of the pairing exploration at /1/typography, so all
+ * four specimens render in their own faces on one page. Whatever the owner
+ * does not pick gets dropped from this list afterwards.
+ */
+const fontFamilies = [
+	'Amiri:wght@400;700',
+	'Cardo:ital,wght@0,400;0,700;1,400',
+	'Cormorant+Garamond:wght@500;600;700',
+	'EB+Garamond:ital,wght@0,400;0,600;1,400;1,600',
+	'IBM+Plex+Mono:wght@400;600',
+	'Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400;1,7..72,600',
+	'Spectral:ital,wght@0,400;0,600;1,400;1,600',
+]
+
+const fontsHref = `https://fonts.googleapis.com/css2?${fontFamilies
+	.map((family) => `family=${family}`)
+	.join('&')}&display=swap`
 
 const year = new Date().getFullYear()
 ---
 
 <!doctype html>
-<html lang="en" class="design-zellij light">
+<html lang="en" class="design-zellij light zf-a">
 	<head>
 		<DesignHead
 			title={`Ahmed El Gabri — ${title} · Zellij design`}
@@ -92,6 +108,49 @@ const year = new Date().getFullYear()
 				})
 			})()
 		</script>
+		<script is:inline>
+			/* Runs before paint so the page is never typeset twice */
+			;(function () {
+				var KEY = 'zellij-fonts'
+				var VALID = ['a', 'b', 'c', 'd']
+				var pairing
+
+				try {
+					pairing = localStorage.getItem(KEY)
+				} catch (e) {}
+
+				if (VALID.indexOf(pairing) === -1) {
+					pairing = 'a'
+				}
+
+				function apply(next) {
+					var root = document.documentElement
+
+					for (var i = 0; i < VALID.length; i++) {
+						root.classList.remove('zf-' + VALID[i])
+					}
+
+					root.classList.add('zf-' + next)
+					window.__zjFonts = next
+					/* The specimen page's buttons follow the resolved pairing */
+					window.dispatchEvent(new CustomEvent('zj:fonts'))
+				}
+
+				apply(pairing)
+
+				window.__zjSetFonts = function (next) {
+					if (VALID.indexOf(next) === -1) {
+						return
+					}
+
+					try {
+						localStorage.setItem(KEY, next)
+					} catch (e) {}
+
+					apply(next)
+				}
+			})()
+		</script>
 	</head>
 	<body>
 		<div class="zj-page">
@@ -153,7 +212,7 @@ const year = new Date().getFullYear()
 			</main>
 
 			<footer class="zj-footer">
-				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a></p>
+				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a> · <a class="zj-footer-quiet" href="/1/typography">typography</a></p>
 			</footer>
 		</div>
 		<DesignSwitcher />
@@ -198,6 +257,57 @@ const year = new Date().getFullYear()
 		--z-font-mono: 'PragmataPro Mono Liga', 'PragmataPro Liga', 'PragmataPro',
 			'Iosevka', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 		--zj-page-pad-x: clamp(1.1rem, 4.5vw, 3.25rem);
+	}
+
+	/* ————— Latin pairings, compared at /1/typography ————— */
+
+	/*
+	 * The pairing class rides on <html>, but the specimen cards wear it too so
+	 * all four can be read side by side — hence the descendant selector. Each
+	 * pairing therefore has to name both faces, never inherit one. Arabic is
+	 * absent on purpose: it stays Amiri throughout.
+	 */
+
+	/* a — Qalam */
+	.design-zellij.zf-a,
+	.design-zellij .zf-a {
+		--z-font-display: 'Amiri', 'Times New Roman', serif;
+		--z-font-body: 'Spectral', 'Iowan Old Style', Georgia, serif;
+	}
+
+	/* b — Andalus */
+	.design-zellij.zf-b,
+	.design-zellij .zf-b {
+		--z-font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+		--z-font-body: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+	}
+
+	/* c — Scriptorium */
+	.design-zellij.zf-c,
+	.design-zellij .zf-c {
+		--z-font-display: 'Amiri', 'Times New Roman', serif;
+		--z-font-body: 'Cardo', 'Iowan Old Style', Georgia, serif;
+	}
+
+	/* d — Matbaa */
+	.design-zellij.zf-d,
+	.design-zellij .zf-d {
+		--z-font-display: 'Amiri', 'Times New Roman', serif;
+		--z-font-body: 'Literata', 'Iowan Old Style', Georgia, serif;
+	}
+
+	/* Cormorant Garamond is cut light; its 700 goes spindly where Amiri's is solid */
+	.design-zellij.zf-b .zj-name,
+	.design-zellij.zf-b .zj-section-title,
+	.design-zellij.zf-b .zj-article-title,
+	.design-zellij.zf-b .zj-prose h2,
+	.design-zellij.zf-b .zj-prose h3,
+	.design-zellij.zf-b .zj-prose h4,
+	.design-zellij.zf-b .zj-prose h5,
+	.design-zellij.zf-b .zj-prose h6,
+	.design-zellij .zf-b .zj-name,
+	.design-zellij .zf-b .zj-section-title {
+		font-weight: 600;
 	}
 
 	/* ————— Light: qishani ivory ————— */
@@ -1161,6 +1271,12 @@ const year = new Date().getFullYear()
 
 	.design-zellij .zj-footer p {
 		margin: 0;
+	}
+
+	/* The specimen page is a workbench, not part of the reading path */
+	.design-zellij .zj-footer-quiet {
+		color: var(--zj-text-muted);
+		text-decoration-color: var(--zj-rule);
 	}
 
 	/* ————— Design switcher theming ————— */
