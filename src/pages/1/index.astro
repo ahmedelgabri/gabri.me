@@ -1,6 +1,6 @@
 ---
 import {compareDesc} from 'date-fns'
-import {getAllPosts, getAllWeeklyLinks} from '../../lib/content'
+import {getAllPosts} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
 import Layout from '../../designs/zellij/Layout.astro'
 import Star from '../../designs/zellij/Star.astro'
@@ -12,7 +12,6 @@ const byDateDesc = ({date: a}: {date: string}, {date: b}: {date: string}) =>
 	compareDesc(new Date(a), new Date(b))
 
 const posts = (await getAllPosts()).sort(byDateDesc)
-const weeklyLinks = (await getAllWeeklyLinks()).sort(byDateDesc)
 
 interface TalkItem {
 	date: string
@@ -88,28 +87,6 @@ const talkItems: TalkItem[] = [
 
 	<StarDivider />
 
-	<section class="zj-section" aria-labelledby="talks">
-		<h2 class="zj-section-title" id="talks">Talks &amp; Interviews</h2>
-		<ul class="zj-entries">
-			{talkItems.map((item) => (
-				<li class="zj-entry zj-entry-dated">
-					<span class="zj-entry-star" aria-hidden="true"><Star size={10} /></span>
-					<time class="zj-entry-date" datetime={item.date}>{item.date}</time>
-					<span class="zj-entry-title">
-						<a href={item.url} target="_blank" rel="noreferrer noopener">{item.title}</a>
-						{item.slides && (
-							<span class="zj-entry-extra">
-								{' ('}<a href={item.slides} target="_blank" rel="noreferrer noopener">slides</a>{')'}
-							</span>
-						)}
-					</span>
-				</li>
-			))}
-		</ul>
-	</section>
-
-	<StarDivider />
-
 	<section class="zj-section" aria-labelledby="blog">
 		<h2 class="zj-section-title" id="blog">Blog</h2>
 		<ul class="zj-entries">
@@ -127,15 +104,20 @@ const talkItems: TalkItem[] = [
 
 	<StarDivider />
 
-	<section class="zj-section" aria-labelledby="weekly-links">
-		<h2 class="zj-section-title" id="weekly-links">Weekly Links</h2>
+	<section class="zj-section" aria-labelledby="talks">
+		<h2 class="zj-section-title" id="talks">Talks &amp; Interviews</h2>
 		<ul class="zj-entries">
-			{weeklyLinks.map((post) => (
-				<li class="zj-entry zj-entry-dated zj-entry-weekly">
+			{talkItems.map((item) => (
+				<li class="zj-entry zj-entry-dated">
 					<span class="zj-entry-star" aria-hidden="true"><Star size={10} /></span>
-					<time class="zj-entry-date" datetime={post.date}>{post.formattedDate}</time>
+					<time class="zj-entry-date" datetime={item.date}>{item.date}</time>
 					<span class="zj-entry-title">
-						<a href={`/1/weekly-links/${post.slug}`}>{post.title}</a>
+						<a href={item.url} target="_blank" rel="noreferrer noopener">{item.title}</a>
+						{item.slides && (
+							<span class="zj-entry-extra">
+								{' ('}<a href={item.slides} target="_blank" rel="noreferrer noopener">slides</a>{')'}
+							</span>
+						)}
 					</span>
 				</li>
 			))}

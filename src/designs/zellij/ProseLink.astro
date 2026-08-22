@@ -7,9 +7,17 @@ const {href, ...rest} = Astro.props
 
 /* Post bodies link to the live site's paths; keep those hops inside this design */
 const designHref =
-	typeof href === 'string' && /^\/(blog|weekly-links)\//.test(href)
-		? `/1${href}`
-		: href
+	typeof href === 'string' && /^\/blog\//.test(href) ? `/1${href}` : href
+
+/*
+ * Markdown cannot mark a link as leaving the site, so the design does it here —
+ * that is what the ↗ in the stylesheet keys off.
+ */
+const isExternal =
+	typeof designHref === 'string' && /^(https?:)?\/\//.test(designHref)
+const externalAttrs: HTMLAttributes<'a'> = isExternal
+	? {target: '_blank', rel: 'noreferrer noopener'}
+	: {}
 ---
 
-<a href={designHref} {...rest}><slot /></a>
+<a href={designHref} {...externalAttrs} {...rest}><slot /></a>

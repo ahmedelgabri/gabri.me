@@ -48,6 +48,7 @@ const innerPath = [
 		y1={impostY}
 		x2={r2(outerExitX)}
 		y2={impostY}
+		pathLength="1"
 	/>
 	<line
 		class="zj-arch-impost"
@@ -55,7 +56,8 @@ const innerPath = [
 		y1={impostY}
 		x2="720"
 		y2={impostY}
+		pathLength="1"
 	/>
-	<path class="zj-arch-inner" d={innerPath}></path>
-	<path class="zj-arch-outer" d={outerPath}></path>
+	<path class="zj-arch-inner" d={innerPath} pathLength="1"></path>
+	<path class="zj-arch-outer" d={outerPath} pathLength="1"></path>
 </svg>

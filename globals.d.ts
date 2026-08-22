@@ -32,6 +32,9 @@ interface Window {
 	__setTheme(setting: ThemeSetting): void
 	__setColorTheme(color: ColorTheme): void
 	__setFontTheme(font: FontTheme): void
+	__zjTheme: ResolvedTheme
+	__zjThemeSetting: ThemeSetting
+	__zjSetTheme(setting: ThemeSetting): void
 }
 
 // Global/Shared Props
