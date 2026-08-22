@@ -41,6 +41,12 @@ export default {
 			url: 'https://github.com/ahmedelgabri/ccpeek',
 			description: 'Explore your Claude Code history, locally.',
 		},
+		{
+			name: 'tmux-agent-panel',
+			url: 'https://github.com/ahmedelgabri/tmux-agent-panel',
+			description:
+				'tap — agent-aware tmux pane picker with live Claude Code/Codex/pi status.',
+		},
 	],
 	twitterId: '1512909779',
 	talks: {
