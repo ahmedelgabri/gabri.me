@@ -3,6 +3,7 @@ import {compareDesc} from 'date-fns'
 import {getAllPosts} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
 import Layout from '../../designs/zellij/Layout.astro'
+import Shamsa from '../../designs/zellij/Shamsa.astro'
 import Star from '../../designs/zellij/Star.astro'
 import StarDivider from '../../designs/zellij/StarDivider.astro'
 
@@ -46,6 +47,8 @@ const talkItems: TalkItem[] = [
 ---
 
 <Layout title={siteMeta.title} hero>
+	<Shamsa slot="ornament" />
+
 	<section class="zj-section" aria-label="About">
 		<p class="zj-lead">
 			Software engineer with 15+ years of experience across Product,
