@@ -33,7 +33,7 @@ describe('activeDesignId', () => {
 
 	it('returns the design id for design sub-pages', () => {
 		expect(activeDesignId('/1/blog/git-wt')).toBe(1)
-		expect(activeDesignId('/1/typography')).toBe(1)
+		expect(activeDesignId('/1/some-unknown-page')).toBe(1)
 	})
 
 	it('handles trailing slashes', () => {
@@ -83,7 +83,7 @@ describe('designPath', () => {
 	it('falls back to the design home page for unmapped paths', () => {
 		expect(designPath(1, '/404')).toBe('/1')
 		expect(designPath(1, '/card')).toBe('/1')
-		expect(designPath(1, '/1/typography')).toBe('/1')
+		expect(designPath(1, '/1/some-unknown-page')).toBe('/1')
 	})
 
 	it('no longer maps weekly links into the design', () => {
@@ -103,7 +103,7 @@ describe('mainSitePath', () => {
 	})
 
 	it('maps any other design sub-page to the main home page', () => {
-		expect(mainSitePath('/1/typography')).toBe('/')
+		expect(mainSitePath('/1/some-unknown-page')).toBe('/')
 		expect(mainSitePath('/1/weekly-links/weekly-links-v-1')).toBe('/')
 		expect(mainSitePath('/1/anything-else')).toBe('/')
 	})

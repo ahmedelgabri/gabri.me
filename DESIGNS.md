@@ -55,12 +55,9 @@ the version the palette was checked against.
 - `--z-font-display` — Amiri, the display face, for the masthead, section titles
   and post titles.
 - `--z-font-body` — Spectral for running text.
-- `--z-font-arabic` — always Amiri for the bilingual masthead, whichever Latin
-  pairing is active.
+- `--z-font-arabic` — Amiri for the bilingual masthead.
 - `--z-font-mono` — PragmataPro first (installed locally), then Iosevka, with
   IBM Plex Mono as the loaded webfont fallback.
-
-The Latin pairing is an open question — see the typography exploration below.
 
 ### Signature
 
@@ -120,24 +117,20 @@ localStorage key as the main site (`system` | `light` | `dark`), defaulting to
 The toggle writes the key and flips the class; its accessible name follows the
 resolved theme.
 
-## Typography exploration
+## Typography
 
-`/1/typography` compares four curated pairings — Latin display plus Latin body,
-with Arabic always in Amiri:
+Four Latin pairings were compared on real pages — **Qalam** (Amiri display,
+Spectral body), **Andalus** (Cormorant Garamond, EB Garamond), **Scriptorium**
+(Amiri, Cardo) and **Matbaa** (Amiri, Literata). Qalam was chosen.
 
-| Class  | Name            | Display                | Body        |
-| ------ | --------------- | ---------------------- | ----------- |
-| `zf-a` | **Qalam**       | Amiri                  | Spectral    |
-| `zf-b` | **Andalus**     | Cormorant Garamond 600 | EB Garamond |
-| `zf-c` | **Scriptorium** | Amiri                  | Cardo       |
-| `zf-d` | **Matbaa**      | Amiri                  | Literata    |
+Amiri carries the display line and the Arabic masthead: its Latin was drawn
+beside its naskh, so one hand sets both scripts. Spectral carries the body text,
+keeping a long column even and quiet underneath. Code is set in the mono stack,
+which starts with PragmataPro Mono Liga.
 
-The active pairing is an html class (`zf-a` … `zf-d`) set by an inline script
-from the `zellij-fonts` localStorage key; each class re-points
-`--z-font-display` and `--z-font-body`. During the exploration all candidate
-families load on every zellij page from a single Google Fonts request. **Once a
-pairing is chosen, the unused families get dropped from that request** and the
-`zf-*` mechanism can collapse to plain token values.
+The three families are the whole webfont payload: the zellij pages load Amiri
+400/700, Spectral 400/600 with italics and IBM Plex Mono 400/600 from a single
+Google Fonts request.
 
 ## three.js shamsa
 
@@ -157,7 +150,6 @@ only.
 | ---------------- | ------------------------- |
 | `/1`             | home                      |
 | `/1/blog/[slug]` | every published blog post |
-| `/1/typography`  | the pairing specimen page |
 
 All design pages carry `noindex, nofollow` and are excluded from the sitemap.
 
