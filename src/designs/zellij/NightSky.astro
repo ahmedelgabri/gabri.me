@@ -1,0 +1,527 @@
+<div class="zj-sky" data-zj-sky></div>
+
+<style is:global>
+	/* ————— The night sky behind the carpet page ————— */
+
+	/*
+	 * The sky shares the negative-z layer with the mashrabiya screen and comes
+	 * after it in the document, so it draws over the lattice and under every
+	 * positioned box on the page. The carpet page's own opaque ground then
+	 * covers the reading column: no star ever lands behind text.
+	 */
+	.design-zellij .zj-sky {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+	}
+
+	.design-zellij .zj-sky canvas {
+		display: block;
+	}
+</style>
+
+<script>
+	import {INNER_RATIO} from './geometry'
+
+	/* --zj-gild on the indigo ground; the sky only ever runs in the dark theme */
+	const GOLD = 0xd9b44a
+	/*
+	 * Depth layers, farthest first: dimmer and smaller with distance, and each
+	 * drifting its own few pixels under the pointer.
+	 */
+	const LAYERS = [
+		{count: 32, size: [1.2, 2], glow: [0.28, 0.5], drift: 2},
+		{count: 26, size: [1.4, 2.4], glow: [0.42, 0.68], drift: 5},
+		{count: 18, size: [1.9, 3.4], glow: [0.55, 0.85], drift: 9},
+	]
+	/* The brightest few are drawn as khatams rather than dots, on the near layer */
+	const KHATAMS = 8
+	const KHATAM_RADIUS = [3, 5.5]
+	const KHATAM_GLOW = [0.5, 0.8]
+	/* One breath every 4–9s, every star on its own phase: a sky, not a signal */
+	const PERIOD = [4, 9]
+	const EASE = 0.06
+	/* Seconds to fade the whole sky in or out when the theme changes */
+	const FADE = 0.6
+	/* Long enough that a streak is something you catch rather than something shown */
+	const SHOT_WAIT = [60, 120]
+	/* The first one comes sooner, or nobody would ever be here to see one */
+	const SHOT_FIRST = [12, 40]
+	const SHOT_LIFE = [0.8, 1.2]
+	const SHOT_LENGTH = [200, 340]
+	/* Where it enters, down the viewport: high enough to have somewhere to fall */
+	const SHOT_DROP = [0.04, 0.45]
+	/* 50° to 75° below the horizontal — steep enough to stay inside the margin */
+	const SHOT_ANGLE = [Math.PI / 3.6, Math.PI / 2.4]
+	/* The lit trail, as a fraction of the whole fall */
+	const SHOT_TRAIL = 0.45
+	const SHOT_JOINTS = 14
+
+	/*
+	 * The carpet page is opaque and sits in the middle of the viewport, so a
+	 * star behind it is a star nobody sees. Every one is seated in the margin
+	 * beside the page instead.
+	 */
+	interface Seat {
+		/* -1 for the left margin, 1 for the right */
+		side: number
+		/* Across the margin: 0 at the screen edge, 1 at the page's edge */
+		across: number
+		/* Down the viewport */
+		down: number
+	}
+
+	interface Shot {
+		x: number
+		y: number
+		dx: number
+		dy: number
+		span: number
+		life: number
+		age: number
+	}
+
+	function pick(range: number[]): number {
+		return range[0] + Math.random() * (range[1] - range[0])
+	}
+
+	function scatter(): Seat {
+		return {
+			side: Math.random() < 0.5 ? -1 : 1,
+			across: Math.random(),
+			down: Math.random(),
+		}
+	}
+
+	/* One khatam of radius 1 — see geometry.ts for the two-square construction */
+	function ring(): number[] {
+		const values: number[] = []
+
+		for (let k = 0; k < 16; k++) {
+			const angle = (k * Math.PI) / 8
+			const radius = k % 2 === 0 ? 1 : INNER_RATIO
+			values.push(Math.cos(angle) * radius, Math.sin(angle) * radius, 0)
+		}
+
+		return values
+	}
+
+	/* Asked before three.js is fetched, so a machine without WebGL downloads nothing */
+	function hasWebGL(): boolean {
+		try {
+			const probe = document.createElement('canvas')
+			const context =
+				probe.getContext('webgl2') ?? probe.getContext('webgl')
+			/* Hand the context back rather than sitting on one of the browser's few */
+			context?.getExtension('WEBGL_lose_context')?.loseContext()
+			return Boolean(context)
+		} catch {
+			return false
+		}
+	}
+
+	async function enhance(box: HTMLElement) {
+		const {
+			BufferGeometry,
+			Color,
+			Float32BufferAttribute,
+			Group,
+			Line,
+			LineBasicMaterial,
+			LineLoop,
+			OrthographicCamera,
+			Points,
+			Scene,
+			ShaderMaterial,
+			WebGLRenderer,
+		} = await import('three')
+
+		const renderer = new WebGLRenderer({alpha: true, antialias: true})
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+		renderer.domElement.setAttribute('aria-hidden', 'true')
+
+		let width = box.clientWidth
+		let height = box.clientHeight
+
+		const scene = new Scene()
+		/* Pixel space with y running down the page: every size below is a CSS pixel */
+		const camera = new OrthographicCamera(0, width, 0, height, -1, 1)
+		const gold = new Color(GOLD)
+
+		/* A hair of warmth either way, so the field never reads as one flat gilt */
+		function warm() {
+			return gold
+				.clone()
+				.offsetHSL(
+					(Math.random() - 0.5) * 0.03,
+					(Math.random() - 0.5) * 0.2,
+					(Math.random() - 0.5) * 0.08,
+				)
+		}
+
+		const stars = new ShaderMaterial({
+			transparent: true,
+			uniforms: {
+				uTime: {value: 0},
+				uPixelRatio: {value: renderer.getPixelRatio()},
+				uOpacity: {value: 0},
+			},
+			vertexShader: `
+				attribute float aSize;
+				attribute float aGlow;
+				attribute float aRate;
+				attribute float aPhase;
+				attribute vec3 aTint;
+
+				uniform float uTime;
+				uniform float uPixelRatio;
+				uniform float uOpacity;
+
+				varying float vAlpha;
+				varying vec3 vTint;
+
+				void main() {
+					/* One oscillation drives both, so a star that dims also shrinks */
+					float pulse = sin(uTime * aRate + aPhase) * 0.5 + 0.5;
+					vAlpha = aGlow * (0.65 + 0.35 * pulse) * uOpacity;
+					vTint = aTint;
+					gl_PointSize = aSize * (0.9 + 0.2 * pulse) * uPixelRatio;
+					gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+				}
+			`,
+			fragmentShader: `
+				varying float vAlpha;
+				varying vec3 vTint;
+
+				void main() {
+					/*
+					 * A bare point is a square; round it off. The ramp is kept
+					 * narrow because a 2px star has no room for a wide one — it
+					 * would dim the whole dot rather than soften its rim.
+					 */
+					float falloff = smoothstep(0.5, 0.3, length(gl_PointCoord - vec2(0.5)));
+					gl_FragColor = vec4(vTint, vAlpha * falloff);
+					#include <colorspace_fragment>
+				}
+			`,
+		})
+
+		const fields = LAYERS.map((layer) => {
+			const seats: Seat[] = []
+			const xyz: number[] = []
+			const sizes: number[] = []
+			const glows: number[] = []
+			const rates: number[] = []
+			const phases: number[] = []
+			const tints: number[] = []
+
+			for (let i = 0; i < layer.count; i++) {
+				const tint = warm()
+				seats.push(scatter())
+				xyz.push(0, 0, 0)
+				sizes.push(pick(layer.size))
+				glows.push(pick(layer.glow))
+				rates.push((Math.PI * 2) / pick(PERIOD))
+				phases.push(Math.random() * Math.PI * 2)
+				tints.push(tint.r, tint.g, tint.b)
+			}
+
+			const position = new Float32BufferAttribute(xyz, 3)
+			const geometry = new BufferGeometry()
+			geometry.setAttribute('position', position)
+			geometry.setAttribute('aSize', new Float32BufferAttribute(sizes, 1))
+			geometry.setAttribute('aGlow', new Float32BufferAttribute(glows, 1))
+			geometry.setAttribute('aRate', new Float32BufferAttribute(rates, 1))
+			geometry.setAttribute('aPhase', new Float32BufferAttribute(phases, 1))
+			geometry.setAttribute('aTint', new Float32BufferAttribute(tints, 3))
+
+			const group = new Group()
+			group.add(new Points(geometry, stars))
+			scene.add(group)
+
+			return {group, drift: layer.drift, seats, position}
+		})
+
+		const near = fields[fields.length - 1]
+		const khatamGeometry = new BufferGeometry()
+		khatamGeometry.setAttribute('position', new Float32BufferAttribute(ring(), 3))
+
+		const khatams = Array.from({length: KHATAMS}, () => {
+			const material = new LineBasicMaterial({color: warm(), transparent: true})
+			const mesh = new LineLoop(khatamGeometry, material)
+			near.group.add(mesh)
+
+			return {
+				mesh,
+				material,
+				seat: scatter(),
+				radius: pick(KHATAM_RADIUS),
+				glow: pick(KHATAM_GLOW),
+				rate: (Math.PI * 2) / pick(PERIOD),
+				phase: Math.random() * Math.PI * 2,
+			}
+		})
+
+		const joints = SHOT_JOINTS + 1
+		const trailPosition = new Float32BufferAttribute(new Float32Array(joints * 3), 3)
+		/* Four floats a vertex: the tail fades on its own alpha, not on the ground */
+		const trailColour = new Float32BufferAttribute(new Float32Array(joints * 4), 4)
+		const trail = new BufferGeometry()
+		trail.setAttribute('position', trailPosition)
+		trail.setAttribute('color', trailColour)
+
+		const streakMaterial = new LineBasicMaterial({
+			vertexColors: true,
+			transparent: true,
+		})
+		const streak = new Line(trail, streakMaterial)
+		streak.visible = false
+		scene.add(streak)
+
+		const page = document.querySelector('.zj-page')
+
+		/*
+		 * The band of sky the carpet page leaves open on either side, read off
+		 * the page's own box so the two can never drift apart.
+		 */
+		function margin(): number {
+			const gap = page ? page.getBoundingClientRect().left : 0
+			return gap > 40 ? gap : width * 0.14
+		}
+
+		function seatX(seat: Seat, band: number): number {
+			return seat.side < 0 ? seat.across * band : width - seat.across * band
+		}
+
+		function place() {
+			const band = margin()
+
+			for (const field of fields) {
+				field.seats.forEach((seat, i) => {
+					field.position.setXY(i, seatX(seat, band), seat.down * height)
+				})
+				field.position.needsUpdate = true
+			}
+
+			for (const star of khatams) {
+				star.mesh.position.set(
+					seatX(star.seat, band),
+					star.seat.down * height,
+					0,
+				)
+			}
+		}
+
+		let shot: Shot | null = null
+		let wait = pick(SHOT_FIRST)
+
+		function launch(): Shot {
+			const band = margin()
+			const side = Math.random() < 0.5 ? -1 : 1
+			const angle = pick(SHOT_ANGLE)
+
+			return {
+				/* Starts at the page's edge, so it falls out from behind the carpet */
+				x: side < 0 ? band : width - band,
+				y: height * pick(SHOT_DROP),
+				dx: Math.cos(angle) * side,
+				dy: Math.sin(angle),
+				span: pick(SHOT_LENGTH),
+				life: pick(SHOT_LIFE),
+				age: 0,
+			}
+		}
+
+		function fall(delta: number) {
+			if (shot === null) {
+				wait -= delta
+
+				if (wait > 0) {
+					return
+				}
+
+				shot = launch()
+				streak.visible = true
+			}
+
+			shot.age += delta
+			const progress = shot.age / shot.life
+
+			if (progress >= 1) {
+				shot = null
+				streak.visible = false
+				wait = pick(SHOT_WAIT)
+				return
+			}
+
+			/* In over the first fifth, out over the last third: no hard ends */
+			const envelope =
+				Math.min(progress / 0.2, 1) * Math.min((1 - progress) / 0.35, 1)
+			const head = progress * shot.span
+			const step = (shot.span * SHOT_TRAIL) / SHOT_JOINTS
+
+			for (let i = 0; i <= SHOT_JOINTS; i++) {
+				/* The tail stays pinned at the launch point until the head outruns it */
+				const travelled = Math.max(head - i * step, 0)
+				trailPosition.setXY(
+					i,
+					shot.x + shot.dx * travelled,
+					shot.y + shot.dy * travelled,
+				)
+				trailColour.setXYZW(
+					i,
+					gold.r,
+					gold.g,
+					gold.b,
+					(1 - i / SHOT_JOINTS) ** 2 * envelope * 0.7,
+				)
+			}
+
+			trailPosition.needsUpdate = true
+			trailColour.needsUpdate = true
+		}
+
+		let targetX = 0
+		let targetY = 0
+		let currentX = 0
+		let currentY = 0
+		let opacity = 0
+		let target = window.__zjTheme === 'dark' ? 1 : 0
+		let elapsed = 0
+		let last = 0
+		let request = 0
+		let running = false
+
+		function frame(now: number) {
+			/* A backgrounded tab can hand back a huge delta on the first frame */
+			const delta = Math.min((now - last) / 1000, 0.1)
+			last = now
+			elapsed += delta
+
+			const step = delta / FADE
+			opacity =
+				target > opacity
+					? Math.min(opacity + step, target)
+					: Math.max(opacity - step, target)
+
+			stars.uniforms.uTime.value = elapsed
+			stars.uniforms.uOpacity.value = opacity
+			streakMaterial.opacity = opacity
+
+			currentX += (targetX - currentX) * EASE
+			currentY += (targetY - currentY) * EASE
+
+			/* Against the pointer, so the near layer swims past the far one */
+			for (const field of fields) {
+				field.group.position.set(
+					-currentX * field.drift,
+					-currentY * field.drift,
+					0,
+				)
+			}
+
+			for (const star of khatams) {
+				const pulse = Math.sin(elapsed * star.rate + star.phase) * 0.5 + 0.5
+				star.material.opacity = star.glow * (0.65 + 0.35 * pulse) * opacity
+				star.mesh.scale.setScalar(star.radius * (0.9 + 0.2 * pulse))
+			}
+
+			fall(delta)
+			renderer.render(scene, camera)
+
+			/* Faded away for good: a light page has no sky to draw */
+			if (opacity === 0 && target === 0) {
+				stop()
+				return
+			}
+
+			request = requestAnimationFrame(frame)
+		}
+
+		function start() {
+			if (running) {
+				return
+			}
+
+			running = true
+			last = performance.now()
+			request = requestAnimationFrame(frame)
+		}
+
+		function stop() {
+			running = false
+			cancelAnimationFrame(request)
+		}
+
+		function settle() {
+			if (
+				document.visibilityState === 'visible' &&
+				(target === 1 || opacity > 0)
+			) {
+				start()
+			} else {
+				stop()
+			}
+		}
+
+		function resize() {
+			width = box.clientWidth
+			height = box.clientHeight
+			camera.right = width
+			camera.bottom = height
+			camera.updateProjectionMatrix()
+			/* The ratio can change under the window, not only the size */
+			renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+			renderer.setSize(width, height)
+			stars.uniforms.uPixelRatio.value = renderer.getPixelRatio()
+			place()
+		}
+
+		window.addEventListener('pointermove', (event) => {
+			targetX = (event.clientX / window.innerWidth - 0.5) * 2
+			targetY = (event.clientY / window.innerHeight - 0.5) * 2
+		})
+
+		window.addEventListener('zj:theme', () => {
+			target = window.__zjTheme === 'dark' ? 1 : 0
+			settle()
+		})
+
+		window.addEventListener('resize', resize)
+		document.addEventListener('visibilitychange', settle)
+
+		renderer.setSize(width, height)
+		place()
+		box.appendChild(renderer.domElement)
+		settle()
+	}
+
+	const box = document.querySelector<HTMLElement>('[data-zj-sky]')
+
+	if (box) {
+		/* Below this the page leaves no margin wide enough to hold a sky */
+		const wide = window.matchMedia('(min-width: 64em)')
+		let started = false
+
+		const open = () => {
+			if (
+				started ||
+				!wide.matches ||
+				window.__zjTheme !== 'dark' ||
+				!hasWebGL()
+			) {
+				return
+			}
+
+			started = true
+			/* A refused chunk or context leaves the plain indigo ground, which is no loss */
+			enhance(box).catch(() => undefined)
+		}
+
+		open()
+		wide.addEventListener('change', open)
+		/* Nothing is fetched until the reader actually asks for the dark theme */
+		window.addEventListener('zj:theme', open)
+	}
+</script>

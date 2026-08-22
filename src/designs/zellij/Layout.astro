@@ -3,6 +3,7 @@ import DesignHead from '../../components/DesignHead.astro'
 import DesignSwitcher from '../../components/DesignSwitcher.astro'
 import siteMeta from '../../config/siteMeta'
 import GirihFrieze from './GirihFrieze.astro'
+import NightSky from './NightSky.astro'
 import Star from './Star.astro'
 
 interface Props {
@@ -151,6 +152,7 @@ const year = new Date().getFullYear()
 				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a></p>
 			</footer>
 		</div>
+		<NightSky />
 		<DesignSwitcher />
 		<script is:inline>
 			;(function () {

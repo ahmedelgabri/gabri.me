@@ -70,8 +70,8 @@ picks the change up without its own rule.
 
 One consumer deliberately does not follow the page: the design switcher sits on
 its own dark ink chip in both themes, so it wears the Blue Quran gold, where the
-selected label holds 8.0:1 (the deepened bronze would put it at 4.2:1). Dark mode
-was already legible and its values are untouched.
+selected label holds 8.0:1 (the deepened bronze would put it at 4.2:1). Dark
+mode was already legible and its values are untouched.
 
 ### Type
 
@@ -132,8 +132,8 @@ strapwork.
 rosette silhouettes read first and the inner construction sits behind them.
 
 **Seams.** Every rosette and interstitial whose content can reach the tile is
-drawn, including the copies centred outside it, and the SVG clips at the
-viewBox — so a stroke cut at one edge is completed by its neighbour. Verified by
+drawn, including the copies centred outside it, and the SVG clips at the viewBox
+— so a stroke cut at one edge is completed by its neighbour. Verified by
 rendering the shipped data URI as a 3×3 tiling with the tile boundaries drawn
 in, at full strength and at working opacity.
 
@@ -153,7 +153,8 @@ The first pass was reviewed and reworked:
   dark), masked so it fades out well before the reading column and drifting one
   tile every 360s. From 1536px up, a single shamsa in the same language sits in
   the left margin at 3.5–5%, right where the lattice has already faded. The
-  construction is described under [The background lattice](#the-background-lattice).
+  construction is described under
+  [The background lattice](#the-background-lattice).
 - **"Add subtle animations, and don't respect reduce-motion."** — every
   `prefers-reduced-motion` gate was removed from the design on purpose; the
   animations always run. See the inventory below.
@@ -187,7 +188,8 @@ The first pass was reviewed and reworked:
 | Theme toggle       | 300ms colour/background crossfade on the major surfaces                                     |
 | Background lattice | 360s linear background-position drift — exactly one 240px tile, so the loop never shows     |
 
-No parallax, no scroll-triggered libraries, no layout shift.
+No scroll-triggered libraries, no layout shift; the only parallax is the night
+sky’s subtle pointer drift.
 
 ### Theme resolution
 
@@ -213,17 +215,43 @@ The three families are the whole webfont payload: the zellij pages load Amiri
 400/700, Spectral 400/600 with italics and IBM Plex Mono 400/600 from a single
 Google Fonts request.
 
-## three.js shamsa
+## three.js night sky
 
-The home masthead carries a hero shamsa medallion built as a 3D gold line
-construction — the khatam's two interpenetrating squares plus the derived
-octagram — rendered with three.js on a transparent canvas, rotating once a
-minute with a small lerped pointer tilt. It is progressive enhancement: the
-static SVG star renders by default and the canvas only takes over when JS runs,
-WebGL is available and the viewport is at least 1024px. The render loop pauses
-when the tab is hidden or the medallion scrolls out of view. All of it lives in
-`src/designs/zellij/Shamsa.astro` so Vite code-splits it onto the home page
-only.
+Dark mode is the Blue Quran, so the three.js work belongs to its world rather
+than to an ornament in the masthead. Every zellij page carries a fixed,
+full-viewport, pointer-events-none canvas in the same negative-z layer as the
+mashrabiya screen — over the lattice, under the carpet page — holding a sky of
+84 gold stars: 76 points across three depth layers, plus 8 khatams for the
+brightest, each drawn as a hairline octagram at 3–5.5px.
+
+Every star carries its own tint (a hair either side of `--zj-gild`), its own
+4–9s twinkle and its own phase, so nothing pulses in step; one oscillation
+drives both brightness and size, and the points are rounded off in the fragment
+shader so they never read as square pixels. The pointer drifts the three layers
+2, 5 and 9px against each other, lerped at the same rate the medallion used.
+
+Because the carpet page's ground is opaque, the sky is only ever seen down the
+two margins beside it. Stars are seated in those bands — a side, a fraction
+across the band and a fraction down the viewport — with the band measured off
+the page's own box, so none is spent behind the reading column and a resize
+reseats every star exactly.
+
+The joy is a shooting star. Once every 60–120s (the first sooner, so a short
+visit still has a chance at one) a hairline gold streak falls out from behind
+the page and down a margin: 200–340px at 50–75° below the horizontal, over
+0.8–1.2s, its tail pinned at the launch point until the head outruns it and
+fading to nothing along its length. Rare enough to be something you catch rather
+than something on show.
+
+It runs in dark mode only. The module waits for `window.__zjTheme` to be `dark`
+before importing three.js at all, so a light-mode, small-screen or WebGL-less
+visitor downloads none of it — the gates are a 1024px viewport, a WebGL probe
+and the theme, and a refused chunk simply leaves the plain indigo ground. From
+then on it listens for `zj:theme` and fades the whole sky in or out over 0.6s,
+stopping the render loop entirely once it has faded off a light page. The loop
+also stops while the tab is hidden, and the device pixel ratio is capped at 2.
+All of it lives in `src/designs/zellij/NightSky.astro` so Vite code-splits it
+out of the page bundle.
 
 ## Routes
 
