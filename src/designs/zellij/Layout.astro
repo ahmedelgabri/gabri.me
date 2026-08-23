@@ -2,6 +2,7 @@
 import DesignHead from '../../components/DesignHead.astro'
 import DesignSwitcher from '../../components/DesignSwitcher.astro'
 import siteMeta from '../../config/siteMeta'
+import Astrolabe from './Astrolabe.astro'
 import GirihFrieze from './GirihFrieze.astro'
 import NightSky from './NightSky.astro'
 import Observatory from './Observatory.astro'
@@ -135,7 +136,8 @@ const year = new Date().getFullYear()
 			</main>
 
 			<footer class="zj-footer">
-				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a> · <a href="/1/three-js" style="color: var(--zj-text-muted); text-decoration-color: var(--zj-rule)">lab</a></p>
+				<Astrolabe />
+				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a></p>
 			</footer>
 		</div>
 		{/* The lattice first, then the sky over it, as the CSS layers stack */}

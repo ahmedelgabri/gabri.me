@@ -3,9 +3,10 @@
  * decides how much of the disc is lit, which limb the light hangs from, and
  * how far the terminator has swung across the face.
  *
- * The longitude terms below are the ones the lab's demonstration was built and
- * checked on. Nothing here touches the DOM, so the glyph in the page corner and
- * the large moon on the plate are the same figure at two sizes.
+ * The longitude terms below are the ones this figure was built and checked on;
+ * the simpler epoch-and-synodic-month formula is not a substitute for them.
+ * Nothing here touches the DOM, so the glyph in the page corner and the large
+ * moon on the plate are the same figure at two sizes.
  */
 
 const RAD = Math.PI / 180

@@ -27,7 +27,8 @@ RTL-on-the-web writing. Three specific references do the work:
   manuscript.
 
 No literal iconography in the ornament — no domes, minarets, lanterns or
-hieroglyphs. The one pictorial pair is the theme toggle’s star and crescent.
+hieroglyphs. The one pictorial thing on the page is the corner control's moon,
+and it is a computed one.
 
 ### Palette
 
@@ -65,7 +66,7 @@ The new gild is the same hue as the old saffron (42° against 41°) and more
 saturated, so it stays gold rather than drifting brown. Every other consumer —
 the carpet frame's double rule, the corner khatams, the star dividers, the entry
 star markers and title underlines, the arch imposts, the blockquote bar, the
-theme toggle, the prose link hover — reads `--zj-gild` or `--zj-hairline` and
+corner control, the prose link hover — reads `--zj-gild` or `--zj-hairline` and
 picks the change up without its own rule.
 
 One consumer deliberately does not follow the page: the design switcher sits on
@@ -172,9 +173,11 @@ The first pass was reviewed and reworked:
   serves both themes — muted ink on ivory, muted parchment on indigo — in the
   site chrome and in rendered post bodies alike. Internal links never get one,
   and the mark is suppressed on image-only links and inside embedded tweets.
-- **Dark mode is switchable** from a button in the masthead corner whose glyph
-  names the theme it switches to: a crescent by day, a five-pointed star by
-  night, crossfading on toggle.
+- **Dark mode is switchable** from the corner of the carpet page. What began as
+  a two-glyph toggle is now the observatory: the control carries tonight's real
+  moon by night and the page's own rosette by day, and opens a plate that
+  explains the figure and ends with the hour changing. See
+  [The observatory](#the-observatory).
 
 ### Animation inventory
 
@@ -185,7 +188,7 @@ The first pass was reviewed and reworked:
 | Home sections      | opacity + 10px rise, 500ms ease-out, 70ms stagger capped at 420ms                           |
 | Entry hover        | star marker rotates 22.5° (its own symmetry angle) and the title underline slides in, 200ms |
 | Prose links        | gilded underline grows from the left, 180ms                                                 |
-| Theme toggle       | 300ms colour/background crossfade on the major surfaces                                     |
+| Theme change       | 1.1s diagonal view-transition sweep from the observatory, else a 300ms crossfade            |
 | Background lattice | 360s linear background-position drift — exactly one 240px tile, so the loop never shows     |
 
 No scroll-triggered libraries, no layout shift; the only parallax is the night
@@ -197,8 +200,8 @@ An inline pre-render script in the layout's `<head>` reads the same `theme`
 localStorage key as the main site (`system` | `light` | `dark`), defaulting to
 `system`, resolves it against `prefers-color-scheme`, and sets `light`/`dark` on
 `<html>`. It keeps listening for system changes while the setting is `system`.
-The toggle writes the key and flips the class; its accessible name follows the
-resolved theme.
+The observatory's switch writes the key and flips the class inside a view
+transition; the control's accessible name follows the resolved theme.
 
 ## Typography
 
@@ -215,20 +218,40 @@ The three families are the whole webfont payload: the zellij pages load Amiri
 400/700, Spectral 400/600 with italics and IBM Plex Mono 400/600 from a single
 Google Fonts request.
 
-## three.js night sky
+## three.js on the page
+
+Four layers, none of them a widget: the sky the dark theme is read under, the
+compass work beneath the light theme's lattice, the almanac in the corner of the
+carpet page, and the instrument in the footer. They were chosen from a
+nine-candidate comparison built as live demos and judged on the grounds they
+belong to; the losers and the page that held them are gone.
+
+All four share `src/designs/zellij/webgl.ts`: `hasWebGL()`, which probes and
+immediately releases a context before anything is downloaded, so a machine that
+cannot draw fetches nothing; `loadThree()`, a single-flight dynamic import, so
+two layers waking in the same frame share one module evaluation; `fitPixels()`,
+the camera and renderer fit with the device pixel ratio capped at 2; and
+`createLayerLifecycle()`, which runs a layer's loop only while the tab is
+visible and the layer still wants frames. Each layer is its own component, so
+Vite code-splits it out of the page bundle, every canvas is `aria-hidden`, and a
+refused chunk or a lost context always leaves the page it enhanced standing.
+
+### The night sky
 
 Dark mode is the Blue Quran, so the three.js work belongs to its world rather
 than to an ornament in the masthead. Every zellij page carries a fixed,
 full-viewport, pointer-events-none canvas in the same negative-z layer as the
-mashrabiya screen — over the lattice, under the carpet page — holding a sky of
-84 gold stars: 76 points across three depth layers, plus 8 khatams for the
-brightest, each drawn as a hairline octagram at 3–5.5px.
+mashrabiya screen — over the lattice, under the carpet page — holding a hundred
+gold stars across three depth layers of 42, 34 and 24, drawn at 1.2–3.4px.
 
 Every star carries its own tint (a hair either side of `--zj-gild`), its own
 4–9s twinkle and its own phase, so nothing pulses in step; one oscillation
 drives both brightness and size, and the points are rounded off in the fragment
 shader so they never read as square pixels. The pointer drifts the three layers
-2, 5 and 9px against each other, lerped at the same rate the medallion used.
+2, 5 and 9px against each other. Stars are the whole sky now: the eight khatam
+line-loops that once marked the brightest were competing with the rosette
+lattice they hung over, so they went, and the field grew from 76 points to 100
+to take the sky back.
 
 Because the carpet page's ground is opaque, the sky is only ever seen down the
 two margins beside it. Stars are seated in those bands — a side, a fraction
@@ -236,67 +259,200 @@ across the band and a fraction down the viewport — with the band measured off
 the page's own box, so none is spent behind the reading column and a resize
 reseats every star exactly.
 
-The joy is a shooting star. Once every 60–120s (the first sooner, so a short
-visit still has a chance at one) a hairline gold streak falls out from behind
-the page and down a margin: 200–340px at 50–75° below the horizontal, over
-0.8–1.2s, its tail pinned at the launch point until the head outruns it and
-fading to nothing along its length. Rare enough to be something you catch rather
-than something on show.
+The joy is a shooting star. The first falls 8–20s in, so a short visit still has
+a chance at one, and then every 30–75s: a hairline gold streak falling out from
+behind the page and down a margin, 200–340px at 50–75° below the horizontal,
+over 0.8–1.2s, its tail pinned at the launch point until the head outruns it and
+fading to nothing along its length. Roughly one fall in six brings a twin half a
+second to a second and a half behind it, entering from the opposite margin while
+the first is still in the eye, the way a real shower arrives. Frequent enough to
+reward sitting with the page, rare enough to still be luck.
 
 It runs in dark mode only. The module waits for `window.__zjTheme` to be `dark`
 before importing three.js at all, so a light-mode, small-screen or WebGL-less
-visitor downloads none of it — the gates are a 1024px viewport, a WebGL probe
-and the theme, and a refused chunk simply leaves the plain indigo ground. From
-then on it listens for `zj:theme` and fades the whole sky in or out over 0.6s,
-stopping the render loop entirely once it has faded off a light page. The loop
-also stops while the tab is hidden, and the device pixel ratio is capped at 2.
-All of it lives in `src/designs/zellij/NightSky.astro` so Vite code-splits it
-out of the page bundle.
+visitor downloads none of it — the gates are a 1024px viewport, the WebGL probe
+and the theme. From then on it listens for `zj:theme` and fades the whole sky in
+or out over 0.6s, stopping the render loop entirely once it has faded off a
+light page.
 
-## three.js lab
+### The draftsman's pencil
 
-`/1/three-js` is a temporary comparison page, in the same spirit as the
-typography specimen that settled Amiri + Spectral: every candidate for where
-three.js could live in this design, built as a live demo and shown on the ground
-it belongs to, so a daylight idea and a night one can be judged side by side on
-one page. Each demo is one self-contained component in
-`src/designs/zellij/lab/`, lazy-imports three.js the first time it intersects
-the viewport, and stops its loop when it scrolls out or the tab is hidden.
-Nothing on the page is integrated into the design.
+From 1200px up — the width the CSS lattice appears at — and on fine pointers
+only, `Pencil.astro` takes the mashrabiya screen over and redraws it in WebGL.
+It does not join the CSS lattice, it replaces it: once the canvas is up and
+painted it sets `zj-pencil` on `<html>`, which takes `body::before` to zero
+opacity, and a lost context hands the work straight back. The CSS lattice stays
+the fallback for no JS, no WebGL, a coarse pointer or a narrow window.
 
-- **S — Night sky (current), thinned.** The incumbent at card size, with the
-  shooting star moved onto a button. The baseline the rest are judged against.
-- **A — The draftsman's pencil.** The page's own rosette lattice drawn as
-  line-work, with its real construction — the compass circle, the sixteen
-  points, the `{16/6}` chords, the circle they are all tangent to and the circle
-  their innermost crossings describe — revealed under a soft lens that follows
-  the pointer.
-- **B — Sun through the mashrabiya.** Pools of warm patterned light gliding
-  across the ivory, the star-and-cross tiling used as a gobo. The light-theme
-  answer.
-- **C — The margin scribe.** An abstract reed-pen swash that draws itself every
-  14–20s, holds, and is absorbed. SVG and the animation API, no three.js.
-- **D — Dusk and dawn.** The theme switch as a diagonal wash with star-points
-  kindling behind the front, played on a miniature carpet page.
-- **G — The true moon.** Tonight's real phase, computed from a new-moon epoch
-  and the synodic month, with a slider over the cycle.
-- **E — The astrolabe.** A line-drawn planispheric astrolabe whose rete creeps
-  at a sped-up sidereal rate and takes a drag with inertia. Proposed for the
-  footer.
-- **F — How this page is drawn.** The rosette's construction as a captioned
-  staged loop.
-- **H — Misbaha.** A strand of beads on a thread, run on verlet physics.
+Alignment is the whole difficulty, because for one 400ms cross-fade the reader
+sees both. The canvas draws the same 240px tile from the same construction the
+data URI was generated from, wears the same margin mask, and takes the same
+per-theme ink and opacity. Its drift phase is read off the CSS animation itself
+— `getAnimations()` is searched for `zj-drift`, and its `currentTime` places the
+lattice — so the canvas stands exactly where the tile it replaced would have
+stood rather than merely at the same rate.
 
-The page, `src/designs/zellij/lab/` and the footer's `lab` link all go away once
-the winners are chosen.
+Under the pattern lies its construction: the generating circle, the sixteen
+compass marks stepped round it, the radii, the `{16/6}` chords, and the three
+circles the figure derives from itself — the petal valleys, the innermost
+crossings, and the one every chord is tangent to. None of it is visible except
+inside a soft 120px lens that lerps after the pointer, where the pattern's own
+lines also lift by half a weight so the two layers agree. Everything is a
+distance test in the fragment shader, so nothing is rebuilt as the lens moves.
+With no pointer in the window the lens wanders the margins on a slow lissajous,
+crossing from one to the other every forty seconds or so, so the layer breathes
+on its own. The ink cross-fades kohl to gold over 0.3s on `zj:theme`.
+
+### The observatory
+
+The corner of the carpet page keeps an almanac. The theme control is no longer a
+toggle with two glyphs; it is the entrance to a plate that explains what it is
+showing and ends with the hour changing.
+
+**The glyph is alive.** By night it is a 24px moon at tonight's true phase,
+computed in `src/designs/zellij/moon.ts` — correct terminator and correct limb,
+so it changes through the month because it is worked, not drawn. By day it is
+the sixteen-petal rosette the page is tiled with, simplified to the petals and
+the ring they close on, which is all that survives legibly at 24px. A tab left
+open across a night re-computes on `visibilitychange`.
+
+**The moon is real.** `moon.ts` takes the sun–moon elongation ψ from the
+longitude terms rather than from an epoch and a synodic month, which is the
+difference between a phase that is right and one that is close. The lit fraction
+is (1 − cos ψ) ⁄ 2; the lit region is two half-ellipses sharing their poles —
+the limb, always a semicircle of the disc's radius, and the terminator, the same
+curve squashed by cos ψ — so crescent and gibbous differ by one SVG arc flag and
+nothing else. `nextPhase` walks the elongation in half-day steps and bisects the
+crossing to find the next new or full moon. The module touches no DOM, so the
+corner glyph and the large disc on the plate are one figure at two sizes.
+
+**Hover and focus give a caption.** A manuscript tooltip beside the control:
+`هلال` and tonight's phase name and illumination by night, `شمسة` and "the
+sixteen-petal rosette — how it is drawn" by day. It is wired with
+`aria-describedby`, shows on `:hover` and `:focus-visible`, and is left to fine
+pointers — a touch goes straight to the plate.
+
+**Click opens the plate**, a native `<dialog>` shown modally, so the focus trap
+and Esc are the browser's; a click that both begins and ends on the backdrop
+closes it, and focus returns to the control. It is dressed as an illumination
+plate: ivory or indigo ground, khatam corner marks, carpet-frame hairlines,
+Amiri headings.
+
+- **By night, the moon.** The disc at 180px at tonight's phase, the phase name,
+  illumination and date, a ±15-day scrubber that re-cuts the terminator as it
+  moves, the next new and full moon dates, and a passage on the hilal, on why
+  the first sighting is argued over, and on the astronomers who measured the
+  moon closely enough to predict it.
+- **By day, the rosette.** The construction drawn stage by stage on a loop with
+  its own captions, a "Hold the compass" button to stop it where it stands, and
+  a passage on how the figure measures itself and on the tradition it belongs
+  to.
+
+**Both plates end with the hour.** A single handsome action — "Dawn — switch to
+the light theme" by night, "Dusk — switch to the dark theme" by day — closes the
+plate and performs the switch with the sweep.
+
+**Dusk and dawn.** The theme class is flipped inside
+`document.startViewTransition`, and the two snapshots are held still while the
+incoming one is uncovered along the 135° diagonal over 1.1s: night comes down
+from the top-left corner, day back up from the bottom-right. The mask is 2.2
+times the page in each direction and its head sits at that same fraction, so the
+run begins with the page wholly past the front and ends with it wholly inside —
+no dead travel at either end, and one pair of stops that works for any window
+shape. Only the plate's own switch sets `data-zj-sweep`; a change that came from
+the system preference, or a browser without view transitions, keeps the 300ms
+cross-fade the page already had. Theme changes made from the plate are announced
+on an `aria-live` region; system-preference changes are not.
+
+The control is gated on `zj-js`, the class the pre-paint theme script sets, so a
+reader without JavaScript is never shown a dead button. `window.__zjSetTheme`
+still does the work; the sweep only wraps it.
+
+### The astrolabe
+
+The footer keeps an instrument: a planispheric astrolabe, drawn out of its own
+projection rather than traced, sitting above the copyright line on every zellij
+page at 420px from 1024px up.
+
+The projection is the real one — the sphere seen from the south pole and dropped
+onto the plane of the equator, so declination becomes a radius and every circle
+in the sky stays a circle on the brass. The plate carries the limb and its
+degree ring, the equator, the tropic of Cancer, the meridian, the zenith of the
+latitude it is cut for and the almucantars of 0°, 20°, 40° and 60°, each clipped
+where it runs off the plate as it would be on brass. Over it turns the rete: the
+ecliptic band with its twelve signs spaced as the projection really spaces them,
+ten star pointers tapering from the band to the star each names, and the sun's
+place today. The rule swings after the sun mark. One plate serves one latitude
+and one only; this one is cut for 52.4°N, which is Amsterdam.
+
+It creeps at 360× the sky's own rate — one turn in four minutes rather than one
+in a day — and it can be taken hold of. A drag turns the rete with a hair of lag
+behind the pointer, and the release carries the rete's own speed rather than the
+pointer's, so a flicked cursor cannot throw the brass faster than it was
+actually turning; the spin then decays back into the sidereal creep. Touch
+pointers are ignored so a finger can always scroll past.
+
+The ink changes with the page and cross-fades over 0.3s on `zj:theme`. By night
+it is brass: both weights in `--zj-gild` on the indigo ground, structure at 0.82
+and the engraved circles at 0.30. By day it is a plate printed in a manuscript,
+and the single gold is split in two — the figure itself in kohl, the way an
+engraving carries its main line, and the circles derived from it in lapis, the
+second colour a diagram keeps for its secondary work.
+
+The two are struck to the same weight on the page rather than to the same
+number. Kohl at 0.70 holds 5.5:1 on the ivory where the night's gold holds 5.7:1
+on the indigo — a hair under, because dark ink on a light ground reads heavier
+than light ink on a dark one. The lapis gets a little more than the gold it
+answers to, 2.1:1 against 1.9:1, because a cool hairline is the first thing
+ivory swallows.
+
+Unlike the other layers this one can scroll away, so it keeps an
+IntersectionObserver: nothing is fetched until the footer is reached, and the
+loop parks when it leaves. Its space is reserved by CSS on `zj-js`, before the
+first paint, so the copyright line never jumps; if the WebGL probe fails or the
+chunk never arrives, `zj-astrolabe-off` folds the figure away rather than leave
+a caption describing an instrument that is not there.
+
+### What the plates teach
+
+The instruments are not only ornaments. Each carries a short passage in the
+design's own voice on the history it comes out of, with links out to Wikipedia
+carrying the design's external-link mark. Any Arabic is a real word, set in
+Amiri with `lang="ar" dir="rtl"`: `هلال`, the crescent, and `شمسة`, the rosette.
+
+- **The moon plate** links
+  [the Hijri calendar](https://en.wikipedia.org/wiki/Islamic_calendar),
+  [what counts as sighting the crescent](https://en.wikipedia.org/wiki/Moon_sighting_in_Islam),
+  [astronomy in the medieval Islamic world](https://en.wikipedia.org/wiki/Astronomy_in_the_medieval_Islamic_world),
+  [Al-Battani](https://en.wikipedia.org/wiki/Al-Battani) and
+  [lunar phase](https://en.wikipedia.org/wiki/Lunar_phase).
+- **The rosette plate** links [girih](https://en.wikipedia.org/wiki/Girih),
+  [Islamic geometric patterns](https://en.wikipedia.org/wiki/Islamic_geometric_patterns),
+  [zellij](https://en.wikipedia.org/wiki/Zellij),
+  [the Topkapı Scroll](https://en.wikipedia.org/wiki/Topkap%C4%B1_Scroll) and
+  [the Rub el Hizb](https://en.wikipedia.org/wiki/Rub_el_Hizb).
+- **The astrolabe's label** links
+  [the astrolabe](https://en.wikipedia.org/wiki/Astrolabe),
+  [astronomy in the medieval Islamic world](https://en.wikipedia.org/wiki/Astronomy_in_the_medieval_Islamic_world),
+  [al-Zarqālī](https://en.wikipedia.org/wiki/Al-Zarqali) and
+  [al-ʻIjliyyah](https://en.wikipedia.org/wiki/Al-%CA%BBIjliyyah).
+
+Every one of those was checked against the Wikipedia REST summary before it
+shipped, on the article's canonical title rather than on a 200 alone. One was
+corrected in the process: `Mariam_al-Asturlabi` is a redirect, and the article
+it lands on is `Al-ʻIjliyyah` — the tenth-century astrolabe maker of Aleppo — so
+the canonical title is what is linked and what she is called.
+
+The astrolabe's label also stays honest about the model. Its star places are
+rounded to the arcminute, its plate is cut for one latitude, and it says so, as
+it says that the creep is 360× and that the rete can be turned.
 
 ## Routes
 
-| Route            | Page                         |
-| ---------------- | ---------------------------- |
-| `/1`             | home                         |
-| `/1/blog/[slug]` | every published blog post    |
-| `/1/three-js`    | the three.js lab (temporary) |
+| Route            | Page                      |
+| ---------------- | ------------------------- |
+| `/1`             | home                      |
+| `/1/blog/[slug]` | every published blog post |
 
 All design pages carry `noindex, nofollow` and are excluded from the sitemap.
 

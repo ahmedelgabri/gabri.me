@@ -1,54 +1,139 @@
-<div class="lab-demo" data-lab="e" data-ground="indigo">
-	<p class="lab-caption">star places approximate · plate cut for 52.4°N</p>
-</div>
+---
+/*
+ * The footer keeps an instrument. A planispheric astrolabe drawn out of its own
+ * projection rather than traced: the plate is cut for the latitude this site is
+ * written at, the rete carries ten real stars in their real places, and the sky
+ * creeps round at 360× its own rate until somebody takes hold of it.
+ */
+const wiki = 'https://en.wikipedia.org/wiki'
+---
 
-<style>
+<figure class="zj-astrolabe">
+	{/* The whole box is the handle: the rete turns wherever you take hold of it */}
+	<div class="zj-astrolabe-plate" data-zj-astrolabe></div>
+
+	<figcaption class="zj-astrolabe-note">
+		<span class="zj-astrolabe-honest"
+			>star places approximate · plate cut for 52.4°N · the rete creeps at 360×
+			the sky’s own rate<span class="zj-astrolabe-hint"> — take hold of it</span
+			></span
+		>
+		<span>
+			An <a href={`${wiki}/Astrolabe`} target="_blank" rel="noopener">astrolabe</a
+			> is the sky worked in brass: the half-dome overhead flattened by stereographic
+			projection onto a plate cut for one latitude, with a pierced rete of star pointers
+			turning over it to give the hour, the season and the height of anything you
+			can sight. It was the working instrument of the <a
+				href={`${wiki}/Astronomy_in_the_medieval_Islamic_world`}
+				target="_blank"
+				rel="noopener">astronomers of the medieval Islamic world</a
+			>, who timed the prayers and found the direction of Mecca by it: <a
+				href={`${wiki}/Al-Zarqali`}
+				target="_blank"
+				rel="noopener">al-Zarqālī</a
+			> of eleventh-century Toledo cut a plate that served every latitude at once,
+			and <a href={`${wiki}/Al-%CA%BBIjliyyah`} target="_blank" rel="noopener"
+				>al-ʻIjliyyah</a
+			> was making astrolabes at the court of Aleppo a century before him.
+		</span>
+	</figcaption>
+</figure>
+
+<style is:global>
+	/* ————— The footer instrument ————— */
+
 	/*
-	 * An astrolabe is read at night, so this card keeps its indigo ground in
-	 * both page themes and pins the dark theme's inks rather than taking the
-	 * tokens, which would turn kohl the moment the page goes ivory.
+	 * The plate is only worth its room where the page is wide enough to give it
+	 * room, and only where it can actually be drawn — a caption describing an
+	 * instrument that never arrived is worse than no instrument. The reservation
+	 * rides on zj-js, which lands before the first paint, so the common case
+	 * never shifts the copyright line; the two failing cases below fold the
+	 * figure away at script time, long before the footer is scrolled to.
 	 */
-	.lab-demo {
-		position: relative;
-		width: 100%;
-		aspect-ratio: 3 / 2;
-		overflow: hidden;
-		border-radius: 2px;
-		background: #132347;
-		/* The whole box is the handle: the rete turns wherever you take hold of it */
-		cursor: grab;
-		touch-action: none;
+	.design-zellij .zj-astrolabe {
+		display: none;
 	}
 
-	.lab-demo[data-held] {
+	@media (min-width: 64em) {
+		.design-zellij.zj-js .zj-astrolabe {
+			display: block;
+			width: min(420px, 60vw);
+			margin: 0.25rem auto 2.25rem;
+		}
+	}
+
+	/* No WebGL, or a chunk that never came */
+	.design-zellij.zj-astrolabe-off .zj-astrolabe {
+		display: none;
+	}
+
+	.design-zellij .zj-astrolabe-plate {
+		position: relative;
+		/* The instrument is a disc; a wider box would only be dead handle */
+		aspect-ratio: 1;
+	}
+
+	.design-zellij .zj-astrolabe-plate[data-held] {
 		cursor: grabbing;
 	}
 
-	.lab-demo :global(canvas) {
+	.design-zellij .zj-astrolabe-plate canvas {
 		position: absolute;
 		inset: 0;
 		display: block;
+		/* Struck rather than faded in: a transition from a fresh node never runs */
+		animation: zj-astrolabe-in 700ms ease-out both;
 	}
 
-	.lab-caption {
-		position: absolute;
-		left: 0.7rem;
-		bottom: 0.55rem;
-		margin: 0;
+	@keyframes zj-astrolabe-in {
+		from {
+			opacity: 0;
+		}
+	}
+
+	.design-zellij .zj-astrolabe-hint {
+		display: none;
+	}
+
+	/*
+	 * A finger has no way to turn the rete — the touch pointers are ignored so
+	 * the page can still be scrolled past a 420px instrument — so the invitation
+	 * to turn it is only extended to a pointer that can.
+	 */
+	@media (hover: hover) and (pointer: fine) {
+		.design-zellij .zj-astrolabe-plate {
+			cursor: grab;
+		}
+
+		.design-zellij .zj-astrolabe-hint {
+			display: inline;
+		}
+	}
+
+	/* The object label under the object: set as a block, not as footer chrome */
+	.design-zellij .zj-astrolabe-note {
+		max-width: 58ch;
+		margin-inline: auto;
+		text-align: left;
+		font-size: 0.8125rem;
+		line-height: 1.65;
+	}
+
+	.design-zellij .zj-astrolabe-honest {
+		display: block;
+		margin-bottom: 0.5rem;
 		font-family: var(--z-font-mono);
 		font-size: 0.625rem;
 		letter-spacing: 0.05em;
-		color: #a99e85;
-		pointer-events: none;
 	}
 </style>
 
 <script>
-	import type {LineBasicMaterial as LineMaterial} from 'three'
-	import {INNER_RATIO} from '../geometry'
+	import type {Color, LineBasicMaterial as LineMaterial} from 'three'
+	import {INNER_RATIO} from './geometry'
+	import {epochDays} from './moon'
+	import {createLayerLifecycle, fitPixels, hasWebGL, loadThree} from './webgl'
 
-	/* --zj-gild on the indigo ground */
-	const GOLD = 0xd9b44a
 	const RAD = Math.PI / 180
 	/* A plate is cut for one latitude and one only; this one is Amsterdam's */
 	const LATITUDE = 52.37 * RAD
@@ -78,6 +163,31 @@
 	const MAX_SPIN = 14
 
 	/*
+	 * The two inks, light theme first. By night the instrument is brass on the
+	 * indigo ground and both weights are --zj-gild. By day it is a plate printed
+	 * in a manuscript: the figure itself in kohl, the way an engraving carries
+	 * its main line, and the circles derived from it in the lapis a diagram
+	 * keeps for its secondary work — a distinction the single gold cannot make.
+	 */
+	const STRUCTURE_INK = [0x26221a, 0xd9b44a]
+	const ENGRAVED_INK = [0x1d3a6e, 0xd9b44a]
+	/*
+	 * Both plates are struck to the same weight on the page rather than to the
+	 * same number: kohl at 0.7 holds 5.5:1 on the ivory where the night's gold
+	 * holds 5.7:1 on the indigo, a hair under because dark ink on a light
+	 * ground reads heavier than light ink on a dark one. The lapis is given a
+	 * little more than the gold it answers to — 2.1:1 against 1.9:1 — because a
+	 * cool hairline is the first thing ivory swallows.
+	 */
+	const STRUCTURE_ALPHA = [0.7, 0.82]
+	const ENGRAVED_ALPHA = [0.4, 0.3]
+	/* Seconds to re-ink when the page changes theme */
+	const FADE = 0.3
+
+	/* Set on <html> when the plate cannot be drawn, which folds the figure away */
+	const OFF = 'zj-astrolabe-off'
+
+	/*
 	 * J2000 places, rounded to the arcminute — a real rete carries its own list
 	 * and this is a short one. All ten lie north of the tropic of Capricorn,
 	 * which is the southern limit of what any rete can reach: Fomalhaut and
@@ -96,14 +206,11 @@
 		['Capella', 5.278, 46.0],
 	]
 
-	interface Handle {
-		resume(): void
-		pause(): void
-	}
-
-	/* Days since J2000.0, the epoch every term below is written against */
-	function epochDays(date: Date): number {
-		return date.getTime() / 86400000 - 10957.5
+	interface Ink {
+		material: LineMaterial
+		day: Color
+		night: Color
+		alpha: number[]
 	}
 
 	/* Sun's apparent longitude, good to about a minute of arc */
@@ -139,6 +246,10 @@
 	 */
 	function decRadius(dec: number): number {
 		return EQUATOR * Math.tan((Math.PI / 2 - dec) / 2)
+	}
+
+	function between(pair: number[], amount: number): number {
+		return pair[0] + (pair[1] - pair[0]) * amount
 	}
 
 	function push(out: number[], ax: number, ay: number, bx: number, by: number) {
@@ -209,22 +320,13 @@
 		)
 	}
 
-	/* Asked before three.js is fetched, so a machine without WebGL downloads nothing */
-	function hasWebGL(): boolean {
-		try {
-			const probe = document.createElement('canvas')
-			const context = probe.getContext('webgl2') ?? probe.getContext('webgl')
-			/* Hand the context back rather than sitting on one of the browser's few */
-			context?.getExtension('WEBGL_lose_context')?.loseContext()
-			return Boolean(context)
-		} catch {
-			return false
-		}
-	}
-
-	async function enhance(box: HTMLElement): Promise<Handle> {
+	async function enhance(
+		box: HTMLElement,
+		onscreen: () => boolean,
+	): Promise<() => void> {
 		const {
 			BufferGeometry,
+			Color,
 			Float32BufferAttribute,
 			Group,
 			LineBasicMaterial,
@@ -232,28 +334,43 @@
 			OrthographicCamera,
 			Scene,
 			WebGLRenderer,
-		} = await import('three')
+		} = await loadThree()
 
 		const renderer = new WebGLRenderer({alpha: true, antialias: true})
-		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
 		renderer.domElement.setAttribute('aria-hidden', 'true')
+
+		let width = box.clientWidth
+		let height = box.clientHeight
 
 		const scene = new Scene()
 		/* Pixel space with y running down, so a screen angle is a clockwise one */
-		const camera = new OrthographicCamera(0, 1, 0, 1, -1, 1)
+		const camera = new OrthographicCamera(0, width, 0, height, -1, 1)
 		const instrument = new Group()
 		scene.add(instrument)
 
-		const structure = new LineBasicMaterial({
-			color: GOLD,
-			transparent: true,
-			opacity: 0.82,
-		})
-		const engraved = new LineBasicMaterial({
-			color: GOLD,
-			transparent: true,
-			opacity: 0.3,
-		})
+		const structure = new LineBasicMaterial({transparent: true})
+		const engraved = new LineBasicMaterial({transparent: true})
+		const inks: Ink[] = [
+			{
+				material: structure,
+				day: new Color(STRUCTURE_INK[0]),
+				night: new Color(STRUCTURE_INK[1]),
+				alpha: STRUCTURE_ALPHA,
+			},
+			{
+				material: engraved,
+				day: new Color(ENGRAVED_INK[0]),
+				night: new Color(ENGRAVED_INK[1]),
+				alpha: ENGRAVED_ALPHA,
+			},
+		]
+
+		function reink(amount: number) {
+			for (const {material, day, night, alpha} of inks) {
+				material.color.copy(day).lerp(night, amount)
+				material.opacity = between(alpha, amount)
+			}
+		}
 
 		function draw(values: number[], material: LineMaterial) {
 			const geometry = new BufferGeometry()
@@ -394,11 +511,10 @@
 		let ruleAngle = angle + sunAngle
 		let spin = SIDEREAL
 		let grab: {pointer: number; raw: number; target: number} | null = null
-		let width = 0
-		let height = 0
-		let last = 0
-		let request = 0
-		let running = false
+		let amount = window.__zjTheme === 'dark' ? 1 : 0
+		let target = amount
+
+		reink(amount)
 
 		function pointerAngle(event: PointerEvent): number {
 			const bounds = box.getBoundingClientRect()
@@ -409,10 +525,15 @@
 			)
 		}
 
-		function frame(now: number) {
-			/* A backgrounded tab can hand back a huge delta on the first frame */
-			const delta = Math.min((now - last) / 1000, 0.1)
-			last = now
+		function frame(delta: number) {
+			if (amount !== target) {
+				const step = delta / FADE
+				amount =
+					target > amount
+						? Math.min(amount + step, target)
+						: Math.max(amount - step, target)
+				reink(amount)
+			}
 
 			if (grab === null) {
 				/* A spun rete gives its speed up slowly and finds the creep again */
@@ -436,28 +557,33 @@
 			rule.rotation.z = ruleAngle
 
 			renderer.render(scene, camera)
-			request = requestAnimationFrame(frame)
 		}
 
-		function resize() {
-			width = box.clientWidth
-			height = box.clientHeight
+		/* Unlike the page's other layers this one scrolls away, and then it stops */
+		const settle = createLayerLifecycle({frame, awake: onscreen})
 
-			if (width === 0 || height === 0) {
+		function resize() {
+			const next = box.clientWidth
+			const tall = box.clientHeight
+
+			/* Below the figure's breakpoint the box is display:none and measures 0 */
+			if (next === 0 || tall === 0) {
 				return
 			}
 
-			camera.right = width
-			camera.bottom = height
-			camera.updateProjectionMatrix()
-			/* The ratio can change under the window, not only the size */
-			renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
-			renderer.setSize(width, height)
+			width = next
+			height = tall
+			fitPixels(renderer, camera, width, height)
 			instrument.position.set(width / 2, height / 2, 0)
 			instrument.scale.setScalar(Math.min(width, height) * 0.45)
 		}
 
 		box.addEventListener('pointerdown', (event) => {
+			/* A finger has to be able to scroll past the instrument, not turn it */
+			if (event.pointerType === 'touch') {
+				return
+			}
+
 			box.setPointerCapture(event.pointerId)
 			box.setAttribute('data-held', '')
 			grab = {pointer: event.pointerId, raw: pointerAngle(event), target: angle}
@@ -496,70 +622,76 @@
 		box.addEventListener('pointerup', release)
 		box.addEventListener('pointercancel', release)
 
+		window.addEventListener('zj:theme', () => {
+			target = window.__zjTheme === 'dark' ? 1 : 0
+
+			/* Off screen there is no cross-fade to see: take the new ink whole */
+			if (!onscreen()) {
+				amount = target
+				reink(amount)
+			}
+
+			settle()
+		})
+
 		new ResizeObserver(resize).observe(box)
 		resize()
 		box.appendChild(renderer.domElement)
 
-		return {
-			resume() {
-				if (running) {
-					return
-				}
-
-				running = true
-				last = performance.now()
-				request = requestAnimationFrame(frame)
-			},
-			pause() {
-				running = false
-				cancelAnimationFrame(request)
-			},
-		}
+		return settle
 	}
 
 	function gate(box: HTMLElement) {
-		let handle: Handle | null = null
-		let pending = false
 		let onscreen = false
+		let started = false
+		let settle: (() => void) | null = null
 
-		function settle() {
-			if (!onscreen || document.visibilityState !== 'visible') {
-				handle?.pause()
-				return
-			}
-
-			if (handle) {
-				handle.resume()
-				return
-			}
-
-			if (pending || !hasWebGL()) {
-				return
-			}
-
-			pending = true
-			/* A refused chunk or context leaves the plain indigo box, which is no loss */
-			enhance(box)
-				.then((ready) => {
-					handle = ready
-					settle()
-				})
-				.catch(() => undefined)
-		}
-
-		/* Nothing is fetched, and nothing runs, until the card is actually on screen */
+		/* Nothing is fetched, and nothing runs, until the footer is reached */
 		new IntersectionObserver(
 			(entries) => {
 				onscreen = entries[entries.length - 1].isIntersecting
-				settle()
-			},
-			{threshold: 0.25},
-		).observe(box)
 
-		document.addEventListener('visibilitychange', settle)
+				if (onscreen && !started) {
+					started = true
+					enhance(box, () => onscreen)
+						.then((ready) => {
+							settle = ready
+							ready()
+						})
+						.catch(() => {
+							document.documentElement.classList.add(OFF)
+						})
+				}
+
+				settle?.()
+			},
+			{threshold: 0},
+		).observe(box)
 	}
 
-	for (const box of document.querySelectorAll<HTMLElement>('[data-lab="e"]')) {
-		gate(box)
+	const box = document.querySelector<HTMLElement>('[data-zj-astrolabe]')
+
+	if (box) {
+		/* The width the figure is reserved at, and the only width it is drawn at */
+		const wide = window.matchMedia('(min-width: 64em)')
+		let opened = false
+
+		const open = () => {
+			if (opened || !wide.matches) {
+				return
+			}
+
+			opened = true
+
+			if (hasWebGL()) {
+				gate(box)
+				return
+			}
+
+			document.documentElement.classList.add(OFF)
+		}
+
+		open()
+		wide.addEventListener('change', open)
 	}
 </script>
