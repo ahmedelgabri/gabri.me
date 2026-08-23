@@ -117,16 +117,15 @@ inside MDX:
   - `/llms.txt` - LLM manifest endpoint
   - `/robots.txt` - Robots file
 
-- **Layout**: `src/designs/zellij/Layout.astro` is the site's only layout. It
+- **Layout**: `src/layouts/Layout.astro` is the site's only layout. It
   carries the whole `<head>` (metadata, fonts, pre-paint theme script, GA4), the
   page frame and every one of the design's CSS rules. See `DESIGNS.md`.
 
-- **Design components** (src/designs/zellij/): the layout's partials — geometry
-  ornaments (`Star`, `StarDivider`, `GirihFrieze`, `Arch`), the three.js layers
-  (`NightSky`, `Pencil`, `Observatory`, `Astrolabe`) and `ProseLink`, which
-  marks external links in rendered MDX so the design can flag them.
-
 - **Components** (src/components/):
+  - The layout's partials — geometry ornaments (`Star`, `StarDivider`,
+    `GirihFrieze`, `Arch`), the three.js layers (`NightSky`, `Pencil`,
+    `Observatory`, `Astrolabe`) and `ProseLink`, which marks external links in
+    rendered MDX so the design can flag them
   - `YouTube` - React component passed to MDX as a component override
 
   Tweets are embedded by importing `astro-tweet` directly in the MDX file.
@@ -137,7 +136,7 @@ inside MDX:
 ### Styling
 
 The design owns its own CSS: every rule lives in the `<style is:global>` block
-of `src/designs/zellij/Layout.astro`, written unprefixed against `.zj-*` and
+of `src/layouts/Layout.astro`, written unprefixed against `.zj-*` and
 element selectors and themed through custom properties on `:root`. There is no
 global stylesheet.
 
@@ -193,7 +192,7 @@ All blog posts are statically generated at build time:
 - `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
   integrations
 - `markdown.config.ts` - Shared Markdown/Shiki configuration
-- `src/designs/zellij/Layout.astro` - The site's layout, head and CSS
+- `src/layouts/Layout.astro` - The site's layout, head and CSS
 - `DESIGNS.md` - The design's own documentation
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration

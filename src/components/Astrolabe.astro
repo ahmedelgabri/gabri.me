@@ -135,11 +135,11 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 <script>
 	import type {Color, LineBasicMaterial as LineMaterial} from 'three'
-	import type {Lifecycle} from './frames'
-	import {FULL_RATE, createLayerLifecycle} from './frames'
-	import {starVertices} from './geometry'
-	import {DARK, LIGHT} from './ink'
-	import {RAD, epochDays, sunLongitude} from './moon'
+	import type {Lifecycle} from '../lib/frames'
+	import {FULL_RATE, createLayerLifecycle} from '../lib/frames'
+	import {starVertices} from '../lib/geometry'
+	import {DARK, LIGHT} from '../lib/ink'
+	import {RAD, epochDays, sunLongitude} from '../lib/moon'
 	import {
 		between,
 		createPixelStage,
@@ -147,7 +147,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		fitPixels,
 		hasWebGL,
 		loadThree,
-	} from './webgl'
+	} from '../lib/webgl'
 
 	/* A plate is cut for one latitude and one only; this one is Amsterdam's */
 	const LATITUDE = 52.37 * RAD

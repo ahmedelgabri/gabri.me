@@ -50,14 +50,14 @@
 </style>
 
 <script>
-	import {FULL_RATE, createLayerLifecycle} from './frames'
+	import {FULL_RATE, createLayerLifecycle} from '../lib/frames'
 	import {
 		DEEP as DEEP_RATIO,
 		VALLEY as VALLEY_RATIO,
 		type Point,
 		starVertices,
-	} from './geometry'
-	import {DARK, LIGHT} from './ink'
+	} from '../lib/geometry'
+	import {DARK, LIGHT} from '../lib/ink'
 	import {
 		between,
 		createPixelStage,
@@ -65,7 +65,7 @@
 		fitPixels,
 		gateLayer,
 		loadThree,
-	} from './webgl'
+	} from '../lib/webgl'
 
 	/*
 	 * One tile of --zj-screen in Layout.astro, and the centred square lattice

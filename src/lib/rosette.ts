@@ -11,7 +11,7 @@
  * dash offset is the drawing hand, so the plate opens without waiting on a
  * renderer and the hairlines stay hairlines.
  */
-import {DEEP, VALLEY, starVertices} from '../geometry'
+import {DEEP, VALLEY, starVertices} from './geometry'
 
 /* The figure's own two crossings live with the rest of the design's geometry */
 export {DEEP, VALLEY}

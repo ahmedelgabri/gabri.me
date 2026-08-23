@@ -2,8 +2,8 @@ import {Resvg} from '@resvg/resvg-js'
 import {format} from 'date-fns'
 import satori, {type SatoriOptions} from 'satori'
 import siteMeta from '../../config/siteMeta'
-import {crossPoints, starPoints} from '../../designs/zellij/geometry'
-import {DARK} from '../../designs/zellij/ink'
+import {crossPoints, starPoints} from '../../lib/geometry'
+import {DARK} from '../../lib/ink'
 import {shapeArabic} from './_arabic'
 
 const WIDTH = 1200

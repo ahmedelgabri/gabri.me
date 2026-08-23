@@ -85,15 +85,15 @@ src/
 │   ├── blog/          # Blog posts (slug/post.mdx)
 │   └── weekly-links/  # Weekly links (slug/post.mdx), not currently rendered
 ├── assets/            # Images used by pages and cards
-├── components/        # Components available to MDX bodies
+├── components/        # Layout partials and components available to MDX bodies
 ├── config/            # Site metadata
-├── designs/zellij/    # The design: layout, partials, geometry and WebGL
-├── lib/               # Content querying, excerpts, sitemap and robots
+├── layouts/           # Layout.astro: the site's only layout
+├── lib/               # Content, excerpts, sitemap, robots, geometry and WebGL
 ├── pages/             # Routes and endpoints
 └── content.config.ts  # Collection definitions and schemas
 ```
 
-`src/designs/zellij/Layout.astro` is the site's only layout: it owns the whole
+`src/layouts/Layout.astro` is the site's only layout: it owns the whole
 `<head>` (metadata, OpenGraph and Twitter cards, the pre-paint theme script),
 the carpet-page frame, and all of the design's CSS.
 

@@ -22,8 +22,8 @@
 </style>
 
 <script>
-	import {FULL_RATE, createLayerLifecycle} from './frames'
-	import {DARK} from './ink'
+	import {FULL_RATE, createLayerLifecycle} from '../lib/frames'
+	import {DARK} from '../lib/ink'
 	import {
 		between,
 		createPixelStage,
@@ -31,7 +31,7 @@
 		fitPixels,
 		gateLayer,
 		loadThree,
-	} from './webgl'
+	} from '../lib/webgl'
 
 	/* --zj-gild on the indigo ground; the sky only ever runs in the dark theme */
 	const GOLD = DARK.gild

@@ -1,7 +1,7 @@
 ---
 import Star from './Star.astro'
 import StarDivider from './StarDivider.astro'
-import {DEEP, DISC_R, FIGURE, LABELS, glyphPetals} from './observatory/rosette'
+import {DEEP, DISC_R, FIGURE, LABELS, glyphPetals} from '../lib/rosette'
 
 /*
  * The corner of the carpet page keeps an almanac. By night the control is
@@ -807,7 +807,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 </style>
 
 <script>
-	import {createLayerLifecycle} from './frames'
+	import {createLayerLifecycle} from '../lib/frames'
 	import {
 		DAY,
 		FULL_MOON,
@@ -817,7 +817,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		nextPhase,
 		phaseName,
 		phaseOn,
-	} from './moon'
+	} from '../lib/moon'
 	import {
 		CLEAR,
 		DISC_R,
@@ -827,7 +827,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		LOOP,
 		type Layer,
 		buildLayers,
-	} from './observatory/rosette'
+	} from '../lib/rosette'
 
 	const SVG = 'http://www.w3.org/2000/svg'
 	/* The corner moon's disc: the rim it is drawn on is in the markup above */

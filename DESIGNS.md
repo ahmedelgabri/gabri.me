@@ -18,7 +18,7 @@ RTL-on-the-web writing. Three specific references do the work:
   [The arches](#the-arches).
 - **Mamluk Cairo geometric ornament** for the star-and-cross girih system in the
   page furniture. It derives from one construction in
-  `src/designs/zellij/geometry.ts`: the khatam, the eight-point star that is the
+  `src/lib/geometry.ts`: the khatam, the eight-point star that is the
   union of two squares rotated 45° against each other, plus the cross tile that
   fills the gaps when khatams are laid on a square lattice.
 - **Alhambra-lineage Andalusian rosettes** for the background lattice and the
@@ -92,7 +92,7 @@ arches over post titles.
 
 The arch over a post title is one of six, chosen at random on every page load
 and named in a tiny caption revealed on hover. Each is a construction in
-`src/designs/zellij/arches.ts` rather than a traced silhouette, and all six
+`src/lib/arches.ts` rather than a traced silhouette, and all six
 share one 720×210 band: the same crown height, the springing line below the
 visible area wherever the form allows it, a double rule whose inner line is a
 true parallel of the outer at 12 units, and impost hairlines running from the
@@ -279,9 +279,9 @@ shared frame scheduler. They were chosen from a nine-candidate comparison built
 as live demos and judged on the grounds they belong to; the losers and the page
 that held them are gone.
 
-All four share `src/designs/zellij/frames.ts`: `createLayerLifecycle()`, which
+All four share `src/lib/frames.ts`: `createLayerLifecycle()`, which
 runs a layer's loop only while the tab is visible and the layer still wants
-frames. The three that draw share `src/designs/zellij/webgl.ts` as well:
+frames. The three that draw share `src/lib/webgl.ts` as well:
 `hasWebGL()`, which probes and immediately releases a context before anything is
 downloaded, so a machine that cannot draw fetches nothing, and remembers the
 answer; `loadThree()`, a single-flight dynamic import, so two layers waking in
@@ -290,7 +290,7 @@ the same frame share one module evaluation; `createPixelStage()` and
 and the fit that keeps them there; `createThemeFade()`, the ink cross-fade every
 layer runs on a theme change; and `gateLayer()`, the media-and-capability gate
 two of them start behind. The palette all three ink themselves from is
-`src/designs/zellij/ink.ts`, which restates Layout's `--zj-*` colours as data
+`src/lib/ink.ts`, which restates Layout's `--zj-*` colours as data
 for the renderers that cannot read a custom property. Each layer is its own
 component, so Vite code-splits it out of the page bundle, every canvas is
 `aria-hidden`, and a refused chunk or a lost context always leaves the page it
@@ -370,7 +370,7 @@ toggle with two glyphs; it is the entrance to a plate that explains what it is
 showing and ends with the hour changing.
 
 **The glyph is alive.** By night it is a 24px moon at tonight's true phase,
-computed in `src/designs/zellij/moon.ts` — correct terminator and correct limb,
+computed in `src/lib/moon.ts` — correct terminator and correct limb,
 so it changes through the month because it is worked, not drawn. By day it is
 the sixteen-petal rosette the page is tiled with, simplified to the petals and
 the ring they close on, which is all that survives legibly at 24px. A tab left
@@ -522,16 +522,16 @@ the design does not touch them.
 
 ## Where it lives
 
-- `src/designs/zellij/Layout.astro` — the site's only layout. It carries the
+- `src/layouts/Layout.astro` — the site's only layout. It carries the
   whole `<head>` (title, description, canonical, OpenGraph and Twitter cards,
   authorship and `rel="me"` links, the RSS alternate, the two media-scoped
   `theme-color` metas, the Google Fonts request, the pre-paint theme script and
   the GA4 snippet), the carpet-page frame with its masthead, frieze, footer and
   astrolabe, and all of the design's CSS in one `<style is:global>` block.
-- `src/designs/zellij/` also owns the partials: `Arch`, `Star`, `StarDivider`,
-  `GirihFrieze`, `Astrolabe`, `Observatory`, `NightSky`, `Pencil`, `ProseLink`,
-  and the `geometry`, `arches`, `moon`, `ink`, `frames` and `webgl` modules
-  behind them.
+- `src/components/` holds the partials: `Arch`, `Star`, `StarDivider`,
+  `GirihFrieze`, `Astrolabe`, `Observatory`, `NightSky`, `Pencil` and
+  `ProseLink`. The `geometry`, `arches`, `moon`, `ink`, `frames`, `webgl` and
+  `rosette` modules behind them are in `src/lib/`.
 - `src/pages/index.astro`, `src/pages/blog/[slug].astro` and
   `src/pages/404.astro` are thin route files over that layout.
 - `src/lib/content.ts` — `getBlogStaticPaths()` and friends, used by the route
