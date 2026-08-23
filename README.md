@@ -21,9 +21,9 @@ and the observatory behind the theme switch — is in [DESIGNS.md](./DESIGNS.md)
 
 - **Framework**: Astro 7, with React 19 for the components used inside MDX
 - **Content**: MDX through Astro content collections
-- **Styling**: the design carries its own CSS in one global block; UnoCSS
-  supplies the preflight reset it is written against, plus the handful of
-  utilities used in post bodies
+- **Styling**: the design carries its own CSS in `src/styles/global.css`, with
+  each component's rules kept beside it; UnoCSS supplies the preflight reset it
+  is written against, plus the handful of utilities used in post bodies
 - **Graphics**: computed SVG throughout, and three.js for the night sky, the
   lattice pencil and the footer astrolabe
 - **Language**: TypeScript (strict mode)
@@ -90,12 +90,14 @@ src/
 ├── layouts/           # Layout.astro: the site's only layout
 ├── lib/               # Content, excerpts, sitemap, robots, geometry and WebGL
 ├── pages/             # Routes and endpoints
+├── styles/            # global.css: the design's base stylesheet
 └── content.config.ts  # Collection definitions and schemas
 ```
 
-`src/layouts/Layout.astro` is the site's only layout: it owns the whole
-`<head>` (metadata, OpenGraph and Twitter cards, the pre-paint theme script),
-the carpet-page frame, and all of the design's CSS.
+`src/layouts/Layout.astro` is the site's only layout: it owns the whole `<head>`
+(metadata, OpenGraph and Twitter cards, the pre-paint theme script) and the
+carpet-page frame, and imports `src/styles/global.css`, the design's base
+stylesheet.
 
 ## Routes
 

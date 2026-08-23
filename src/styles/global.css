@@ -1,0 +1,1073 @@
+/*
+ * The design's base stylesheet: the two palettes, the carpet-page frame,
+ * masthead, links, entry lists, article pages, rendered MDX prose and Shiki
+ * code blocks. Rules that belong to a single component are kept in that
+ * component instead, alongside the markup they dress.
+ *
+ * Unlayered on purpose. UnoCSS writes its preflight into cascade layers, so
+ * everything here outranks the reset whatever the specificity either side.
+ */
+
+:root {
+	--z-font-display: 'Amiri', 'Times New Roman', serif;
+	--z-font-body: 'Spectral', 'Iowan Old Style', Georgia, serif;
+	/* Arabic is always Amiri */
+	--z-font-arabic: 'Amiri', 'Times New Roman', serif;
+	--z-font-mono:
+		'PragmataPro Mono Liga', 'PragmataPro Liga', 'PragmataPro', 'Iosevka',
+		'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+	--zj-page-pad-x: clamp(1.1rem, 4.5vw, 3.25rem);
+	/* How far the corner stars stand outside the frame they are pinned through */
+	--zj-corner-inset: -3px;
+	/* Ivory to indigo and back, wherever a surface has to cross with the ground */
+	--zj-swap: 300ms ease;
+	/*
+	 * The lattice dies away before it reaches the reading column: full
+	 * strength out to --zj-lattice-from of the centre line, gone by
+	 * --zj-lattice-clear. Everything drawn in the margins is masked with it,
+	 * and the canvas that replaces the lattice measures itself against the
+	 * same two figures.
+	 */
+	--zj-lattice-from: 31rem;
+	--zj-lattice-clear: 25rem;
+	--zj-lattice-mask: linear-gradient(
+		to right,
+		#000 0,
+		#000 calc(50% - var(--zj-lattice-from)),
+		transparent calc(50% - var(--zj-lattice-clear)),
+		transparent calc(50% + var(--zj-lattice-clear)),
+		#000 calc(50% + var(--zj-lattice-from)),
+		#000 100%
+	);
+	/*
+	 * The external-link mark: an arrow pointing north-east whose head is a
+	 * four-point diamond star — the khatam's four-fold cousin — on a thin
+	 * shaft running back along the same diagonal. The star's outer points
+	 * sit on the diagonals with the north-east one stretched so it leads;
+	 * its inner points sit on the axes. The viewBox is the mark's exact
+	 * bounding box, so the glyph fills its box rather than floating in
+	 * padding. Carried as a mask so one shape serves both themes.
+	 */
+	--zj-extlink: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16.97 16.97'%3E%3Cpath d='M0.71 16.26L9.9 7.07' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M16.97 0L12.3 7.07L14.28 11.45L9.9 9.47L5.52 11.45L7.5 7.07L5.52 2.69L9.9 4.67Z'/%3E%3C/svg%3E");
+}
+
+/*
+ * ————— The two palettes —————
+ *
+ * The figures drawn outside CSS — the three WebGL layers and the social
+ * card — cannot read a custom property, so they carry the same colours as
+ * data in ink.ts. The two blocks are meant to be changed together.
+ */
+
+/* ————— Light: qishani ivory ————— */
+
+.light {
+	--zj-ground: #f5eedf;
+	--zj-panel: #ece3cc;
+	--zj-text: #26221a;
+	--zj-text-muted: #5a5142;
+	/* Links, the Arabic masthead and focus rings — always text-grade contrast */
+	--zj-accent: #1d3a6e;
+	/*
+	 * Gilding only: hairlines, ornament, markers. Never body text.
+	 * A bronze-gold deep enough to hold 3.26:1 on the ivory ground — a
+	 * lighter saffron leaves the hairlines below 1.5:1 and they vanish.
+	 */
+	--zj-gild: #a97c14;
+	--zj-glaze: #2a7268;
+	/* Geometry strokes: lapis in daylight, oxidised silver on the indigo ground */
+	--zj-geo: #1d3a6e;
+	/* 2.26:1 on ivory — the lighter of the two gilded rules, still legible */
+	--zj-hairline: rgba(169, 124, 20, 0.72);
+	/* Structural rules that carry meaning need more weight than the ornamental hairline */
+	--zj-rule: rgba(90, 81, 66, 0.5);
+	--zj-panel-edge: rgba(38, 34, 26, 0.16);
+	--zj-panel-edge-soft: rgba(38, 34, 26, 0.1);
+	--zj-underline-rest: rgba(29, 58, 110, 0.35);
+	--zj-selection: rgba(169, 124, 20, 0.32);
+	/* What a plate darkens the page to while it holds the reader */
+	--zj-backdrop: rgba(38, 34, 26, 0.6);
+	--zj-screen-opacity: 0.06;
+	--zj-medallion-opacity: 0.035;
+	/*
+	 * Andalusian rosette tile, 240px, seamless. Rosettes of radius
+	 * 120/sqrt(2) sit on a centred square lattice — (0,0) and (120,120) —
+	 * so diagonal neighbours are exactly tangent. Each rosette is the
+	 * breath-of-the-compass figure: sixteen petals cut by the {16/6} star
+	 * polygon on a circle of that radius, a nested ring on the petals'
+	 * valleys, and a khatam inscribed in the polygon the {16/6}'s own
+	 * innermost intersections describe. The lattice's holes carry an
+	 * eight-point khatam whose axial tips land on four rosette tips and
+	 * whose diagonal tips launch lozenge straps onto the tangency points —
+	 * waisted, because a straight strap would be collinear with the next
+	 * hole's and the two would chain into an endless diagonal.
+	 * Structure strokes are 1, infill 0.55.
+	 */
+	--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cdefs%3E%3Cg id='r'%3E%3Cpath d='M84.85 0L57.32 11.4L78.39 32.47L48.6 32.47L60 60L32.47 48.6L32.47 78.39L11.4 57.32L0 84.85L-11.4 57.32L-32.47 78.39L-32.47 48.6L-60 60L-48.6 32.47L-78.39 32.47L-57.32 11.4L-84.85 0L-57.32 -11.4L-78.39 -32.47L-48.6 -32.47L-60 -60L-32.47 -48.6L-32.47 -78.39L-11.4 -57.32L0 -84.85L11.4 -57.32L32.47 -78.39L32.47 -48.6L60 -60L48.6 -32.47L78.39 -32.47L57.32 -11.4Z'/%3E%3Cpath d='M33.11 0L23.41 9.7L23.41 23.41L9.7 23.41L0 33.11L-9.7 23.41L-23.41 23.41L-23.41 9.7L-33.11 0L-23.41 -9.7L-23.41 -23.41L-9.7 -23.41L0 -33.11L9.7 -23.41L23.41 -23.41L23.41 -9.7Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M57.32 11.4L30.59 12.67L48.6 32.47L23.41 23.41L32.47 48.6L12.67 30.59L11.4 57.32L0 33.11L-11.4 57.32L-12.67 30.59L-32.47 48.6L-23.41 23.41L-48.6 32.47L-30.59 12.67L-57.32 11.4L-33.11 0L-57.32 -11.4L-30.59 -12.67L-48.6 -32.47L-23.41 -23.41L-32.47 -48.6L-12.67 -30.59L-11.4 -57.32L0 -33.11L11.4 -57.32L12.67 -30.59L32.47 -48.6L23.41 -23.41L48.6 -32.47L30.59 -12.67L57.32 -11.4L33.11 0Z'/%3E%3Ccircle r='33.11'/%3E%3C/g%3E%3C/g%3E%3Cg id='x'%3E%3Cpath d='M35.15 0L17.57 7.28L24.85 24.85L7.28 17.57L0 35.15L-7.28 17.57L-24.85 24.85L-17.57 7.28L-35.15 0L-17.57 -7.28L-24.85 -24.85L-7.28 -17.57L0 -35.15L7.28 -17.57L24.85 -24.85L17.57 -7.28Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M24.85 24.85L38.18 46.67L60 60L46.67 38.18ZM-24.85 24.85L-46.67 38.18L-60 60L-38.18 46.67ZM-24.85 -24.85L-38.18 -46.67L-60 -60L-46.67 -38.18ZM24.85 -24.85L46.67 -38.18L60 -60L38.18 -46.67Z'/%3E%3Ccircle r='19.02'/%3E%3C/g%3E%3C/g%3E%3C/defs%3E%3Cg fill='none' stroke='%2326221A' stroke-width='1'%3E%3Cuse href='%23r' x='0' y='0'/%3E%3Cuse href='%23r' x='240' y='0'/%3E%3Cuse href='%23r' x='0' y='240'/%3E%3Cuse href='%23r' x='240' y='240'/%3E%3Cuse href='%23r' x='120' y='120'/%3E%3Cuse href='%23x' x='120' y='0'/%3E%3Cuse href='%23x' x='120' y='240'/%3E%3Cuse href='%23x' x='0' y='120'/%3E%3Cuse href='%23x' x='240' y='120'/%3E%3C/g%3E%3C/svg%3E");
+	/* Marginal shamsa: the same rosette, rimmed by two circles and a ring of sixteen cells */
+	--zj-medallion: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2326221A' stroke-width='1.4' transform='translate(120 120)'%3E%3Ccircle r='118'/%3E%3Ccircle r='110'/%3E%3Cpath d='M107.89 21.46L88.69 36.74L91.46 61.11L67.88 67.88L61.11 91.46L36.74 88.69L21.46 107.89L0 96L-21.46 107.89L-36.74 88.69L-61.11 91.46L-67.88 67.88L-91.46 61.11L-88.69 36.74L-107.89 21.46L-96 0L-107.89 -21.46L-88.69 -36.74L-91.46 -61.11L-67.88 -67.88L-61.11 -91.46L-36.74 -88.69L-21.46 -107.89L0 -96L21.46 -107.89L36.74 -88.69L61.11 -91.46L67.88 -67.88L91.46 -61.11L88.69 -36.74L107.89 -21.46L96 0Z'/%3E%3Cpath d='M96 0L64.86 12.9L88.69 36.74L54.98 36.74L67.88 67.88L36.74 54.98L36.74 88.69L12.9 64.86L0 96L-12.9 64.86L-36.74 88.69L-36.74 54.98L-67.88 67.88L-54.98 36.74L-88.69 36.74L-64.86 12.9L-96 0L-64.86 -12.9L-88.69 -36.74L-54.98 -36.74L-67.88 -67.88L-36.74 -54.98L-36.74 -88.69L-12.9 -64.86L0 -96L12.9 -64.86L36.74 -88.69L36.74 -54.98L67.88 -67.88L54.98 -36.74L88.69 -36.74L64.86 -12.9Z'/%3E%3Cpath d='M37.46 0L26.49 10.97L26.49 26.49L10.97 26.49L0 37.46L-10.97 26.49L-26.49 26.49L-26.49 10.97L-37.46 0L-26.49 -10.97L-26.49 -26.49L-10.97 -26.49L0 -37.46L10.97 -26.49L26.49 -26.49L26.49 -10.97Z'/%3E%3Cg stroke-width='.8'%3E%3Cpath d='M64.86 12.9L34.61 14.33L54.98 36.74L26.49 26.49L36.74 54.98L14.33 34.61L12.9 64.86L0 37.46L-12.9 64.86L-14.33 34.61L-36.74 54.98L-26.49 26.49L-54.98 36.74L-34.61 14.33L-64.86 12.9L-37.46 0L-64.86 -12.9L-34.61 -14.33L-54.98 -36.74L-26.49 -26.49L-36.74 -54.98L-14.33 -34.61L-12.9 -64.86L0 -37.46L12.9 -64.86L14.33 -34.61L36.74 -54.98L26.49 -26.49L54.98 -36.74L34.61 -14.33L64.86 -12.9L37.46 0Z'/%3E%3Ccircle r='37.46'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+	color-scheme: light;
+}
+
+/* ————— Dark: the Blue Quran — gold on indigo-dyed vellum ————— */
+
+.dark {
+	--zj-ground: #132347;
+	--zj-panel: #1a2c55;
+	--zj-text: #ede3cb;
+	--zj-text-muted: #a99e85;
+	--zj-accent: #d9b44a;
+	--zj-gild: #d9b44a;
+	--zj-glaze: #6fb3a8;
+	--zj-geo: #c8bca0;
+	--zj-hairline: rgba(217, 180, 74, 0.4);
+	--zj-rule: rgba(237, 227, 203, 0.3);
+	--zj-panel-edge: rgba(217, 180, 74, 0.4);
+	--zj-panel-edge-soft: rgba(217, 180, 74, 0.28);
+	--zj-underline-rest: rgba(217, 180, 74, 0.4);
+	--zj-selection: rgba(217, 180, 74, 0.28);
+	--zj-backdrop: rgba(7, 14, 32, 0.72);
+	--zj-screen-opacity: 0.08;
+	--zj-medallion-opacity: 0.05;
+	--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cdefs%3E%3Cg id='r'%3E%3Cpath d='M84.85 0L57.32 11.4L78.39 32.47L48.6 32.47L60 60L32.47 48.6L32.47 78.39L11.4 57.32L0 84.85L-11.4 57.32L-32.47 78.39L-32.47 48.6L-60 60L-48.6 32.47L-78.39 32.47L-57.32 11.4L-84.85 0L-57.32 -11.4L-78.39 -32.47L-48.6 -32.47L-60 -60L-32.47 -48.6L-32.47 -78.39L-11.4 -57.32L0 -84.85L11.4 -57.32L32.47 -78.39L32.47 -48.6L60 -60L48.6 -32.47L78.39 -32.47L57.32 -11.4Z'/%3E%3Cpath d='M33.11 0L23.41 9.7L23.41 23.41L9.7 23.41L0 33.11L-9.7 23.41L-23.41 23.41L-23.41 9.7L-33.11 0L-23.41 -9.7L-23.41 -23.41L-9.7 -23.41L0 -33.11L9.7 -23.41L23.41 -23.41L23.41 -9.7Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M57.32 11.4L30.59 12.67L48.6 32.47L23.41 23.41L32.47 48.6L12.67 30.59L11.4 57.32L0 33.11L-11.4 57.32L-12.67 30.59L-32.47 48.6L-23.41 23.41L-48.6 32.47L-30.59 12.67L-57.32 11.4L-33.11 0L-57.32 -11.4L-30.59 -12.67L-48.6 -32.47L-23.41 -23.41L-32.47 -48.6L-12.67 -30.59L-11.4 -57.32L0 -33.11L11.4 -57.32L12.67 -30.59L32.47 -48.6L23.41 -23.41L48.6 -32.47L30.59 -12.67L57.32 -11.4L33.11 0Z'/%3E%3Ccircle r='33.11'/%3E%3C/g%3E%3C/g%3E%3Cg id='x'%3E%3Cpath d='M35.15 0L17.57 7.28L24.85 24.85L7.28 17.57L0 35.15L-7.28 17.57L-24.85 24.85L-17.57 7.28L-35.15 0L-17.57 -7.28L-24.85 -24.85L-7.28 -17.57L0 -35.15L7.28 -17.57L24.85 -24.85L17.57 -7.28Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M24.85 24.85L38.18 46.67L60 60L46.67 38.18ZM-24.85 24.85L-46.67 38.18L-60 60L-38.18 46.67ZM-24.85 -24.85L-38.18 -46.67L-60 -60L-46.67 -38.18ZM24.85 -24.85L46.67 -38.18L60 -60L38.18 -46.67Z'/%3E%3Ccircle r='19.02'/%3E%3C/g%3E%3C/g%3E%3C/defs%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1'%3E%3Cuse href='%23r' x='0' y='0'/%3E%3Cuse href='%23r' x='240' y='0'/%3E%3Cuse href='%23r' x='0' y='240'/%3E%3Cuse href='%23r' x='240' y='240'/%3E%3Cuse href='%23r' x='120' y='120'/%3E%3Cuse href='%23x' x='120' y='0'/%3E%3Cuse href='%23x' x='120' y='240'/%3E%3Cuse href='%23x' x='0' y='120'/%3E%3Cuse href='%23x' x='240' y='120'/%3E%3C/g%3E%3C/svg%3E");
+	--zj-medallion: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1.4' transform='translate(120 120)'%3E%3Ccircle r='118'/%3E%3Ccircle r='110'/%3E%3Cpath d='M107.89 21.46L88.69 36.74L91.46 61.11L67.88 67.88L61.11 91.46L36.74 88.69L21.46 107.89L0 96L-21.46 107.89L-36.74 88.69L-61.11 91.46L-67.88 67.88L-91.46 61.11L-88.69 36.74L-107.89 21.46L-96 0L-107.89 -21.46L-88.69 -36.74L-91.46 -61.11L-67.88 -67.88L-61.11 -91.46L-36.74 -88.69L-21.46 -107.89L0 -96L21.46 -107.89L36.74 -88.69L61.11 -91.46L67.88 -67.88L91.46 -61.11L88.69 -36.74L107.89 -21.46L96 0Z'/%3E%3Cpath d='M96 0L64.86 12.9L88.69 36.74L54.98 36.74L67.88 67.88L36.74 54.98L36.74 88.69L12.9 64.86L0 96L-12.9 64.86L-36.74 88.69L-36.74 54.98L-67.88 67.88L-54.98 36.74L-88.69 36.74L-64.86 12.9L-96 0L-64.86 -12.9L-88.69 -36.74L-54.98 -36.74L-67.88 -67.88L-36.74 -54.98L-36.74 -88.69L-12.9 -64.86L0 -96L12.9 -64.86L36.74 -88.69L36.74 -54.98L67.88 -67.88L54.98 -36.74L88.69 -36.74L64.86 -12.9Z'/%3E%3Cpath d='M37.46 0L26.49 10.97L26.49 26.49L10.97 26.49L0 37.46L-10.97 26.49L-26.49 26.49L-26.49 10.97L-37.46 0L-26.49 -10.97L-26.49 -26.49L-10.97 -26.49L0 -37.46L10.97 -26.49L26.49 -26.49L26.49 -10.97Z'/%3E%3Cg stroke-width='.8'%3E%3Cpath d='M64.86 12.9L34.61 14.33L54.98 36.74L26.49 26.49L36.74 54.98L14.33 34.61L12.9 64.86L0 37.46L-12.9 64.86L-14.33 34.61L-36.74 54.98L-26.49 26.49L-54.98 36.74L-34.61 14.33L-64.86 12.9L-37.46 0L-64.86 -12.9L-34.61 -14.33L-54.98 -36.74L-26.49 -26.49L-36.74 -54.98L-14.33 -34.61L-12.9 -64.86L0 -37.46L12.9 -64.86L14.33 -34.61L36.74 -54.98L26.49 -26.49L54.98 -36.74L34.61 -14.33L64.86 -12.9L37.46 0Z'/%3E%3Ccircle r='37.46'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+	color-scheme: dark;
+}
+
+body {
+	margin: 0;
+	background: var(--zj-ground);
+	color: var(--zj-text);
+	font-family: var(--z-font-body);
+	font-size: 1.0625rem;
+	line-height: 1.75;
+	padding: clamp(0.875rem, 3vw, 2.5rem) clamp(0.875rem, 3vw, 2rem);
+	-webkit-font-smoothing: antialiased;
+	transition:
+		background-color var(--zj-swap),
+		color var(--zj-swap);
+}
+
+::selection {
+	background: var(--zj-selection);
+}
+
+.zj-page :focus-visible {
+	outline: 2px solid var(--zj-accent);
+	outline-offset: 3px;
+}
+
+/* ————— The mashrabiya screen behind the carpet page ————— */
+
+body::before,
+body::after {
+	content: '';
+	position: fixed;
+	z-index: -1;
+	pointer-events: none;
+	display: none;
+}
+
+@media (min-width: 75em) {
+	body::before {
+		display: block;
+		inset: 0;
+		background-image: var(--zj-screen);
+		background-repeat: repeat;
+		background-size: 240px 240px;
+		background-position: 0 0;
+		opacity: var(--zj-screen-opacity);
+		-webkit-mask-image: var(--zj-lattice-mask);
+		mask-image: var(--zj-lattice-mask);
+	}
+}
+
+/*
+ * One marginal shamsa in the left whitespace, sitting exactly where the
+ * lattice above has already faded out, so the two never fight.
+ */
+@media (min-width: 96em) {
+	body::after {
+		display: block;
+		top: 50%;
+		right: calc(50% + var(--zj-lattice-clear));
+		width: 20rem;
+		height: 20rem;
+		transform: translateY(-50%);
+		background-image: var(--zj-medallion);
+		background-repeat: no-repeat;
+		background-size: contain;
+		opacity: var(--zj-medallion-opacity);
+	}
+}
+
+/* ————— The carpet-page frame ————— */
+
+.zj-page {
+	position: relative;
+	max-width: 47rem;
+	margin: 0 auto;
+	border: 1px solid var(--zj-gild);
+	outline: 1px solid var(--zj-hairline);
+	outline-offset: 4px;
+	/* The top margin also has to clear the observatory's control in the corner */
+	padding: clamp(2.85rem, 4vw, 3.25rem) var(--zj-page-pad-x) 2.25rem;
+	background: var(--zj-ground);
+	transition:
+		background-color var(--zj-swap),
+		border-color var(--zj-swap);
+}
+
+.zj-corner {
+	position: absolute;
+	display: block;
+	color: var(--zj-gild);
+}
+
+.zj-corner polygon {
+	fill: var(--zj-ground);
+}
+
+.zj-corner-tl {
+	top: var(--zj-corner-inset);
+	left: var(--zj-corner-inset);
+	transform: translate(-50%, -50%);
+}
+
+.zj-corner-tr {
+	top: var(--zj-corner-inset);
+	right: var(--zj-corner-inset);
+	transform: translate(50%, -50%);
+}
+
+.zj-corner-bl {
+	bottom: var(--zj-corner-inset);
+	left: var(--zj-corner-inset);
+	transform: translate(-50%, 50%);
+}
+
+.zj-corner-br {
+	bottom: var(--zj-corner-inset);
+	right: var(--zj-corner-inset);
+	transform: translate(50%, 50%);
+}
+
+/* ————— Dusk and dawn: the sweep between the two grounds ————— */
+
+/*
+ * Both snapshots are held still and the incoming one is uncovered along the
+ * 135° diagonal instead. The mask is 2.2 times the page in each direction,
+ * so the page is 1/2.2 of the mask box along either axis whatever the window
+ * shape — which is why one pair of stops works for every window. The head of
+ * the gradient is that same 1/2.2, so the run begins with the page wholly
+ * past the front and ends with it wholly inside: no dead travel at either
+ * end, and a soft edge about a seventh of the page deep.
+ *
+ * Only the observatory's own switch sets data-zj-sweep. A change that came
+ * from the system preference leaves it unset and cross-fades as before.
+ */
+
+/* Both snapshots are opaque here, so the default lighter blend has nothing to do */
+[data-zj-sweep]::view-transition-image-pair(root) {
+	isolation: auto;
+}
+
+[data-zj-sweep]::view-transition-old(root),
+[data-zj-sweep]::view-transition-new(root) {
+	display: block;
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+[data-zj-sweep]::view-transition-old(root) {
+	z-index: 0;
+}
+
+[data-zj-sweep]::view-transition-new(root) {
+	z-index: 1;
+	-webkit-mask-size: 220% 220%;
+	mask-size: 220% 220%;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	animation: zj-sweep 1100ms cubic-bezier(0.55, 0, 0.3, 1) both;
+}
+
+/* Night comes down from the top-left corner */
+[data-zj-sweep='dark']::view-transition-new(root) {
+	-webkit-mask-image: linear-gradient(135deg, #000 0 46%, transparent 53%);
+	mask-image: linear-gradient(135deg, #000 0 46%, transparent 53%);
+}
+
+/* Day comes back up from the opposite one */
+[data-zj-sweep='light']::view-transition-new(root) {
+	-webkit-mask-image: linear-gradient(315deg, #000 0 46%, transparent 53%);
+	mask-image: linear-gradient(315deg, #000 0 46%, transparent 53%);
+	animation-name: zj-sweep-back;
+}
+
+@keyframes zj-sweep {
+	from {
+		mask-position: 100% 100%;
+		-webkit-mask-position: 100% 100%;
+	}
+
+	to {
+		mask-position: 0% 0%;
+		-webkit-mask-position: 0% 0%;
+	}
+}
+
+@keyframes zj-sweep-back {
+	from {
+		mask-position: 0% 0%;
+		-webkit-mask-position: 0% 0%;
+	}
+
+	to {
+		mask-position: 100% 100%;
+		-webkit-mask-position: 100% 100%;
+	}
+}
+
+/* ————— Masthead ————— */
+
+.zj-masthead {
+	text-align: center;
+}
+
+/*
+ * The one display line set at regular: Amiri's bold reads lumpy at masthead
+ * size, and 400 sits closer to the naskh underneath it.
+ */
+.zj-name {
+	margin: 0;
+	font-family: var(--z-font-display);
+	font-weight: 400;
+	font-size: clamp(2.1rem, 6vw, 3.15rem);
+	line-height: 1.2;
+	letter-spacing: 0.01em;
+}
+
+.zj-name a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.zj-name a:hover {
+	color: var(--zj-accent);
+}
+
+.zj-name-ar {
+	margin: 0.1rem 0 0;
+	font-family: var(--z-font-arabic);
+	font-size: clamp(1.15rem, 3vw, 1.5rem);
+	line-height: 1.7;
+	color: var(--zj-accent);
+}
+
+.zj-role {
+	margin: 0.7rem 0 0;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--zj-text-muted);
+}
+
+.zj-masthead-compact .zj-name {
+	font-size: 1.55rem;
+}
+
+.zj-masthead-compact .zj-name-ar {
+	font-size: 1.05rem;
+}
+
+/* ————— Girih frieze band ————— */
+
+.zj-frieze-band {
+	margin: 1.4rem calc(-1 * var(--zj-page-pad-x)) 0;
+	border-block: 1px solid var(--zj-hairline);
+	line-height: 0;
+}
+
+.zj-frieze {
+	display: block;
+	width: 100%;
+	height: 40px;
+	fill: none;
+	/*
+	 * One knob for the whole band, so the three weights inside it keep the
+	 * balance they were drawn with: the frieze sits a step back and the
+	 * name above it leads.
+	 */
+	opacity: 0.7;
+}
+
+.zj-frieze-star {
+	stroke: var(--zj-geo);
+	stroke-width: 1.2;
+}
+
+.zj-frieze-square {
+	stroke: var(--zj-gild);
+	stroke-width: 0.75;
+	opacity: 0.6;
+}
+
+/* Gold on indigo carries 0.6 easily; bronze on ivory needs the extra weight */
+.light .zj-frieze-square {
+	opacity: 0.8;
+}
+
+.zj-frieze-cross {
+	stroke: var(--zj-geo);
+	stroke-width: 1;
+	opacity: 0.35;
+}
+
+/*
+ * The band is one tile of each kind placed again and again, so the draw-in
+ * is set on the instances: the dash properties are inherited, which is the
+ * only way into the shape a <use> carries.
+ */
+.zj-frieze use {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 0;
+	animation: zj-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+@keyframes zj-draw {
+	from {
+		stroke-dashoffset: 1;
+	}
+}
+
+/* ————— Links ————— */
+
+a {
+	color: var(--zj-accent);
+	text-decoration: underline;
+	text-decoration-color: var(--zj-underline-rest);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.16em;
+	transition:
+		text-decoration-color 150ms ease,
+		color 150ms ease;
+}
+
+a:hover {
+	text-decoration-color: var(--zj-gild);
+	text-decoration-thickness: 2px;
+}
+
+/* Every link that leaves the site says so, in chrome and in prose alike */
+a[target='_blank']::after {
+	content: '';
+	display: inline-block;
+	width: 0.6em;
+	height: 0.6em;
+	margin-left: 0.22em;
+	vertical-align: 0.08em;
+	/* The mark is a mask, so it takes the muted ink of whichever theme is on */
+	background-color: var(--zj-text-muted);
+	-webkit-mask-image: var(--zj-extlink);
+	mask-image: var(--zj-extlink);
+	-webkit-mask-size: 100% 100%;
+	mask-size: 100% 100%;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+/* ————— Home sections ————— */
+
+.zj-main {
+	padding-top: 2.25rem;
+}
+
+.zj-section {
+	max-width: 68ch;
+	margin-inline: auto;
+}
+
+.zj-section-title {
+	margin: 0 0 1.3rem;
+	font-family: var(--z-font-display);
+	font-weight: 700;
+	font-size: 1.55rem;
+	line-height: 1.3;
+	text-align: center;
+}
+
+.zj-lead {
+	margin: 0 0 1.2em;
+}
+
+.zj-divider {
+	display: flex;
+	align-items: center;
+	gap: 1.1rem;
+	max-width: 68ch;
+	margin: 2.6rem auto;
+	color: var(--zj-gild);
+}
+
+.zj-divider::before,
+.zj-divider::after {
+	content: '';
+	flex: 1;
+	border-top: 1px solid var(--zj-hairline);
+}
+
+.zj-divider svg {
+	display: block;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1;
+}
+
+.zj-social {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 1.7rem;
+	margin: 1.4rem 0 0;
+	padding: 0;
+	list-style: none;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.zj-social a {
+	text-decoration: none;
+}
+
+.zj-social a:hover {
+	text-decoration: underline;
+	text-decoration-color: var(--zj-gild);
+}
+
+/* ————— Entry lists ————— */
+
+.zj-entries {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.zj-entry {
+	display: grid;
+	grid-template-columns: 0.95rem 1fr;
+	grid-template-areas:
+		'star title'
+		'.    date'
+		'.    desc';
+	column-gap: 0.85rem;
+	row-gap: 0;
+	padding-block: 0.7rem;
+}
+
+.zj-entry + .zj-entry {
+	border-top: 1px solid var(--zj-rule);
+}
+
+.zj-entry-star {
+	grid-area: star;
+	margin-top: 0.55rem;
+	color: var(--zj-gild);
+}
+
+.zj-entry-star svg {
+	display: block;
+	transform-origin: 50% 50%;
+	transition: transform 200ms ease;
+}
+
+/* 22.5° is the khatam's own symmetry angle — the star lands on itself */
+.zj-entry:hover .zj-entry-star svg {
+	transform: rotate(22.5deg);
+}
+
+.zj-entry-title {
+	grid-area: title;
+}
+
+.zj-entry-title a {
+	text-decoration: none;
+	padding-bottom: 0.1em;
+	background-image: linear-gradient(var(--zj-gild), var(--zj-gild));
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	background-size: 0 1px;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	transition: background-size 200ms ease;
+}
+
+.zj-entry:hover .zj-entry-title a,
+.zj-entry-title a:focus-visible {
+	background-size: 100% 1px;
+}
+
+.zj-entry-date {
+	grid-area: date;
+	font-size: 0.9rem;
+	color: var(--zj-text-muted);
+	font-variant-numeric: oldstyle-nums;
+	letter-spacing: 0.02em;
+}
+
+.zj-entry-desc {
+	grid-area: desc;
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--zj-text-muted);
+}
+
+.zj-entry-extra {
+	font-size: 0.9375rem;
+	color: var(--zj-text-muted);
+}
+
+@media (min-width: 40em) {
+	.zj-entry-dated {
+		grid-template-columns: 0.95rem 6.5rem 1fr;
+		grid-template-areas:
+			'star date title'
+			'.    .    desc';
+		align-items: baseline;
+	}
+
+	.zj-entry-dated .zj-entry-star {
+		align-self: start;
+	}
+}
+
+/* ————— Article pages ————— */
+
+.zj-article {
+	max-width: 68ch;
+	margin-inline: auto;
+}
+
+.zj-article-header {
+	text-align: center;
+	margin-bottom: 2.5rem;
+}
+
+.zj-article-kicker {
+	margin: 0 0 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.26em;
+	text-transform: uppercase;
+	color: var(--zj-text-muted);
+}
+
+.zj-article-title {
+	margin: 0;
+	font-family: var(--z-font-display);
+	font-weight: 700;
+	font-size: clamp(1.7rem, 5vw, 2.4rem);
+	line-height: 1.25;
+}
+
+.zj-article-meta {
+	margin: 0.8rem 0 0;
+	font-size: 0.9rem;
+	color: var(--zj-text-muted);
+	font-variant-numeric: oldstyle-nums;
+}
+
+.zj-article-tags {
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--zj-glaze);
+}
+
+/* The closing note answers the meta line under the title, at the same weight */
+.zj-colophon {
+	margin: 0 0 2.4rem;
+	text-align: center;
+	font-size: 0.9rem;
+	color: var(--zj-text-muted);
+}
+
+.zj-article-nav {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.9rem;
+	font-size: 0.9375rem;
+}
+
+.zj-nav-label {
+	display: block;
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--zj-text-muted);
+}
+
+/* The spacer for a missing older/newer post only earns a cell in the wide layout */
+.zj-article-nav > span:empty {
+	display: none;
+}
+
+.zj-article-nav a {
+	text-decoration: none;
+}
+
+.zj-article-nav a:hover {
+	text-decoration: underline;
+	text-decoration-color: var(--zj-gild);
+}
+
+@media (min-width: 40em) {
+	.zj-article-nav {
+		grid-template-columns: 1fr auto 1fr;
+		gap: 1.5rem;
+	}
+
+	.zj-article-nav > span:empty {
+		display: block;
+	}
+
+	.zj-nav-newer {
+		text-align: right;
+	}
+
+	.zj-nav-index {
+		align-self: start;
+	}
+}
+
+/* ————— Prose (rendered MDX) ————— */
+
+.zj-prose {
+	overflow-wrap: break-word;
+}
+
+.zj-prose > p:first-child {
+	font-size: 1.125rem;
+}
+
+.zj-prose p {
+	margin: 0 0 1.35em;
+}
+
+.zj-prose h2,
+.zj-prose h3,
+.zj-prose h4,
+.zj-prose h5,
+.zj-prose h6 {
+	font-family: var(--z-font-display);
+	font-weight: 700;
+	line-height: 1.3;
+	margin: 1.9em 0 0.6em;
+}
+
+.zj-prose h2 {
+	font-size: 1.6rem;
+}
+
+.zj-prose h3 {
+	font-size: 1.3rem;
+}
+
+.zj-prose h4 {
+	font-size: 1.1rem;
+}
+
+.zj-prose h5 {
+	font-size: 1rem;
+}
+
+.zj-prose h6 {
+	font-size: 0.9rem;
+}
+
+/* The resting hairline keeps the affordance; the gilded bar grows in on hover */
+.zj-prose a {
+	text-decoration: none;
+	padding-bottom: 0.08em;
+	background-image:
+		linear-gradient(var(--zj-underline-rest), var(--zj-underline-rest)),
+		linear-gradient(var(--zj-gild), var(--zj-gild));
+	background-repeat: no-repeat;
+	background-position:
+		0 100%,
+		0 100%;
+	background-size:
+		100% 1px,
+		0 2px;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	transition: background-size 180ms ease;
+}
+
+.zj-prose a:hover,
+.zj-prose a:focus-visible {
+	background-size:
+		100% 1px,
+		100% 2px;
+}
+
+.zj-prose ul,
+.zj-prose ol {
+	margin: 0 0 1.35em;
+	padding-left: 1.5rem;
+}
+
+/* The global preflight strips list styling; restore it for prose */
+.zj-prose ul {
+	list-style: disc outside;
+}
+
+.zj-prose ol {
+	list-style: decimal outside;
+}
+
+.zj-prose li {
+	margin-bottom: 0.35em;
+}
+
+/* Gilding is reserved for ornament — list numerals are text and need real contrast */
+.zj-prose li::marker {
+	color: var(--zj-text-muted);
+}
+
+/* Spectral is loaded at 400/600 only — keep bold text on a real weight */
+.zj-prose strong,
+.zj-prose b {
+	font-weight: 600;
+}
+
+.zj-prose blockquote {
+	margin: 0 0 1.35em;
+	padding: 0.1rem 0 0.1rem 1.25rem;
+	border-left: 2px solid var(--zj-gild);
+	font-style: italic;
+}
+
+.zj-prose blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* Italicised monospace identifiers are hard to scan */
+.zj-prose blockquote code {
+	font-style: normal;
+}
+
+.zj-prose hr {
+	width: 60%;
+	margin: 2.5rem auto;
+	border: none;
+	border-top: 1px solid var(--zj-rule);
+}
+
+.zj-prose table {
+	width: 100%;
+	margin: 0 0 1.5em;
+	border-collapse: collapse;
+	font-size: 0.9375rem;
+}
+
+.zj-prose th,
+.zj-prose td {
+	padding: 0.5rem 0.75rem;
+	border-bottom: 1px solid var(--zj-rule);
+	text-align: left;
+	vertical-align: top;
+}
+
+.zj-prose th {
+	font-weight: 600;
+	font-size: 0.8125rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--zj-text-muted);
+}
+
+.zj-prose img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* An anchor wrapping only an image would drag a link underline across the artwork */
+.zj-prose a:has(> img) {
+	background-image: none;
+	padding-bottom: 0;
+}
+
+.zj-prose a[target='_blank']:has(> img)::after {
+	content: none;
+}
+
+.zj-prose figure {
+	margin: 2rem 0;
+}
+
+.zj-prose figcaption {
+	margin-top: 0.5rem;
+	font-size: 0.875rem;
+	font-style: italic;
+	text-align: center;
+	color: var(--zj-text-muted);
+}
+
+.zj-prose iframe {
+	max-width: 100%;
+	border: 0;
+}
+
+.zj-prose [class*='tweet'] {
+	max-width: min(100%, 32rem);
+	margin-inline: auto;
+}
+
+/* The embedded card ships its own link colours; stop the design from repainting them */
+.zj-prose [class*='tweet'] a {
+	color: inherit;
+	text-decoration: none;
+	background-image: none;
+	padding-bottom: 0;
+}
+
+.zj-prose [class*='tweet'] a:hover {
+	text-decoration: underline;
+}
+
+.zj-prose [class*='tweet'] a[target='_blank']::after {
+	content: none;
+}
+
+.zj-prose code {
+	font-family: var(--z-font-mono);
+	font-size: 0.86em;
+	background: var(--zj-panel);
+	border: 1px solid var(--zj-panel-edge-soft);
+	border-radius: 2px;
+	padding: 0.08em 0.32em;
+	transition:
+		background-color var(--zj-swap),
+		border-color var(--zj-swap);
+}
+
+/* ————— Shiki code blocks ————— */
+
+.astro-code {
+	overflow-x: auto;
+	margin: 0 0 1.5em;
+	padding: 1.15rem 1.3rem;
+	tab-size: 4;
+	font-family: var(--z-font-mono);
+	font-size: 0.85rem;
+	line-height: 1.65;
+	border: 1px solid var(--zj-panel-edge);
+}
+
+/* Shiki inlines a cool grey background; the block shares the panel of its title bar */
+.astro-code,
+.astro-code-themes {
+	background-color: var(--zj-panel) !important;
+	transition:
+		background-color var(--zj-swap),
+		border-color var(--zj-swap);
+}
+
+.astro-code code {
+	font-family: inherit;
+	font-size: inherit;
+	background: none;
+	border: none;
+	border-radius: 0;
+	padding: 0;
+}
+
+/*
+ * Shiki writes the light colour inline and parks the dark one in a custom
+ * property. Only the colour has to flip — plain-light and plain-dark carry
+ * identical font styles, which are already inline.
+ */
+.dark .astro-code,
+.dark .astro-code span {
+	color: var(--shiki-dark) !important;
+}
+
+.code-title {
+	padding: 0.45rem 1.3rem;
+	font-family: var(--z-font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+	color: var(--zj-text-muted);
+	background: var(--zj-panel);
+	border: 1px solid var(--zj-panel-edge);
+	border-bottom: none;
+	transition:
+		background-color var(--zj-swap),
+		border-color var(--zj-swap),
+		color var(--zj-swap);
+}
+
+.code-title + pre {
+	margin-top: 0;
+}
+
+/* ————— Footer ————— */
+
+.zj-footer {
+	margin-top: 3rem;
+	padding-top: 1.25rem;
+	border-top: 1px solid var(--zj-rule);
+	text-align: center;
+	font-size: 0.875rem;
+	color: var(--zj-text-muted);
+}
+
+.zj-footer p {
+	margin: 0;
+}
+
+/* ————— Motion ————— */
+
+/*
+ * Sections settle in one after another. The stagger is capped so a long
+ * home page never keeps the reader waiting on the last card.
+ */
+.zj-main > * {
+	animation: zj-rise 500ms ease-out backwards;
+}
+
+.zj-main > *:nth-child(2) {
+	animation-delay: 70ms;
+}
+
+.zj-main > *:nth-child(3) {
+	animation-delay: 140ms;
+}
+
+.zj-main > *:nth-child(4) {
+	animation-delay: 210ms;
+}
+
+.zj-main > *:nth-child(5) {
+	animation-delay: 280ms;
+}
+
+.zj-main > *:nth-child(6) {
+	animation-delay: 350ms;
+}
+
+.zj-main > *:nth-child(n + 7) {
+	animation-delay: 420ms;
+}
+
+@keyframes zj-rise {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+}

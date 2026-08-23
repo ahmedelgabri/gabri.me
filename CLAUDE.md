@@ -117,9 +117,9 @@ inside MDX:
   - `/llms.txt` - LLM manifest endpoint
   - `/robots.txt` - Robots file
 
-- **Layout**: `src/layouts/Layout.astro` is the site's only layout. It
-  carries the whole `<head>` (metadata, fonts, pre-paint theme script, GA4), the
-  page frame and every one of the design's CSS rules. See `DESIGNS.md`.
+- **Layout**: `src/layouts/Layout.astro` is the site's only layout. It carries
+  the whole `<head>` (metadata, fonts, pre-paint theme script, GA4) and the page
+  frame, and imports the design's base stylesheet. See `DESIGNS.md`.
 
 - **Components** (src/components/):
   - The layout's partials — geometry ornaments (`Star`, `StarDivider`,
@@ -135,10 +135,12 @@ inside MDX:
 
 ### Styling
 
-The design owns its own CSS: every rule lives in the `<style is:global>` block
-of `src/layouts/Layout.astro`, written unprefixed against `.zj-*` and
-element selectors and themed through custom properties on `:root`. There is no
-global stylesheet.
+The design owns its own CSS, written unprefixed against `.zj-*` and element
+selectors and themed through custom properties on `:root`. The base stylesheet
+is `src/styles/global.css`, imported by `src/layouts/Layout.astro`; rules that
+belong to a single component stay in that component's own `<style is:global>`
+block. Nothing is inside a cascade layer, which is what lets it outrank the
+UnoCSS preflight.
 
 **UnoCSS** (atomic CSS framework) is still in the build:
 
@@ -192,7 +194,8 @@ All blog posts are statically generated at build time:
 - `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
   integrations
 - `markdown.config.ts` - Shared Markdown/Shiki configuration
-- `src/layouts/Layout.astro` - The site's layout, head and CSS
+- `src/layouts/Layout.astro` - The site's layout and head
+- `src/styles/global.css` - The design's base stylesheet
 - `DESIGNS.md` - The design's own documentation
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration
