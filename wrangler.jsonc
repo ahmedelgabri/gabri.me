@@ -27,8 +27,9 @@
 	// The account comes from CLOUDFLARE_ACCOUNT_ID in CI, so it is not committed
 	// here.
 	//
-	// Once gabri.me's DNS is on Cloudflare, add the custom domain here:
-	//   "routes": [{"pattern": "gabri.me", "custom_domain": true}]
-	// The zone does not exist in the account yet, so declaring it now would fail
-	// every deploy.
+	// Listing routes here makes this file the source of truth: wrangler assigns
+	// exactly these on deploy and detaches anything else the dashboard holds.
+	// www is deliberately absent — a redirect rule sends it to the apex, so it
+	// needs a proxied DNS record of its own rather than a binding to this Worker.
+	"routes": [{"pattern": "gabri.me", "custom_domain": true}],
 }
