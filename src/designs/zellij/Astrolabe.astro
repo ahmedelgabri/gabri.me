@@ -43,9 +43,10 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	/* ————— The footer instrument ————— */
 
 	/*
-	 * The plate is only worth its room where the page is wide enough to give it
-	 * room, and only where it can actually be drawn — a caption describing an
-	 * instrument that never arrived is worse than no instrument. The reservation
+	 * The instrument is the footer's content rather than its ornament, so it is
+	 * drawn at every width and takes the reading column for its own. The one
+	 * thing it cannot do is be described and not arrive — a caption for an
+	 * instrument that is not there is worse than no instrument. The reservation
 	 * rides on zj-js, which lands before the first paint, so the common case
 	 * never shifts the copyright line; the two failing cases below fold the
 	 * figure away at script time, long before the footer is scrolled to.
@@ -54,12 +55,15 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		display: none;
 	}
 
-	@media (min-width: 64em) {
-		.design-zellij.zj-js .zj-astrolabe {
-			display: block;
-			width: min(420px, 60vw);
-			margin: 0.25rem auto 2.25rem;
-		}
+	.design-zellij.zj-js .zj-astrolabe {
+		display: block;
+		/*
+		 * The column is the only limit worth measuring against — the page frame
+		 * has already taken its padding out of it — and 420px is where a disc
+		 * drawn in hairlines stops gaining anything from more room.
+		 */
+		width: min(420px, 100%);
+		margin: 0.25rem auto 2.25rem;
 	}
 
 	/* No WebGL, or a chunk that never came */
@@ -97,8 +101,9 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 	/*
 	 * A finger has no way to turn the rete — the touch pointers are ignored so
-	 * the page can still be scrolled past a 420px instrument — so the invitation
-	 * to turn it is only extended to a pointer that can.
+	 * the page can still be scrolled past an instrument that fills the column —
+	 * so the invitation to turn it is only extended to a pointer that can. The
+	 * rete turns on its own regardless, so a finger is shown the same motion.
 	 */
 	@media (hover: hover) and (pointer: fine) {
 		.design-zellij .zj-astrolabe-plate {
@@ -169,9 +174,10 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	/* Fast enough to feel thrown, slow enough that the ring never strobes */
 	const MAX_SPIN = 14
 	/*
-	 * A 420px instrument drawn in hairlines. Three device pixels to two CSS
-	 * ones still resolves every one of them and asks the machine for little
-	 * over half the fragments a fourth would.
+	 * An instrument of at most 420px drawn in hairlines. Three device pixels to
+	 * two CSS ones still resolves every one of them and asks the machine for
+	 * little over half the fragments a fourth would — which the phones with
+	 * three device pixels to one CSS pixel feel more sharply than any desktop.
 	 */
 	const MAX_RATIO = 1.5
 	/*
@@ -617,7 +623,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			const next = box.clientWidth
 			const tall = box.clientHeight
 
-			/* Below the figure's breakpoint the box is display:none and measures 0 */
+			/* A box that has been folded away, or is not yet laid out, measures 0 */
 			if (next === 0 || tall === 0) {
 				return
 			}
@@ -725,26 +731,10 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	const box = document.querySelector<HTMLElement>('[data-zj-astrolabe]')
 
 	if (box) {
-		/* The width the figure is reserved at, and the only width it is drawn at */
-		const wide = window.matchMedia('(min-width: 64em)')
-		let opened = false
-
-		const open = () => {
-			if (opened || !wide.matches) {
-				return
-			}
-
-			opened = true
-
-			if (hasWebGL()) {
-				gate(box)
-				return
-			}
-
+		if (hasWebGL()) {
+			gate(box)
+		} else {
 			document.documentElement.classList.add(OFF)
 		}
-
-		open()
-		wide.addEventListener('change', open)
 	}
 </script>

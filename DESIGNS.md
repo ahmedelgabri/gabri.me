@@ -425,7 +425,8 @@ still does the work; the sweep only wraps it.
 
 The footer keeps an instrument: a planispheric astrolabe, drawn out of its own
 projection rather than traced, sitting above the copyright line on every page at
-420px from 1024px up.
+every width — 420px where the reading column has the room for it, and sized to
+that column where it does not.
 
 The projection is the real one — the sphere seen from the south pole and dropped
 onto the plane of the equator, so declination becomes a radius and every circle
