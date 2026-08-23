@@ -43,7 +43,6 @@
 		"satori": "^0.26.0",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.35.1",
-		"strip-ansi": "^7.2.0",
 		"three": "^0.185.1"
 	},
 	"devDependencies": {

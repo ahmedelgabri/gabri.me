@@ -1,15 +1,13 @@
 import type {APIRoute} from 'astro'
-import {getCard} from 'ahmedelgabri'
-import stripAnsi from 'strip-ansi'
+import {ansi, plain} from 'virtual:card'
 
 export const prerender = false
 
-export const GET: APIRoute = async ({request}) => {
+/* curl gets the colours; anything else would only see the escape codes */
+export const GET: APIRoute = ({request}) => {
 	const agent = request.headers.get('User-Agent')
-	const isCurl = agent?.startsWith('curl/')
-	const card = getCard()
 
-	return new Response(isCurl ? card : stripAnsi(card), {
+	return new Response(agent?.startsWith('curl/') ? ansi : plain, {
 		status: 200,
 		headers: {
 			'Content-Type': 'text/plain; charset=utf-8',

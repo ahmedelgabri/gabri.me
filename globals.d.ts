@@ -12,6 +12,13 @@ declare module 'ahmedelgabri' {
 	export function getPlainCard(): string
 }
 
+/* Built by the cardData() plugin in astro.config.ts, so the package that draws
+ * the card stays out of the Worker bundle. */
+declare module 'virtual:card' {
+	export const ansi: string
+	export const plain: string
+}
+
 declare module '*.png'
 declare module '*.svg'
 declare module '*.gif'
