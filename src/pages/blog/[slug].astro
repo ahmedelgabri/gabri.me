@@ -1,17 +1,20 @@
 ---
 import {render} from 'astro:content'
-import {format} from 'date-fns'
-import {getAllBlogEntries, getBlogEntry, generateExcerpt} from '../../lib/content'
-import BaseLayout from '../../layouts/BaseLayout.astro'
-import YouTube from '../../components/YouTube'
+import {compareDesc, format} from 'date-fns'
+import {
+	getAllPosts,
+	getBlogEntry,
+	getBlogStaticPaths,
+	generateExcerpt,
+} from '../../lib/content'
 import siteMeta from '../../config/siteMeta'
+import Layout from '../../designs/zellij/Layout.astro'
+import Arch from '../../designs/zellij/Arch.astro'
+import StarDivider from '../../designs/zellij/StarDivider.astro'
+import ProseLink from '../../designs/zellij/ProseLink.astro'
+import YouTube from '../../components/YouTube'
 
-export async function getStaticPaths() {
-	const entries = await getAllBlogEntries()
-	return entries.map((entry) => ({
-		params: {slug: entry.id.replace(/\/post$/, '')},
-	}))
-}
+export const getStaticPaths = getBlogStaticPaths
 
 const {slug} = Astro.params
 const entry = await getBlogEntry(slug!)
@@ -20,26 +23,23 @@ if (!entry || !entry.data.published) {
 	return Astro.redirect('/404')
 }
 
-const {title, date} = entry.data
+const {title, date, tags} = entry.data
 const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
 const formattedDate = format(date, 'yyyy-MM-dd')
-const url = `/blog/${slug}`
-const postUrl = `${siteMeta.siteUrl}${url}`
+const postUrl = `${siteMeta.siteUrl}/blog/${slug}`
 
-const {
-	social: {
-		twitter: {display: twitterDisplay, url: twitterUrl},
-	},
-} = siteMeta
+const posts = (await getAllPosts()).sort(({date: a}, {date: b}) =>
+	compareDesc(new Date(a), new Date(b)),
+)
+const index = posts.findIndex((post) => post.slug === slug)
+const newer = index > 0 ? posts[index - 1] : null
+const older =
+	index >= 0 && index < posts.length - 1 ? posts[index + 1] : null
 
 const {Content} = await render(entry)
-
-const components = {
-	YouTube,
-}
 ---
 
-<BaseLayout
+<Layout
 	title={title}
 	description={excerpt}
 	canonicalUrl={postUrl}
@@ -47,36 +47,45 @@ const components = {
 	slug={slug}
 	publishedTime={date}
 >
-	<article>
-		<header class="mb-8">
-			<h2 class="mb-4 font-bold text-neutral-900 dark:text-neutral-100 text-2xl">
-				{title}
-			</h2>
-			<time class="text-sm text-neutral-500" datetime={date.toISOString()}>
-				<i class="i-tabler:calendar mr-1 inline-block align-[-2px]"></i>
-				{formattedDate}
-			</time>
+	<article class="zj-article">
+		<header class="zj-article-header">
+			<Arch />
+			<p class="zj-article-kicker">Blog</p>
+			<h1 class="zj-article-title">{title}</h1>
+			<p class="zj-article-meta">
+				<time datetime={date.toISOString()}>{formattedDate}</time>
+				{tags.length > 0 && (
+					<span class="zj-article-tags">
+						{' · '}{tags.join(' · ')}
+					</span>
+				)}
+			</p>
 		</header>
 
-		<div class="prose">
-			<Content components={components} />
+		<div class="zj-prose">
+			<Content components={{YouTube, a: ProseLink}} />
 		</div>
 
-		<div class="my-8 border-t border-neutral-300 pt-8 text-sm dark:border-neutral-700">
-			You can
-			<a
-				href={`https://twitter.com/share?url=${postUrl}&via=${twitterDisplay.slice(1)}&text=${title}`}
-				rel="noopener noreferrer"
-				target="_blank"
-			>
-				<i class="i-tabler:brand-twitter mr-1 inline-block align-[-2px]"></i>
-				tweet
-			</a>
-			this post or reach out to me on
-			<a href={twitterUrl} rel="noopener noreferrer" target="_blank">
-				<i class="i-tabler:brand-twitter mr-1 inline-block align-[-2px]"></i>
-				{twitterDisplay}
-			</a>.
-		</div>
+		<StarDivider />
+
+		<nav class="zj-article-nav" aria-label="More posts">
+			{older ? (
+				<a class="zj-nav-older" href={`/blog/${older.slug}`}>
+					<span class="zj-nav-label">Older</span>
+					{older.title}
+				</a>
+			) : (
+				<span></span>
+			)}
+			<a class="zj-nav-index" href="/">Index</a>
+			{newer ? (
+				<a class="zj-nav-newer" href={`/blog/${newer.slug}`}>
+					<span class="zj-nav-label">Newer</span>
+					{newer.title}
+				</a>
+			) : (
+				<span></span>
+			)}
+		</nav>
 	</article>
-</BaseLayout>
+</Layout>

@@ -1,8 +1,16 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
+import Layout from '../designs/zellij/Layout.astro'
 ---
 
-<BaseLayout title="Oops - page not found">
-	<h2>Sorry! This page was not found.</h2>
-	<img src="/img/404.gif" alt="" style="max-width: 100%;" />
-</BaseLayout>
+<Layout title="Page not found">
+	<section class="zj-section" aria-labelledby="not-found">
+		<h1 class="zj-section-title" id="not-found">Page not found</h1>
+		<p class="zj-lead">
+			This leaf is not in the volume. It may have been bound elsewhere, or
+			never written at all.
+		</p>
+		<p class="zj-lead">
+			<a href="/">Back to the index</a>
+		</p>
+	</section>
+</Layout>

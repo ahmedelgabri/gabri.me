@@ -1,6 +1,4 @@
 ---
-import DesignHead from '../../components/DesignHead.astro'
-import DesignSwitcher from '../../components/DesignSwitcher.astro'
 import siteMeta from '../../config/siteMeta'
 import Astrolabe from './Astrolabe.astro'
 import GirihFrieze from './GirihFrieze.astro'
@@ -10,12 +8,38 @@ import Pencil from './Pencil.astro'
 import Star from './Star.astro'
 
 interface Props {
-	title: string
+	title?: string
 	description?: string
+	canonicalUrl?: string
+	ogType?: 'website' | 'article'
+	slug?: string
+	publishedTime?: Date
 	hero?: boolean
 }
 
-const {title, description, hero = false} = Astro.props
+const {
+	title,
+	description = siteMeta.description,
+	canonicalUrl,
+	ogType = 'website',
+	slug,
+	publishedTime,
+	hero = false,
+} = Astro.props
+
+const {author, siteUrl, social, twitterId} = siteMeta
+
+const fullTitle = title
+	? `${author} | ${siteMeta.title} - ${title}`
+	: `${author} | ${siteMeta.title}`
+
+const canonical = canonicalUrl || Astro.url.href
+
+/* Posts get a card rendered from their title; everything else shares the site's */
+const ogImage =
+	ogType === 'article' && slug ? `/og/${slug}.png` : '/img/fb-image.jpg'
+
+const GA4_TRACKING_ID = import.meta.env.GA4_TRACKING_ID
 
 const fontFamilies = [
 	'Amiri:wght@400;700',
@@ -33,10 +57,10 @@ const year = new Date().getFullYear()
 <!doctype html>
 <html lang="en" class="design-zellij light">
 	<head>
-		<DesignHead
-			title={`Ahmed El Gabri — ${title} · Zellij design`}
-			description={description}
-			fontsHref={fontsHref}
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, viewport-fit=cover"
 		/>
 		<meta
 			name="theme-color"
@@ -48,6 +72,72 @@ const year = new Date().getFullYear()
 			media="(prefers-color-scheme: dark)"
 			content="#132347"
 		/>
+		{/* The stylesheet re-declares this per theme; the meta covers the frames before it lands */}
+		<meta name="color-scheme" content="light dark" />
+
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" sizes="any" />
+		<link rel="shortcut icon" href="/icon.svg" type="image/svg+xml" />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href={fontsHref} />
+
+		<!-- OpenGraph -->
+		<meta property="og:title" content={title || fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:site_name" content={author} />
+		<meta property="og:locale" content="en-US" />
+		<meta property="og:image" content={`${siteUrl}${ogImage}`} />
+		<meta property="og:type" content={ogType} />
+		{ogType === 'article' && publishedTime && (
+			<meta
+				property="article:published_time"
+				content={publishedTime.toISOString()}
+			/>
+		)}
+		{ogType === 'article' && <meta property="article:author" content={author} />}
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site:id" content={twitterId} />
+		<meta name="twitter:creator" content={social.twitter.display} />
+		<meta name="twitter:creator:id" content={twitterId} />
+		<meta name="twitter:title" content={title || fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+		<!-- Authors -->
+		<link rel="author" href={siteUrl} />
+		<meta name="author" content={author} />
+		<meta name="creator" content={author} />
+		<meta name="publisher" content={author} />
+		<meta name="application-name" content="Gabri.me" />
+		<meta name="fediverse:creator" content="@gabri@mastodon.online" />
+		<meta name="mobile-web-app-capable" content="yes" />
+
+		<!-- Apple -->
+		<meta name="apple-mobile-web-app-title" content="Gabri.me" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+
+		<!-- RSS -->
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title={`${author} RSS Feed`}
+			href={new URL('feed.xml', Astro.site)}
+		/>
+
+		<!-- Social links -->
+		{Object.entries(social).map(([, {url}]) => <link href={url} rel="me" />)}
+
 		<script is:inline>
 			/* Runs before paint so the ivory/indigo swap never flashes */
 			;(function () {
@@ -103,6 +193,27 @@ const year = new Date().getFullYear()
 				})
 			})()
 		</script>
+
+		{GA4_TRACKING_ID && (
+			<>
+				<script
+					is:inline
+					async
+					src={`https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`}
+				></script>
+				<script is:inline define:vars={{GA4_TRACKING_ID}}>
+					window.dataLayer = window.dataLayer || []
+					function gtag() {
+						dataLayer.push(arguments)
+					}
+					gtag('js', new Date())
+					gtag('config', GA4_TRACKING_ID, {
+						page_path: window.location.pathname,
+						anonymize_ip: true,
+					})
+				</script>
+			</>
+		)}
 	</head>
 	<body>
 		<div class="zj-page">
@@ -120,7 +231,7 @@ const year = new Date().getFullYear()
 						<h1 class="zj-name">Ahmed El Gabri</h1>
 					) : (
 						<p class="zj-name">
-							<a href="/1">Ahmed El Gabri</a>
+							<a href="/">Ahmed El Gabri</a>
 						</p>
 					)
 				}
@@ -137,13 +248,12 @@ const year = new Date().getFullYear()
 
 			<footer class="zj-footer">
 				<Astrolabe />
-				<p>© {year} Ahmed El Gabri · <a href="/">gabri.me</a></p>
+				<p>© {year} Ahmed El Gabri</p>
 			</footer>
 		</div>
 		{/* The lattice first, then the sky over it, as the CSS layers stack */}
 		<Pencil />
 		<NightSky />
-		<DesignSwitcher />
 	</body>
 </html>
 
@@ -247,8 +357,7 @@ const year = new Date().getFullYear()
 		font-family: var(--z-font-body);
 		font-size: 1.0625rem;
 		line-height: 1.75;
-		/* Bottom padding keeps the fixed design switcher clear of the footer */
-		padding: clamp(0.875rem, 3vw, 2.5rem) clamp(0.875rem, 3vw, 2rem) 6.5rem;
+		padding: clamp(0.875rem, 3vw, 2.5rem) clamp(0.875rem, 3vw, 2rem);
 		-webkit-font-smoothing: antialiased;
 		transition:
 			background-color 300ms ease,
@@ -1170,33 +1279,6 @@ const year = new Date().getFullYear()
 
 	.design-zellij .zj-footer p {
 		margin: 0;
-	}
-
-	/* ————— Design switcher theming ————— */
-
-	/*
-	 * The switcher sits on its own dark ink chip in both themes, so its gilding
-	 * follows the chip rather than the page: the light theme's bronze gild would
-	 * put the selected label at 4.2:1 on gold, where this gold holds 8:1.
-	 */
-	.design-zellij .design-switcher {
-		--ds-bg: rgba(38, 34, 26, 0.92);
-		--ds-fg: rgba(245, 238, 223, 0.78);
-		--ds-border: rgba(217, 180, 74, 0.45);
-		--ds-hover-bg: rgba(217, 180, 74, 0.18);
-		--ds-hover-fg: #f5eedf;
-		--ds-accent: #d9b44a;
-		--ds-accent-fg: #26221a;
-		--ds-font: var(--z-font-body);
-		--ds-radius: 2px;
-		--ds-item-radius: 2px;
-	}
-
-	.design-zellij.dark .design-switcher {
-		--ds-bg: rgba(19, 35, 71, 0.92);
-		--ds-fg: rgba(237, 227, 203, 0.82);
-		--ds-hover-fg: #ede3cb;
-		--ds-accent-fg: #132347;
 	}
 
 	/* ————— Motion ————— */
