@@ -874,6 +874,12 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	const SWAP = 160
 	/* Attribute writes are cheap, but not sixty times a second across seventy paths */
 	const STEP = 1000
+	/*
+	 * The quickest hand on the plate is the compass circle, walked in over a
+	 * second and a half. At thirty frames its drawing end moves some fourteen
+	 * pixels a frame — the pace of a film reel, for a hand rather than a pan.
+	 */
+	const COMPASS = 30
 
 	type Kind = Layer['kind']
 
@@ -1132,12 +1138,16 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		let held = false
 		let speak = false
 
-		const settle = createLayerLifecycle({
-			frame(delta) {
+		const life = createLayerLifecycle({
+			step(delta) {
 				elapsed = (elapsed + delta) % LOOP
-				draw()
+				/* A compass drawing itself in never repeats a frame */
+				return true
 			},
+			paint: draw,
 			awake: () => showing && !held && window.__zjTheme === 'light',
+			fps: () => COMPASS,
+			counter: 'plate',
 		})
 
 		function open() {
@@ -1174,7 +1184,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			control.setAttribute('aria-expanded', 'true')
 			plate.showModal()
 			showing = true
-			settle()
+			life.settle()
 		}
 
 		control.addEventListener('click', open)
@@ -1200,7 +1210,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		plate.addEventListener('close', () => {
 			showing = false
 			control.setAttribute('aria-expanded', 'false')
-			settle()
+			life.settle()
 		})
 
 		scrub?.addEventListener('input', aim)
@@ -1217,7 +1227,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		hold?.addEventListener('click', () => {
 			held = !held
 			hold.textContent = held ? 'Draw it again' : 'Hold the compass'
-			settle()
+			life.settle()
 		})
 
 		/* ————— Dusk and dawn ————— */
@@ -1239,7 +1249,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 						: 'Light theme. The corner keeps the rosette.'
 			}
 
-			settle()
+			life.settle()
 		})
 
 		/* A tab left open for days would otherwise keep last week's moon in the corner */

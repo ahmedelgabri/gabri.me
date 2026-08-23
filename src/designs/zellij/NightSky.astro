@@ -23,6 +23,7 @@
 
 <script>
 	import {
+		FULL_RATE,
 		createLayerLifecycle,
 		fitPixels,
 		hasWebGL,
@@ -32,6 +33,23 @@
 
 	/* --zj-gild on the indigo ground; the sky only ever runs in the dark theme */
 	const GOLD = 0xd9b44a
+	/*
+	 * A hundred soft dots and one hairline streak, on a layer that clears the
+	 * whole viewport every frame. A second device pixel quadruples that clear
+	 * and buys a rounder rim on a two-pixel star, which nobody has ever seen.
+	 */
+	const MAX_RATIO = 1
+	/*
+	 * A breath is four to nine seconds long, so the fastest a star's alpha ever
+	 * moves is about a hundredth a frame at this rate — three levels of eight
+	 * bits, on a dot two pixels across.
+	 */
+	const AMBIENT = 24
+	/*
+	 * Where the parallax has arrived. The near layer swims nine pixels either
+	 * way, so a fifth of a pixel on the page.
+	 */
+	const CLOSE = 0.02
 	/*
 	 * Depth layers, farthest first: dimmer and smaller with distance, and each
 	 * drifting its own few pixels under the pointer.
@@ -143,7 +161,7 @@
 			transparent: true,
 			uniforms: {
 				uTime: {value: 0},
-				uPixelRatio: {value: pixelRatio()},
+				uPixelRatio: {value: pixelRatio(MAX_RATIO)},
 				uOpacity: {value: 0},
 			},
 			vertexShader: `
@@ -348,21 +366,28 @@
 		let target = window.__zjTheme === 'dark' ? 1 : 0
 		let elapsed = 0
 
-		function frame(delta: number) {
+		function step(delta: number): boolean {
 			elapsed += delta
 
-			const step = delta / FADE
+			const pace = delta / FADE
 			opacity =
 				target > opacity
-					? Math.min(opacity + step, target)
-					: Math.max(opacity - step, target)
-
-			stars.uniforms.uTime.value = elapsed
-			stars.uniforms.uOpacity.value = opacity
-			streakMaterial.opacity = opacity
+					? Math.min(opacity + pace, target)
+					: Math.max(opacity - pace, target)
 
 			currentX += (targetX - currentX) * EASE
 			currentY += (targetY - currentY) * EASE
+
+			fall(delta)
+
+			/* Every star breathes on its own phase, so no frame is ever a repeat */
+			return true
+		}
+
+		function paint() {
+			stars.uniforms.uTime.value = elapsed
+			stars.uniforms.uOpacity.value = opacity
+			streakMaterial.opacity = opacity
 
 			/* Against the pointer, so the near layer swims past the far one */
 			for (const field of fields) {
@@ -373,8 +398,25 @@
 				)
 			}
 
-			fall(delta)
 			renderer.render(scene, camera)
+		}
+
+		/*
+		 * A fall crossing the margin, a theme fading in or out, and a parallax
+		 * still closing on the pointer are the only things here quick enough to
+		 * want a display's own rate. The twinkle under them is not.
+		 */
+		function fps(): number {
+			if (
+				shot !== null ||
+				opacity !== target ||
+				Math.abs(targetX - currentX) > CLOSE ||
+				Math.abs(targetY - currentY) > CLOSE
+			) {
+				return FULL_RATE
+			}
+
+			return AMBIENT
 		}
 
 		/* A light page has no sky to draw, once the last of it has faded out */
@@ -382,7 +424,13 @@
 			return target === 1 || opacity > 0
 		}
 
-		const settle = createLayerLifecycle({frame, awake})
+		const life = createLayerLifecycle({
+			step,
+			paint,
+			awake,
+			fps,
+			counter: 'sky',
+		})
 
 		function resize() {
 			width = box.clientWidth
@@ -392,6 +440,7 @@
 				camera,
 				width,
 				height,
+				MAX_RATIO,
 			)
 			place()
 		}
@@ -403,14 +452,14 @@
 
 		window.addEventListener('zj:theme', () => {
 			target = window.__zjTheme === 'dark' ? 1 : 0
-			settle()
+			life.settle()
 		})
 
 		window.addEventListener('resize', resize)
 
 		resize()
 		box.appendChild(renderer.domElement)
-		settle()
+		life.settle()
 	}
 
 	const box = document.querySelector<HTMLElement>('[data-zj-sky]')

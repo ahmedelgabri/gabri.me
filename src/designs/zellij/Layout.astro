@@ -303,7 +303,6 @@ const year = new Date().getFullYear()
 				#000 calc(50% + 31rem),
 				#000 100%
 			);
-			animation: zj-drift 360s linear infinite;
 		}
 	}
 
@@ -323,13 +322,6 @@ const year = new Date().getFullYear()
 			background-repeat: no-repeat;
 			background-size: contain;
 			opacity: var(--zj-medallion-opacity);
-		}
-	}
-
-	/* Exactly one tile, so the loop point is invisible; 360s keeps the old pace */
-	@keyframes zj-drift {
-		to {
-			background-position: 240px 240px;
 		}
 	}
 

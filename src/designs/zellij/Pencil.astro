@@ -68,6 +68,7 @@
 <script>
 	import {INNER_RATIO} from './geometry'
 	import {
+		FULL_RATE,
 		createLayerLifecycle,
 		fitPixels,
 		hasWebGL,
@@ -125,7 +126,8 @@
 	const MARK_SIZE = 3
 
 	const LENS = 120
-	const EASE = 0.08
+	/* Per second: how quickly the lens closes the gap to wherever it is wanted */
+	const FOLLOW = 10
 	/* Seconds to cross-fade the ink when the page changes theme */
 	const FADE = 0.3
 	/* The lens wanders on its own until a pointer takes it over */
@@ -139,14 +141,41 @@
 	 * has anything to reveal.
 	 */
 	const MARGIN_REM = 31
+	/* And where it is wholly transparent: the reading column, never uncovered */
+	const CLEAR_REM = 25
 
-	/* Layout's zj-drift keyframe: the whole tile down the diagonal every 360s */
-	const DRIFT_NAME = 'zj-drift'
+	/*
+	 * A full-viewport field of hairlines, carried at whatever alpha keeps the
+	 * ink the same at any density. Three device pixels to two CSS ones resolve
+	 * them as well as four do and cost little over half the fragments.
+	 */
+	const MAX_RATIO = 1.5
+	/*
+	 * An unattended lens crosses its margin at a hundred pixels a second, and
+	 * it is a soft 120px mask with a 90px ramp: ten frames a second moves its
+	 * edge a ninth of that ramp at a time, which is nothing to look at.
+	 */
+	const WANDER_FPS = 10
+	/*
+	 * A parked lens changes nothing on its own — the drift only rides frames
+	 * that are already being painted — so the loop keeps a slow heartbeat for
+	 * its checks and lets pointer and theme events boost it awake.
+	 */
+	const PARKED_FPS = 0.5
+	/* Seconds of full rate on a pointer, until the lens can answer for itself */
+	const CHASE = 0.2
+	/* Under half a CSS pixel of lens travel is not a frame anyone would miss */
+	const MOVED = 0.5
+
+	/* The lattice crosses one whole tile down its diagonal every 360 seconds */
 	const DRIFT_PERIOD = 360
 	/*
-	 * Cells of overhang. A figure reaches R past its own centre and the drift
-	 * carries the lattice a whole tile, so the furthest cell that can still
-	 * touch the viewport is (R + TILE) / CELL — two — away from its edge.
+	 * Cells of overhang before the origin. The drift only ever carries the
+	 * lattice down and to the right, so the furthest cell that can still
+	 * arrive in the viewport is a whole tile plus the R its figure reaches
+	 * past its own centre — (TILE + R) / CELL, or two — before the near edge.
+	 * Nothing ever arrives from past the far edge, which is why there is no
+	 * overhang on that side at all.
 	 */
 	const OVERHANG = 2
 
@@ -276,10 +305,10 @@
 	}
 
 	/*
-	 * The lattice slides with Layout's drift animation, so the lens has to be
-	 * measured against where each line actually landed rather than where it
-	 * was built. Everything else is a distance test in the fragment shader,
-	 * which is why nothing here is rebuilt as the lens moves.
+	 * The lattice slides with the drift, so the lens has to be measured against
+	 * where each line actually landed rather than where it was built.
+	 * Everything else is a distance test in the fragment shader, which is why
+	 * nothing here is rebuilt as the lens moves.
 	 */
 	const LINE_VERTEX = `
 		uniform vec2 uShift;
@@ -352,22 +381,6 @@
 		}
 	`
 
-	/*
-	 * The CSS lattice is only made transparent, never removed, so its drift
-	 * animation is still running underneath. Reading the phase off that
-	 * animation is the one way the canvas can be certain it stands exactly
-	 * where the tile it replaced would have stood.
-	 */
-	function findClock(): Animation | null {
-		for (const animation of document.getAnimations()) {
-			if ((animation as CSSAnimation).animationName === DRIFT_NAME) {
-				return animation
-			}
-		}
-
-		return null
-	}
-
 	async function enhance(box: HTMLElement, wide: MediaQueryList) {
 		const {
 			BufferGeometry,
@@ -388,7 +401,7 @@
 
 		let width = box.clientWidth
 		let height = box.clientHeight
-		let ratio = pixelRatio()
+		let ratio = pixelRatio(MAX_RATIO)
 
 		const scene = new Scene()
 		/* Pixel space with y running down, so every constant above is a CSS pixel */
@@ -447,22 +460,44 @@
 
 		let spanX = 0
 		let spanY = 0
+		/* Half the width of the reading column the mask leaves wholly clear */
+		let clear = 0
+		/* The run of columns that column covers, which no drift can uncover */
+		let hiddenFrom = 0
+		let hiddenTo = -1
 
 		function draw() {
-			const columns = Math.ceil(width / CELL) + OVERHANG
-			const rows = Math.ceil(height / CELL) + OVERHANG
+			const columns = Math.floor((width + R) / CELL)
+			const rows = Math.floor((height + R) / CELL)
+			/*
+			 * The reading column is wholly transparent in the mask, so a column
+			 * whose figure cannot reach either margin from anywhere in the
+			 * drift's cycle is never seen — and the middle of the page is where
+			 * the most of them are.
+			 */
+			const from = Math.ceil((width / 2 - clear + R) / CELL)
+			const to = Math.floor((width / 2 + clear - R - TILE) / CELL)
 
 			/*
 			 * A window that only got smaller keeps the larger lattice: the
 			 * extra overhang costs nothing offscreen, and rebuilding a couple
-			 * of hundred thousand vertices mid-drag would be felt.
+			 * of hundred thousand vertices mid-drag would be felt. The covered
+			 * columns travel with the middle of the window, though, so those
+			 * are answered afresh whichever way it went.
 			 */
-			if (columns <= spanX && rows <= spanY) {
+			if (
+				columns <= spanX &&
+				rows <= spanY &&
+				from === hiddenFrom &&
+				to === hiddenTo
+			) {
 				return
 			}
 
 			spanX = Math.max(columns, spanX)
 			spanY = Math.max(rows, spanY)
+			hiddenFrom = from
+			hiddenTo = to
 
 			const structure: number[] = []
 			const infill: number[] = []
@@ -470,6 +505,10 @@
 			const marks: number[] = []
 
 			for (let i = -OVERHANG; i <= spanX; i++) {
+				if (i >= hiddenFrom && i <= hiddenTo) {
+					continue
+				}
+
 				for (let j = -OVERHANG; j <= spanY; j++) {
 					const cx = i * CELL
 					const cy = j * CELL
@@ -490,21 +529,6 @@
 			upload(markGeometry, marks)
 		}
 
-		let clock = findClock()
-
-		function slide(): number {
-			const time = clock?.currentTime
-			/*
-			 * Both clocks are counted from the document's time origin, so the
-			 * fallback is out only by the milliseconds before the first style
-			 * pass — a fifth of a pixel across the whole 360s cycle.
-			 */
-			const seconds =
-				typeof time === 'number' ? time / 1000 : performance.now() / 1000
-
-			return TILE * ((seconds / DRIFT_PERIOD) % 1)
-		}
-
 		let lensX = width / 2
 		let lensY = height / 2
 		let targetX = lensX
@@ -516,6 +540,10 @@
 		let target = amount
 		let elapsed = 0
 		let lost = false
+		let drift = 0
+		/* Where the last painted frame put the lens */
+		let shownX = lensX
+		let shownY = lensY
 
 		function paint() {
 			ink.copy(inkLight).lerp(inkDark, amount)
@@ -536,22 +564,31 @@
 			/* The compass marks are points, already sized in device pixels */
 			markMaterial.uniforms.uLit.value = weight * MARK
 
-			const along = slide()
-			group.position.set(along, along, 0)
-			shift.set(along, along)
+			group.position.set(drift, drift, 0)
+			shift.set(drift, drift)
 			lens.set(lensX, lensY)
 
 			renderer.render(scene, camera)
+
+			shownX = lensX
+			shownY = lensY
 		}
 
-		function frame(delta: number) {
+		/*
+		 * Nothing on this layer moves quickly enough to be worth a frame it did
+		 * not earn: a lens that has not crossed half a pixel with no cross-fade
+		 * running would draw the very same picture again — and the drift only
+		 * ever moves under one of those.
+		 */
+		function step(delta: number): boolean {
 			elapsed += delta
 
-			const step = delta / FADE
+			const was = amount
+			const pace = delta / FADE
 			amount =
 				target > amount
-					? Math.min(amount + step, target)
-					: Math.max(amount - step, target)
+					? Math.min(amount + pace, target)
+					: Math.max(amount - pace, target)
 
 			if (!pointer) {
 				/*
@@ -567,10 +604,48 @@
 					height * (0.5 + Math.sin(elapsed * WANDER[1]) * WANDER_REACH)
 			}
 
-			lensX += (targetX - lensX) * EASE
-			lensY += (targetY - lensY) * EASE
+			const close = 1 - Math.exp(-FOLLOW * delta)
+			lensX += (targetX - lensX) * close
+			lensY += (targetY - lensY) * close
 
-			paint()
+			const earned =
+				amount !== was ||
+				Math.abs(lensX - shownX) > MOVED ||
+				Math.abs(lensY - shownY) > MOVED
+
+			/*
+			 * The drift rides frames the fade or the lens already earned, so it
+			 * stays sub-pixel smooth and is never the reason a frame exists: a
+			 * parked page holds perfectly still instead of ticking a pixel at a
+			 * time, and a blurred one resumes where it stopped instead of
+			 * snapping to a wall clock.
+			 */
+			if (earned) {
+				drift = (drift + (delta * TILE) / DRIFT_PERIOD) % TILE
+			}
+
+			return earned
+		}
+
+		/*
+		 * A cross-fade and a lens still closing on a pointer both want every
+		 * frame the display has. An unattended lens is always on its way
+		 * somewhere and wants a tenth of them; one the pointer has parked has
+		 * nothing to paint at all.
+		 */
+		function fps(): number {
+			if (amount !== target) {
+				return FULL_RATE
+			}
+
+			if (!pointer) {
+				return WANDER_FPS
+			}
+
+			return Math.abs(targetX - lensX) > MOVED ||
+				Math.abs(targetY - lensY) > MOVED
+				? FULL_RATE
+				: PARKED_FPS
 		}
 
 		/* Below the lattice's breakpoint the layer is display:none and measures 0 */
@@ -578,8 +653,15 @@
 			return wide.matches && !lost
 		}
 
-		const settle = createLayerLifecycle({frame, awake})
+		const life = createLayerLifecycle({
+			step,
+			paint,
+			awake,
+			fps,
+			counter: 'pencil',
+		})
 
+		/* The one thing the frame loop cannot notice for itself, so it paints here */
 		function resize() {
 			const next = box.clientWidth
 			const tall = box.clientHeight
@@ -590,16 +672,15 @@
 
 			width = next
 			height = tall
-			ratio = fitPixels(renderer, camera, width, height)
+			ratio = fitPixels(renderer, camera, width, height, MAX_RATIO)
 			markMaterial.uniforms.uSize.value = MARK_SIZE * ratio
 
 			const rem = Number.parseFloat(
 				getComputedStyle(document.documentElement).fontSize,
 			)
 			band = Math.max(width / 2 - MARGIN_REM * rem, LENS)
+			clear = CLEAR_REM * rem
 
-			/* The animation is re-made whenever the media query brings it back */
-			clock = findClock()
 			draw()
 			paint()
 		}
@@ -608,6 +689,8 @@
 			pointer = true
 			targetX = event.clientX
 			targetY = event.clientY
+			/* A parked lens is on a half-second timer and must not answer this late */
+			life.boost(CHASE)
 		})
 
 		/* Out of the window: the lens wanders again rather than sticking */
@@ -619,12 +702,14 @@
 
 		wide.addEventListener('change', () => {
 			resize()
-			settle()
+			life.settle()
 		})
 
 		/* The lattice is drawn in both themes, so this only ever re-inks it */
 		window.addEventListener('zj:theme', () => {
 			target = window.__zjTheme === 'dark' ? 1 : 0
+			/* The cross-fade is over in three tenths and cannot wait on a timer */
+			life.boost(FADE)
 		})
 
 		/*
@@ -634,14 +719,14 @@
 		renderer.domElement.addEventListener('webglcontextlost', () => {
 			lost = true
 			document.documentElement.classList.remove(TAKEOVER)
-			settle()
+			life.settle()
 		})
 
 		resize()
 		box.appendChild(renderer.domElement)
 		/* Only now, with something painted, does the CSS lattice stand down */
 		document.documentElement.classList.add(TAKEOVER)
-		settle()
+		life.settle()
 	}
 
 	const box = document.querySelector<HTMLElement>('[data-zj-pencil]')

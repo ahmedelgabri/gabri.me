@@ -244,7 +244,7 @@ The first pass was reviewed and reworked:
 | Entry hover        | star marker rotates 22.5° (its own symmetry angle) and the title underline slides in, 200ms |
 | Prose links        | gilded underline grows from the left, 180ms                                                 |
 | Theme change       | 1.1s diagonal view-transition sweep from the observatory, else a 300ms crossfade            |
-| Background lattice | 360s linear background-position drift — exactly one 240px tile, so the loop never shows     |
+| Background lattice | drifts sub-pixel-smooth only on frames the pencil already paints; still when parked         |
 
 No scroll-triggered libraries, no layout shift; the only parallax is the night
 sky’s subtle pointer drift.
@@ -342,10 +342,10 @@ the fallback for no JS, no WebGL, a coarse pointer or a narrow window.
 Alignment is the whole difficulty, because for one 400ms cross-fade the reader
 sees both. The canvas draws the same 240px tile from the same construction the
 data URI was generated from, wears the same margin mask, and takes the same
-per-theme ink and opacity. Its drift phase is read off the CSS animation itself
-— `getAnimations()` is searched for `zj-drift`, and its `currentTime` places the
-lattice — so the canvas stands exactly where the tile it replaced would have
-stood rather than merely at the same rate.
+per-theme ink and opacity. Its drift is delta-accumulated and rides only the
+frames the lens or a theme fade already earned, so it is always sub-pixel
+smooth, never the reason a frame is painted, and never jumps when a blurred
+window is refocused. The CSS fallback lattice is static.
 
 Under the pattern lies its construction: the generating circle, the sixteen
 compass marks stepped round it, the radii, the `{16/6}` chords, and the three

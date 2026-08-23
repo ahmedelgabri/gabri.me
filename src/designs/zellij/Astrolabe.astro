@@ -132,7 +132,14 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	import type {Color, LineBasicMaterial as LineMaterial} from 'three'
 	import {INNER_RATIO} from './geometry'
 	import {epochDays} from './moon'
-	import {createLayerLifecycle, fitPixels, hasWebGL, loadThree} from './webgl'
+	import type {Lifecycle} from './webgl'
+	import {
+		FULL_RATE,
+		createLayerLifecycle,
+		fitPixels,
+		hasWebGL,
+		loadThree,
+	} from './webgl'
 
 	const RAD = Math.PI / 180
 	/* A plate is cut for one latitude and one only; this one is Amsterdam's */
@@ -161,6 +168,22 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	const RULE_FOLLOW = 1.6
 	/* Fast enough to feel thrown, slow enough that the ring never strobes */
 	const MAX_SPIN = 14
+	/*
+	 * A 420px instrument drawn in hairlines. Three device pixels to two CSS
+	 * ones still resolves every one of them and asks the machine for little
+	 * over half the fragments a fourth would.
+	 */
+	const MAX_RATIO = 1.5
+	/*
+	 * The creep at this rate turns an eighth of a degree a frame, which is
+	 * four tenths of a pixel out at the limb — under the width of the line it
+	 * is moving.
+	 */
+	const CREEP = 12
+	/* Past twice the creep the ring would step visibly at that rate */
+	const CALM = SIDEREAL * 2
+	/* Long enough to reach the frame that can see the grab for itself */
+	const GRAB = 0.2
 
 	/*
 	 * The two inks, light theme first. By night the instrument is brass on the
@@ -323,7 +346,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	async function enhance(
 		box: HTMLElement,
 		onscreen: () => boolean,
-	): Promise<() => void> {
+	): Promise<Lifecycle> {
 		const {
 			BufferGeometry,
 			Color,
@@ -525,13 +548,13 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			)
 		}
 
-		function frame(delta: number) {
+		function step(delta: number): boolean {
 			if (amount !== target) {
-				const step = delta / FADE
+				const pace = delta / FADE
 				amount =
 					target > amount
-						? Math.min(amount + step, target)
-						: Math.max(amount - step, target)
+						? Math.min(amount + pace, target)
+						: Math.max(amount - pace, target)
 				reink(amount)
 			}
 
@@ -551,16 +574,44 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				spin = Math.max(-MAX_SPIN, Math.min(MAX_SPIN, rate))
 			}
 
-			rete.rotation.z = angle
 			ruleAngle +=
 				(angle + sunAngle - ruleAngle) * (1 - Math.exp(-RULE_FOLLOW * delta))
-			rule.rotation.z = ruleAngle
 
+			/* The sky never stops turning, so no frame here is ever a repeat */
+			return true
+		}
+
+		function paint() {
+			rete.rotation.z = angle
+			rule.rotation.z = ruleAngle
 			renderer.render(scene, camera)
 		}
 
+		/*
+		 * A rete under a hand, and one still giving up the speed it was thrown
+		 * at, both turn far faster than the sky does and want every frame until
+		 * they are back to the creep.
+		 */
+		function fps(): number {
+			if (
+				grab !== null ||
+				amount !== target ||
+				Math.abs(spin - SIDEREAL) > CALM
+			) {
+				return FULL_RATE
+			}
+
+			return CREEP
+		}
+
 		/* Unlike the page's other layers this one scrolls away, and then it stops */
-		const settle = createLayerLifecycle({frame, awake: onscreen})
+		const life = createLayerLifecycle({
+			step,
+			paint,
+			awake: onscreen,
+			fps,
+			counter: 'astrolabe',
+		})
 
 		function resize() {
 			const next = box.clientWidth
@@ -573,7 +624,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			width = next
 			height = tall
-			fitPixels(renderer, camera, width, height)
+			fitPixels(renderer, camera, width, height, MAX_RATIO)
 			instrument.position.set(width / 2, height / 2, 0)
 			instrument.scale.setScalar(Math.min(width, height) * 0.45)
 		}
@@ -587,6 +638,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			box.setPointerCapture(event.pointerId)
 			box.setAttribute('data-held', '')
 			grab = {pointer: event.pointerId, raw: pointerAngle(event), target: angle}
+			/* The creep is on a slow timer; a hand on the brass must not wait for it */
+			life.boost(GRAB)
 		})
 
 		box.addEventListener('pointermove', (event) => {
@@ -596,18 +649,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			/* Accumulated rather than absolute, so crossing the top is not a jump */
 			const raw = pointerAngle(event)
-			let step = raw - grab.raw
+			let turn = raw - grab.raw
 
-			while (step > Math.PI) {
-				step -= Math.PI * 2
+			while (turn > Math.PI) {
+				turn -= Math.PI * 2
 			}
 
-			while (step < -Math.PI) {
-				step += Math.PI * 2
+			while (turn < -Math.PI) {
+				turn += Math.PI * 2
 			}
 
 			grab.raw = raw
-			grab.target += step
+			grab.target += turn
 		})
 
 		function release(event: PointerEvent) {
@@ -631,20 +684,20 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				reink(amount)
 			}
 
-			settle()
+			life.settle()
 		})
 
 		new ResizeObserver(resize).observe(box)
 		resize()
 		box.appendChild(renderer.domElement)
 
-		return settle
+		return life
 	}
 
 	function gate(box: HTMLElement) {
 		let onscreen = false
 		let started = false
-		let settle: (() => void) | null = null
+		let life: Lifecycle | null = null
 
 		/* Nothing is fetched, and nothing runs, until the footer is reached */
 		new IntersectionObserver(
@@ -655,15 +708,15 @@ const wiki = 'https://en.wikipedia.org/wiki'
 					started = true
 					enhance(box, () => onscreen)
 						.then((ready) => {
-							settle = ready
-							ready()
+							life = ready
+							ready.settle()
 						})
 						.catch(() => {
 							document.documentElement.classList.add(OFF)
 						})
 				}
 
-				settle?.()
+				life?.settle()
 			},
 			{threshold: 0},
 		).observe(box)
