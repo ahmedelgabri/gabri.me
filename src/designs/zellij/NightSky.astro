@@ -22,7 +22,13 @@
 </style>
 
 <script>
-	import {INNER_RATIO} from './geometry'
+	import {
+		createLayerLifecycle,
+		fitPixels,
+		hasWebGL,
+		loadThree,
+		pixelRatio,
+	} from './webgl'
 
 	/* --zj-gild on the indigo ground; the sky only ever runs in the dark theme */
 	const GOLD = 0xd9b44a
@@ -31,23 +37,25 @@
 	 * drifting its own few pixels under the pointer.
 	 */
 	const LAYERS = [
-		{count: 32, size: [1.2, 2], glow: [0.28, 0.5], drift: 2},
-		{count: 26, size: [1.4, 2.4], glow: [0.42, 0.68], drift: 5},
-		{count: 18, size: [1.9, 3.4], glow: [0.55, 0.85], drift: 9},
+		{count: 42, size: [1.2, 2], glow: [0.28, 0.5], drift: 2},
+		{count: 34, size: [1.4, 2.4], glow: [0.42, 0.68], drift: 5},
+		{count: 24, size: [1.9, 3.4], glow: [0.55, 0.85], drift: 9},
 	]
-	/* The brightest few are drawn as khatams rather than dots, on the near layer */
-	const KHATAMS = 8
-	const KHATAM_RADIUS = [3, 5.5]
-	const KHATAM_GLOW = [0.5, 0.8]
 	/* One breath every 4–9s, every star on its own phase: a sky, not a signal */
 	const PERIOD = [4, 9]
 	const EASE = 0.06
 	/* Seconds to fade the whole sky in or out when the theme changes */
 	const FADE = 0.6
-	/* Long enough that a streak is something you catch rather than something shown */
-	const SHOT_WAIT = [60, 120]
+	/* Often enough to reward sitting with the page, rare enough to still be luck */
+	const SHOT_WAIT = [30, 75]
 	/* The first one comes sooner, or nobody would ever be here to see one */
-	const SHOT_FIRST = [12, 40]
+	const SHOT_FIRST = [8, 20]
+	/*
+	 * Now and then a fall comes in twos, the second from the far margin while
+	 * the first is still in the eye — the way a real shower arrives.
+	 */
+	const SHOT_TWIN = 1 / 6
+	const SHOT_GAP = [0.5, 1.6]
 	const SHOT_LIFE = [0.8, 1.2]
 	const SHOT_LENGTH = [200, 340]
 	/* Where it enters, down the viewport: high enough to have somewhere to fall */
@@ -94,33 +102,6 @@
 		}
 	}
 
-	/* One khatam of radius 1 — see geometry.ts for the two-square construction */
-	function ring(): number[] {
-		const values: number[] = []
-
-		for (let k = 0; k < 16; k++) {
-			const angle = (k * Math.PI) / 8
-			const radius = k % 2 === 0 ? 1 : INNER_RATIO
-			values.push(Math.cos(angle) * radius, Math.sin(angle) * radius, 0)
-		}
-
-		return values
-	}
-
-	/* Asked before three.js is fetched, so a machine without WebGL downloads nothing */
-	function hasWebGL(): boolean {
-		try {
-			const probe = document.createElement('canvas')
-			const context =
-				probe.getContext('webgl2') ?? probe.getContext('webgl')
-			/* Hand the context back rather than sitting on one of the browser's few */
-			context?.getExtension('WEBGL_lose_context')?.loseContext()
-			return Boolean(context)
-		} catch {
-			return false
-		}
-	}
-
 	async function enhance(box: HTMLElement) {
 		const {
 			BufferGeometry,
@@ -129,16 +110,14 @@
 			Group,
 			Line,
 			LineBasicMaterial,
-			LineLoop,
 			OrthographicCamera,
 			Points,
 			Scene,
 			ShaderMaterial,
 			WebGLRenderer,
-		} = await import('three')
+		} = await loadThree()
 
 		const renderer = new WebGLRenderer({alpha: true, antialias: true})
-		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
 		renderer.domElement.setAttribute('aria-hidden', 'true')
 
 		let width = box.clientWidth
@@ -164,7 +143,7 @@
 			transparent: true,
 			uniforms: {
 				uTime: {value: 0},
-				uPixelRatio: {value: renderer.getPixelRatio()},
+				uPixelRatio: {value: pixelRatio()},
 				uOpacity: {value: 0},
 			},
 			vertexShader: `
@@ -243,26 +222,6 @@
 			return {group, drift: layer.drift, seats, position}
 		})
 
-		const near = fields[fields.length - 1]
-		const khatamGeometry = new BufferGeometry()
-		khatamGeometry.setAttribute('position', new Float32BufferAttribute(ring(), 3))
-
-		const khatams = Array.from({length: KHATAMS}, () => {
-			const material = new LineBasicMaterial({color: warm(), transparent: true})
-			const mesh = new LineLoop(khatamGeometry, material)
-			near.group.add(mesh)
-
-			return {
-				mesh,
-				material,
-				seat: scatter(),
-				radius: pick(KHATAM_RADIUS),
-				glow: pick(KHATAM_GLOW),
-				rate: (Math.PI * 2) / pick(PERIOD),
-				phase: Math.random() * Math.PI * 2,
-			}
-		})
-
 		const joints = SHOT_JOINTS + 1
 		const trailPosition = new Float32BufferAttribute(new Float32Array(joints * 3), 3)
 		/* Four floats a vertex: the tail fades on its own alpha, not on the ground */
@@ -303,23 +262,19 @@
 				})
 				field.position.needsUpdate = true
 			}
-
-			for (const star of khatams) {
-				star.mesh.position.set(
-					seatX(star.seat, band),
-					star.seat.down * height,
-					0,
-				)
-			}
 		}
 
 		let shot: Shot | null = null
 		let wait = pick(SHOT_FIRST)
+		/* The margin the last fall came from, so its twin can come from the other */
+		let came = 0
+		let twin = false
 
 		function launch(): Shot {
 			const band = margin()
-			const side = Math.random() < 0.5 ? -1 : 1
+			const side = twin && came !== 0 ? -came : Math.random() < 0.5 ? -1 : 1
 			const angle = pick(SHOT_ANGLE)
+			came = side
 
 			return {
 				/* Starts at the page's edge, so it falls out from behind the carpet */
@@ -351,7 +306,10 @@
 			if (progress >= 1) {
 				shot = null
 				streak.visible = false
-				wait = pick(SHOT_WAIT)
+				/* A twin never brings a third: one pair, then the long wait again */
+				const pairing = !twin && Math.random() < SHOT_TWIN
+				twin = pairing
+				wait = pick(pairing ? SHOT_GAP : SHOT_WAIT)
 				return
 			}
 
@@ -389,14 +347,8 @@
 		let opacity = 0
 		let target = window.__zjTheme === 'dark' ? 1 : 0
 		let elapsed = 0
-		let last = 0
-		let request = 0
-		let running = false
 
-		function frame(now: number) {
-			/* A backgrounded tab can hand back a huge delta on the first frame */
-			const delta = Math.min((now - last) / 1000, 0.1)
-			last = now
+		function frame(delta: number) {
 			elapsed += delta
 
 			const step = delta / FADE
@@ -421,60 +373,26 @@
 				)
 			}
 
-			for (const star of khatams) {
-				const pulse = Math.sin(elapsed * star.rate + star.phase) * 0.5 + 0.5
-				star.material.opacity = star.glow * (0.65 + 0.35 * pulse) * opacity
-				star.mesh.scale.setScalar(star.radius * (0.9 + 0.2 * pulse))
-			}
-
 			fall(delta)
 			renderer.render(scene, camera)
-
-			/* Faded away for good: a light page has no sky to draw */
-			if (opacity === 0 && target === 0) {
-				stop()
-				return
-			}
-
-			request = requestAnimationFrame(frame)
 		}
 
-		function start() {
-			if (running) {
-				return
-			}
-
-			running = true
-			last = performance.now()
-			request = requestAnimationFrame(frame)
+		/* A light page has no sky to draw, once the last of it has faded out */
+		function awake(): boolean {
+			return target === 1 || opacity > 0
 		}
 
-		function stop() {
-			running = false
-			cancelAnimationFrame(request)
-		}
-
-		function settle() {
-			if (
-				document.visibilityState === 'visible' &&
-				(target === 1 || opacity > 0)
-			) {
-				start()
-			} else {
-				stop()
-			}
-		}
+		const settle = createLayerLifecycle({frame, awake})
 
 		function resize() {
 			width = box.clientWidth
 			height = box.clientHeight
-			camera.right = width
-			camera.bottom = height
-			camera.updateProjectionMatrix()
-			/* The ratio can change under the window, not only the size */
-			renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
-			renderer.setSize(width, height)
-			stars.uniforms.uPixelRatio.value = renderer.getPixelRatio()
+			stars.uniforms.uPixelRatio.value = fitPixels(
+				renderer,
+				camera,
+				width,
+				height,
+			)
 			place()
 		}
 
@@ -489,10 +407,8 @@
 		})
 
 		window.addEventListener('resize', resize)
-		document.addEventListener('visibilitychange', settle)
 
-		renderer.setSize(width, height)
-		place()
+		resize()
 		box.appendChild(renderer.domElement)
 		settle()
 	}
