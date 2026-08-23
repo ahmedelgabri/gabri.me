@@ -77,37 +77,37 @@ const {caption, paths} = defaultArch
 </span>
 
 <style is:global>
-	.design-zellij .zj-arch-frame {
+	.zj-arch-frame {
 		display: block;
 	}
 
-	.design-zellij .zj-arch {
+	.zj-arch {
 		display: block;
 		width: min(100%, 26rem);
 		height: auto;
 		margin: 0 auto 1.1rem;
 	}
 
-	.design-zellij .zj-arch path {
+	.zj-arch path {
 		fill: none;
 		stroke-dasharray: 1;
 		stroke-dashoffset: 0;
 		animation: zj-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) backwards;
 	}
 
-	.design-zellij .zj-arch-outer {
+	.zj-arch-outer {
 		stroke: var(--zj-geo);
 		stroke-width: 2.25;
 	}
 
-	.design-zellij .zj-arch-inner {
+	.zj-arch-inner {
 		stroke: var(--zj-geo);
 		stroke-width: 1;
 		opacity: 0.5;
 	}
 
 	/* The imposts ground the arcs, so they land once the curve has been drawn */
-	.design-zellij .zj-arch-impost {
+	.zj-arch-impost {
 		stroke: var(--zj-gild);
 		stroke-width: 1.25;
 		stroke-dasharray: 1;
@@ -117,7 +117,7 @@ const {caption, paths} = defaultArch
 
 	/* A plate label, shown only while the reader is with the arch. Its line
 	 * stays reserved so the reveal never shifts the header. */
-	.design-zellij .zj-arch-caption {
+	.zj-arch-caption {
 		display: block;
 		margin-top: 0.15rem;
 		font-family: var(--z-font-body);
@@ -129,19 +129,19 @@ const {caption, paths} = defaultArch
 		transition: opacity 250ms ease;
 	}
 
-	.design-zellij .zj-arch-frame:hover .zj-arch-caption,
-	.design-zellij .zj-arch-frame:focus-within .zj-arch-caption {
+	.zj-arch-frame:hover .zj-arch-caption,
+	.zj-arch-frame:focus-within .zj-arch-caption {
 		opacity: 1;
 	}
 
 	/* No hover, no reveal — touch readers keep the label */
 	@media (hover: none) {
-		.design-zellij .zj-arch-caption {
+		.zj-arch-caption {
 			opacity: 1;
 		}
 	}
 
-	.design-zellij .zj-arch-caption a {
+	.zj-arch-caption a {
 		color: inherit;
 	}
 </style>

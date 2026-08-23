@@ -297,7 +297,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 <style is:global>
 	/* ————— The corner control ————— */
 
-	.design-zellij .zj-observatory {
+	.zj-observatory {
 		position: absolute;
 		top: 0.5rem;
 		right: 0.5rem;
@@ -305,7 +305,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		z-index: 2;
 	}
 
-	.design-zellij .zj-obs-control {
+	.zj-obs-control {
 		display: none;
 		position: relative;
 		align-items: center;
@@ -321,43 +321,43 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	}
 
 	/* The control is inert without the theme script, so it only appears once it runs */
-	.design-zellij.zj-js .zj-obs-control {
+	.zj-js .zj-obs-control {
 		display: flex;
 	}
 
 	/* Only ever one sky at a time — and the hidden name is hidden from readers too */
-	.design-zellij.light .zj-obs-night,
-	.design-zellij.dark .zj-obs-day {
+	.light .zj-obs-night,
+	.dark .zj-obs-day {
 		display: none;
 	}
 
-	.design-zellij .zj-obs-glyph {
+	.zj-obs-glyph {
 		display: block;
 		line-height: 0;
 	}
 
-	.design-zellij .zj-obs-glyph svg {
+	.zj-obs-glyph svg {
 		display: block;
 		transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	/* 22.5° is the rosette's own symmetry angle — half a petal, and it lands on itself */
-	.design-zellij .zj-obs-control:hover .zj-obs-rosette {
+	.zj-obs-control:hover .zj-obs-rosette {
 		transform: rotate(22.5deg);
 	}
 
-	.design-zellij .zj-obs-control:hover .zj-obs-moon {
+	.zj-obs-control:hover .zj-obs-moon {
 		transform: rotate(-8deg);
 	}
 
-	.design-zellij .zj-obs-rosette {
+	.zj-obs-rosette {
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1.2;
 		vector-effect: non-scaling-stroke;
 	}
 
-	.design-zellij .zj-obs-rim {
+	.zj-obs-rim {
 		display: none;
 		fill: none;
 		stroke: currentColor;
@@ -365,7 +365,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		stroke-width: 1;
 	}
 
-	.design-zellij .zj-obs-lit {
+	.zj-obs-lit {
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1.5;
@@ -373,18 +373,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	}
 
 	/* Set once the true phase has replaced the plain crescent */
-	.design-zellij .zj-obs-computed .zj-obs-rim {
+	.zj-obs-computed .zj-obs-rim {
 		display: block;
 	}
 
-	.design-zellij .zj-obs-computed .zj-obs-lit {
+	.zj-obs-computed .zj-obs-lit {
 		fill: currentColor;
 		fill-opacity: 0.3;
 		stroke-width: 1;
 	}
 
-	.design-zellij .zj-obs-name,
-	.design-zellij .zj-obs-live {
+	.zj-obs-name,
+	.zj-obs-live {
 		position: absolute;
 		width: 1px;
 		height: 1px;
@@ -401,7 +401,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * allows, so it has no way of reaching either side of the frame. Kept
 	 * rendered rather than hidden, because it is the control's description.
 	 */
-	.design-zellij .zj-obs-caption {
+	.zj-obs-caption {
 		position: absolute;
 		top: calc(100% + 0.35rem);
 		right: 0;
@@ -424,7 +424,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			transform 180ms ease;
 	}
 
-	.design-zellij .zj-obs-word {
+	.zj-obs-word {
 		font-family: var(--z-font-arabic);
 		font-size: 1.15em;
 		font-style: normal;
@@ -436,18 +436,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * would be laid out inside that span's right-to-left run and come out on
 	 * the wrong side of the word.
 	 */
-	.design-zellij .zj-obs-word + span::before {
+	.zj-obs-word + span::before {
 		content: ' · ';
 	}
 
-	.design-zellij .zj-obs-control:focus-visible ~ .zj-obs-caption {
+	.zj-obs-control:focus-visible ~ .zj-obs-caption {
 		opacity: 1;
 		transform: none;
 	}
 
 	/* A finger has no hover to rest; it goes straight to the plate instead */
 	@media (hover: hover) and (pointer: fine) {
-		.design-zellij .zj-obs-control:hover ~ .zj-obs-caption {
+		.zj-obs-control:hover ~ .zj-obs-caption {
 			opacity: 1;
 			transform: none;
 		}
@@ -455,7 +455,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 	/* ————— The plate ————— */
 
-	.design-zellij .zj-obs-plate {
+	.zj-obs-plate {
 		/* The carpet page's corner stars at the plate's own cut: smaller, and pinned closer in */
 		--zj-corner-inset: -1px;
 		position: fixed;
@@ -474,7 +474,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		overflow: visible;
 	}
 
-	.design-zellij .zj-obs-plate::backdrop {
+	.zj-obs-plate::backdrop {
 		background: var(--zj-backdrop);
 	}
 
@@ -483,7 +483,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * after its own cap and scrolls inside it — rather than being told a cap of
 	 * its own and having to arrive at the same answer twice.
 	 */
-	.design-zellij .zj-obs-plate[open] {
+	.zj-obs-plate[open] {
 		display: flex;
 		flex-direction: column;
 		animation: zj-obs-rise 260ms cubic-bezier(0.2, 0, 0.2, 1);
@@ -496,7 +496,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		}
 	}
 
-	.design-zellij .zj-obs-close {
+	.zj-obs-close {
 		position: absolute;
 		top: 0.55rem;
 		right: 0.55rem;
@@ -513,17 +513,17 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		transition: color 150ms ease;
 	}
 
-	.design-zellij .zj-obs-close:hover {
+	.zj-obs-close:hover {
 		color: var(--zj-gild);
 	}
 
-	.design-zellij .zj-obs-close path {
+	.zj-obs-close path {
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1.25;
 	}
 
-	.design-zellij .zj-obs-sheet {
+	.zj-obs-sheet {
 		flex: 1 1 auto;
 		/* Without this a flex item refuses to shrink below its content */
 		min-height: 0;
@@ -533,7 +533,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		text-align: center;
 	}
 
-	.design-zellij .zj-obs-kicker {
+	.zj-obs-kicker {
 		margin: 0 0 0.45rem;
 		font-size: 0.7rem;
 		font-weight: 600;
@@ -542,7 +542,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-obs-title {
+	.zj-obs-title {
 		margin: 0;
 		font-family: var(--z-font-display);
 		font-weight: 700;
@@ -550,7 +550,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		line-height: 1.25;
 	}
 
-	.design-zellij .zj-obs-title-ar {
+	.zj-obs-title-ar {
 		display: block;
 		margin-top: 0.1rem;
 		font-family: var(--z-font-arabic);
@@ -559,18 +559,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		color: var(--zj-accent);
 	}
 
-	.design-zellij .zj-obs-figure {
+	.zj-obs-figure {
 		margin: 1.3rem 0 0;
 	}
 
-	.design-zellij .zj-obs-disc,
-	.design-zellij .zj-obs-construction {
+	.zj-obs-disc,
+	.zj-obs-construction {
 		display: block;
 		height: auto;
 		margin: 0 auto;
 	}
 
-	.design-zellij .zj-obs-disc {
+	.zj-obs-disc {
 		width: min(11.25rem, 56vw);
 		color: var(--zj-gild);
 	}
@@ -579,14 +579,14 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * Both figures are drawn in a 240-unit box and shown smaller, so their
 	 * stroke widths are set to land on one CSS pixel at the size each is given.
 	 */
-	.design-zellij .zj-obs-disc-rim {
+	.zj-obs-disc-rim {
 		fill: none;
 		stroke: currentColor;
 		stroke-opacity: 0.26;
 		stroke-width: 1.35;
 	}
 
-	.design-zellij .zj-obs-disc-lit {
+	.zj-obs-disc-lit {
 		fill: url(#zj-obs-glaze);
 		stroke: currentColor;
 		stroke-opacity: 0.9;
@@ -594,15 +594,15 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	}
 
 	/* The tile's own kohl, at the tile's own weights */
-	.design-zellij .zj-obs-construction {
+	.zj-obs-construction {
 		width: min(13.75rem, 64vw);
 		fill: none;
 		stroke: var(--zj-text);
 		stroke-width: 1.2;
 	}
 
-	.design-zellij .zj-obs-readout,
-	.design-zellij .zj-obs-stage {
+	.zj-obs-readout,
+	.zj-obs-stage {
 		margin: 0.85rem 0 0;
 		font-family: var(--z-font-mono);
 		font-size: 0.6875rem;
@@ -612,16 +612,16 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	}
 
 	/* A caption swapping mid-fade would read as two sentences at once */
-	.design-zellij .zj-obs-stage.is-out {
+	.zj-obs-stage.is-out {
 		opacity: 0;
 	}
 
-	.design-zellij .zj-obs-scrub {
+	.zj-obs-scrub {
 		width: min(20rem, 90%);
 		margin: 1.1rem auto 0;
 	}
 
-	.design-zellij .zj-obs-slider {
+	.zj-obs-slider {
 		display: block;
 		width: 100%;
 		height: 0.9rem;
@@ -633,18 +633,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		appearance: none;
 	}
 
-	.design-zellij .zj-obs-slider::-webkit-slider-runnable-track {
+	.zj-obs-slider::-webkit-slider-runnable-track {
 		height: 1px;
 		background: var(--zj-hairline);
 	}
 
-	.design-zellij .zj-obs-slider::-moz-range-track {
+	.zj-obs-slider::-moz-range-track {
 		height: 1px;
 		background: var(--zj-hairline);
 	}
 
 	/* The handle is a diamond: the khatam's four-fold cousin, as on external links */
-	.design-zellij .zj-obs-slider::-webkit-slider-thumb {
+	.zj-obs-slider::-webkit-slider-thumb {
 		width: 10px;
 		height: 10px;
 		margin-top: -4.5px;
@@ -656,7 +656,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		appearance: none;
 	}
 
-	.design-zellij .zj-obs-slider::-moz-range-thumb {
+	.zj-obs-slider::-moz-range-thumb {
 		width: 10px;
 		height: 10px;
 		border: 1px solid var(--zj-gild);
@@ -665,7 +665,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		transform: rotate(45deg);
 	}
 
-	.design-zellij .zj-obs-ticks {
+	.zj-obs-ticks {
 		display: flex;
 		justify-content: space-between;
 		margin: 0.15rem 0 0;
@@ -675,7 +675,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-obs-hold {
+	.zj-obs-hold {
 		padding: 0.3rem 0.9rem;
 		border: 1px solid var(--zj-hairline);
 		background: none;
@@ -691,18 +691,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			border-color 150ms ease;
 	}
 
-	.design-zellij .zj-obs-hold:hover {
+	.zj-obs-hold:hover {
 		color: var(--zj-gild);
 		border-color: var(--zj-gild);
 	}
 
-	.design-zellij .zj-obs-facts {
+	.zj-obs-facts {
 		display: grid;
 		gap: 0.6rem 1.6rem;
 		margin: 1.3rem 0 0;
 	}
 
-	.design-zellij .zj-obs-facts dt {
+	.zj-obs-facts dt {
 		font-size: 0.7rem;
 		font-weight: 600;
 		letter-spacing: 0.18em;
@@ -710,19 +710,19 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-obs-facts dd {
+	.zj-obs-facts dd {
 		margin: 0.15rem 0 0;
 		font-size: 0.9375rem;
 		font-variant-numeric: oldstyle-nums;
 	}
 
 	@media (min-width: 30em) {
-		.design-zellij .zj-obs-facts {
+		.zj-obs-facts {
 			grid-template-columns: 1fr 1fr;
 		}
 	}
 
-	.design-zellij .zj-obs-sheet .zj-divider {
+	.zj-obs-sheet .zj-divider {
 		margin: 1.5rem auto;
 	}
 
@@ -731,7 +731,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * which is an inline-block, and the pretty rebalancer will happily break
 	 * between that mark and the comma that follows it.
 	 */
-	.design-zellij .zj-obs-passage {
+	.zj-obs-passage {
 		max-width: 46ch;
 		margin-inline: auto;
 		font-size: 0.9375rem;
@@ -739,11 +739,11 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		text-align: left;
 	}
 
-	.design-zellij .zj-obs-passage p {
+	.zj-obs-passage p {
 		margin: 0 0 1em;
 	}
 
-	.design-zellij .zj-obs-passage p:last-child {
+	.zj-obs-passage p:last-child {
 		margin-bottom: 0;
 	}
 
@@ -754,7 +754,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * thing on it that is an action rather than a reading — so it stays put at
 	 * the foot while the passage scrolls under it.
 	 */
-	.design-zellij .zj-obs-foot {
+	.zj-obs-foot {
 		position: relative;
 		flex: none;
 		padding: 1.5rem clamp(1.1rem, 4vw, 2.2rem) 1.6rem;
@@ -762,7 +762,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	}
 
 	/* The passage runs out under the foot rather than stopping short of it */
-	.design-zellij .zj-obs-foot::before {
+	.zj-obs-foot::before {
 		content: '';
 		position: absolute;
 		inset: -1.6rem 0 100%;
@@ -770,7 +770,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		pointer-events: none;
 	}
 
-	.design-zellij .zj-obs-switch {
+	.zj-obs-switch {
 		display: block;
 		width: 100%;
 		padding: 0.75rem 1rem;
@@ -783,11 +783,11 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			border-color 200ms ease;
 	}
 
-	.design-zellij .zj-obs-switch:hover {
+	.zj-obs-switch:hover {
 		background: var(--zj-panel);
 	}
 
-	.design-zellij .zj-obs-switch-word {
+	.zj-obs-switch-word {
 		display: block;
 		font-family: var(--z-font-display);
 		font-weight: 700;
@@ -795,7 +795,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		line-height: 1.2;
 	}
 
-	.design-zellij .zj-obs-switch-note {
+	.zj-obs-switch-note {
 		display: block;
 		margin-top: 0.15rem;
 		font-size: 0.7rem;

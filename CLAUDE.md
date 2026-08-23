@@ -137,8 +137,9 @@ inside MDX:
 ### Styling
 
 The design owns its own CSS: every rule lives in the `<style is:global>` block
-of `src/designs/zellij/Layout.astro`, keyed off `.design-zellij` and themed
-through custom properties. There is no global stylesheet.
+of `src/designs/zellij/Layout.astro`, written unprefixed against `.zj-*` and
+element selectors and themed through custom properties on `:root`. There is no
+global stylesheet.
 
 **UnoCSS** (atomic CSS framework) is still in the build:
 

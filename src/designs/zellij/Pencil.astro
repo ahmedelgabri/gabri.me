@@ -9,7 +9,7 @@
 	 * can be uncovered where the pointer goes. It only ever replaces the CSS
 	 * lattice, never joins it: see the .zj-pencil rules below.
 	 */
-	.design-zellij .zj-pencil-layer {
+	.zj-pencil-layer {
 		display: none;
 		position: fixed;
 		inset: 0;
@@ -24,12 +24,12 @@
 
 	/* The breakpoint the lattice appears at; below it there is no margin to use */
 	@media (min-width: 75em) {
-		.design-zellij .zj-pencil-layer {
+		.zj-pencil-layer {
 			display: block;
 		}
 	}
 
-	.design-zellij .zj-pencil-layer canvas {
+	.zj-pencil-layer canvas {
 		display: block;
 	}
 
@@ -39,11 +39,11 @@
 	 * windows. Two classes beat the one in Layout's media query, whatever
 	 * order the two style sheets end up in.
 	 */
-	.design-zellij.zj-pencil .zj-pencil-layer {
+	.zj-pencil .zj-pencil-layer {
 		opacity: 1;
 	}
 
-	.design-zellij.zj-pencil body::before {
+	.zj-pencil body::before {
 		opacity: 0;
 		transition: opacity 400ms ease;
 	}

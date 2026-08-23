@@ -55,7 +55,7 @@ const year = new Date().getFullYear()
 ---
 
 <!doctype html>
-<html lang="en" class="design-zellij light">
+<html lang="en" class="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta
@@ -257,7 +257,7 @@ const year = new Date().getFullYear()
 </html>
 
 <style is:global>
-	.design-zellij {
+	:root {
 		--z-font-display: 'Amiri', 'Times New Roman', serif;
 		--z-font-body: 'Spectral', 'Iowan Old Style', Georgia, serif;
 		/* Arabic is always Amiri */
@@ -309,7 +309,7 @@ const year = new Date().getFullYear()
 
 	/* ————— Light: qishani ivory ————— */
 
-	.design-zellij.light {
+	.light {
 		--zj-ground: #f5eedf;
 		--zj-panel: #ece3cc;
 		--zj-text: #26221a;
@@ -359,7 +359,7 @@ const year = new Date().getFullYear()
 
 	/* ————— Dark: the Blue Quran — gold on indigo-dyed vellum ————— */
 
-	.design-zellij.dark {
+	.dark {
 		--zj-ground: #132347;
 		--zj-panel: #1a2c55;
 		--zj-text: #ede3cb;
@@ -382,7 +382,7 @@ const year = new Date().getFullYear()
 		color-scheme: dark;
 	}
 
-	.design-zellij body {
+	body {
 		margin: 0;
 		background: var(--zj-ground);
 		color: var(--zj-text);
@@ -396,19 +396,19 @@ const year = new Date().getFullYear()
 			color var(--zj-swap);
 	}
 
-	.design-zellij ::selection {
+	::selection {
 		background: var(--zj-selection);
 	}
 
-	.design-zellij :focus-visible {
+	.zj-page :focus-visible {
 		outline: 2px solid var(--zj-accent);
 		outline-offset: 3px;
 	}
 
 	/* ————— The mashrabiya screen behind the carpet page ————— */
 
-	.design-zellij body::before,
-	.design-zellij body::after {
+	body::before,
+	body::after {
 		content: '';
 		position: fixed;
 		z-index: -1;
@@ -417,7 +417,7 @@ const year = new Date().getFullYear()
 	}
 
 	@media (min-width: 75em) {
-		.design-zellij body::before {
+		body::before {
 			display: block;
 			inset: 0;
 			background-image: var(--zj-screen);
@@ -435,7 +435,7 @@ const year = new Date().getFullYear()
 	 * lattice above has already faded out, so the two never fight.
 	 */
 	@media (min-width: 96em) {
-		.design-zellij body::after {
+		body::after {
 			display: block;
 			top: 50%;
 			right: calc(50% + var(--zj-lattice-clear));
@@ -451,7 +451,7 @@ const year = new Date().getFullYear()
 
 	/* ————— The carpet-page frame ————— */
 
-	.design-zellij .zj-page {
+	.zj-page {
 		position: relative;
 		max-width: 47rem;
 		margin: 0 auto;
@@ -466,35 +466,35 @@ const year = new Date().getFullYear()
 			border-color var(--zj-swap);
 	}
 
-	.design-zellij .zj-corner {
+	.zj-corner {
 		position: absolute;
 		display: block;
 		color: var(--zj-gild);
 	}
 
-	.design-zellij .zj-corner polygon {
+	.zj-corner polygon {
 		fill: var(--zj-ground);
 	}
 
-	.design-zellij .zj-corner-tl {
+	.zj-corner-tl {
 		top: var(--zj-corner-inset);
 		left: var(--zj-corner-inset);
 		transform: translate(-50%, -50%);
 	}
 
-	.design-zellij .zj-corner-tr {
+	.zj-corner-tr {
 		top: var(--zj-corner-inset);
 		right: var(--zj-corner-inset);
 		transform: translate(50%, -50%);
 	}
 
-	.design-zellij .zj-corner-bl {
+	.zj-corner-bl {
 		bottom: var(--zj-corner-inset);
 		left: var(--zj-corner-inset);
 		transform: translate(-50%, 50%);
 	}
 
-	.design-zellij .zj-corner-br {
+	.zj-corner-br {
 		bottom: var(--zj-corner-inset);
 		right: var(--zj-corner-inset);
 		transform: translate(50%, 50%);
@@ -516,22 +516,22 @@ const year = new Date().getFullYear()
 	 */
 
 	/* Both snapshots are opaque here, so the default lighter blend has nothing to do */
-	.design-zellij[data-zj-sweep]::view-transition-image-pair(root) {
+	[data-zj-sweep]::view-transition-image-pair(root) {
 		isolation: auto;
 	}
 
-	.design-zellij[data-zj-sweep]::view-transition-old(root),
-	.design-zellij[data-zj-sweep]::view-transition-new(root) {
+	[data-zj-sweep]::view-transition-old(root),
+	[data-zj-sweep]::view-transition-new(root) {
 		display: block;
 		animation: none;
 		mix-blend-mode: normal;
 	}
 
-	.design-zellij[data-zj-sweep]::view-transition-old(root) {
+	[data-zj-sweep]::view-transition-old(root) {
 		z-index: 0;
 	}
 
-	.design-zellij[data-zj-sweep]::view-transition-new(root) {
+	[data-zj-sweep]::view-transition-new(root) {
 		z-index: 1;
 		-webkit-mask-size: 220% 220%;
 		mask-size: 220% 220%;
@@ -541,13 +541,13 @@ const year = new Date().getFullYear()
 	}
 
 	/* Night comes down from the top-left corner */
-	.design-zellij[data-zj-sweep='dark']::view-transition-new(root) {
+	[data-zj-sweep='dark']::view-transition-new(root) {
 		-webkit-mask-image: linear-gradient(135deg, #000 0 46%, transparent 53%);
 		mask-image: linear-gradient(135deg, #000 0 46%, transparent 53%);
 	}
 
 	/* Day comes back up from the opposite one */
-	.design-zellij[data-zj-sweep='light']::view-transition-new(root) {
+	[data-zj-sweep='light']::view-transition-new(root) {
 		-webkit-mask-image: linear-gradient(315deg, #000 0 46%, transparent 53%);
 		mask-image: linear-gradient(315deg, #000 0 46%, transparent 53%);
 		animation-name: zj-sweep-back;
@@ -579,7 +579,7 @@ const year = new Date().getFullYear()
 
 	/* ————— Masthead ————— */
 
-	.design-zellij .zj-masthead {
+	.zj-masthead {
 		text-align: center;
 	}
 
@@ -587,7 +587,7 @@ const year = new Date().getFullYear()
 	 * The one display line set at regular: Amiri's bold reads lumpy at masthead
 	 * size, and 400 sits closer to the naskh underneath it.
 	 */
-	.design-zellij .zj-name {
+	.zj-name {
 		margin: 0;
 		font-family: var(--z-font-display);
 		font-weight: 400;
@@ -596,16 +596,16 @@ const year = new Date().getFullYear()
 		letter-spacing: 0.01em;
 	}
 
-	.design-zellij .zj-name a {
+	.zj-name a {
 		color: inherit;
 		text-decoration: none;
 	}
 
-	.design-zellij .zj-name a:hover {
+	.zj-name a:hover {
 		color: var(--zj-accent);
 	}
 
-	.design-zellij .zj-name-ar {
+	.zj-name-ar {
 		margin: 0.1rem 0 0;
 		font-family: var(--z-font-arabic);
 		font-size: clamp(1.15rem, 3vw, 1.5rem);
@@ -613,7 +613,7 @@ const year = new Date().getFullYear()
 		color: var(--zj-accent);
 	}
 
-	.design-zellij .zj-role {
+	.zj-role {
 		margin: 0.7rem 0 0;
 		font-size: 0.8125rem;
 		font-weight: 600;
@@ -622,46 +622,46 @@ const year = new Date().getFullYear()
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-masthead-compact .zj-name {
+	.zj-masthead-compact .zj-name {
 		font-size: 1.55rem;
 	}
 
-	.design-zellij .zj-masthead-compact .zj-name-ar {
+	.zj-masthead-compact .zj-name-ar {
 		font-size: 1.05rem;
 	}
 
 	/* ————— Girih frieze band ————— */
 
-	.design-zellij .zj-frieze-band {
+	.zj-frieze-band {
 		margin: 1.4rem calc(-1 * var(--zj-page-pad-x)) 0;
 		border-block: 1px solid var(--zj-hairline);
 		line-height: 0;
 	}
 
-	.design-zellij .zj-frieze {
+	.zj-frieze {
 		display: block;
 		width: 100%;
 		height: 40px;
 		fill: none;
 	}
 
-	.design-zellij .zj-frieze-star {
+	.zj-frieze-star {
 		stroke: var(--zj-geo);
 		stroke-width: 1.2;
 	}
 
-	.design-zellij .zj-frieze-square {
+	.zj-frieze-square {
 		stroke: var(--zj-gild);
 		stroke-width: 0.75;
 		opacity: 0.6;
 	}
 
 	/* Gold on indigo carries 0.6 easily; bronze on ivory needs the extra weight */
-	.design-zellij.light .zj-frieze-square {
+	.light .zj-frieze-square {
 		opacity: 0.8;
 	}
 
-	.design-zellij .zj-frieze-cross {
+	.zj-frieze-cross {
 		stroke: var(--zj-geo);
 		stroke-width: 1;
 		opacity: 0.35;
@@ -672,7 +672,7 @@ const year = new Date().getFullYear()
 	 * is set on the instances: the dash properties are inherited, which is the
 	 * only way into the shape a <use> carries.
 	 */
-	.design-zellij .zj-frieze use {
+	.zj-frieze use {
 		stroke-dasharray: 1;
 		stroke-dashoffset: 0;
 		animation: zj-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) backwards;
@@ -686,7 +686,7 @@ const year = new Date().getFullYear()
 
 	/* ————— Links ————— */
 
-	.design-zellij a {
+	a {
 		color: var(--zj-accent);
 		text-decoration: underline;
 		text-decoration-color: var(--zj-underline-rest);
@@ -697,13 +697,13 @@ const year = new Date().getFullYear()
 			color 150ms ease;
 	}
 
-	.design-zellij a:hover {
+	a:hover {
 		text-decoration-color: var(--zj-gild);
 		text-decoration-thickness: 2px;
 	}
 
 	/* Every link that leaves the site says so, in chrome and in prose alike */
-	.design-zellij a[target='_blank']::after {
+	a[target='_blank']::after {
 		content: '';
 		display: inline-block;
 		width: 0.6em;
@@ -722,16 +722,16 @@ const year = new Date().getFullYear()
 
 	/* ————— Home sections ————— */
 
-	.design-zellij .zj-main {
+	.zj-main {
 		padding-top: 2.25rem;
 	}
 
-	.design-zellij .zj-section {
+	.zj-section {
 		max-width: 68ch;
 		margin-inline: auto;
 	}
 
-	.design-zellij .zj-section-title {
+	.zj-section-title {
 		margin: 0 0 1.3rem;
 		font-family: var(--z-font-display);
 		font-weight: 700;
@@ -740,11 +740,11 @@ const year = new Date().getFullYear()
 		text-align: center;
 	}
 
-	.design-zellij .zj-lead {
+	.zj-lead {
 		margin: 0 0 1.2em;
 	}
 
-	.design-zellij .zj-divider {
+	.zj-divider {
 		display: flex;
 		align-items: center;
 		gap: 1.1rem;
@@ -753,21 +753,21 @@ const year = new Date().getFullYear()
 		color: var(--zj-gild);
 	}
 
-	.design-zellij .zj-divider::before,
-	.design-zellij .zj-divider::after {
+	.zj-divider::before,
+	.zj-divider::after {
 		content: '';
 		flex: 1;
 		border-top: 1px solid var(--zj-hairline);
 	}
 
-	.design-zellij .zj-divider svg {
+	.zj-divider svg {
 		display: block;
 		fill: none;
 		stroke: currentColor;
 		stroke-width: 1;
 	}
 
-	.design-zellij .zj-social {
+	.zj-social {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.4rem 1.7rem;
@@ -780,24 +780,24 @@ const year = new Date().getFullYear()
 		text-transform: uppercase;
 	}
 
-	.design-zellij .zj-social a {
+	.zj-social a {
 		text-decoration: none;
 	}
 
-	.design-zellij .zj-social a:hover {
+	.zj-social a:hover {
 		text-decoration: underline;
 		text-decoration-color: var(--zj-gild);
 	}
 
 	/* ————— Entry lists ————— */
 
-	.design-zellij .zj-entries {
+	.zj-entries {
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	.design-zellij .zj-entry {
+	.zj-entry {
 		display: grid;
 		grid-template-columns: 0.95rem 1fr;
 		grid-template-areas:
@@ -809,32 +809,32 @@ const year = new Date().getFullYear()
 		padding-block: 0.7rem;
 	}
 
-	.design-zellij .zj-entry + .zj-entry {
+	.zj-entry + .zj-entry {
 		border-top: 1px solid var(--zj-rule);
 	}
 
-	.design-zellij .zj-entry-star {
+	.zj-entry-star {
 		grid-area: star;
 		margin-top: 0.55rem;
 		color: var(--zj-gild);
 	}
 
-	.design-zellij .zj-entry-star svg {
+	.zj-entry-star svg {
 		display: block;
 		transform-origin: 50% 50%;
 		transition: transform 200ms ease;
 	}
 
 	/* 22.5° is the khatam's own symmetry angle — the star lands on itself */
-	.design-zellij .zj-entry:hover .zj-entry-star svg {
+	.zj-entry:hover .zj-entry-star svg {
 		transform: rotate(22.5deg);
 	}
 
-	.design-zellij .zj-entry-title {
+	.zj-entry-title {
 		grid-area: title;
 	}
 
-	.design-zellij .zj-entry-title a {
+	.zj-entry-title a {
 		text-decoration: none;
 		padding-bottom: 0.1em;
 		background-image: linear-gradient(var(--zj-gild), var(--zj-gild));
@@ -846,12 +846,12 @@ const year = new Date().getFullYear()
 		transition: background-size 200ms ease;
 	}
 
-	.design-zellij .zj-entry:hover .zj-entry-title a,
-	.design-zellij .zj-entry-title a:focus-visible {
+	.zj-entry:hover .zj-entry-title a,
+	.zj-entry-title a:focus-visible {
 		background-size: 100% 1px;
 	}
 
-	.design-zellij .zj-entry-date {
+	.zj-entry-date {
 		grid-area: date;
 		font-size: 0.9rem;
 		color: var(--zj-text-muted);
@@ -859,20 +859,20 @@ const year = new Date().getFullYear()
 		letter-spacing: 0.02em;
 	}
 
-	.design-zellij .zj-entry-desc {
+	.zj-entry-desc {
 		grid-area: desc;
 		margin: 0;
 		font-size: 0.9375rem;
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-entry-extra {
+	.zj-entry-extra {
 		font-size: 0.9375rem;
 		color: var(--zj-text-muted);
 	}
 
 	@media (min-width: 40em) {
-		.design-zellij .zj-entry-dated {
+		.zj-entry-dated {
 			grid-template-columns: 0.95rem 6.5rem 1fr;
 			grid-template-areas:
 				'star date title'
@@ -880,24 +880,24 @@ const year = new Date().getFullYear()
 			align-items: baseline;
 		}
 
-		.design-zellij .zj-entry-dated .zj-entry-star {
+		.zj-entry-dated .zj-entry-star {
 			align-self: start;
 		}
 	}
 
 	/* ————— Article pages ————— */
 
-	.design-zellij .zj-article {
+	.zj-article {
 		max-width: 68ch;
 		margin-inline: auto;
 	}
 
-	.design-zellij .zj-article-header {
+	.zj-article-header {
 		text-align: center;
 		margin-bottom: 2.5rem;
 	}
 
-	.design-zellij .zj-article-kicker {
+	.zj-article-kicker {
 		margin: 0 0 0.5rem;
 		font-size: 0.75rem;
 		font-weight: 600;
@@ -906,7 +906,7 @@ const year = new Date().getFullYear()
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-article-title {
+	.zj-article-title {
 		margin: 0;
 		font-family: var(--z-font-display);
 		font-weight: 700;
@@ -914,14 +914,14 @@ const year = new Date().getFullYear()
 		line-height: 1.25;
 	}
 
-	.design-zellij .zj-article-meta {
+	.zj-article-meta {
 		margin: 0.8rem 0 0;
 		font-size: 0.9rem;
 		color: var(--zj-text-muted);
 		font-variant-numeric: oldstyle-nums;
 	}
 
-	.design-zellij .zj-article-tags {
+	.zj-article-tags {
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		font-size: 0.75rem;
@@ -930,21 +930,21 @@ const year = new Date().getFullYear()
 	}
 
 	/* The closing note answers the meta line under the title, at the same weight */
-	.design-zellij .zj-colophon {
+	.zj-colophon {
 		margin: 0 0 2.4rem;
 		text-align: center;
 		font-size: 0.9rem;
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-article-nav {
+	.zj-article-nav {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 0.9rem;
 		font-size: 0.9375rem;
 	}
 
-	.design-zellij .zj-nav-label {
+	.zj-nav-label {
 		display: block;
 		font-size: 0.7rem;
 		font-weight: 600;
@@ -954,85 +954,85 @@ const year = new Date().getFullYear()
 	}
 
 	/* The spacer for a missing older/newer post only earns a cell in the wide layout */
-	.design-zellij .zj-article-nav > span:empty {
+	.zj-article-nav > span:empty {
 		display: none;
 	}
 
-	.design-zellij .zj-article-nav a {
+	.zj-article-nav a {
 		text-decoration: none;
 	}
 
-	.design-zellij .zj-article-nav a:hover {
+	.zj-article-nav a:hover {
 		text-decoration: underline;
 		text-decoration-color: var(--zj-gild);
 	}
 
 	@media (min-width: 40em) {
-		.design-zellij .zj-article-nav {
+		.zj-article-nav {
 			grid-template-columns: 1fr auto 1fr;
 			gap: 1.5rem;
 		}
 
-		.design-zellij .zj-article-nav > span:empty {
+		.zj-article-nav > span:empty {
 			display: block;
 		}
 
-		.design-zellij .zj-nav-newer {
+		.zj-nav-newer {
 			text-align: right;
 		}
 
-		.design-zellij .zj-nav-index {
+		.zj-nav-index {
 			align-self: start;
 		}
 	}
 
 	/* ————— Prose (rendered MDX) ————— */
 
-	.design-zellij .zj-prose {
+	.zj-prose {
 		overflow-wrap: break-word;
 	}
 
-	.design-zellij .zj-prose > p:first-child {
+	.zj-prose > p:first-child {
 		font-size: 1.125rem;
 	}
 
-	.design-zellij .zj-prose p {
+	.zj-prose p {
 		margin: 0 0 1.35em;
 	}
 
-	.design-zellij .zj-prose h2,
-	.design-zellij .zj-prose h3,
-	.design-zellij .zj-prose h4,
-	.design-zellij .zj-prose h5,
-	.design-zellij .zj-prose h6 {
+	.zj-prose h2,
+	.zj-prose h3,
+	.zj-prose h4,
+	.zj-prose h5,
+	.zj-prose h6 {
 		font-family: var(--z-font-display);
 		font-weight: 700;
 		line-height: 1.3;
 		margin: 1.9em 0 0.6em;
 	}
 
-	.design-zellij .zj-prose h2 {
+	.zj-prose h2 {
 		font-size: 1.6rem;
 	}
 
-	.design-zellij .zj-prose h3 {
+	.zj-prose h3 {
 		font-size: 1.3rem;
 	}
 
-	.design-zellij .zj-prose h4 {
+	.zj-prose h4 {
 		font-size: 1.1rem;
 	}
 
-	.design-zellij .zj-prose h5 {
+	.zj-prose h5 {
 		font-size: 1rem;
 	}
 
-	.design-zellij .zj-prose h6 {
+	.zj-prose h6 {
 		font-size: 0.9rem;
 	}
 
 	/* The resting hairline keeps the affordance; the gilded bar grows in on hover */
-	.design-zellij .zj-prose a {
+	.zj-prose a {
 		text-decoration: none;
 		padding-bottom: 0.08em;
 		background-image:
@@ -1050,82 +1050,82 @@ const year = new Date().getFullYear()
 		transition: background-size 180ms ease;
 	}
 
-	.design-zellij .zj-prose a:hover,
-	.design-zellij .zj-prose a:focus-visible {
+	.zj-prose a:hover,
+	.zj-prose a:focus-visible {
 		background-size:
 			100% 1px,
 			100% 2px;
 	}
 
-	.design-zellij .zj-prose ul,
-	.design-zellij .zj-prose ol {
+	.zj-prose ul,
+	.zj-prose ol {
 		margin: 0 0 1.35em;
 		padding-left: 1.5rem;
 	}
 
 	/* The global preflight strips list styling; restore it for prose */
-	.design-zellij .zj-prose ul {
+	.zj-prose ul {
 		list-style: disc outside;
 	}
 
-	.design-zellij .zj-prose ol {
+	.zj-prose ol {
 		list-style: decimal outside;
 	}
 
-	.design-zellij .zj-prose li {
+	.zj-prose li {
 		margin-bottom: 0.35em;
 	}
 
 	/* Gilding is reserved for ornament — list numerals are text and need real contrast */
-	.design-zellij .zj-prose li::marker {
+	.zj-prose li::marker {
 		color: var(--zj-text-muted);
 	}
 
 	/* Spectral is loaded at 400/600 only — keep bold text on a real weight */
-	.design-zellij .zj-prose strong,
-	.design-zellij .zj-prose b {
+	.zj-prose strong,
+	.zj-prose b {
 		font-weight: 600;
 	}
 
-	.design-zellij .zj-prose blockquote {
+	.zj-prose blockquote {
 		margin: 0 0 1.35em;
 		padding: 0.1rem 0 0.1rem 1.25rem;
 		border-left: 2px solid var(--zj-gild);
 		font-style: italic;
 	}
 
-	.design-zellij .zj-prose blockquote p:last-child {
+	.zj-prose blockquote p:last-child {
 		margin-bottom: 0;
 	}
 
 	/* Italicised monospace identifiers are hard to scan */
-	.design-zellij .zj-prose blockquote code {
+	.zj-prose blockquote code {
 		font-style: normal;
 	}
 
-	.design-zellij .zj-prose hr {
+	.zj-prose hr {
 		width: 60%;
 		margin: 2.5rem auto;
 		border: none;
 		border-top: 1px solid var(--zj-rule);
 	}
 
-	.design-zellij .zj-prose table {
+	.zj-prose table {
 		width: 100%;
 		margin: 0 0 1.5em;
 		border-collapse: collapse;
 		font-size: 0.9375rem;
 	}
 
-	.design-zellij .zj-prose th,
-	.design-zellij .zj-prose td {
+	.zj-prose th,
+	.zj-prose td {
 		padding: 0.5rem 0.75rem;
 		border-bottom: 1px solid var(--zj-rule);
 		text-align: left;
 		vertical-align: top;
 	}
 
-	.design-zellij .zj-prose th {
+	.zj-prose th {
 		font-weight: 600;
 		font-size: 0.8125rem;
 		letter-spacing: 0.1em;
@@ -1133,26 +1133,26 @@ const year = new Date().getFullYear()
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-prose img {
+	.zj-prose img {
 		max-width: 100%;
 		height: auto;
 	}
 
 	/* An anchor wrapping only an image would drag a link underline across the artwork */
-	.design-zellij .zj-prose a:has(> img) {
+	.zj-prose a:has(> img) {
 		background-image: none;
 		padding-bottom: 0;
 	}
 
-	.design-zellij .zj-prose a[target='_blank']:has(> img)::after {
+	.zj-prose a[target='_blank']:has(> img)::after {
 		content: none;
 	}
 
-	.design-zellij .zj-prose figure {
+	.zj-prose figure {
 		margin: 2rem 0;
 	}
 
-	.design-zellij .zj-prose figcaption {
+	.zj-prose figcaption {
 		margin-top: 0.5rem;
 		font-size: 0.875rem;
 		font-style: italic;
@@ -1160,33 +1160,33 @@ const year = new Date().getFullYear()
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-prose iframe {
+	.zj-prose iframe {
 		max-width: 100%;
 		border: 0;
 	}
 
-	.design-zellij .zj-prose [class*='tweet'] {
+	.zj-prose [class*='tweet'] {
 		max-width: min(100%, 32rem);
 		margin-inline: auto;
 	}
 
 	/* The embedded card ships its own link colours; stop the design from repainting them */
-	.design-zellij .zj-prose [class*='tweet'] a {
+	.zj-prose [class*='tweet'] a {
 		color: inherit;
 		text-decoration: none;
 		background-image: none;
 		padding-bottom: 0;
 	}
 
-	.design-zellij .zj-prose [class*='tweet'] a:hover {
+	.zj-prose [class*='tweet'] a:hover {
 		text-decoration: underline;
 	}
 
-	.design-zellij .zj-prose [class*='tweet'] a[target='_blank']::after {
+	.zj-prose [class*='tweet'] a[target='_blank']::after {
 		content: none;
 	}
 
-	.design-zellij .zj-prose code {
+	.zj-prose code {
 		font-family: var(--z-font-mono);
 		font-size: 0.86em;
 		background: var(--zj-panel);
@@ -1200,7 +1200,7 @@ const year = new Date().getFullYear()
 
 	/* ————— Shiki code blocks ————— */
 
-	.design-zellij .astro-code {
+	.astro-code {
 		overflow-x: auto;
 		margin: 0 0 1.5em;
 		padding: 1.15rem 1.3rem;
@@ -1212,15 +1212,15 @@ const year = new Date().getFullYear()
 	}
 
 	/* Shiki inlines a cool grey background; the block shares the panel of its title bar */
-	.design-zellij .astro-code,
-	.design-zellij .astro-code-themes {
+	.astro-code,
+	.astro-code-themes {
 		background-color: var(--zj-panel) !important;
 		transition:
 			background-color var(--zj-swap),
 			border-color var(--zj-swap);
 	}
 
-	.design-zellij .astro-code code {
+	.astro-code code {
 		font-family: inherit;
 		font-size: inherit;
 		background: none;
@@ -1234,12 +1234,12 @@ const year = new Date().getFullYear()
 	 * property. Only the colour has to flip — plain-light and plain-dark carry
 	 * identical font styles, which are already inline.
 	 */
-	.design-zellij.dark .astro-code,
-	.design-zellij.dark .astro-code span {
+	.dark .astro-code,
+	.dark .astro-code span {
 		color: var(--shiki-dark) !important;
 	}
 
-	.design-zellij .code-title {
+	.code-title {
 		padding: 0.45rem 1.3rem;
 		font-family: var(--z-font-mono);
 		font-size: 0.72rem;
@@ -1254,13 +1254,13 @@ const year = new Date().getFullYear()
 			color var(--zj-swap);
 	}
 
-	.design-zellij .code-title + pre {
+	.code-title + pre {
 		margin-top: 0;
 	}
 
 	/* ————— Footer ————— */
 
-	.design-zellij .zj-footer {
+	.zj-footer {
 		margin-top: 3rem;
 		padding-top: 1.25rem;
 		border-top: 1px solid var(--zj-rule);
@@ -1269,7 +1269,7 @@ const year = new Date().getFullYear()
 		color: var(--zj-text-muted);
 	}
 
-	.design-zellij .zj-footer p {
+	.zj-footer p {
 		margin: 0;
 	}
 
@@ -1279,31 +1279,31 @@ const year = new Date().getFullYear()
 	 * Sections settle in one after another. The stagger is capped so a long
 	 * home page never keeps the reader waiting on the last card.
 	 */
-	.design-zellij .zj-main > * {
+	.zj-main > * {
 		animation: zj-rise 500ms ease-out backwards;
 	}
 
-	.design-zellij .zj-main > *:nth-child(2) {
+	.zj-main > *:nth-child(2) {
 		animation-delay: 70ms;
 	}
 
-	.design-zellij .zj-main > *:nth-child(3) {
+	.zj-main > *:nth-child(3) {
 		animation-delay: 140ms;
 	}
 
-	.design-zellij .zj-main > *:nth-child(4) {
+	.zj-main > *:nth-child(4) {
 		animation-delay: 210ms;
 	}
 
-	.design-zellij .zj-main > *:nth-child(5) {
+	.zj-main > *:nth-child(5) {
 		animation-delay: 280ms;
 	}
 
-	.design-zellij .zj-main > *:nth-child(6) {
+	.zj-main > *:nth-child(6) {
 		animation-delay: 350ms;
 	}
 
-	.design-zellij .zj-main > *:nth-child(n + 7) {
+	.zj-main > *:nth-child(n + 7) {
 		animation-delay: 420ms;
 	}
 

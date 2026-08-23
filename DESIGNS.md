@@ -34,8 +34,8 @@ and it is a computed one.
 ### Palette
 
 Light is a qishani ivory manuscript page. Dark is the Blue Quran. Both are
-expressed as the same set of semantic custom properties on
-`.design-zellij.light` / `.design-zellij.dark`, so every rule and every SVG
+expressed as the same set of semantic custom properties on the `.light` /
+`.dark` class the theme script keeps on `<html>`, so every rule and every SVG
 stroke re-themes without a second code path.
 
 | Token             | Light (ivory)            | Dark (Blue Quran)         | Used for                                |
