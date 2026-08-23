@@ -568,10 +568,14 @@ const year = new Date().getFullYear()
 		text-align: center;
 	}
 
+	/*
+	 * The one display line set at regular: Amiri's bold reads lumpy at masthead
+	 * size, and 400 sits closer to the naskh underneath it.
+	 */
 	.design-zellij .zj-name {
 		margin: 0;
 		font-family: var(--z-font-display);
-		font-weight: 700;
+		font-weight: 400;
 		font-size: clamp(2.1rem, 6vw, 3.15rem);
 		line-height: 1.2;
 		letter-spacing: 0.01em;
