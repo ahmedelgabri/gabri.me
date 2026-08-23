@@ -6,7 +6,9 @@
 	// and points `wrangler` at it via `.wrangler/deploy/config.json`, so a plain
 	// `wrangler deploy` after `pnpm build` picks up the built output.
 	"main": "@astrojs/cloudflare/entrypoints/server",
-	"compatibility_date": "2026-08-23",
+	// Keep at or below the newest date the installed wrangler's workerd supports,
+	// or `wrangler dev` refuses to start locally even though the edge is fine.
+	"compatibility_date": "2026-08-18",
 	// `global_fetch_strictly_public` sends fetch() calls to our own hostname back
 	// out through the edge instead of looping straight into this Worker.
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
