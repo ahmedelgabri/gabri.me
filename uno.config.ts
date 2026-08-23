@@ -1,16 +1,10 @@
-import {
-	defineConfig,
-	presetWind4,
-	presetIcons,
-	transformerDirectives,
-} from 'unocss'
+import {defineConfig, presetWind4} from 'unocss'
 
 export default defineConfig({
-	layers: {
-		'my-layer': -200,
-	},
+	// The design's own styles are unlayered, so they outrank everything Uno
+	// emits regardless of specificity. Keeping the reset inside a cascade layer
+	// is what makes that hold.
 	outputToCssLayers: true,
-	transformers: [transformerDirectives()],
 	presets: [
 		presetWind4({
 			preflights: {
@@ -18,22 +12,7 @@ export default defineConfig({
 			},
 			dark: 'class',
 		}),
-		presetIcons({
-			extraProperties: {
-				display: 'inline-block',
-				'vertical-align': 'middle',
-			},
-		}),
 	],
-	theme: {
-		font: {
-			mono: '"PragmataPro Liga", "PragmataPro", "Iosevka", "Iosevka Term", "IBM Plex Mono", Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-			serif:
-				'"Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, ui-serif, serif',
-			sans: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-		},
-	},
-	rules: [['w-content', {width: 'min(70ch, 100%)'}]],
 	postprocess: [
 		(util) => {
 			util.entries.forEach((entry) => {
