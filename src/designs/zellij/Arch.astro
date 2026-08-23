@@ -1,63 +1,113 @@
 ---
+import {arches, ARCH_HEIGHT, ARCH_WIDTH, IMPOST_Y} from './arches'
+
 /*
- * Two-centred drop arch. Each half is a circular arc whose centre sits on
- * the springing line, offset from the axis toward the opposite side; the
- * offset makes the arcs meet at the apex in a true point (this requires
- * rise > half-span). The viewBox crops the band to the crown — the
- * springing line itself lies below the visible area — and short impost
- * hairlines ground the arcs where they exit the frame.
+ * All six arches are rendered; the script below chooses one before they are
+ * parsed, and CSS shows only that one. With no script the drop arch — the
+ * design's own, from Ibn Tulun — stands.
  */
-const mid = 360
-const halfSpan = 270
-const rise = 300
-const springY = 320
-const cropHeight = 210
-const gap = 12
-
-const offset = (rise * rise - halfSpan * halfSpan) / (2 * halfSpan)
-const outerR = halfSpan + offset
-const innerR = outerR - gap
-
-const apexY = springY - rise
-const innerApexY = springY - Math.sqrt(innerR * innerR - offset * offset)
-const innerSpringX = mid + offset - innerR
-
-const impostY = cropHeight - 1.5
-const outerExitX =
-	mid + offset - Math.sqrt(outerR * outerR - (springY - impostY) ** 2)
-
-const r2 = (n: number) => Math.round(n * 100) / 100
-
-const outerPath = [
-	`M ${mid - halfSpan} ${springY}`,
-	`A ${r2(outerR)} ${r2(outerR)} 0 0 1 ${mid} ${apexY}`,
-	`A ${r2(outerR)} ${r2(outerR)} 0 0 1 ${mid + halfSpan} ${springY}`,
-].join(' ')
-
-const innerPath = [
-	`M ${r2(innerSpringX)} ${springY}`,
-	`A ${r2(innerR)} ${r2(innerR)} 0 0 1 ${mid} ${r2(innerApexY)}`,
-	`A ${r2(innerR)} ${r2(innerR)} 0 0 1 ${r2(2 * mid - innerSpringX)} ${springY}`,
-].join(' ')
+const viewBox = `0 0 ${ARCH_WIDTH} ${ARCH_HEIGHT}`
+const ids = arches.map(({id}) => id)
 ---
 
-<svg class="zj-arch" viewBox={`0 0 720 ${cropHeight}`} aria-hidden="true">
-	<line
-		class="zj-arch-impost"
-		x1="0"
-		y1={impostY}
-		x2={r2(outerExitX)}
-		y2={impostY}
-		pathLength="1"
-	/>
-	<line
-		class="zj-arch-impost"
-		x1={r2(2 * mid - outerExitX)}
-		y1={impostY}
-		x2="720"
-		y2={impostY}
-		pathLength="1"
-	/>
-	<path class="zj-arch-inner" d={innerPath} pathLength="1"></path>
-	<path class="zj-arch-outer" d={outerPath} pathLength="1"></path>
-</svg>
+<span class="zj-arch-frame">
+	<script is:inline define:vars={{ids}}>
+		/*
+		 * Runs where it stands, before the arches after it are parsed, so the one
+		 * that is drawn is the only one that ever paints: no swap, no restart of
+		 * the draw-in, nothing to reflow.
+		 */
+		;(function () {
+			var frame = document.currentScript.parentNode
+			frame.setAttribute(
+				'data-zj-arch',
+				ids[Math.floor(Math.random() * ids.length)],
+			)
+		})()
+	</script>
+	{
+		arches.map((arch) => (
+			<span class="zj-arch-item" data-arch={arch.id}>
+				<svg class="zj-arch" viewBox={viewBox} aria-hidden="true">
+					<line
+						class="zj-arch-impost"
+						x1="0"
+						y1={IMPOST_Y}
+						x2={arch.paths.impostX}
+						y2={IMPOST_Y}
+						pathLength="1"
+					/>
+					<line
+						class="zj-arch-impost"
+						x1={ARCH_WIDTH - arch.paths.impostX}
+						y1={IMPOST_Y}
+						x2={ARCH_WIDTH}
+						y2={IMPOST_Y}
+						pathLength="1"
+					/>
+					<path class="zj-arch-inner" d={arch.paths.inner} pathLength="1" />
+					<path class="zj-arch-outer" d={arch.paths.outer} pathLength="1" />
+				</svg>
+				<span class="zj-arch-caption">
+					{arch.caption.pre}<a
+						href={arch.caption.href}
+						target="_blank"
+						rel="noreferrer noopener"
+					>{arch.caption.linkText}</a>{arch.caption.post}
+				</span>
+			</span>
+		))
+	}
+</span>
+
+<style is:global>
+	.design-zellij .zj-arch-frame {
+		display: block;
+	}
+
+	/* All six are in the page; the chosen one is the only one drawn */
+	.design-zellij .zj-arch-frame > .zj-arch-item {
+		display: none;
+	}
+
+	/* Nothing chose — no script — and the drop arch stands */
+	.design-zellij .zj-arch-frame:not([data-zj-arch]) > [data-arch='drop'],
+	.design-zellij [data-zj-arch='drop'] > [data-arch='drop'],
+	.design-zellij [data-zj-arch='horseshoe'] > [data-arch='horseshoe'],
+	.design-zellij [data-zj-arch='fourCentred'] > [data-arch='fourCentred'],
+	.design-zellij [data-zj-arch='ogee'] > [data-arch='ogee'],
+	.design-zellij [data-zj-arch='keel'] > [data-arch='keel'],
+	.design-zellij [data-zj-arch='multifoil'] > [data-arch='multifoil'] {
+		display: block;
+	}
+
+	/* A plate label, shown only while the reader is with the arch. Its line
+	 * stays reserved so the reveal never shifts the header. */
+	.design-zellij .zj-arch-caption {
+		display: block;
+		margin-top: 0.15rem;
+		font-family: var(--z-font-body);
+		font-size: 0.5625rem;
+		letter-spacing: 0.04em;
+		text-align: center;
+		color: var(--zj-text-muted);
+		opacity: 0;
+		transition: opacity 250ms ease;
+	}
+
+	.design-zellij .zj-arch-frame:hover .zj-arch-caption,
+	.design-zellij .zj-arch-frame:focus-within .zj-arch-caption {
+		opacity: 1;
+	}
+
+	/* No hover, no reveal — touch readers keep the label */
+	@media (hover: none) {
+		.design-zellij .zj-arch-caption {
+			opacity: 1;
+		}
+	}
+
+	.design-zellij .zj-arch-caption a {
+		color: inherit;
+	}
+</style>

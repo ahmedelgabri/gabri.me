@@ -14,7 +14,9 @@ RTL-on-the-web writing. Three specific references do the work:
 
 - **Ibn Tulun's mosque** for the two-centred pointed arch that crowns post
   titles — computed, not traced: each half is a circular arc whose centre is
-  offset from the axis so the two arcs meet in a true point.
+  offset from the axis so the two arcs meet in a true point. It heads a
+  portfolio of six arches, one of them struck over each post; see
+  [The arches](#the-arches).
 - **Mamluk Cairo geometric ornament** for the star-and-cross girih system in the
   page furniture. It derives from one construction in
   `src/designs/zellij/geometry.ts`: the khatam, the eight-point star that is the
@@ -89,7 +91,60 @@ The khatam as a working system, not a decorative sticker: a mathematically exact
 star-and-cross girih frieze under the masthead that draws itself in on load,
 star-and-cross section dividers, star list markers that rotate onto themselves
 on hover, khatam corner marks on the manuscript carpet-page frame, and the
-two-centred arch over post titles.
+arches over post titles.
+
+### The arches
+
+The arch over a post title is one of six, chosen at random on every page load
+and named in a tiny caption revealed on hover. Each is a construction in
+`src/designs/zellij/arches.ts` rather than a traced silhouette, and all six
+share one 720×210 band: the same crown height, the springing line below the
+visible area wherever the form allows it, a double rule whose inner line is a
+true parallel of the outer at 12 units, and impost hairlines running from the
+frame edges to the point where the outer line leaves it.
+
+- **Two-centred drop arch** — the
+  [Mosque of Ibn Tulun](https://en.wikipedia.org/wiki/Mosque_of_Ibn_Tulun),
+  Cairo, 876–879. Two arcs whose centres sit on the springing line, each offset
+  from the axis toward the far side so the pair meets in a true point.
+- **Rounded [horseshoe](https://en.wikipedia.org/wiki/Horseshoe_arch)** — the
+  [Great Mosque of Córdoba](https://en.wikipedia.org/wiki/Mosque%E2%80%93Cathedral_of_C%C3%B3rdoba),
+  from 785. One circle, stilted a third of its radius above the springing line,
+  so the arc passes its widest point — the full diameter — before it turns back
+  in to the imposts: the span at the springing is only √8/3 = 0.943 of it.
+- **[Four-centred arch](https://en.wikipedia.org/wiki/Four-centred_arch)** —
+  Persia and the Timurid east. Haunches struck from the quarter points of the
+  span, crown arcs struck from centres below the springing line and across the
+  axis, internally tangent to the haunches with their centres R − r apart. The
+  rise is 0.70 of the half-span and the tangent at the apex tilts 6°, which is
+  the arch's point.
+- **[Ogee](https://en.wikipedia.org/wiki/Ogee)** — Mamluk Cairo and beyond. A
+  convex haunch and a concave crown, tangent externally at the inflection with
+  their centres r + R apart; the crown's radius is whatever makes the arc reach
+  the apex.
+- **Keel arch** — the
+  [al-Aqmar Mosque](https://en.wikipedia.org/wiki/Aqmar_Mosque), Cairo, 1125.
+  Curved haunches continued by straight runs into the point, each straight the
+  tangent drawn to its haunch circle from the apex, so the join has no kink.
+- **[Seven-lobed multifoil](https://en.wikipedia.org/wiki/Multifoil_arch)** —
+  the [Aljafería](https://en.wikipedia.org/wiki/Aljafer%C3%ADa), Zaragoza, 11th
+  century. Lobes riding a supporting semicircle of the family's own half-span,
+  overlapping just enough that each neighbouring pair of circles crosses at 130°
+  — that crossing is the cusp — with the outer pair of lobes halved by the
+  springing, so the flanks meet the imposts vertically. Its inner line is the
+  real parallel rather than a smaller multifoil: lobe arcs 12 smaller, filleted
+  around every cusp on a 12 radius, because a line held 12 clear of a spike has
+  to turn around its point.
+
+A script inside the component runs before the six are parsed, marks the wrapper
+with the chosen id, and CSS shows that one and hides the rest. The arch that is
+drawn is the only one that ever paints — no swap, no restarted draw-in, no
+reflow, and all six fill the same box. Without JavaScript the drop arch stands.
+A tiny caption under the arch names the type and its provenance and carries one
+of the verified links above (the keel's caption links its building, since
+Wikipedia files the keel under the four-centred arch). It shows only while the
+arch is hovered or its link focused — its line stays reserved so nothing shifts
+— and stays visible on touch screens, where there is no hover.
 
 ### The background lattice
 
