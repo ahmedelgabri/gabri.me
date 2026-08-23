@@ -4,6 +4,7 @@ import DesignSwitcher from '../../components/DesignSwitcher.astro'
 import siteMeta from '../../config/siteMeta'
 import GirihFrieze from './GirihFrieze.astro'
 import NightSky from './NightSky.astro'
+import Observatory from './Observatory.astro'
 import Pencil from './Pencil.astro'
 import Star from './Star.astro'
 
@@ -71,7 +72,7 @@ const year = new Date().getFullYear()
 						: window.__zjThemeSetting
 				}
 
-				/* The toggle is inert without this script, so it only appears once it runs */
+				/* The observatory is inert without this script, so it only appears once it runs */
 				document.documentElement.classList.add('zj-js')
 
 				function apply(theme) {
@@ -79,7 +80,7 @@ const year = new Date().getFullYear()
 					root.classList.remove('light', 'dark')
 					root.classList.add(theme)
 					window.__zjTheme = theme
-					/* The toggle's label follows the resolved theme, system changes included */
+					/* Everything that follows the sky hears this, system changes included */
 					window.dispatchEvent(new CustomEvent('zj:theme'))
 				}
 
@@ -109,23 +110,7 @@ const year = new Date().getFullYear()
 			<Star class="zj-corner zj-corner-bl" size={18} />
 			<Star class="zj-corner zj-corner-br" size={18} />
 
-			<button class="zj-theme-toggle" type="button" aria-live="polite">
-				<svg
-					class="zj-toggle-glyph zj-toggle-moon"
-					viewBox="0 0 24 24"
-					width="19"
-					height="19"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="1.5"
-					stroke-linejoin="round"
-					aria-hidden="true"
-				>
-					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-				</svg>
-				<Star class="zj-toggle-glyph zj-toggle-sun" size={19} />
-				<span class="zj-toggle-label">Switch to dark theme</span>
-			</button>
+			<Observatory />
 
 			<header class:list={['zj-masthead', {'zj-masthead-compact': !hero}]}>
 				<slot name="ornament" />
@@ -157,35 +142,6 @@ const year = new Date().getFullYear()
 		<Pencil />
 		<NightSky />
 		<DesignSwitcher />
-		<script is:inline>
-			;(function () {
-				var button = document.querySelector('.zj-theme-toggle')
-				var label = button && button.querySelector('.zj-toggle-label')
-
-				if (!button || !label) {
-					return
-				}
-
-				function sync() {
-					var next =
-						window.__zjTheme === 'dark'
-							? 'Switch to light theme'
-							: 'Switch to dark theme'
-
-					/* Writing an unchanged label would make the live region speak for nothing */
-					if (label.textContent !== next) {
-						label.textContent = next
-					}
-				}
-
-				sync()
-				window.addEventListener('zj:theme', sync)
-
-				button.addEventListener('click', function () {
-					window.__zjSetTheme(window.__zjTheme === 'dark' ? 'light' : 'dark')
-				})
-			})()
-		</script>
 	</body>
 </html>
 
@@ -384,7 +340,7 @@ const year = new Date().getFullYear()
 		border: 1px solid var(--zj-gild);
 		outline: 1px solid var(--zj-hairline);
 		outline-offset: 4px;
-		/* The top margin also has to clear the theme toggle in the corner */
+		/* The top margin also has to clear the observatory's control in the corner */
 		padding: clamp(2.85rem, 4vw, 3.25rem) var(--zj-page-pad-x) 2.25rem;
 		background: var(--zj-ground);
 		transition:
@@ -426,62 +382,81 @@ const year = new Date().getFullYear()
 		transform: translate(50%, 50%);
 	}
 
-	/* ————— Theme toggle ————— */
+	/* ————— Dusk and dawn: the sweep between the two grounds ————— */
 
-	.design-zellij .zj-theme-toggle {
-		display: none;
-		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
-		align-items: center;
-		justify-content: center;
-		width: 2.25rem;
-		height: 2.25rem;
-		padding: 0;
-		border: none;
-		background: none;
-		color: var(--zj-gild);
-		cursor: pointer;
-		transition: color 300ms ease;
+	/*
+	 * Both snapshots are held still and the incoming one is uncovered along the
+	 * 135° diagonal instead. The mask is 2.2 times the page in each direction,
+	 * so the page is 1/2.2 of the mask box along either axis whatever the window
+	 * shape — which is why one pair of stops works for every window. The head of
+	 * the gradient is that same 1/2.2, so the run begins with the page wholly
+	 * past the front and ends with it wholly inside: no dead travel at either
+	 * end, and a soft edge about a seventh of the page deep.
+	 *
+	 * Only the observatory's own switch sets data-zj-sweep. A change that came
+	 * from the system preference leaves it unset and cross-fades as before.
+	 */
+
+	/* Both snapshots are opaque here, so the default lighter blend has nothing to do */
+	.design-zellij[data-zj-sweep]::view-transition-image-pair(root) {
+		isolation: auto;
 	}
 
-	.design-zellij.zj-js .zj-theme-toggle {
-		display: flex;
-	}
-
-	/* The glyph names the theme the button switches TO: crescent by day, star by night */
-	.design-zellij .zj-toggle-glyph {
-		position: absolute;
+	.design-zellij[data-zj-sweep]::view-transition-old(root),
+	.design-zellij[data-zj-sweep]::view-transition-new(root) {
 		display: block;
-		transition:
-			opacity 300ms ease,
-			transform 300ms ease;
+		animation: none;
+		mix-blend-mode: normal;
 	}
 
-	.design-zellij.light .zj-toggle-sun,
-	.design-zellij.dark .zj-toggle-moon {
-		opacity: 0;
-		transform: rotate(-90deg) scale(0.6);
+	.design-zellij[data-zj-sweep]::view-transition-old(root) {
+		z-index: 0;
 	}
 
-	.design-zellij.light .zj-toggle-moon,
-	.design-zellij.dark .zj-toggle-sun {
-		opacity: 1;
-		transform: none;
+	.design-zellij[data-zj-sweep]::view-transition-new(root) {
+		z-index: 1;
+		-webkit-mask-size: 220% 220%;
+		mask-size: 220% 220%;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		animation: zj-sweep 1100ms cubic-bezier(0.55, 0, 0.3, 1) both;
 	}
 
-	.design-zellij.light .zj-theme-toggle:hover .zj-toggle-moon,
-	.design-zellij.dark .zj-theme-toggle:hover .zj-toggle-sun {
-		transform: rotate(15deg);
+	/* Night comes down from the top-left corner */
+	.design-zellij[data-zj-sweep='dark']::view-transition-new(root) {
+		-webkit-mask-image: linear-gradient(135deg, #000 0 46%, transparent 53%);
+		mask-image: linear-gradient(135deg, #000 0 46%, transparent 53%);
 	}
 
-	.design-zellij .zj-toggle-label {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
+	/* Day comes back up from the opposite one */
+	.design-zellij[data-zj-sweep='light']::view-transition-new(root) {
+		-webkit-mask-image: linear-gradient(315deg, #000 0 46%, transparent 53%);
+		mask-image: linear-gradient(315deg, #000 0 46%, transparent 53%);
+		animation-name: zj-sweep-back;
+	}
+
+	@keyframes zj-sweep {
+		from {
+			mask-position: 100% 100%;
+			-webkit-mask-position: 100% 100%;
+		}
+
+		to {
+			mask-position: 0% 0%;
+			-webkit-mask-position: 0% 0%;
+		}
+	}
+
+	@keyframes zj-sweep-back {
+		from {
+			mask-position: 0% 0%;
+			-webkit-mask-position: 0% 0%;
+		}
+
+		to {
+			mask-position: 100% 100%;
+			-webkit-mask-position: 100% 100%;
+		}
 	}
 
 	/* ————— Masthead ————— */

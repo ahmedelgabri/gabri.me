@@ -1,0 +1,1294 @@
+---
+import Star from './Star.astro'
+import StarDivider from './StarDivider.astro'
+import {DEEP, LABELS, glyphPetals} from './observatory/rosette'
+
+/*
+ * The corner of the carpet page keeps an almanac. By night the control is
+ * tonight's moon at its true phase; by day it is the rosette the ground is
+ * tiled with. Either one opens a plate that explains itself and ends with the
+ * hour changing.
+ *
+ * The glyphs are cut at twenty-four pixels, where the rosette's chords and
+ * crossings collapse into a smudge — so the day glyph keeps the sixteen petals
+ * and the ring they close on, and nothing else.
+ */
+const GLYPH = 24
+const GLYPH_R = 10
+const petals = glyphPetals(GLYPH / 2, GLYPH / 2, GLYPH_R)
+const glyphRing = Math.round(GLYPH_R * DEEP * 100) / 100
+
+/*
+ * The disc is built in the figure's own units and scaled by CSS, so the plate
+ * can give it whatever room it has without the geometry being recomputed.
+ */
+const DISC = 240
+const DISC_R = 106
+
+const corners = ['tl', 'tr', 'bl', 'br'] as const
+
+const wiki = 'https://en.wikipedia.org/wiki'
+---
+
+<div class="zj-observatory" data-zj-observatory>
+	<button
+		class="zj-obs-control"
+		type="button"
+		aria-haspopup="dialog"
+		aria-expanded="false"
+		aria-describedby="zj-obs-caption"
+		data-zj-obs-open
+	>
+		<span class="zj-obs-glyph zj-obs-night" aria-hidden="true">
+			<svg
+				class="zj-obs-moon"
+				viewBox="0 0 24 24"
+				width={GLYPH}
+				height={GLYPH}
+				data-zj-obs-glyph
+			>
+				<circle class="zj-obs-rim" cx="12" cy="12" r="9"></circle>
+				{/* A plain crescent until the phase is computed, and if it never is */}
+				<path
+					class="zj-obs-lit"
+					d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+					data-zj-obs-glyph-lit></path>
+			</svg>
+		</span>
+		<span class="zj-obs-glyph zj-obs-day" aria-hidden="true">
+			<svg class="zj-obs-rosette" viewBox="0 0 24 24" width={GLYPH} height={GLYPH}>
+				<polygon points={petals}></polygon>
+				<circle cx="12" cy="12" r={glyphRing}></circle>
+			</svg>
+		</span>
+		{/* The name follows the sky, and only one of the two is ever rendered */}
+		<span class="zj-obs-name zj-obs-night">About tonight’s moon</span>
+		<span class="zj-obs-name zj-obs-day">About the rosette</span>
+	</button>
+
+	<span class="zj-obs-caption" id="zj-obs-caption" role="tooltip">
+		<span class="zj-obs-night">
+			<span class="zj-obs-word" lang="ar" dir="rtl">هلال</span>
+			<span data-zj-obs-phase>tonight’s moon</span>
+		</span>
+		<span class="zj-obs-day">
+			<span class="zj-obs-word" lang="ar" dir="rtl">شمسة</span>
+			<span>the sixteen-petal rosette — how it is drawn</span>
+		</span>
+	</span>
+
+	{/* Theme changes made from the plate are spoken; system changes are not */}
+	<p class="zj-obs-live" aria-live="polite" data-zj-obs-live></p>
+
+	<dialog class="zj-obs-plate" aria-modal="true" data-zj-obs-plate>
+		{
+			corners.map((corner) => (
+				<Star class={`zj-obs-corner zj-obs-corner-${corner}`} size={15} />
+			))
+		}
+
+		<button
+			class="zj-obs-close"
+			type="button"
+			aria-label="Close"
+			data-zj-obs-close
+		>
+			<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+				<path d="M3 3 13 13M13 3 3 13"></path>
+			</svg>
+		</button>
+
+		{/* Focus lands on the sheet, so the plate is read from its own top and scrolls by key */}
+		<div class="zj-obs-sheet" tabindex="-1" autofocus>
+			<section class="zj-obs-face zj-obs-night">
+				<p class="zj-obs-kicker">The observatory</p>
+				<h2 class="zj-obs-title" id="zj-obs-title-night">
+					Tonight’s moon
+					<span class="zj-obs-title-ar" lang="ar" dir="rtl">هلال</span>
+				</h2>
+
+				<figure class="zj-obs-figure">
+					<svg
+						class="zj-obs-disc"
+						viewBox={`0 0 ${DISC} ${DISC}`}
+						aria-hidden="true"
+					>
+						<defs>
+							<linearGradient
+								id="zj-obs-glaze"
+								gradientUnits="userSpaceOnUse"
+								x1="0"
+								y1="0"
+								x2={DISC}
+								y2="0"
+								data-zj-obs-glaze
+							>
+								{/* Bright at the limb, all but gone at the terminator, where the sun grazes */}
+								<stop offset="0" stop-color="currentColor" stop-opacity="0.17"
+								></stop>
+								<stop offset="1" stop-color="currentColor" stop-opacity="0.035"
+								></stop>
+							</linearGradient>
+						</defs>
+						{/* The whole disc, unlit and all: the moon is there on a new moon too */}
+						<circle
+							class="zj-obs-disc-rim"
+							cx={DISC / 2}
+							cy={DISC / 2}
+							r={DISC_R}></circle>
+						<path class="zj-obs-disc-lit" data-zj-obs-disc></path>
+					</svg>
+					<figcaption class="zj-obs-readout" data-zj-obs-readout></figcaption>
+				</figure>
+
+				<div class="zj-obs-scrub">
+					<input
+						class="zj-obs-slider"
+						type="range"
+						min="-15"
+						max="15"
+						step="0.25"
+						value="0"
+						aria-label="Days from tonight"
+						data-zj-obs-scrub
+					/>
+					<p class="zj-obs-ticks" aria-hidden="true">
+						<span>−15 days</span><span>tonight</span><span>+15 days</span>
+					</p>
+				</div>
+
+				<dl class="zj-obs-facts">
+					<div>
+						<dt>Next new moon</dt>
+						<dd data-zj-obs-new>—</dd>
+					</div>
+					<div>
+						<dt>Next full moon</dt>
+						<dd data-zj-obs-full>—</dd>
+					</div>
+				</dl>
+
+				<StarDivider />
+
+				<div class="zj-obs-passage">
+					<p>
+						The first thin crescent — <span lang="ar" dir="rtl">هلال</span>, the
+						hilal — is the moon a day or two out of conjunction, and it is a
+						beginning. The <a
+							href={`${wiki}/Islamic_calendar`}
+							target="_blank"
+							rel="noopener">Hijri calendar</a
+						> is lunar: twelve months of twenty-nine or thirty days, a year some eleven
+						days shorter than the solar one, so its months walk backwards through
+						the seasons. A month opens when the new crescent is seen — and the naked-eye
+						hilal is a hard object, thin and low and lost in the dusk it hangs in,
+						which is why <a
+							href={`${wiki}/Moon_sighting_in_Islam`}
+							target="_blank"
+							rel="noopener">what counts as seeing it</a
+						> has been argued over for centuries.
+					</p>
+					<p>
+						That is one reason the <a
+							href={`${wiki}/Astronomy_in_the_medieval_Islamic_world`}
+							target="_blank"
+							rel="noopener">astronomers of the medieval Islamic world</a
+						> measured the moon as closely as they did. <a
+							href={`${wiki}/Al-Battani`}
+							target="_blank"
+							rel="noopener">Al-Battani</a
+						>, who spent most of his life at Raqqa and died in 929, left the earliest
+						surviving zīj — a book of astronomical tables — in the Ptolemaic tradition,
+						and tables like it could place the crescent before anyone went out to
+						look for it. The disc above is worked the same way: everything on it follows
+						from ψ, the angle between sun and moon, which fixes both <a
+							href={`${wiki}/Lunar_phase`}
+							target="_blank"
+							rel="noopener">the phase</a
+						> and the lit fraction, (1 − cos ψ) ⁄ 2.
+					</p>
+				</div>
+			</section>
+
+			<section class="zj-obs-face zj-obs-day">
+				<p class="zj-obs-kicker">The observatory</p>
+				<h2 class="zj-obs-title" id="zj-obs-title-day">
+					The sixteen-petal rosette
+					<span class="zj-obs-title-ar" lang="ar" dir="rtl">شمسة</span>
+				</h2>
+
+				<figure class="zj-obs-figure">
+					<svg
+						class="zj-obs-construction"
+						viewBox={`0 0 ${DISC} ${DISC}`}
+						aria-hidden="true"
+						data-zj-obs-figure></svg>
+					<figcaption class="zj-obs-stage" data-zj-obs-stage>
+						{LABELS[0][1]}
+					</figcaption>
+				</figure>
+
+				<div class="zj-obs-scrub">
+					<button class="zj-obs-hold" type="button" data-zj-obs-pause>
+						Hold the compass
+					</button>
+				</div>
+
+				<StarDivider />
+
+				<div class="zj-obs-passage">
+					<p>
+						Everything here is stepped off one circle. Sixteen points around it,
+						each joined to the sixth from it; the {'{16/6}'} star polygon that follows
+						then supplies its own measurements — the petal valleys at 0.689 R where
+						consecutive chords meet, the ring at 0.390 R where they cross closest
+						to the centre. Nothing is chosen by eye.
+					</p>
+					<p>
+						Patterns built on that kind of scaffolding are <a
+							href={`${wiki}/Girih`}
+							target="_blank"
+							rel="noopener">girih</a
+						>, the interlaced strapwork behind much of <a
+							href={`${wiki}/Islamic_geometric_patterns`}
+							target="_blank"
+							rel="noopener">Islamic geometric ornament</a
+						>; cut from glazed terracotta and set piece by hand-chiselled piece,
+						the same figures become <a
+							href={`${wiki}/Zellij`}
+							target="_blank"
+							rel="noopener">zellij</a
+						>, the mosaic of Morocco and al-Andalus this page is named for. What
+						craftsmen carried between sites was the construction rather than the
+						finished design: the <a
+							href={`${wiki}/Topkap%C4%B1_Scroll`}
+							target="_blank"
+							rel="noopener">Topkapı Scroll</a
+						>, 114 patterns from the Timurid workshops, is the one pattern-book of
+						its kind to survive. The eight-pointed star this rosette closes on is
+						the khatam — two squares laid across each other, the octagram the Qur’an
+						uses in its margins as the <a
+							href={`${wiki}/Rub_el_Hizb`}
+							target="_blank"
+							rel="noopener">Rub el Hizb</a
+						>.
+					</p>
+				</div>
+			</section>
+		</div>
+
+		{/* Outside the sheet, so it holds the foot of the plate however far the passage runs */}
+		<div class="zj-obs-foot">
+			<button class="zj-obs-switch" type="button" data-zj-obs-switch>
+				<span class="zj-obs-night">
+					<span class="zj-obs-switch-word">Dawn</span>
+					<span class="zj-obs-switch-note">switch to the light theme</span>
+				</span>
+				<span class="zj-obs-day">
+					<span class="zj-obs-switch-word">Dusk</span>
+					<span class="zj-obs-switch-note">switch to the dark theme</span>
+				</span>
+			</button>
+		</div>
+	</dialog>
+</div>
+
+<style is:global>
+	/* ————— The corner control ————— */
+
+	.design-zellij .zj-observatory {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		/* Above the masthead, so the caption may hang over the ornament */
+		z-index: 2;
+	}
+
+	.design-zellij .zj-obs-control {
+		display: none;
+		position: relative;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--zj-gild);
+		cursor: pointer;
+		transition: color 300ms ease;
+	}
+
+	/* The control is inert without the theme script, so it only appears once it runs */
+	.design-zellij.zj-js .zj-obs-control {
+		display: flex;
+	}
+
+	/* Only ever one sky at a time — and the hidden name is hidden from readers too */
+	.design-zellij.light .zj-obs-night,
+	.design-zellij.dark .zj-obs-day {
+		display: none;
+	}
+
+	.design-zellij .zj-obs-glyph {
+		display: block;
+		line-height: 0;
+	}
+
+	.design-zellij .zj-obs-glyph svg {
+		display: block;
+		transition: transform 400ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	/* 22.5° is the rosette's own symmetry angle — half a petal, and it lands on itself */
+	.design-zellij .zj-obs-control:hover .zj-obs-rosette {
+		transform: rotate(22.5deg);
+	}
+
+	.design-zellij .zj-obs-control:hover .zj-obs-moon {
+		transform: rotate(-8deg);
+	}
+
+	.design-zellij .zj-obs-rosette {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.2;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.design-zellij .zj-obs-rim {
+		display: none;
+		fill: none;
+		stroke: currentColor;
+		stroke-opacity: 0.32;
+		stroke-width: 1;
+	}
+
+	.design-zellij .zj-obs-lit {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linejoin: round;
+	}
+
+	/* Set once the true phase has replaced the plain crescent */
+	.design-zellij .zj-obs-computed .zj-obs-rim {
+		display: block;
+	}
+
+	.design-zellij .zj-obs-computed .zj-obs-lit {
+		fill: currentColor;
+		fill-opacity: 0.3;
+		stroke-width: 1;
+	}
+
+	.design-zellij .zj-obs-name,
+	.design-zellij .zj-obs-live {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	/* ————— The manuscript caption ————— */
+
+	/*
+	 * Hung from the control's own right edge and never wider than the window
+	 * allows, so it has no way of reaching either side of the frame. Kept
+	 * rendered rather than hidden, because it is the control's description.
+	 */
+	.design-zellij .zj-obs-caption {
+		position: absolute;
+		top: calc(100% + 0.35rem);
+		right: 0;
+		width: max-content;
+		max-width: min(17rem, calc(100vw - 2.5rem));
+		padding: 0.4rem 0.7rem;
+		border: 1px solid var(--zj-hairline);
+		background: var(--zj-panel);
+		color: var(--zj-text-muted);
+		font-family: var(--z-font-body);
+		font-size: 0.75rem;
+		font-style: italic;
+		line-height: 1.5;
+		text-align: right;
+		opacity: 0;
+		transform: translateY(-3px);
+		pointer-events: none;
+		transition:
+			opacity 180ms ease,
+			transform 180ms ease;
+	}
+
+	.design-zellij .zj-obs-word {
+		font-family: var(--z-font-arabic);
+		font-size: 1.15em;
+		font-style: normal;
+		color: var(--zj-accent);
+	}
+
+	/*
+	 * The separator belongs to the English half. Hung off the Arabic instead it
+	 * would be laid out inside that span's right-to-left run and come out on
+	 * the wrong side of the word.
+	 */
+	.design-zellij .zj-obs-word + span::before {
+		content: ' · ';
+	}
+
+	.design-zellij .zj-obs-control:focus-visible ~ .zj-obs-caption {
+		opacity: 1;
+		transform: none;
+	}
+
+	/* A finger has no hover to rest; it goes straight to the plate instead */
+	@media (hover: hover) and (pointer: fine) {
+		.design-zellij .zj-obs-control:hover ~ .zj-obs-caption {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	/* ————— The plate ————— */
+
+	.design-zellij .zj-obs-plate {
+		position: fixed;
+		inset: 0;
+		width: min(36rem, calc(100% - 1.75rem));
+		max-width: none;
+		max-height: min(86vh, 46rem);
+		margin: auto;
+		padding: 0;
+		border: 1px solid var(--zj-gild);
+		outline: 1px solid var(--zj-hairline);
+		outline-offset: 4px;
+		background: var(--zj-ground);
+		color: var(--zj-text);
+		/* The corner stars sit astride the frame, so nothing may clip them */
+		overflow: visible;
+	}
+
+	.design-zellij .zj-obs-plate::backdrop {
+		background: rgba(38, 34, 26, 0.6);
+	}
+
+	.design-zellij.dark .zj-obs-plate::backdrop {
+		background: rgba(7, 14, 32, 0.72);
+	}
+
+	/*
+	 * A column, so the sheet is handed exactly the height the plate has left
+	 * after its own cap and scrolls inside it — rather than being told a cap of
+	 * its own and having to arrive at the same answer twice.
+	 */
+	.design-zellij .zj-obs-plate[open] {
+		display: flex;
+		flex-direction: column;
+		animation: zj-obs-rise 260ms cubic-bezier(0.2, 0, 0.2, 1);
+	}
+
+	@keyframes zj-obs-rise {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+	}
+
+	.design-zellij .zj-obs-corner {
+		position: absolute;
+		display: block;
+		color: var(--zj-gild);
+	}
+
+	.design-zellij .zj-obs-corner polygon {
+		fill: var(--zj-ground);
+	}
+
+	.design-zellij .zj-obs-corner-tl {
+		top: -1px;
+		left: -1px;
+		transform: translate(-50%, -50%);
+	}
+
+	.design-zellij .zj-obs-corner-tr {
+		top: -1px;
+		right: -1px;
+		transform: translate(50%, -50%);
+	}
+
+	.design-zellij .zj-obs-corner-bl {
+		bottom: -1px;
+		left: -1px;
+		transform: translate(-50%, 50%);
+	}
+
+	.design-zellij .zj-obs-corner-br {
+		bottom: -1px;
+		right: -1px;
+		transform: translate(50%, 50%);
+	}
+
+	.design-zellij .zj-obs-close {
+		position: absolute;
+		top: 0.55rem;
+		right: 0.55rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--zj-text-muted);
+		cursor: pointer;
+		transition: color 150ms ease;
+	}
+
+	.design-zellij .zj-obs-close:hover {
+		color: var(--zj-gild);
+	}
+
+	.design-zellij .zj-obs-close path {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.25;
+	}
+
+	.design-zellij .zj-obs-sheet {
+		flex: 1 1 auto;
+		/* Without this a flex item refuses to shrink below its content */
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		padding: 1.9rem clamp(1.1rem, 4vw, 2.2rem) 0;
+		text-align: center;
+	}
+
+	.design-zellij .zj-obs-kicker {
+		margin: 0 0 0.45rem;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.26em;
+		text-transform: uppercase;
+		color: var(--zj-text-muted);
+	}
+
+	.design-zellij .zj-obs-title {
+		margin: 0;
+		font-family: var(--z-font-display);
+		font-weight: 700;
+		font-size: clamp(1.45rem, 5vw, 1.9rem);
+		line-height: 1.25;
+	}
+
+	.design-zellij .zj-obs-title-ar {
+		display: block;
+		margin-top: 0.1rem;
+		font-family: var(--z-font-arabic);
+		font-size: 0.78em;
+		font-weight: 400;
+		color: var(--zj-accent);
+	}
+
+	.design-zellij .zj-obs-figure {
+		margin: 1.3rem 0 0;
+	}
+
+	.design-zellij .zj-obs-disc,
+	.design-zellij .zj-obs-construction {
+		display: block;
+		height: auto;
+		margin: 0 auto;
+	}
+
+	.design-zellij .zj-obs-disc {
+		width: min(11.25rem, 56vw);
+		color: var(--zj-gild);
+	}
+
+	/*
+	 * Both figures are drawn in a 240-unit box and shown smaller, so their
+	 * stroke widths are set to land on one CSS pixel at the size each is given.
+	 */
+	.design-zellij .zj-obs-disc-rim {
+		fill: none;
+		stroke: currentColor;
+		stroke-opacity: 0.26;
+		stroke-width: 1.35;
+	}
+
+	.design-zellij .zj-obs-disc-lit {
+		fill: url(#zj-obs-glaze);
+		stroke: currentColor;
+		stroke-opacity: 0.9;
+		stroke-width: 1.35;
+	}
+
+	/* The tile's own kohl, at the tile's own weights */
+	.design-zellij .zj-obs-construction {
+		width: min(13.75rem, 64vw);
+		fill: none;
+		stroke: var(--zj-text);
+		stroke-width: 1.2;
+	}
+
+	.design-zellij .zj-obs-readout,
+	.design-zellij .zj-obs-stage {
+		margin: 0.85rem 0 0;
+		font-family: var(--z-font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.05em;
+		color: var(--zj-text-muted);
+		transition: opacity 160ms ease;
+	}
+
+	/* A caption swapping mid-fade would read as two sentences at once */
+	.design-zellij .zj-obs-stage.is-out {
+		opacity: 0;
+	}
+
+	.design-zellij .zj-obs-scrub {
+		width: min(20rem, 90%);
+		margin: 1.1rem auto 0;
+	}
+
+	.design-zellij .zj-obs-slider {
+		display: block;
+		width: 100%;
+		height: 0.9rem;
+		margin: 0;
+		padding: 0;
+		background: none;
+		cursor: ew-resize;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	.design-zellij .zj-obs-slider::-webkit-slider-runnable-track {
+		height: 1px;
+		background: var(--zj-hairline);
+	}
+
+	.design-zellij .zj-obs-slider::-moz-range-track {
+		height: 1px;
+		background: var(--zj-hairline);
+	}
+
+	/* The handle is a diamond: the khatam's four-fold cousin, as on external links */
+	.design-zellij .zj-obs-slider::-webkit-slider-thumb {
+		width: 10px;
+		height: 10px;
+		margin-top: -4.5px;
+		border: 1px solid var(--zj-gild);
+		border-radius: 0;
+		background: var(--zj-ground);
+		transform: rotate(45deg);
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	.design-zellij .zj-obs-slider::-moz-range-thumb {
+		width: 10px;
+		height: 10px;
+		border: 1px solid var(--zj-gild);
+		border-radius: 0;
+		background: var(--zj-ground);
+		transform: rotate(45deg);
+	}
+
+	.design-zellij .zj-obs-ticks {
+		display: flex;
+		justify-content: space-between;
+		margin: 0.15rem 0 0;
+		font-family: var(--z-font-mono);
+		font-size: 0.625rem;
+		letter-spacing: 0.05em;
+		color: var(--zj-text-muted);
+	}
+
+	.design-zellij .zj-obs-hold {
+		padding: 0.3rem 0.9rem;
+		border: 1px solid var(--zj-hairline);
+		background: none;
+		color: var(--zj-text-muted);
+		font-family: var(--z-font-body);
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition:
+			color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.design-zellij .zj-obs-hold:hover {
+		color: var(--zj-gild);
+		border-color: var(--zj-gild);
+	}
+
+	.design-zellij .zj-obs-facts {
+		display: grid;
+		gap: 0.6rem 1.6rem;
+		margin: 1.3rem 0 0;
+	}
+
+	.design-zellij .zj-obs-facts dt {
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--zj-text-muted);
+	}
+
+	.design-zellij .zj-obs-facts dd {
+		margin: 0.15rem 0 0;
+		font-size: 0.9375rem;
+		font-variant-numeric: oldstyle-nums;
+	}
+
+	@media (min-width: 30em) {
+		.design-zellij .zj-obs-facts {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.design-zellij .zj-obs-sheet .zj-divider {
+		margin: 1.5rem auto;
+	}
+
+	/*
+	 * No text-wrap: pretty here. Every link carries the design's external mark,
+	 * which is an inline-block, and the pretty rebalancer will happily break
+	 * between that mark and the comma that follows it.
+	 */
+	.design-zellij .zj-obs-passage {
+		max-width: 46ch;
+		margin-inline: auto;
+		font-size: 0.9375rem;
+		line-height: 1.7;
+		text-align: left;
+	}
+
+	.design-zellij .zj-obs-passage p {
+		margin: 0 0 1em;
+	}
+
+	.design-zellij .zj-obs-passage p:last-child {
+		margin-bottom: 0;
+	}
+
+	/* ————— Dusk and dawn ————— */
+
+	/*
+	 * The plate is taller than most windows, and the hour changing is the one
+	 * thing on it that is an action rather than a reading — so it stays put at
+	 * the foot while the passage scrolls under it.
+	 */
+	.design-zellij .zj-obs-foot {
+		position: relative;
+		flex: none;
+		padding: 1.5rem clamp(1.1rem, 4vw, 2.2rem) 1.6rem;
+		background: var(--zj-ground);
+	}
+
+	/* The passage runs out under the foot rather than stopping short of it */
+	.design-zellij .zj-obs-foot::before {
+		content: '';
+		position: absolute;
+		inset: -1.6rem 0 100%;
+		background: linear-gradient(transparent, var(--zj-ground));
+		pointer-events: none;
+	}
+
+	.design-zellij .zj-obs-switch {
+		display: block;
+		width: 100%;
+		padding: 0.75rem 1rem;
+		border: 1px solid var(--zj-gild);
+		background: none;
+		color: var(--zj-text);
+		cursor: pointer;
+		transition:
+			background-color 200ms ease,
+			border-color 200ms ease;
+	}
+
+	.design-zellij .zj-obs-switch:hover {
+		background: var(--zj-panel);
+	}
+
+	.design-zellij .zj-obs-switch-word {
+		display: block;
+		font-family: var(--z-font-display);
+		font-weight: 700;
+		font-size: 1.3rem;
+		line-height: 1.2;
+	}
+
+	.design-zellij .zj-obs-switch-note {
+		display: block;
+		margin-top: 0.15rem;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--zj-text-muted);
+	}
+</style>
+
+<script>
+	import {
+		DAY,
+		FULL_MOON,
+		NEW_MOON,
+		illumination,
+		moonShape,
+		nextPhase,
+		phaseName,
+		phaseOn,
+	} from './moon'
+	import {
+		CLEAR,
+		ERASE,
+		LABELS,
+		LOOP,
+		type Layer,
+		buildLayers,
+	} from './observatory/rosette'
+	import {createLayerLifecycle} from './webgl'
+
+	const SVG = 'http://www.w3.org/2000/svg'
+	/* The units the plate's two figures are built in */
+	const FIGURE = 240
+	const DISC_R = 106
+	/* The corner glyph's own box */
+	const GLYPH_R = 9
+	/* A gradient with no width at all is not a gradient; a new moon has none */
+	const MIN_GLAZE = 1
+	/* The caption is out of the way for this long while the next one is written */
+	const SWAP = 160
+	/* Attribute writes are cheap, but not sixty times a second across seventy paths */
+	const STEP = 1000
+
+	type Kind = Layer['kind']
+
+	interface Node {
+		path: SVGPathElement
+		from: number
+		span: number
+		last: number
+	}
+
+	interface Built {
+		group: SVGGElement
+		kind: Kind
+		from: number
+		span: number
+		weight: number
+		scaffold: boolean
+		nodes: Node[]
+		last: number
+	}
+
+	function clamp(value: number): number {
+		return value < 0 ? 0 : value > 1 ? 1 : value
+	}
+
+	function quantise(value: number): number {
+		return Math.round(value * STEP) / STEP
+	}
+
+	function day(date: Date): string {
+		return date.toLocaleDateString('en-GB', {
+			day: 'numeric',
+			month: 'short',
+			year: 'numeric',
+		})
+	}
+
+	function moment(date: Date): string {
+		return `${date.toLocaleDateString('en-GB', {
+			day: 'numeric',
+			month: 'short',
+		})} · ${date.toLocaleTimeString('en-GB', {
+			hour: '2-digit',
+			minute: '2-digit',
+		})}`
+	}
+
+	function setup(
+		root: HTMLElement,
+		control: HTMLButtonElement,
+		plate: HTMLDialogElement,
+	) {
+		const live = root.querySelector<HTMLElement>('[data-zj-obs-live]')
+		const glyph = root.querySelector<SVGSVGElement>('[data-zj-obs-glyph]')
+		const glyphLit = root.querySelector<SVGPathElement>(
+			'[data-zj-obs-glyph-lit]',
+		)
+		const phrase = root.querySelector<HTMLElement>('[data-zj-obs-phase]')
+		const disc = root.querySelector<SVGPathElement>('[data-zj-obs-disc]')
+		const glaze = root.querySelector<SVGElement>('[data-zj-obs-glaze]')
+		const readout = root.querySelector<HTMLElement>('[data-zj-obs-readout]')
+		const scrub = root.querySelector<HTMLInputElement>('[data-zj-obs-scrub]')
+		const newMoon = root.querySelector<HTMLElement>('[data-zj-obs-new]')
+		const fullMoon = root.querySelector<HTMLElement>('[data-zj-obs-full]')
+		const host = root.querySelector<SVGSVGElement>('[data-zj-obs-figure]')
+		const caption = root.querySelector<HTMLElement>('[data-zj-obs-stage]')
+		const hold = root.querySelector<HTMLButtonElement>('[data-zj-obs-pause]')
+		const switcher = root.querySelector<HTMLButtonElement>('[data-zj-obs-switch]')
+		const close = root.querySelector<HTMLButtonElement>('[data-zj-obs-close]')
+
+		/* ————— The moon ————— */
+
+		let stamp = ''
+
+		function tell(date: Date, psi: number) {
+			const lit = Math.round(illumination(psi) * 100)
+			const line = `${day(date)} · ${phaseName(psi)} · ${lit}% lit`
+
+			/* A quarter-day step often reads the same; leave the DOM alone if so */
+			if (readout && line !== stamp) {
+				stamp = line
+				readout.textContent = line
+			}
+		}
+
+		function aim() {
+			const offset = scrub ? Number(scrub.value) : 0
+			const date = new Date(Date.now() + offset * DAY)
+			const psi = phaseOn(date)
+			const shape = moonShape(psi, FIGURE / 2, FIGURE / 2, DISC_R)
+
+			if (disc && glaze) {
+				disc.setAttribute('d', shape.path)
+
+				/*
+				 * The wash runs from the lit limb to the terminator, which at a new
+				 * moon are the same line. Give it a hair of width so the browser
+				 * still has two points to interpolate between.
+				 */
+				const reach = shape.terminatorX - shape.limbX
+				const far =
+					Math.abs(reach) < MIN_GLAZE
+						? shape.limbX + (reach < 0 ? -MIN_GLAZE : MIN_GLAZE)
+						: shape.terminatorX
+
+				glaze.setAttribute('x1', String(shape.limbX))
+				glaze.setAttribute('x2', String(far))
+			}
+
+			tell(date, psi)
+		}
+
+		/* The corner glyph and its caption, which are always tonight rather than the scrub */
+		function tonight() {
+			const psi = phaseOn(new Date())
+
+			if (glyph && glyphLit) {
+				glyphLit.setAttribute(
+					'd',
+					moonShape(psi, 12, 12, GLYPH_R).path,
+				)
+				glyph.classList.add('zj-obs-computed')
+			}
+
+			if (phrase) {
+				const lit = Math.round(illumination(psi) * 100)
+				phrase.textContent = `${phaseName(psi)}, ${lit}% — tonight’s moon`
+			}
+		}
+
+		function almanac() {
+			const now = new Date()
+
+			if (newMoon) {
+				newMoon.textContent = moment(nextPhase(now, NEW_MOON))
+			}
+
+			if (fullMoon) {
+				fullMoon.textContent = moment(nextPhase(now, FULL_MOON))
+			}
+		}
+
+		/* ————— The rosette, drawn as a compass would draw it ————— */
+
+		let built: Built[] | null = null
+		let elapsed = 0
+		let spoken = -1
+		let swap = 0
+
+		function raise() {
+			if (built || !host) {
+				return
+			}
+
+			built = buildLayers(FIGURE / 2, FIGURE / 2, FIGURE * 0.42).map((layer) => {
+				const group = document.createElementNS(SVG, 'g')
+				const nodes = layer.strokes.map((stroke) => {
+					const path = document.createElementNS(SVG, 'path')
+					path.setAttribute('d', stroke.d)
+
+					if (layer.kind === 'draw') {
+						/* Normalised, so one dash and one offset cover the whole line */
+						path.setAttribute('pathLength', '1')
+						path.setAttribute('stroke-dasharray', '1')
+						path.setAttribute('stroke-dashoffset', '1')
+					} else {
+						path.setAttribute('stroke-opacity', '0')
+					}
+
+					group.append(path)
+
+					return {path, from: stroke.from, span: stroke.span, last: 0}
+				})
+
+				group.setAttribute('opacity', '0')
+				host.append(group)
+
+				return {
+					group,
+					kind: layer.kind,
+					from: layer.from,
+					span: layer.span,
+					weight: layer.weight,
+					scaffold: layer.scaffold,
+					nodes,
+					last: 0,
+				}
+			})
+		}
+
+		function say(index: number) {
+			if (index === spoken || !caption) {
+				return
+			}
+
+			spoken = index
+			caption.classList.add('is-out')
+			window.clearTimeout(swap)
+			swap = window.setTimeout(() => {
+				caption.textContent = LABELS[index][1]
+				caption.classList.remove('is-out')
+			}, SWAP)
+		}
+
+		function draw() {
+			if (!built) {
+				return
+			}
+
+			const erased = 1 - clamp((elapsed - ERASE[0]) / ERASE[1])
+			const cleared = 1 - clamp((elapsed - CLEAR[0]) / CLEAR[1])
+
+			for (const layer of built) {
+				const opacity = quantise(
+					layer.weight * cleared * (layer.scaffold ? erased : 1),
+				)
+
+				if (opacity !== layer.last) {
+					layer.last = opacity
+					layer.group.setAttribute('opacity', String(opacity))
+				}
+
+				const reveal = clamp((elapsed - layer.from) / layer.span)
+
+				for (const node of layer.nodes) {
+					const shown = quantise(clamp((reveal - node.from) / node.span))
+
+					if (shown === node.last) {
+						continue
+					}
+
+					node.last = shown
+
+					if (layer.kind === 'draw') {
+						node.path.setAttribute('stroke-dashoffset', String(1 - shown))
+					} else {
+						node.path.setAttribute('stroke-opacity', String(shown))
+					}
+				}
+			}
+
+			let index = 0
+
+			for (let i = 0; i < LABELS.length; i++) {
+				if (elapsed >= LABELS[i][0]) {
+					index = i
+				}
+			}
+
+			say(index)
+		}
+
+		/* ————— The plate ————— */
+
+		let showing = false
+		let held = false
+		let speak = false
+
+		const settle = createLayerLifecycle({
+			frame(delta) {
+				elapsed = (elapsed + delta) % LOOP
+				draw()
+			},
+			awake: () => showing && !held && window.__zjTheme === 'light',
+		})
+
+		function open() {
+			const dark = window.__zjTheme === 'dark'
+			plate.setAttribute(
+				'aria-labelledby',
+				dark ? 'zj-obs-title-night' : 'zj-obs-title-day',
+			)
+
+			if (dark) {
+				/* Every opening asks about tonight, whatever the last visit scrubbed to */
+				if (scrub) {
+					scrub.value = '0'
+				}
+
+				aim()
+				almanac()
+			} else {
+				raise()
+				/* The compass always begins at the beginning, and says so at once */
+				elapsed = 0
+				spoken = 0
+				window.clearTimeout(swap)
+				release()
+
+				if (caption) {
+					caption.classList.remove('is-out')
+					caption.textContent = LABELS[0][1]
+				}
+
+				draw()
+			}
+
+			control.setAttribute('aria-expanded', 'true')
+			plate.showModal()
+			showing = true
+			settle()
+		}
+
+		control.addEventListener('click', open)
+		close?.addEventListener('click', () => plate.close())
+
+		/*
+		 * A click that only ended on the backdrop began somewhere else — usually
+		 * a selection dragged out of the passage — and must not close the plate.
+		 */
+		let outside = false
+
+		plate.addEventListener('pointerdown', (event) => {
+			outside = event.target === plate
+		})
+
+		plate.addEventListener('click', (event) => {
+			if (outside && event.target === plate) {
+				plate.close()
+			}
+		})
+
+		/* Esc and the close button both land here, and so does the theme switch */
+		plate.addEventListener('close', () => {
+			showing = false
+			control.setAttribute('aria-expanded', 'false')
+			settle()
+		})
+
+		scrub?.addEventListener('input', aim)
+
+		/* A held compass belongs to the visit that held it, not to the next one */
+		function release() {
+			held = false
+
+			if (hold) {
+				hold.textContent = 'Hold the compass'
+			}
+		}
+
+		hold?.addEventListener('click', () => {
+			held = !held
+			hold.textContent = held ? 'Draw it again' : 'Hold the compass'
+			settle()
+		})
+
+		/* ————— Dusk and dawn ————— */
+
+		switcher?.addEventListener('click', () => {
+			const next: ThemeSetting = window.__zjTheme === 'dark' ? 'light' : 'dark'
+			/* The change was asked for here, so it is worth announcing */
+			speak = true
+			plate.close()
+			sweep(next)
+		})
+
+		window.addEventListener('zj:theme', () => {
+			if (speak && live) {
+				speak = false
+				live.textContent =
+					window.__zjTheme === 'dark'
+						? 'Dark theme. The corner keeps tonight’s moon.'
+						: 'Light theme. The corner keeps the rosette.'
+			}
+
+			settle()
+		})
+
+		/* A tab left open for days would otherwise keep last week's moon in the corner */
+		document.addEventListener('visibilitychange', () => {
+			if (document.visibilityState === 'visible') {
+				tonight()
+			}
+		})
+
+		tonight()
+	}
+
+	/*
+	 * The theme class is flipped inside a view transition so the two grounds are
+	 * both on screen at once, and the incoming one is wiped in along the 135°
+	 * diagonal — night down from the top-left corner, day back up from the
+	 * bottom-right. Where there are no view transitions the class simply
+	 * changes, and the 300ms colour transitions already on body and page carry
+	 * it across as a cross-fade.
+	 */
+	function sweep(next: ThemeSetting) {
+		const start = document.startViewTransition as
+			| typeof document.startViewTransition
+			| undefined
+
+		if (!start) {
+			window.__zjSetTheme(next)
+			return
+		}
+
+		const root = document.documentElement
+		root.dataset.zjSweep = next
+
+		const done = () => {
+			delete root.dataset.zjSweep
+		}
+
+		start
+			.call(document, () => {
+				window.__zjSetTheme(next)
+			})
+			.finished.then(done, done)
+	}
+
+	const root = document.querySelector<HTMLElement>('[data-zj-observatory]')
+	const control = root?.querySelector<HTMLButtonElement>('[data-zj-obs-open]')
+	const plate = root?.querySelector<HTMLDialogElement>('[data-zj-obs-plate]')
+
+	if (root && control && plate) {
+		setup(root, control, plate)
+	}
+</script>
