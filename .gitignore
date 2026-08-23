@@ -86,5 +86,5 @@ public/feed.xml
 # generated content manifest
 src/lib/content-manifest.json
 
-# Local Netlify folder
-.netlify
+# Wrangler's local state and generated deploy config
+.wrangler

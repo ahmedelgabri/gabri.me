@@ -187,13 +187,14 @@ All blog posts are statically generated at build time:
 - `getStaticPaths()` creates paths for all posts
 - Content sourced from MDX files via `src/lib/content.ts` helper functions
 - Output is prerendered static HTML; the single exception is `/card`
-  (`prerender = false`), which runs as a Netlify function — hence the adapter
+  (`prerender = false`), which runs in the Cloudflare Worker — hence the adapter
 
 ## Important Files
 
 - `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
   integrations
 - `markdown.config.ts` - Shared Markdown/Shiki configuration
+- `wrangler.jsonc` - Cloudflare Worker configuration
 - `src/layouts/Layout.astro` - The site's layout and head
 - `src/styles/global.css` - The design's base stylesheet
 - `DESIGNS.md` - The design's own documentation
@@ -216,13 +217,49 @@ To add new blog posts:
 
 ## Deployment
 
-Deployed to **Netlify** as a static site.
+Deployed to **Cloudflare Workers** via `@astrojs/cloudflare`. `wrangler.jsonc`
+holds the Worker configuration; `pnpm build` writes the prerendered site to
+`dist/client`, the Worker to `dist/server`, and a resolved `wrangler.json`
+beside it that `wrangler` picks up through `.wrangler/deploy/config.json`.
+
+- `assets.html_handling` is `drop-trailing-slash`, the Workers equivalent of
+  Astro's `trailingSlash: 'never'`
+- `prerenderEnvironment: 'node'` is required: `/og/[...slug].png` renders
+  through `@resvg/resvg-js`, a native Node addon that cannot run in workerd
+- `wrangler.jsonc` deliberately has no `routes`/`custom_domain` yet — the zone
+  is not in Cloudflare until DNS moves
+
+Commands:
+
+```bash
+pnpm build            # produces dist/client + dist/server
+pnpm exec wrangler deploy                 # production
+pnpm exec wrangler versions upload        # a preview version, not live traffic
+pnpm exec wrangler deploy --dry-run       # offline config check, no auth needed
+```
+
+CI (`.github/workflows/ci.yml`) runs tests, lint, format check, type check and
+build, then deploys `main` with `wrangler deploy` and uploads a preview version
+per pull request with
+`wrangler versions upload --preview-alias pr-<number>-<branch>`, posting the
+preview URL as a single sticky PR comment. Forks are excluded, since they have
+no access to the credentials.
+
+Repository configuration:
+
+- Secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
+- Variable: `GA4_TRACKING_ID` (a repo _variable_, not a secret — the measurement
+  ID ships in the page source). It is only passed to the production build, so
+  previews emit no analytics markup at all.
 
 Key redirects configured in astro.config.ts:
 
 - `/feed` → `/feed.xml`
 - `/work` → `/`
 - `/blog` → `/`
+
+The adapter compiles them into `dist/client/_redirects` as 301s, which Workers
+static assets serves. `astro.config.ts` is the only place they are declared.
 
 ## Code Style
 

@@ -30,7 +30,7 @@ and the observatory behind the theme switch — is in [DESIGNS.md](./DESIGNS.md)
 - **Testing**: Vitest with React Testing Library on happy-dom
 - **Tooling**: oxlint (type-aware) and oxfmt
 - **Environment**: Nix flakes
-- **Deployment**: Netlify
+- **Deployment**: Cloudflare Workers
 
 ## Development
 
@@ -42,7 +42,9 @@ This project uses Nix for environment management. Enter the development shell:
 nix develop
 ```
 
-That gives you Node, pnpm, actionlint and the Netlify CLI.
+That gives you Node, pnpm, actionlint and the Astro language server. Wrangler
+comes from pnpm (`pnpm exec wrangler`) so it stays pinned to the version CI
+deploys with.
 
 ### Commands
 
@@ -138,13 +140,37 @@ turns a `filename=` or `title=` on the fence into a title bar above the block.
 
 ## Deployment
 
-Deployed to Netlify. Pages are prerendered to static HTML at build time; the
-`/card` endpoint is the one thing rendered on demand, through
-`@astrojs/netlify`. The build also minifies the HTML and precompresses
+Deployed to Cloudflare Workers. Pages are prerendered to static HTML at build
+time and served straight from Workers static assets; the `/card` endpoint is the
+one thing rendered on demand, in the Worker itself, through
+`@astrojs/cloudflare`. The build also minifies the HTML and precompresses
 everything to Brotli, gzip and Zstandard.
 
+`pnpm build` writes the site to `dist/client` and the Worker to `dist/server`,
+alongside a resolved `wrangler.json` that `wrangler` picks up automatically. The
+Worker itself is configured in `wrangler.jsonc`: `html_handling` is
+`drop-trailing-slash` so URLs behave the way Astro's `trailingSlash: 'never'`
+writes them, and the `/feed`, `/work` and `/blog` redirects declared in
+`astro.config.ts` are compiled into `dist/client/_redirects` as 301s.
+
+```bash
+pnpm exec wrangler deploy             # production
+pnpm exec wrangler deploy --dry-run   # offline check, no credentials needed
+```
+
 CI (`.github/workflows/ci.yml`) runs the tests, linter, formatter check, type
-check and build, then deploys with the Netlify CLI.
+check and build. On `main` it deploys; on a pull request it uploads a preview
+version with `wrangler versions upload --preview-alias`, giving every branch its
+own URL, and keeps a single sticky comment on the PR pointing at it. Pull
+requests from forks skip both, as they have no credentials.
+
+It needs two repository secrets, `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID`, plus a repository _variable_ `GA4_TRACKING_ID` — a GA4
+measurement ID is public, and it is only handed to the production build so that
+previews carry no analytics at all.
+
+The custom domain is not in `wrangler.jsonc` yet; it goes in once gabri.me's DNS
+moves to Cloudflare.
 
 ## License
 

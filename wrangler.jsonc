@@ -1,0 +1,32 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "gabri-me",
+	// Astro's Cloudflare adapter builds the Worker from this entrypoint. The
+	// build rewrites `main` and `assets.directory` into `dist/server/wrangler.json`
+	// and points `wrangler` at it via `.wrangler/deploy/config.json`, so a plain
+	// `wrangler deploy` after `pnpm build` picks up the built output.
+	"main": "@astrojs/cloudflare/entrypoints/server",
+	"compatibility_date": "2026-08-23",
+	// `global_fetch_strictly_public` sends fetch() calls to our own hostname back
+	// out through the edge instead of looping straight into this Worker.
+	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist/client",
+		// Mirrors `trailingSlash: 'never'`: /blog/slug serves
+		// dist/client/blog/slug/index.html and /blog/slug/ redirects to /blog/slug.
+		"html_handling": "drop-trailing-slash",
+	},
+	// Per-branch previews are uploaded with `wrangler versions upload`.
+	"preview_urls": true,
+	"observability": {
+		"enabled": true,
+	},
+	// The account comes from CLOUDFLARE_ACCOUNT_ID in CI, so it is not committed
+	// here.
+	//
+	// Once gabri.me's DNS is on Cloudflare, add the custom domain here:
+	//   "routes": [{"pattern": "gabri.me", "custom_domain": true}]
+	// The zone does not exist in the account yet, so declaring it now would fail
+	// every deploy.
+}

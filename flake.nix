@@ -20,11 +20,13 @@
         {
           devShells.default = pkgs.mkShell {
             name = "gabri.me";
+            # wrangler is deliberately absent: it is a pinned pnpm
+            # devDependency, so `pnpm exec wrangler` matches what CI deploys
+            # with, and a second copy from nixpkgs would drift from it.
             buildInputs = with pkgs; [
               nodejs
               actionlint
               pnpm
-              netlify-cli
               astro-language-server
             ];
             shellHook = "";
