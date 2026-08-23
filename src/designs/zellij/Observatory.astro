@@ -1,7 +1,7 @@
 ---
 import Star from './Star.astro'
 import StarDivider from './StarDivider.astro'
-import {DEEP, LABELS, glyphPetals} from './observatory/rosette'
+import {DEEP, DISC_R, FIGURE, LABELS, glyphPetals} from './observatory/rosette'
 
 /*
  * The corner of the carpet page keeps an almanac. By night the control is
@@ -14,16 +14,16 @@ import {DEEP, LABELS, glyphPetals} from './observatory/rosette'
  * and the ring they close on, and nothing else.
  */
 const GLYPH = 24
-const GLYPH_R = 10
-const petals = glyphPetals(GLYPH / 2, GLYPH / 2, GLYPH_R)
-const glyphRing = Math.round(GLYPH_R * DEEP * 100) / 100
-
 /*
- * The disc is built in the figure's own units and scaled by CSS, so the plate
- * can give it whatever room it has without the geometry being recomputed.
+ * The two glyphs are cut to the same weight in the corner rather than to the
+ * same radius: sixteen spikes reaching 10 read as the moon's rim does at 9,
+ * because a ring of points leaves most of its circle empty and a disc does
+ * not. The moon's own script is measured against the rim below.
  */
-const DISC = 240
-const DISC_R = 106
+const ROSETTE_R = 10
+const MOON_R = 9
+const petals = glyphPetals(GLYPH / 2, GLYPH / 2, ROSETTE_R)
+const glyphRing = Math.round(ROSETTE_R * DEEP * 100) / 100
 
 const corners = ['tl', 'tr', 'bl', 'br'] as const
 
@@ -47,7 +47,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				height={GLYPH}
 				data-zj-obs-glyph
 			>
-				<circle class="zj-obs-rim" cx="12" cy="12" r="9"></circle>
+				<circle class="zj-obs-rim" cx="12" cy="12" r={MOON_R}></circle>
 				{/* A plain crescent until the phase is computed, and if it never is */}
 				<path
 					class="zj-obs-lit"
@@ -82,8 +82,9 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 	<dialog class="zj-obs-plate" aria-modal="true" data-zj-obs-plate>
 		{
+			/* The page frame's own corner stars, pinned a little tighter */
 			corners.map((corner) => (
-				<Star class={`zj-obs-corner zj-obs-corner-${corner}`} size={15} />
+				<Star class={`zj-corner zj-corner-${corner}`} size={15} />
 			))
 		}
 
@@ -110,7 +111,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				<figure class="zj-obs-figure">
 					<svg
 						class="zj-obs-disc"
-						viewBox={`0 0 ${DISC} ${DISC}`}
+						viewBox={`0 0 ${FIGURE} ${FIGURE}`}
 						aria-hidden="true"
 					>
 						<defs>
@@ -119,7 +120,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 								gradientUnits="userSpaceOnUse"
 								x1="0"
 								y1="0"
-								x2={DISC}
+								x2={FIGURE}
 								y2="0"
 								data-zj-obs-glaze
 							>
@@ -133,8 +134,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 						{/* The whole disc, unlit and all: the moon is there on a new moon too */}
 						<circle
 							class="zj-obs-disc-rim"
-							cx={DISC / 2}
-							cy={DISC / 2}
+							cx={FIGURE / 2}
+							cy={FIGURE / 2}
 							r={DISC_R}></circle>
 						<path class="zj-obs-disc-lit" data-zj-obs-disc></path>
 					</svg>
@@ -220,7 +221,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				<figure class="zj-obs-figure">
 					<svg
 						class="zj-obs-construction"
-						viewBox={`0 0 ${DISC} ${DISC}`}
+						viewBox={`0 0 ${FIGURE} ${FIGURE}`}
 						aria-hidden="true"
 						data-zj-obs-figure></svg>
 					<figcaption class="zj-obs-stage" data-zj-obs-stage>
@@ -455,6 +456,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	/* ————— The plate ————— */
 
 	.design-zellij .zj-obs-plate {
+		/* The carpet page's corner stars at the plate's own cut: smaller, and pinned closer in */
+		--zj-corner-inset: -1px;
 		position: fixed;
 		inset: 0;
 		width: min(36rem, calc(100% - 1.75rem));
@@ -472,11 +475,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	}
 
 	.design-zellij .zj-obs-plate::backdrop {
-		background: rgba(38, 34, 26, 0.6);
-	}
-
-	.design-zellij.dark .zj-obs-plate::backdrop {
-		background: rgba(7, 14, 32, 0.72);
+		background: var(--zj-backdrop);
 	}
 
 	/*
@@ -495,40 +494,6 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			opacity: 0;
 			transform: translateY(10px);
 		}
-	}
-
-	.design-zellij .zj-obs-corner {
-		position: absolute;
-		display: block;
-		color: var(--zj-gild);
-	}
-
-	.design-zellij .zj-obs-corner polygon {
-		fill: var(--zj-ground);
-	}
-
-	.design-zellij .zj-obs-corner-tl {
-		top: -1px;
-		left: -1px;
-		transform: translate(-50%, -50%);
-	}
-
-	.design-zellij .zj-obs-corner-tr {
-		top: -1px;
-		right: -1px;
-		transform: translate(50%, -50%);
-	}
-
-	.design-zellij .zj-obs-corner-bl {
-		bottom: -1px;
-		left: -1px;
-		transform: translate(-50%, 50%);
-	}
-
-	.design-zellij .zj-obs-corner-br {
-		bottom: -1px;
-		right: -1px;
-		transform: translate(50%, 50%);
 	}
 
 	.design-zellij .zj-obs-close {
@@ -842,6 +807,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 </style>
 
 <script>
+	import {createLayerLifecycle} from './frames'
 	import {
 		DAY,
 		FULL_MOON,
@@ -854,20 +820,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	} from './moon'
 	import {
 		CLEAR,
+		DISC_R,
 		ERASE,
+		FIGURE,
 		LABELS,
 		LOOP,
 		type Layer,
 		buildLayers,
 	} from './observatory/rosette'
-	import {createLayerLifecycle} from './webgl'
 
 	const SVG = 'http://www.w3.org/2000/svg'
-	/* The units the plate's two figures are built in */
-	const FIGURE = 240
-	const DISC_R = 106
-	/* The corner glyph's own box */
-	const GLYPH_R = 9
+	/* The corner moon's disc: the rim it is drawn on is in the markup above */
+	const MOON_R = 9
 	/* A gradient with no width at all is not a gradient; a new moon has none */
 	const MIN_GLAZE = 1
 	/* The caption is out of the way for this long while the next one is written */
@@ -881,8 +845,6 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 */
 	const COMPASS = 30
 
-	type Kind = Layer['kind']
-
 	interface Node {
 		path: SVGPathElement
 		from: number
@@ -890,13 +852,9 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		last: number
 	}
 
-	interface Built {
+	/* One layer of the construction, with the paths that carry it on the page */
+	interface Built extends Layer {
 		group: SVGGElement
-		kind: Kind
-		from: number
-		span: number
-		weight: number
-		scaffold: boolean
 		nodes: Node[]
 		last: number
 	}
@@ -927,28 +885,50 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		})}`
 	}
 
-	function setup(
-		root: HTMLElement,
-		control: HTMLButtonElement,
-		plate: HTMLDialogElement,
-	) {
-		const live = root.querySelector<HTMLElement>('[data-zj-obs-live]')
-		const glyph = root.querySelector<SVGSVGElement>('[data-zj-obs-glyph]')
-		const glyphLit = root.querySelector<SVGPathElement>(
-			'[data-zj-obs-glyph-lit]',
-		)
-		const phrase = root.querySelector<HTMLElement>('[data-zj-obs-phase]')
-		const disc = root.querySelector<SVGPathElement>('[data-zj-obs-disc]')
-		const glaze = root.querySelector<SVGElement>('[data-zj-obs-glaze]')
-		const readout = root.querySelector<HTMLElement>('[data-zj-obs-readout]')
-		const scrub = root.querySelector<HTMLInputElement>('[data-zj-obs-scrub]')
-		const newMoon = root.querySelector<HTMLElement>('[data-zj-obs-new]')
-		const fullMoon = root.querySelector<HTMLElement>('[data-zj-obs-full]')
-		const host = root.querySelector<SVGSVGElement>('[data-zj-obs-figure]')
-		const caption = root.querySelector<HTMLElement>('[data-zj-obs-stage]')
-		const hold = root.querySelector<HTMLButtonElement>('[data-zj-obs-pause]')
-		const switcher = root.querySelector<HTMLButtonElement>('[data-zj-obs-switch]')
-		const close = root.querySelector<HTMLButtonElement>('[data-zj-obs-close]')
+	/* Every part of the almanac, all of which ship in this component's template */
+	interface Parts {
+		control: HTMLButtonElement
+		plate: HTMLDialogElement
+		sheet: HTMLElement
+		live: HTMLElement
+		glyph: SVGSVGElement
+		glyphLit: SVGPathElement
+		phrase: HTMLElement
+		disc: SVGPathElement
+		glaze: SVGElement
+		readout: HTMLElement
+		scrub: HTMLInputElement
+		newMoon: HTMLElement
+		fullMoon: HTMLElement
+		host: SVGSVGElement
+		caption: HTMLElement
+		hold: HTMLButtonElement
+		switcher: HTMLButtonElement
+		close: HTMLButtonElement
+	}
+
+	function setup({
+		control,
+		plate,
+		sheet,
+		live,
+		glyph,
+		glyphLit,
+		phrase,
+		disc,
+		glaze,
+		readout,
+		scrub,
+		newMoon,
+		fullMoon,
+		host,
+		caption,
+		hold,
+		switcher,
+		close,
+	}: Parts) {
+		/* The system's own preference, which the switch below reads against */
+		const systemDark = window.matchMedia('(prefers-color-scheme: dark)')
 
 		/* ————— The moon ————— */
 
@@ -959,35 +939,32 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			const line = `${day(date)} · ${phaseName(psi)} · ${lit}% lit`
 
 			/* A quarter-day step often reads the same; leave the DOM alone if so */
-			if (readout && line !== stamp) {
+			if (line !== stamp) {
 				stamp = line
 				readout.textContent = line
 			}
 		}
 
 		function aim() {
-			const offset = scrub ? Number(scrub.value) : 0
-			const date = new Date(Date.now() + offset * DAY)
+			const date = new Date(Date.now() + Number(scrub.value) * DAY)
 			const psi = phaseOn(date)
 			const shape = moonShape(psi, FIGURE / 2, FIGURE / 2, DISC_R)
 
-			if (disc && glaze) {
-				disc.setAttribute('d', shape.path)
+			disc.setAttribute('d', shape.path)
 
-				/*
-				 * The wash runs from the lit limb to the terminator, which at a new
-				 * moon are the same line. Give it a hair of width so the browser
-				 * still has two points to interpolate between.
-				 */
-				const reach = shape.terminatorX - shape.limbX
-				const far =
-					Math.abs(reach) < MIN_GLAZE
-						? shape.limbX + (reach < 0 ? -MIN_GLAZE : MIN_GLAZE)
-						: shape.terminatorX
+			/*
+			 * The wash runs from the lit limb to the terminator, which at a new
+			 * moon are the same line. Give it a hair of width so the browser
+			 * still has two points to interpolate between.
+			 */
+			const reach = shape.terminatorX - shape.limbX
+			const far =
+				Math.abs(reach) < MIN_GLAZE
+					? shape.limbX + (reach < 0 ? -MIN_GLAZE : MIN_GLAZE)
+					: shape.terminatorX
 
-				glaze.setAttribute('x1', String(shape.limbX))
-				glaze.setAttribute('x2', String(far))
-			}
+			glaze.setAttribute('x1', String(shape.limbX))
+			glaze.setAttribute('x2', String(far))
 
 			tell(date, psi)
 		}
@@ -995,31 +972,18 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		/* The corner glyph and its caption, which are always tonight rather than the scrub */
 		function tonight() {
 			const psi = phaseOn(new Date())
+			const lit = Math.round(illumination(psi) * 100)
 
-			if (glyph && glyphLit) {
-				glyphLit.setAttribute(
-					'd',
-					moonShape(psi, 12, 12, GLYPH_R).path,
-				)
-				glyph.classList.add('zj-obs-computed')
-			}
-
-			if (phrase) {
-				const lit = Math.round(illumination(psi) * 100)
-				phrase.textContent = `${phaseName(psi)}, ${lit}% — tonight’s moon`
-			}
+			glyphLit.setAttribute('d', moonShape(psi, 12, 12, MOON_R).path)
+			glyph.classList.add('zj-obs-computed')
+			phrase.textContent = `${phaseName(psi)}, ${lit}% — tonight’s moon`
 		}
 
 		function almanac() {
 			const now = new Date()
 
-			if (newMoon) {
-				newMoon.textContent = moment(nextPhase(now, NEW_MOON))
-			}
-
-			if (fullMoon) {
-				fullMoon.textContent = moment(nextPhase(now, FULL_MOON))
-			}
+			newMoon.textContent = moment(nextPhase(now, NEW_MOON))
+			fullMoon.textContent = moment(nextPhase(now, FULL_MOON))
 		}
 
 		/* ————— The rosette, drawn as a compass would draw it ————— */
@@ -1030,7 +994,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		let swap = 0
 
 		function raise() {
-			if (built || !host) {
+			if (built) {
 				return
 			}
 
@@ -1057,21 +1021,12 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				group.setAttribute('opacity', '0')
 				host.append(group)
 
-				return {
-					group,
-					kind: layer.kind,
-					from: layer.from,
-					span: layer.span,
-					weight: layer.weight,
-					scaffold: layer.scaffold,
-					nodes,
-					last: 0,
-				}
+				return {...layer, group, nodes, last: 0}
 			})
 		}
 
 		function say(index: number) {
-			if (index === spoken || !caption) {
+			if (index === spoken) {
 				return
 			}
 
@@ -1159,10 +1114,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			if (dark) {
 				/* Every opening asks about tonight, whatever the last visit scrubbed to */
-				if (scrub) {
-					scrub.value = '0'
-				}
-
+				scrub.value = '0'
 				aim()
 				almanac()
 			} else {
@@ -1172,28 +1124,21 @@ const wiki = 'https://en.wikipedia.org/wiki'
 				spoken = 0
 				window.clearTimeout(swap)
 				release()
-
-				if (caption) {
-					caption.classList.remove('is-out')
-					caption.textContent = LABELS[0][1]
-				}
-
+				caption.classList.remove('is-out')
+				caption.textContent = LABELS[0][1]
 				draw()
 			}
 
 			control.setAttribute('aria-expanded', 'true')
 			plate.showModal()
 			/* Every visit starts at the head of the plate, however far the last one read */
-			const sheet = plate.querySelector<HTMLElement>('.zj-obs-sheet')
-			if (sheet) {
-				sheet.scrollTop = 0
-			}
+			sheet.scrollTop = 0
 			showing = true
 			life.settle()
 		}
 
 		control.addEventListener('click', open)
-		close?.addEventListener('click', () => plate.close())
+		close.addEventListener('click', () => plate.close())
 
 		/*
 		 * A click that only ended on the backdrop began somewhere else — usually
@@ -1218,18 +1163,15 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			life.settle()
 		})
 
-		scrub?.addEventListener('input', aim)
+		scrub.addEventListener('input', aim)
 
 		/* A held compass belongs to the visit that held it, not to the next one */
 		function release() {
 			held = false
-
-			if (hold) {
-				hold.textContent = 'Hold the compass'
-			}
+			hold.textContent = 'Hold the compass'
 		}
 
-		hold?.addEventListener('click', () => {
+		hold.addEventListener('click', () => {
 			held = !held
 			hold.textContent = held ? 'Draw it again' : 'Hold the compass'
 			life.settle()
@@ -1237,14 +1179,10 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 		/* ————— Dusk and dawn ————— */
 
-		switcher?.addEventListener('click', () => {
+		switcher.addEventListener('click', () => {
 			const target: ResolvedTheme =
 				window.__zjTheme === 'dark' ? 'light' : 'dark'
-			const system: ResolvedTheme = window.matchMedia(
-				'(prefers-color-scheme: dark)',
-			).matches
-				? 'dark'
-				: 'light'
+			const system: ResolvedTheme = systemDark.matches ? 'dark' : 'light'
 			/*
 			 * Choosing the theme the computer already prefers is a return, not
 			 * an override: stored as system, the site follows the machine again
@@ -1258,7 +1196,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		})
 
 		window.addEventListener('zj:theme', () => {
-			if (speak && live) {
+			if (speak) {
 				speak = false
 				live.textContent =
 					window.__zjTheme === 'dark'
@@ -1315,8 +1253,66 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	const root = document.querySelector<HTMLElement>('[data-zj-observatory]')
 	const control = root?.querySelector<HTMLButtonElement>('[data-zj-obs-open]')
 	const plate = root?.querySelector<HTMLDialogElement>('[data-zj-obs-plate]')
+	const sheet = root?.querySelector<HTMLElement>('.zj-obs-sheet')
+	const live = root?.querySelector<HTMLElement>('[data-zj-obs-live]')
+	const glyph = root?.querySelector<SVGSVGElement>('[data-zj-obs-glyph]')
+	const glyphLit = root?.querySelector<SVGPathElement>('[data-zj-obs-glyph-lit]')
+	const phrase = root?.querySelector<HTMLElement>('[data-zj-obs-phase]')
+	const disc = root?.querySelector<SVGPathElement>('[data-zj-obs-disc]')
+	const glaze = root?.querySelector<SVGElement>('[data-zj-obs-glaze]')
+	const readout = root?.querySelector<HTMLElement>('[data-zj-obs-readout]')
+	const scrub = root?.querySelector<HTMLInputElement>('[data-zj-obs-scrub]')
+	const newMoon = root?.querySelector<HTMLElement>('[data-zj-obs-new]')
+	const fullMoon = root?.querySelector<HTMLElement>('[data-zj-obs-full]')
+	const host = root?.querySelector<SVGSVGElement>('[data-zj-obs-figure]')
+	const caption = root?.querySelector<HTMLElement>('[data-zj-obs-stage]')
+	const hold = root?.querySelector<HTMLButtonElement>('[data-zj-obs-pause]')
+	const switcher = root?.querySelector<HTMLButtonElement>('[data-zj-obs-switch]')
+	const close = root?.querySelector<HTMLButtonElement>('[data-zj-obs-close]')
 
-	if (root && control && plate) {
-		setup(root, control, plate)
+	/*
+	 * The almanac is one piece of markup: either the whole of it is on the page
+	 * or none of it is. Asking here means nothing downstream has to ask again.
+	 */
+	if (
+		control &&
+		plate &&
+		sheet &&
+		live &&
+		glyph &&
+		glyphLit &&
+		phrase &&
+		disc &&
+		glaze &&
+		readout &&
+		scrub &&
+		newMoon &&
+		fullMoon &&
+		host &&
+		caption &&
+		hold &&
+		switcher &&
+		close
+	) {
+		setup({
+			control,
+			plate,
+			sheet,
+			live,
+			glyph,
+			glyphLit,
+			phrase,
+			disc,
+			glaze,
+			readout,
+			scrub,
+			newMoon,
+			fullMoon,
+			host,
+			caption,
+			hold,
+			switcher,
+			close,
+		})
 	}
 </script>

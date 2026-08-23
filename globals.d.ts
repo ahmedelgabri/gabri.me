@@ -24,7 +24,6 @@ interface Window {
 	gtag: any
 	twttr: any
 	__zjTheme: ResolvedTheme
-	__zjThemeSetting: ThemeSetting
 	__zjSetTheme(setting: ThemeSetting): void
 }
 

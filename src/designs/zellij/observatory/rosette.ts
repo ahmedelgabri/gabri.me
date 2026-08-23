@@ -1,9 +1,9 @@
 /*
  * The figure this builds is the one tiling the page ground: sixteen points
  * stepped round a circle of radius R and joined as the {16/6} star polygon.
- * Both radii below are that polygon's own crossings — the petals' valleys
- * where consecutive chords meet, and the deep ring where the chords cross
- * closest to the centre — not numbers chosen by eye.
+ * The two radii it is measured by are that polygon's own crossings — the
+ * petals' valleys and the deep ring where the chords cross closest to the
+ * centre — and they are kept in geometry.ts with the rest of the design's.
  *
  * The construction is laid out in the order a compass and straightedge would
  * lay it: the schedule and the captions come from the demonstration this was
@@ -11,11 +11,21 @@
  * dash offset is the drawing hand, so the plate opens without waiting on a
  * renderer and the hairlines stay hairlines.
  */
-import {INNER_RATIO} from '../geometry'
+import {DEEP, VALLEY, starVertices} from '../geometry'
 
-export const VALLEY =
-	Math.cos((6 * Math.PI) / 16) / Math.cos((5 * Math.PI) / 16)
-export const DEEP = Math.cos((6 * Math.PI) / 16) / Math.cos(Math.PI / 16)
+/* The figure's own two crossings live with the rest of the design's geometry */
+export {DEEP, VALLEY}
+
+/*
+ * The units the plate's two figures are built in, and the radius the moon is
+ * drawn at inside them. Both are built in the figure's own units and scaled by
+ * CSS, so the plate can give them whatever room it has without the geometry
+ * being recomputed — and the markup and the script that fills it in are
+ * measured against the same two numbers rather than each keeping a copy.
+ */
+export const FIGURE = 240
+export const DISC_R = 106
+
 /* One sixteenth of the circle: the step the whole figure is built on */
 const STEP = Math.PI / 8
 const POINT_COUNT = 16
@@ -220,6 +230,9 @@ export function buildLayers(cx: number, cy: number, r: number): Layer[] {
 
 	/* ————— 4. Petals, 5. the nested ring and its circle, and the khatam ————— */
 
+	/* The walk is open where a ring closes itself, so it is walked back home */
+	const star = starVertices(cx, cy, DEEP * r)
+
 	return [
 		circle,
 		points,
@@ -243,12 +256,7 @@ export function buildLayers(cx: number, cy: number, r: number): Layer[] {
 			0.55,
 			false,
 		),
-		trace(
-			ring(place, 16, (k) => (k % 2 === 0 ? DEEP : DEEP * INNER_RATIO)),
-			KHATAM,
-			1,
-			false,
-		),
+		trace([...star, star[0]], KHATAM, 1, false),
 	]
 }
 

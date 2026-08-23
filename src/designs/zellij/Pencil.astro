@@ -18,24 +18,8 @@
 		opacity: 0;
 		transition: opacity 400ms ease;
 		/* Dies away before the reading column, exactly as body::before does */
-		-webkit-mask-image: linear-gradient(
-			to right,
-			#000 0,
-			#000 calc(50% - 31rem),
-			transparent calc(50% - 25rem),
-			transparent calc(50% + 25rem),
-			#000 calc(50% + 31rem),
-			#000 100%
-		);
-		mask-image: linear-gradient(
-			to right,
-			#000 0,
-			#000 calc(50% - 31rem),
-			transparent calc(50% - 25rem),
-			transparent calc(50% + 25rem),
-			#000 calc(50% + 31rem),
-			#000 100%
-		);
+		-webkit-mask-image: var(--zj-lattice-mask);
+		mask-image: var(--zj-lattice-mask);
 	}
 
 	/* The breakpoint the lattice appears at; below it there is no margin to use */
@@ -66,14 +50,21 @@
 </style>
 
 <script>
-	import {INNER_RATIO} from './geometry'
+	import {FULL_RATE, createLayerLifecycle} from './frames'
 	import {
-		FULL_RATE,
-		createLayerLifecycle,
+		DEEP as DEEP_RATIO,
+		VALLEY as VALLEY_RATIO,
+		type Point,
+		starVertices,
+	} from './geometry'
+	import {DARK, LIGHT} from './ink'
+	import {
+		between,
+		createPixelStage,
+		createThemeFade,
 		fitPixels,
-		hasWebGL,
+		gateLayer,
 		loadThree,
-		pixelRatio,
 	} from './webgl'
 
 	/*
@@ -88,10 +79,9 @@
 	const CELL = TILE / 2
 	const R = CELL / Math.SQRT2
 	/* Where the {16/6} chords cut each other to make the petal valleys */
-	const VALLEY =
-		(R * Math.cos((6 * Math.PI) / 16)) / Math.cos((5 * Math.PI) / 16)
+	const VALLEY = R * VALLEY_RATIO
 	/* The circumcircle of the 16-gon the {16/6}'s innermost intersections describe */
-	const INNER = (R * Math.cos((6 * Math.PI) / 16)) / Math.cos(Math.PI / 16)
+	const INNER = R * DEEP_RATIO
 	/* Every one of the sixteen chords is tangent to this circle */
 	const APOTHEM = R * Math.cos((6 * Math.PI) / 16)
 	/* The free radius left in the lattice's holes */
@@ -105,10 +95,10 @@
 	const STEP = 6
 
 	/* The tile's own stroke: kohl by day, gold by night */
-	const INK_LIGHT = 0x26221a
-	const INK_DARK = 0xd9b44a
-	/* --zj-screen-opacity per theme — the whole lattice's weight on the ground */
-	const SCREEN = [0.06, 0.08]
+	const INK_LIGHT = LIGHT.text
+	const INK_DARK = DARK.gild
+	/* The whole lattice's weight on the ground, as the CSS screen carries it */
+	const SCREEN = [LIGHT.screen, DARK.screen]
 	/*
 	 * The tile strokes structure at 1 and infill at .55. A GL line has one
 	 * width and no other, so the lighter of the two weights is carried as
@@ -135,14 +125,6 @@
 	const WANDER_REACH = 0.32
 	/* Slow enough to finish a wander in one margin before crossing to the other */
 	const WANDER_CROSS = 0.08
-	/*
-	 * Where the mask above is opaque again, in root ems: the lattice only
-	 * shows in the two margins, so that is the only place an unattended lens
-	 * has anything to reveal.
-	 */
-	const MARGIN_REM = 31
-	/* And where it is wholly transparent: the reading column, never uncovered */
-	const CLEAR_REM = 25
 
 	/*
 	 * A full-viewport field of hairlines, carried at whatever alpha keeps the
@@ -181,8 +163,6 @@
 
 	/* Set on <html> once the canvas has taken the lattice over from CSS */
 	const TAKEOVER = 'zj-pencil'
-
-	type Point = [number, number]
 
 	function ring(
 		outer: number,
@@ -226,13 +206,49 @@
 		target.push(ax, ay, 0, bx, by, 0)
 	}
 
+	/*
+	 * Every figure the lattice is made of, once. They are drawn thousands of
+	 * times over a full-viewport rebuild and never differ between cells — each
+	 * one is stepped off the tile's own constants and then carried to wherever
+	 * its cell centre is, so building them per cell only churned the heap.
+	 */
+
+	/* The ring of sixteen petals: tips at R, valleys where the chords cross */
+	const PETAL_RING = ring(R, VALLEY, POINTS, 0)
+	/* The khatam inscribed in the innermost figure */
+	const KHATAM = starVertices(0, 0, INNER)
+	/* The nested ring interlocking with the petals, half a step round */
+	const NESTED_RING = ring(VALLEY, INNER, POINTS, Math.PI / POINTS)
+	const INNER_CIRCLE = circle(INNER, 72)
+	/* The hole's own star, and the circle inside it */
+	const HOLE_STAR = ring(HOLE, HOLE_INNER, 8, 0)
+	const HOLE_CIRCLE = circle(HOLE_INNER, 48)
+	/*
+	 * Each diagonal tip of the hole launches a strap onto the tangency point
+	 * where two rosettes kiss, waisted so neighbouring straps never chain into
+	 * one straight diagonal across the plane.
+	 */
+	const STRAPS = Array.from({length: 4}, (_, k) => {
+		const angle = Math.PI / 4 + (k * Math.PI) / 2
+		const cos = Math.cos(angle)
+		const sin = Math.sin(angle)
+
+		return [
+			[HOLE, 0],
+			[CELL / 2, STRAP_WAIST],
+			[R, 0],
+			[CELL / 2, -STRAP_WAIST],
+		].map(
+			([along, across]) =>
+				[along * cos - across * sin, along * sin + across * cos] as Point,
+		)
+	})
+	/* The compass circle the whole figure is stepped round, and its children */
+	const COMPASS_CIRCLE = circle(R, 96)
+	const VALLEY_CIRCLE = circle(VALLEY, 96)
+	const APOTHEM_CIRCLE = circle(APOTHEM, 72)
 	/* The sixteen points stepped round the generating circle */
-	function divisions(): Point[] {
-		return Array.from({length: POINTS}, (_, k) => {
-			const angle = (k * Math.PI * 2) / POINTS
-			return [Math.cos(angle) * R, Math.sin(angle) * R] as Point
-		})
-	}
+	const DIVISIONS = circle(R, POINTS)
 
 	function rosette(
 		structure: number[],
@@ -240,38 +256,17 @@
 		cx: number,
 		cy: number,
 	) {
-		/* The ring of sixteen petals: tips at R, valleys where the chords cross */
-		loop(structure, ring(R, VALLEY, POINTS, 0), cx, cy)
-		/* The khatam inscribed in the innermost figure */
-		loop(structure, ring(INNER, INNER * INNER_RATIO, 8, 0), cx, cy)
-		/* The nested ring interlocking with the petals, half a step round */
-		loop(infill, ring(VALLEY, INNER, POINTS, Math.PI / POINTS), cx, cy)
-		loop(infill, circle(INNER, 72), cx, cy)
+		loop(structure, PETAL_RING, cx, cy)
+		loop(structure, KHATAM, cx, cy)
+		loop(infill, NESTED_RING, cx, cy)
+		loop(infill, INNER_CIRCLE, cx, cy)
 	}
 
 	function hole(structure: number[], infill: number[], cx: number, cy: number) {
-		loop(structure, ring(HOLE, HOLE_INNER, 8, 0), cx, cy)
-		loop(infill, circle(HOLE_INNER, 48), cx, cy)
+		loop(structure, HOLE_STAR, cx, cy)
+		loop(infill, HOLE_CIRCLE, cx, cy)
 
-		/*
-		 * Each diagonal tip launches a strap onto the tangency point where two
-		 * rosettes kiss, waisted so neighbouring straps never chain into one
-		 * straight diagonal across the plane.
-		 */
-		for (let k = 0; k < 4; k++) {
-			const angle = Math.PI / 4 + (k * Math.PI) / 2
-			const cos = Math.cos(angle)
-			const sin = Math.sin(angle)
-			const strap = [
-				[HOLE, 0],
-				[CELL / 2, STRAP_WAIST],
-				[R, 0],
-				[CELL / 2, -STRAP_WAIST],
-			].map(
-				([along, across]) =>
-					[along * cos - across * sin, along * sin + across * cos] as Point,
-			)
-
+		for (const strap of STRAPS) {
 			loop(infill, strap, cx, cy)
 		}
 	}
@@ -283,25 +278,18 @@
 		cx: number,
 		cy: number,
 	) {
-		/* The compass circle the whole figure is stepped round, and its three children */
-		loop(target, circle(R, 96), cx, cy)
-		loop(target, circle(VALLEY, 96), cx, cy)
-		loop(target, circle(INNER, 72), cx, cy)
-		loop(target, circle(APOTHEM, 72), cx, cy)
-
-		const points = divisions()
+		loop(target, COMPASS_CIRCLE, cx, cy)
+		loop(target, VALLEY_CIRCLE, cx, cy)
+		loop(target, INNER_CIRCLE, cx, cy)
+		loop(target, APOTHEM_CIRCLE, cx, cy)
 
 		for (let k = 0; k < POINTS; k++) {
-			const from = points[k]
-			const to = points[(k + STEP) % POINTS]
+			const from = DIVISIONS[k]
+			const to = DIVISIONS[(k + STEP) % POINTS]
 			segment(target, cx, cy, cx + from[0], cy + from[1])
 			segment(target, cx + from[0], cy + from[1], cx + to[0], cy + to[1])
 			marks.push(cx + from[0], cy + from[1], 0)
 		}
-	}
-
-	function between(pair: number[], amount: number): number {
-		return pair[0] + (pair[1] - pair[0]) * amount
 	}
 
 	/*
@@ -388,24 +376,33 @@
 			Float32BufferAttribute,
 			Group,
 			LineSegments,
-			OrthographicCamera,
 			Points,
-			Scene,
 			ShaderMaterial,
 			Vector2,
-			WebGLRenderer,
 		} = await loadThree()
 
-		const renderer = new WebGLRenderer({alpha: true, antialias: true})
-		renderer.domElement.setAttribute('aria-hidden', 'true')
+		/* Pixel space with y running down, so every constant above is a CSS pixel */
+		const {renderer, scene, camera} = await createPixelStage(box)
 
 		let width = box.clientWidth
 		let height = box.clientHeight
-		let ratio = pixelRatio(MAX_RATIO)
+		/* Answered by the first fit, which runs before anything is painted */
+		let ratio = 1
 
-		const scene = new Scene()
-		/* Pixel space with y running down, so every constant above is a CSS pixel */
-		const camera = new OrthographicCamera(0, width, 0, height, -1, 1)
+		/*
+		 * The mask's own two figures, taken off the root rather than restated:
+		 * the lattice is opaque again --zj-lattice-from of the centre line and
+		 * wholly gone by --zj-lattice-clear, which is the only place an
+		 * unattended lens has anything to reveal. Both are declared in rem, so
+		 * the root's own size turns them into pixels.
+		 */
+		const root = getComputedStyle(document.documentElement)
+		const rem = Number.parseFloat(root.fontSize)
+		const margin =
+			Number.parseFloat(root.getPropertyValue('--zj-lattice-from')) * rem
+		/* Half the width of the reading column the mask leaves wholly clear */
+		const clear =
+			Number.parseFloat(root.getPropertyValue('--zj-lattice-clear')) * rem
 
 		const inkLight = new Color(INK_LIGHT)
 		const inkDark = new Color(INK_DARK)
@@ -460,8 +457,6 @@
 
 		let spanX = 0
 		let spanY = 0
-		/* Half the width of the reading column the mask leaves wholly clear */
-		let clear = 0
 		/* The run of columns that column covers, which no drift can uncover */
 		let hiddenFrom = 0
 		let hiddenTo = -1
@@ -536,8 +531,6 @@
 		/* How much lattice the mask leaves standing on either side of the page */
 		let band = LENS
 		let pointer = false
-		let amount = window.__zjTheme === 'dark' ? 1 : 0
-		let target = amount
 		let elapsed = 0
 		let lost = false
 		let drift = 0
@@ -545,15 +538,21 @@
 		let shownX = lensX
 		let shownY = lensY
 
+		/* The lattice is drawn in both themes, so this only ever re-inks it */
+		const fade = createThemeFade(FADE, () => {
+			/* The cross-fade is over in three tenths and cannot wait on a timer */
+			life.boost(FADE)
+		})
+
 		function paint() {
-			ink.copy(inkLight).lerp(inkDark, amount)
+			ink.copy(inkLight).lerp(inkDark, fade.amount)
 
 			/*
 			 * A GL line is one device pixel wide whatever the display density,
 			 * where the tile's stroke is one CSS pixel. Carrying the shortfall
 			 * as alpha keeps the same ink on the page at any ratio.
 			 */
-			const weight = between(SCREEN, amount)
+			const weight = between(SCREEN, fade.amount)
 			const line = weight * ratio
 
 			structureMaterial.uniforms.uBase.value = line
@@ -583,12 +582,7 @@
 		function step(delta: number): boolean {
 			elapsed += delta
 
-			const was = amount
-			const pace = delta / FADE
-			amount =
-				target > amount
-					? Math.min(amount + pace, target)
-					: Math.max(amount - pace, target)
+			const inked = fade.step(delta)
 
 			if (!pointer) {
 				/*
@@ -609,7 +603,7 @@
 			lensY += (targetY - lensY) * close
 
 			const earned =
-				amount !== was ||
+				inked ||
 				Math.abs(lensX - shownX) > MOVED ||
 				Math.abs(lensY - shownY) > MOVED
 
@@ -634,7 +628,7 @@
 		 * nothing to paint at all.
 		 */
 		function fps(): number {
-			if (amount !== target) {
+			if (fade.amount !== fade.target) {
 				return FULL_RATE
 			}
 
@@ -674,15 +668,18 @@
 			height = tall
 			ratio = fitPixels(renderer, camera, width, height, MAX_RATIO)
 			markMaterial.uniforms.uSize.value = MARK_SIZE * ratio
-
-			const rem = Number.parseFloat(
-				getComputedStyle(document.documentElement).fontSize,
-			)
-			band = Math.max(width / 2 - MARGIN_REM * rem, LENS)
-			clear = CLEAR_REM * rem
+			band = Math.max(width / 2 - margin, LENS)
 
 			draw()
 			paint()
+		}
+
+		let refit = 0
+
+		/* A drag across the desktop is one rebuild of the lattice, not a hundred */
+		function refresh() {
+			cancelAnimationFrame(refit)
+			refit = requestAnimationFrame(resize)
 		}
 
 		window.addEventListener('pointermove', (event) => {
@@ -698,18 +695,11 @@
 			pointer = false
 		})
 
-		window.addEventListener('resize', resize)
+		window.addEventListener('resize', refresh)
 
 		wide.addEventListener('change', () => {
 			resize()
 			life.settle()
-		})
-
-		/* The lattice is drawn in both themes, so this only ever re-inks it */
-		window.addEventListener('zj:theme', () => {
-			target = window.__zjTheme === 'dark' ? 1 : 0
-			/* The cross-fade is over in three tenths and cannot wait on a timer */
-			life.boost(FADE)
 		})
 
 		/*
@@ -736,20 +726,8 @@
 		const wide = window.matchMedia('(min-width: 75em)')
 		/* A finger has no hover to follow, so there is no lens to draw for it */
 		const fine = window.matchMedia('(hover: hover) and (pointer: fine)')
-		let started = false
 
-		const open = () => {
-			if (started || !wide.matches || !fine.matches || !hasWebGL()) {
-				return
-			}
-
-			started = true
-			/* A refused chunk or context leaves the CSS lattice, which is its whole job */
-			enhance(box, wide).catch(() => undefined)
-		}
-
-		open()
-		wide.addEventListener('change', open)
-		fine.addEventListener('change', open)
+		/* A refused chunk or context leaves the CSS lattice, which is its whole job */
+		gateLayer(box, [wide, fine], (target) => enhance(target, wide))
 	}
 </script>

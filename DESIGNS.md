@@ -279,15 +279,22 @@ shared frame scheduler. They were chosen from a nine-candidate comparison built
 as live demos and judged on the grounds they belong to; the losers and the page
 that held them are gone.
 
-All four share `src/designs/zellij/webgl.ts`: `hasWebGL()`, which probes and
-immediately releases a context before anything is downloaded, so a machine that
-cannot draw fetches nothing; `loadThree()`, a single-flight dynamic import, so
-two layers waking in the same frame share one module evaluation; `fitPixels()`,
-the camera and renderer fit with the device pixel ratio capped at 2; and
-`createLayerLifecycle()`, which runs a layer's loop only while the tab is
-visible and the layer still wants frames. Each layer is its own component, so
-Vite code-splits it out of the page bundle, every canvas is `aria-hidden`, and a
-refused chunk or a lost context always leaves the page it enhanced standing.
+All four share `src/designs/zellij/frames.ts`: `createLayerLifecycle()`, which
+runs a layer's loop only while the tab is visible and the layer still wants
+frames. The three that draw share `src/designs/zellij/webgl.ts` as well:
+`hasWebGL()`, which probes and immediately releases a context before anything is
+downloaded, so a machine that cannot draw fetches nothing, and remembers the
+answer; `loadThree()`, a single-flight dynamic import, so two layers waking in
+the same frame share one module evaluation; `createPixelStage()` and
+`fitPixels()`, the renderer, scene and camera in CSS pixels with y down the page
+and the fit that keeps them there; `createThemeFade()`, the ink cross-fade every
+layer runs on a theme change; and `gateLayer()`, the media-and-capability gate
+two of them start behind. The palette all three ink themselves from is
+`src/designs/zellij/ink.ts`, which restates Layout's `--zj-*` colours as data
+for the renderers that cannot read a custom property. Each layer is its own
+component, so Vite code-splits it out of the page bundle, every canvas is
+`aria-hidden`, and a refused chunk or a lost context always leaves the page it
+enhanced standing.
 
 ### The night sky
 
@@ -523,7 +530,8 @@ the design does not touch them.
   astrolabe, and all of the design's CSS in one `<style is:global>` block.
 - `src/designs/zellij/` also owns the partials: `Arch`, `Star`, `StarDivider`,
   `GirihFrieze`, `Astrolabe`, `Observatory`, `NightSky`, `Pencil`, `ProseLink`,
-  and the `geometry`, `arches`, `moon` and `webgl` modules behind them.
+  and the `geometry`, `arches`, `moon`, `ink`, `frames` and `webgl` modules
+  behind them.
 - `src/pages/index.astro`, `src/pages/blog/[slug].astro` and
   `src/pages/404.astro` are thin route files over that layout.
 - `src/lib/content.ts` — `getBlogStaticPaths()` and friends, used by the route

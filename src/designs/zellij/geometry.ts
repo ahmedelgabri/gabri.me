@@ -6,20 +6,47 @@
  */
 export const INNER_RATIO = Math.sqrt(2 - Math.SQRT2)
 
-function round(n: number): number {
+/*
+ * The other figure this page is built from: sixteen points stepped round a
+ * circle and joined as the {16/6} star polygon. Both ratios are that polygon's
+ * own crossings, as fractions of the generating radius — the petals' valleys
+ * where consecutive chords meet, and the deep ring where the chords cross
+ * closest to the centre — not numbers chosen by eye.
+ */
+export const VALLEY =
+	Math.cos((6 * Math.PI) / 16) / Math.cos((5 * Math.PI) / 16)
+export const DEEP = Math.cos((6 * Math.PI) / 16) / Math.cos(Math.PI / 16)
+
+export type Point = [number, number]
+
+export function round(n: number): number {
 	return Math.round(n * 100) / 100
 }
 
-export function starPoints(cx: number, cy: number, r: number): string {
-	const points: string[] = []
+/*
+ * The walk every khatam here is shaped from: sixteen vertices, outer and inner
+ * alternating, starting due east. Left open, since a polygon closes itself and
+ * a line strip has to be told to.
+ */
+export function starVertices(
+	cx: number,
+	cy: number,
+	r: number,
+	ratio = INNER_RATIO,
+): Point[] {
+	const points: Point[] = []
 	for (let k = 0; k < 16; k++) {
 		const angle = (k * Math.PI) / 8
-		const radius = k % 2 === 0 ? r : r * INNER_RATIO
-		points.push(
-			`${round(cx + radius * Math.cos(angle))},${round(cy + radius * Math.sin(angle))}`,
-		)
+		const radius = k % 2 === 0 ? r : r * ratio
+		points.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)])
 	}
-	return points.join(' ')
+	return points
+}
+
+export function starPoints(cx: number, cy: number, r: number): string {
+	return starVertices(cx, cy, r)
+		.map(([x, y]) => `${round(x)},${round(y)}`)
+		.join(' ')
 }
 
 /*
@@ -31,7 +58,7 @@ export function starPoints(cx: number, cy: number, r: number): string {
 export function crossPoints(cx: number, cy: number, r: number): string {
 	const a = r / Math.SQRT2
 	const t = (Math.SQRT2 - 1) * a
-	const vertices: Array<[number, number]> = [
+	const vertices: Point[] = [
 		[0, -r],
 		[t, -a],
 		[t, -t],

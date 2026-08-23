@@ -1,135 +1,44 @@
 /*
  * The plumbing the zellij page's WebGL layers share: the capability probe that
- * runs before anything is downloaded, one three.js import between them all,
- * and the frame loop that parks itself when the tab or the layer goes quiet.
+ * runs before anything is downloaded, one three.js import between them all, and
+ * the stage they each draw on — CSS pixels with y running down the page, which
+ * is what every constant in those layers is written in.
  *
- * The layers draw in CSS pixels with y running down the page, so they also
- * share a camera fit. Visibility is each layer's own affair: the fixed
- * full-viewport ones answer awake() from theme and focus alone, and the
- * astrolabe feeds it from an IntersectionObserver because it can scroll away.
+ * The two cross-cutting behaviours live here too, because all three layers want
+ * them and none of them wants a different one: the cross-fade that carries the
+ * ink from one theme to the other, and the gate that decides a layer is worth
+ * starting at all. What each layer does about a theme change past the fade —
+ * settle, boost, or take the new ink whole — is its own business.
  *
- * The loop is demand-driven rather than continuous. Nothing on this page moves
- * quickly — the lattice creeps two thirds of a pixel a second — so a layer
- * names the rate it wants and the loop waits on a timer for it, handing the
- * paint itself to one animation frame at the end of the wait. A layer asking
- * for ten frames a second therefore leaves the event loop alone for a tenth of
- * a second, rather than waking on every vsync to decide it has nothing to do.
+ * The frame loop the layers run on is in frames.ts.
  */
-import type {OrthographicCamera, WebGLRenderer} from 'three'
-
-/* A tab coming back from the background hands out one enormous first delta */
-const MAX_DELTA = 0.1
-/*
- * A frame is allowed to arrive twice as late as it was asked for and still be
- * honoured in full; past that the machine was busy elsewhere and the layer is
- * not owed the whole gap.
- */
-const LATE = 2
-/* What a layer asks for when it wants every frame the display will give */
-export const FULL_RATE = Infinity
-/*
- * The timer is set to fire a hair before the frame is due and hands the paint
- * to the next animation frame, so the paint still lands on a vsync.
- */
-const LEAD = 4
-/* Ornament does not get a full share of a battery that is being drained */
-const UNPLUGGED = 0.5
-
-/* One counter per layer, so the throttling can be read off a live page */
-export type Counted = 'sky' | 'pencil' | 'astrolabe' | 'plate'
-
-declare global {
-	interface Window {
-		__zjFrames: Record<Counted, number>
-	}
-}
-
-/*
- * One integer increment per painted frame. Sample it over a measured wall
- * second and the answer is that layer's real frame rate, whatever the tab,
- * the focus and the battery have decided between them.
- */
-const frames: Record<Counted, number> = {
-	sky: 0,
-	pencil: 0,
-	astrolabe: 0,
-	plate: 0,
-}
-
-window.__zjFrames = frames
-
-/* ————— Power signals: a global multiplier on every ambient budget ————— */
-
-/*
- * A window nobody is looking at cannot be interacted with either, so its
- * layers stop outright rather than slow down. What each does about the gap is
- * its own business: a phase that has to stay registered with something outside
- * itself reads the clock and resumes where it would have been, and one that
- * answers to nothing is simply held where it stood.
- *
- * Note when reading __zjFrames by hand: in most browsers moving focus to the
- * developer tools blurs the page, and the counters will sit still.
- */
-let focused = document.hasFocus()
-let unplugged = false
-
-const sleepers = new Set<() => void>()
-
-function stir() {
-	for (const settle of sleepers) {
-		settle()
-	}
-}
-
-window.addEventListener('focus', () => {
-	focused = true
-	stir()
-})
-
-window.addEventListener('blur', () => {
-	focused = false
-	stir()
-})
-
-document.addEventListener('visibilitychange', stir)
-
-interface Battery {
-	charging: boolean
-	addEventListener(type: 'chargingchange', listener: () => void): void
-}
-
-const getBattery = (
-	navigator as Navigator & {getBattery?: () => Promise<Battery>}
-).getBattery
-
-getBattery
-	?.call(navigator)
-	.then((battery) => {
-		function read() {
-			unplugged = !battery.charging
-			stir()
-		}
-
-		battery.addEventListener('chargingchange', read)
-		read()
-	})
-	/* No battery API, or a browser that refuses it: the layers run at full ambient */
-	.catch(() => undefined)
+import type {OrthographicCamera, Scene, WebGLRenderer} from 'three'
 
 /*
  * The cap is per layer: a full-viewport field of soft dots gains nothing from
  * a second device pixel, where an instrument drawn in hairlines does. Past two
  * the extra fragments cost real battery and show nothing on either.
  */
-export function pixelRatio(cap: number): number {
+function pixelRatio(cap: number): number {
 	return Math.min(window.devicePixelRatio || 1, cap)
 }
 
-/* Asked before three.js is fetched, so a machine without WebGL downloads nothing */
+let webgl: boolean | null = null
+
+/*
+ * Asked before three.js is fetched, so a machine without WebGL downloads
+ * nothing. The answer cannot change under a live page, and the probe costs a
+ * real context, so it is taken once and remembered.
+ */
 export function hasWebGL(): boolean {
+	webgl ??= probe()
+	return webgl
+}
+
+function probe(): boolean {
 	try {
-		const probe = document.createElement('canvas')
-		const context = probe.getContext('webgl2') ?? probe.getContext('webgl')
+		const canvas = document.createElement('canvas')
+		const context = canvas.getContext('webgl2') ?? canvas.getContext('webgl')
 		/* Hand the context back rather than sitting on one of the browser's few */
 		context?.getExtension('WEBGL_lose_context')?.loseContext()
 		return Boolean(context)
@@ -149,8 +58,39 @@ export function loadThree(): Promise<typeof import('three')> {
 	return pending
 }
 
+export interface PixelStage {
+	renderer: WebGLRenderer
+	scene: Scene
+	camera: OrthographicCamera
+}
+
 /*
- * The resize dance both layers want. Returns the device-pixel ratio in force,
+ * A canvas that draws in the page's own pixels: the origin at the top left,
+ * y running down, and one unit to one CSS pixel — so a layer's geometry can be
+ * written in the same numbers as the CSS it has to land on. The canvas is
+ * ornament in every case, so it is hidden from the accessibility tree.
+ */
+export async function createPixelStage(box: HTMLElement): Promise<PixelStage> {
+	const {OrthographicCamera, Scene, WebGLRenderer} = await loadThree()
+	const renderer = new WebGLRenderer({alpha: true, antialias: true})
+	renderer.domElement.setAttribute('aria-hidden', 'true')
+
+	return {
+		renderer,
+		scene: new Scene(),
+		camera: new OrthographicCamera(
+			0,
+			box.clientWidth,
+			0,
+			box.clientHeight,
+			-1,
+			1,
+		),
+	}
+}
+
+/*
+ * The resize dance every layer wants. Returns the device-pixel ratio in force,
  * which any shader sizing points in device pixels has to be told about.
  */
 export function fitPixels(
@@ -169,150 +109,102 @@ export function fitPixels(
 	return renderer.getPixelRatio()
 }
 
-export interface Layer {
-	/*
-	 * One step of the layer's own animation; delta is seconds, already clamped.
-	 * False when the step left the layer looking exactly as it already does,
-	 * which skips the paint entirely.
-	 */
-	step(delta: number): boolean
-	/* Draws whatever the last step arrived at */
-	paint(): void
-	/* False once there is nothing left to draw, which parks the loop */
-	awake(): boolean
-	/* Frames a second this layer wants right now, before the power multiplier */
-	fps(): number
-	/* Which of window.__zjFrames this layer's painted frames are counted in */
-	counter: Counted
+/* Somewhere between the two ends of a pair, the way every ink here is carried */
+export function between(pair: number[], amount: number): number {
+	return pair[0] + (pair[1] - pair[0]) * amount
 }
 
-export interface Lifecycle {
-	/* Call whenever anything awake() reads may have changed */
-	settle(): void
-	/*
-	 * Every frame the display will give, for this many seconds. For the
-	 * interactions a layer cannot see coming: a layer parked on a half-second
-	 * timer would answer the first flick of a pointer half a second late.
-	 * Interactions the layer can measure — a lens still closing on its target,
-	 * a rete still giving up its speed — belong in fps() instead.
-	 */
-	boost(seconds: number): void
+export interface ThemeFade {
+	/* Where the cross-fade has got to: 0 in the light theme, 1 in the dark */
+	readonly amount: number
+	/* And where it is going */
+	readonly target: number
+	/* Moves the fade on by one frame; false when it was already arrived */
+	step(delta: number): boolean
+	/* Takes the far end whole, for a layer nobody can see cross */
+	snap(): void
 }
 
 /*
- * Runs the layer while the window is being looked at and the layer still wants
- * frames, at whatever rate the layer asks for.
+ * The one thing every layer on this page does with the theme: carry its ink
+ * across in the given number of seconds. A layer's own reaction to the change —
+ * whether it settles, boosts, or has no cross-fade to run at all — is handed
+ * back to it, since no two of them want the same one.
  */
-export function createLayerLifecycle(layer: Layer): Lifecycle {
-	let request = 0
-	let timer = 0
-	let running = false
-	let last = 0
-	/* The wait the pending frame was scheduled on, for the late-frame clamp */
-	let planned = 0
-	let boosted = 0
+export function createThemeFade(
+	seconds: number,
+	onChange: () => void,
+	/* Where to start, for a layer that arrives with nothing drawn yet */
+	from?: number,
+): ThemeFade {
+	let target = window.__zjTheme === 'dark' ? 1 : 0
+	let amount = from ?? target
 
-	function stop() {
-		running = false
-		cancelAnimationFrame(request)
-		clearTimeout(timer)
+	window.addEventListener('zj:theme', () => {
+		target = window.__zjTheme === 'dark' ? 1 : 0
+		onChange()
+	})
+
+	return {
+		get amount() {
+			return amount
+		},
+		get target() {
+			return target
+		},
+		step(delta: number): boolean {
+			if (amount === target) {
+				return false
+			}
+
+			const pace = delta / seconds
+			amount =
+				target > amount
+					? Math.min(amount + pace, target)
+					: Math.max(amount - pace, target)
+
+			return true
+		},
+		snap() {
+			amount = target
+		},
 	}
+}
 
-	function live(): boolean {
-		return focused && document.visibilityState === 'visible' && layer.awake()
-	}
+/*
+ * The bootstrap the two fixed layers share. Nothing is fetched until every
+ * condition for drawing is met — and they arrive in any order, so each one is
+ * asked again whenever a query changes its mind — and the first start is the
+ * only one. The retry is handed back for whatever else a layer waits on.
+ */
+export function gateLayer(
+	box: HTMLElement,
+	queries: MediaQueryList[],
+	enhance: (box: HTMLElement) => Promise<unknown>,
+	wanted: () => boolean = () => true,
+): () => void {
+	let started = false
 
-	function soon() {
-		request = requestAnimationFrame(tick)
-	}
-
-	function schedule() {
-		const rate =
-			performance.now() < boosted
-				? FULL_RATE
-				: layer.fps() * (unplugged ? UNPLUGGED : 1)
-
-		if (!Number.isFinite(rate)) {
-			planned = 0
-			soon()
+	function open() {
+		if (
+			started ||
+			!wanted() ||
+			queries.some((query) => !query.matches) ||
+			!hasWebGL()
+		) {
 			return
 		}
 
-		planned = 1 / rate
-		/*
-		 * Counted from the last frame rather than from now, so a budget stays a
-		 * rate instead of becoming a gap with the paint's own cost added to it.
-		 */
-		const wait = planned * 1000 - (performance.now() - last) - LEAD
-		timer = window.setTimeout(soon, Math.max(wait, 0))
+		started = true
+		/* A refused chunk or context leaves the CSS this layer was to replace */
+		enhance(box).catch(() => undefined)
 	}
 
-	function tick(now: number) {
-		/* A layer asked for one frame a second is not owed a tenth of a second */
-		const delta = Math.min(
-			(now - last) / 1000,
-			Math.max(MAX_DELTA, planned * LATE),
-		)
-		last = now
+	open()
 
-		if (layer.step(delta)) {
-			layer.paint()
-			frames[layer.counter]++
-		}
-
-		/* Asked after the frame, so a layer always gets to draw its last one */
-		if (!live()) {
-			stop()
-			return
-		}
-
-		schedule()
+	for (const query of queries) {
+		query.addEventListener('change', open)
 	}
 
-	function settle() {
-		if (!live()) {
-			stop()
-			return
-		}
-
-		if (running) {
-			return
-		}
-
-		running = true
-		last = performance.now()
-		planned = 0
-		soon()
-	}
-
-	function boost(seconds: number) {
-		const now = performance.now()
-
-		/*
-		 * A layer idling on a half-second timer must not charge that wait to
-		 * the interaction that woke it, or a three-tenths cross-fade would be
-		 * over in the first frame of it. The animation starts here. Only the
-		 * boost that begins the interaction does this: one already under way
-		 * is running at the display's rate and its deltas are honest.
-		 */
-		if (now >= boosted) {
-			last = now
-		}
-
-		boosted = Math.max(boosted, now + seconds * 1000)
-
-		if (!running) {
-			settle()
-			return
-		}
-
-		/* Whatever the layer was waiting on, it is wanted sooner than that */
-		clearTimeout(timer)
-		cancelAnimationFrame(request)
-		soon()
-	}
-
-	sleepers.add(settle)
-
-	return {settle, boost}
+	return open
 }

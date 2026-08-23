@@ -9,7 +9,7 @@
  * moon on the plate are the same figure at two sizes.
  */
 
-const RAD = Math.PI / 180
+export const RAD = Math.PI / 180
 const DEGREE = 180 / Math.PI
 
 export const DAY = 86400000
@@ -30,6 +30,26 @@ function wrap(degrees: number): number {
 	return turned < 0 ? turned + 360 : turned
 }
 
+/* How far the sun has gone round its own orbit, which both longitudes turn on */
+function meanAnomaly(days: number): number {
+	return (357.5291092 + 0.98560028 * days) * RAD
+}
+
+/* Where the sun stands on the ecliptic, in degrees */
+function sunDegrees(days: number, anomaly: number): number {
+	return (
+		280.4665 +
+		0.98564736 * days +
+		1.915 * Math.sin(anomaly) +
+		0.02 * Math.sin(2 * anomaly)
+	)
+}
+
+/* The sun's apparent longitude, good to about a minute of arc */
+export function sunLongitude(days: number): number {
+	return sunDegrees(days, meanAnomaly(days)) * RAD
+}
+
 /*
  * The angle from the sun to the moon as seen from here. Nothing else is
  * needed: the lit fraction is (1 − cos ψ) / 2, and which limb it hangs from
@@ -42,7 +62,7 @@ function wrap(degrees: number): number {
  * 2017 and 2025, none of which it misses by more than a fifth of a degree.
  */
 export function elongation(days: number): number {
-	const sunAnomaly = (357.5291092 + 0.98560028 * days) * RAD
+	const sunAnomaly = meanAnomaly(days)
 	const moonAnomaly = (134.9633964 + 13.06499295 * days) * RAD
 	const mean = (297.8501921 + 12.19074912 * days) * RAD
 	const node = (93.272095 + 13.2293502 * days) * RAD
@@ -55,13 +75,8 @@ export function elongation(days: number): number {
 		0.214 * Math.sin(2 * moonAnomaly) -
 		0.186 * Math.sin(sunAnomaly) -
 		0.114 * Math.sin(2 * node)
-	const sun =
-		280.4665 +
-		0.98564736 * days +
-		1.915 * Math.sin(sunAnomaly) +
-		0.02 * Math.sin(2 * sunAnomaly)
 
-	return wrap(moon - sun) * RAD
+	return wrap(moon - sunDegrees(days, sunAnomaly)) * RAD
 }
 
 export function phaseName(psi: number): string {

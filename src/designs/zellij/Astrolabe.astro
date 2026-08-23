@@ -135,18 +135,20 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 <script>
 	import type {Color, LineBasicMaterial as LineMaterial} from 'three'
-	import {INNER_RATIO} from './geometry'
-	import {epochDays} from './moon'
-	import type {Lifecycle} from './webgl'
+	import type {Lifecycle} from './frames'
+	import {FULL_RATE, createLayerLifecycle} from './frames'
+	import {starVertices} from './geometry'
+	import {DARK, LIGHT} from './ink'
+	import {RAD, epochDays, sunLongitude} from './moon'
 	import {
-		FULL_RATE,
-		createLayerLifecycle,
+		between,
+		createPixelStage,
+		createThemeFade,
 		fitPixels,
 		hasWebGL,
 		loadThree,
 	} from './webgl'
 
-	const RAD = Math.PI / 180
 	/* A plate is cut for one latitude and one only; this one is Amsterdam's */
 	const LATITUDE = 52.37 * RAD
 	const LONGITUDE = 4.9
@@ -198,8 +200,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * its main line, and the circles derived from it in the lapis a diagram
 	 * keeps for its secondary work — a distinction the single gold cannot make.
 	 */
-	const STRUCTURE_INK = [0x26221a, 0xd9b44a]
-	const ENGRAVED_INK = [0x1d3a6e, 0xd9b44a]
+	const STRUCTURE_INK = [LIGHT.text, DARK.gild]
+	const ENGRAVED_INK = [LIGHT.geo, DARK.gild]
 	/*
 	 * Both plates are struck to the same weight on the page rather than to the
 	 * same number: kohl at 0.7 holds 5.5:1 on the ivory where the night's gold
@@ -242,19 +244,6 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		alpha: number[]
 	}
 
-	/* Sun's apparent longitude, good to about a minute of arc */
-	function sunLongitude(days: number): number {
-		const anomaly = (357.5291 + 0.98560028 * days) * RAD
-
-		return (
-			(280.4665 +
-				0.98564736 * days +
-				1.915 * Math.sin(anomaly) +
-				0.02 * Math.sin(2 * anomaly)) *
-			RAD
-		)
-	}
-
 	/* Which star sits on the meridian right now, in radians of right ascension */
 	function siderealTime(days: number): number {
 		const turned = (280.46061837 + 360.98564736629 * days + LONGITUDE) % 360
@@ -275,10 +264,6 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 */
 	function decRadius(dec: number): number {
 		return EQUATOR * Math.tan((Math.PI / 2 - dec) / 2)
-	}
-
-	function between(pair: number[], amount: number): number {
-		return pair[0] + (pair[1] - pair[0]) * amount
 	}
 
 	function push(out: number[], ax: number, ay: number, bx: number, by: number) {
@@ -322,15 +307,9 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 	/* The design's eight-point star, used here as the mark at a pointer's tip */
 	function khatam(out: number[], cx: number, cy: number, r: number) {
-		const points: Array<[number, number]> = []
-
-		for (let k = 0; k <= 16; k++) {
-			const angle = (k * Math.PI) / 8
-			const radius = k % 2 === 0 ? r : r * INNER_RATIO
-			points.push([cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius])
-		}
-
-		chain(out, points)
+		const points = starVertices(cx, cy, r)
+		/* The walk is open; chained back to its first vertex it closes the star */
+		chain(out, [...points, points[0]])
 	}
 
 	/*
@@ -360,20 +339,14 @@ const wiki = 'https://en.wikipedia.org/wiki'
 			Group,
 			LineBasicMaterial,
 			LineSegments,
-			OrthographicCamera,
-			Scene,
-			WebGLRenderer,
 		} = await loadThree()
 
-		const renderer = new WebGLRenderer({alpha: true, antialias: true})
-		renderer.domElement.setAttribute('aria-hidden', 'true')
+		/* Pixel space with y running down, so a screen angle is a clockwise one */
+		const {renderer, scene, camera} = await createPixelStage(box)
 
 		let width = box.clientWidth
 		let height = box.clientHeight
 
-		const scene = new Scene()
-		/* Pixel space with y running down, so a screen angle is a clockwise one */
-		const camera = new OrthographicCamera(0, width, 0, height, -1, 1)
 		const instrument = new Group()
 		scene.add(instrument)
 
@@ -540,13 +513,27 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		let ruleAngle = angle + sunAngle
 		let spin = SIDEREAL
 		let grab: {pointer: number; raw: number; target: number} | null = null
-		let amount = window.__zjTheme === 'dark' ? 1 : 0
-		let target = amount
 
-		reink(amount)
+		const fade = createThemeFade(FADE, () => {
+			/* Off screen there is no cross-fade to see: take the new ink whole */
+			if (!onscreen()) {
+				fade.snap()
+				reink(fade.amount)
+			}
+
+			life.settle()
+		})
+
+		reink(fade.amount)
+
+		/*
+		 * Where the box stood when the hand took hold of it. A rect is a layout
+		 * read, and asking for one on every move of the pointer is asking for
+		 * one on every frame of the turn.
+		 */
+		let bounds = box.getBoundingClientRect()
 
 		function pointerAngle(event: PointerEvent): number {
-			const bounds = box.getBoundingClientRect()
 			/* Clockwise from the top, to match the angles the rete is built on */
 			return Math.atan2(
 				event.clientX - (bounds.left + bounds.width / 2),
@@ -555,13 +542,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		}
 
 		function step(delta: number): boolean {
-			if (amount !== target) {
-				const pace = delta / FADE
-				amount =
-					target > amount
-						? Math.min(amount + pace, target)
-						: Math.max(amount - pace, target)
-				reink(amount)
+			if (fade.step(delta)) {
+				reink(fade.amount)
 			}
 
 			if (grab === null) {
@@ -601,7 +583,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		function fps(): number {
 			if (
 				grab !== null ||
-				amount !== target ||
+				fade.amount !== fade.target ||
 				Math.abs(spin - SIDEREAL) > CALM
 			) {
 				return FULL_RATE
@@ -630,6 +612,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			width = next
 			height = tall
+			bounds = box.getBoundingClientRect()
 			fitPixels(renderer, camera, width, height, MAX_RATIO)
 			instrument.position.set(width / 2, height / 2, 0)
 			instrument.scale.setScalar(Math.min(width, height) * 0.45)
@@ -643,6 +626,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			box.setPointerCapture(event.pointerId)
 			box.setAttribute('data-held', '')
+			bounds = box.getBoundingClientRect()
 			grab = {pointer: event.pointerId, raw: pointerAngle(event), target: angle}
 			/* The creep is on a slow timer; a hand on the brass must not wait for it */
 			life.boost(GRAB)
@@ -680,18 +664,6 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 		box.addEventListener('pointerup', release)
 		box.addEventListener('pointercancel', release)
-
-		window.addEventListener('zj:theme', () => {
-			target = window.__zjTheme === 'dark' ? 1 : 0
-
-			/* Off screen there is no cross-fade to see: take the new ink whole */
-			if (!onscreen()) {
-				amount = target
-				reink(amount)
-			}
-
-			life.settle()
-		})
 
 		new ResizeObserver(resize).observe(box)
 		resize()

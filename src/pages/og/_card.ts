@@ -3,6 +3,7 @@ import {format} from 'date-fns'
 import satori, {type SatoriOptions} from 'satori'
 import siteMeta from '../../config/siteMeta'
 import {crossPoints, starPoints} from '../../designs/zellij/geometry'
+import {DARK} from '../../designs/zellij/ink'
 import {shapeArabic} from './_arabic'
 
 const WIDTH = 1200
@@ -18,14 +19,7 @@ const HEADPIECE_GAP = 26
 const RULE = 1.5
 
 /* The night side of the design — the Blue Quran's gold on indigo-dyed vellum */
-const ink = {
-	ground: '#132347',
-	text: '#EDE3CB',
-	muted: '#A99E85',
-	gild: '#D9B44A',
-	geo: '#C8BCA0',
-	hairline: 'rgba(217, 180, 74, 0.42)',
-}
+const ink = DARK
 
 const NAME_AR = shapeArabic('أحمد الجابري')
 const DOMAIN = new URL(siteMeta.siteUrl).host
@@ -285,7 +279,7 @@ export function renderPostCard(title: string, date: Date): Promise<Buffer> {
 					]),
 					box({flexDirection: 'column', alignItems: 'flex-end'}, [
 						box(
-							{fontFamily: 'Spectral', fontSize: 25, color: ink.muted},
+							{fontFamily: 'Spectral', fontSize: 25, color: ink.textMuted},
 							format(date, 'yyyy-MM-dd'),
 						),
 						smallCaps(DOMAIN, {fontSize: 22, color: ink.gild, marginTop: 8}),
@@ -333,7 +327,7 @@ export function renderHomeCard(): Promise<Buffer> {
 					smallCaps(siteMeta.title.toUpperCase(), {
 						fontSize: 24,
 						letterSpacing: '0.26em',
-						color: ink.muted,
+						color: ink.textMuted,
 						marginTop: 24,
 					}),
 				],

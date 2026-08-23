@@ -22,17 +22,19 @@
 </style>
 
 <script>
+	import {FULL_RATE, createLayerLifecycle} from './frames'
+	import {DARK} from './ink'
 	import {
-		FULL_RATE,
-		createLayerLifecycle,
+		between,
+		createPixelStage,
+		createThemeFade,
 		fitPixels,
-		hasWebGL,
+		gateLayer,
 		loadThree,
-		pixelRatio,
 	} from './webgl'
 
 	/* --zj-gild on the indigo ground; the sky only ever runs in the dark theme */
-	const GOLD = 0xd9b44a
+	const GOLD = DARK.gild
 	/*
 	 * A hundred soft dots and one hairline streak, on a layer that clears the
 	 * whole viewport every frame. A second device pixel quadruples that clear
@@ -108,8 +110,9 @@
 		age: number
 	}
 
+	/* Anywhere between the two ends of a range, which is how everything here varies */
 	function pick(range: number[]): number {
-		return range[0] + Math.random() * (range[1] - range[0])
+		return between(range, Math.random())
 	}
 
 	function scatter(): Seat {
@@ -128,22 +131,16 @@
 			Group,
 			Line,
 			LineBasicMaterial,
-			OrthographicCamera,
 			Points,
-			Scene,
 			ShaderMaterial,
-			WebGLRenderer,
 		} = await loadThree()
 
-		const renderer = new WebGLRenderer({alpha: true, antialias: true})
-		renderer.domElement.setAttribute('aria-hidden', 'true')
+		/* Pixel space with y running down the page: every size below is a CSS pixel */
+		const {renderer, scene, camera} = await createPixelStage(box)
 
 		let width = box.clientWidth
 		let height = box.clientHeight
 
-		const scene = new Scene()
-		/* Pixel space with y running down the page: every size below is a CSS pixel */
-		const camera = new OrthographicCamera(0, width, 0, height, -1, 1)
 		const gold = new Color(GOLD)
 
 		/* A hair of warmth either way, so the field never reads as one flat gilt */
@@ -161,7 +158,8 @@
 			transparent: true,
 			uniforms: {
 				uTime: {value: 0},
-				uPixelRatio: {value: pixelRatio(MAX_RATIO)},
+				/* Answered by the first fit, which runs before anything is painted */
+				uPixelRatio: {value: 1},
 				uOpacity: {value: 0},
 			},
 			vertexShader: `
@@ -362,18 +360,18 @@
 		let targetY = 0
 		let currentX = 0
 		let currentY = 0
-		let opacity = 0
-		let target = window.__zjTheme === 'dark' ? 1 : 0
 		let elapsed = 0
+
+		/*
+		 * A theme change here is the whole sky arriving or leaving — and the
+		 * first arrival is one too, so it starts from an empty screen.
+		 */
+		const fade = createThemeFade(FADE, () => life.settle(), 0)
 
 		function step(delta: number): boolean {
 			elapsed += delta
 
-			const pace = delta / FADE
-			opacity =
-				target > opacity
-					? Math.min(opacity + pace, target)
-					: Math.max(opacity - pace, target)
+			fade.step(delta)
 
 			currentX += (targetX - currentX) * EASE
 			currentY += (targetY - currentY) * EASE
@@ -386,8 +384,8 @@
 
 		function paint() {
 			stars.uniforms.uTime.value = elapsed
-			stars.uniforms.uOpacity.value = opacity
-			streakMaterial.opacity = opacity
+			stars.uniforms.uOpacity.value = fade.amount
+			streakMaterial.opacity = fade.amount
 
 			/* Against the pointer, so the near layer swims past the far one */
 			for (const field of fields) {
@@ -409,7 +407,7 @@
 		function fps(): number {
 			if (
 				shot !== null ||
-				opacity !== target ||
+				fade.amount !== fade.target ||
 				Math.abs(targetX - currentX) > CLOSE ||
 				Math.abs(targetY - currentY) > CLOSE
 			) {
@@ -421,7 +419,7 @@
 
 		/* A light page has no sky to draw, once the last of it has faded out */
 		function awake(): boolean {
-			return target === 1 || opacity > 0
+			return fade.target === 1 || fade.amount > 0
 		}
 
 		const life = createLayerLifecycle({
@@ -450,11 +448,6 @@
 			targetY = (event.clientY / window.innerHeight - 0.5) * 2
 		})
 
-		window.addEventListener('zj:theme', () => {
-			target = window.__zjTheme === 'dark' ? 1 : 0
-			life.settle()
-		})
-
 		window.addEventListener('resize', resize)
 
 		resize()
@@ -467,25 +460,14 @@
 	if (box) {
 		/* Below this the page leaves no margin wide enough to hold a sky */
 		const wide = window.matchMedia('(min-width: 64em)')
-		let started = false
+		/* A refused chunk or context leaves the plain indigo ground, which is no loss */
+		const open = gateLayer(
+			box,
+			[wide],
+			enhance,
+			() => window.__zjTheme === 'dark',
+		)
 
-		const open = () => {
-			if (
-				started ||
-				!wide.matches ||
-				window.__zjTheme !== 'dark' ||
-				!hasWebGL()
-			) {
-				return
-			}
-
-			started = true
-			/* A refused chunk or context leaves the plain indigo ground, which is no loss */
-			enhance(box).catch(() => undefined)
-		}
-
-		open()
-		wide.addEventListener('change', open)
 		/* Nothing is fetched until the reader actually asks for the dark theme */
 		window.addEventListener('zj:theme', open)
 	}
