@@ -28,6 +28,15 @@ const excerpt = entry.data.excerpt || generateExcerpt(entry.body)
 const formattedDate = format(date, 'yyyy-MM-dd')
 const postUrl = `${siteMeta.siteUrl}/blog/${slug}`
 
+const {twitter} = siteMeta.social
+/* `via` wants the bare handle, so the display form's leading @ has to go */
+const shareParams = new URLSearchParams({
+	url: postUrl,
+	via: twitter.display.slice(1),
+	text: title,
+})
+const shareUrl = `https://twitter.com/share?${shareParams.toString()}`
+
 const posts = (await getAllPosts()).sort(({date: a}, {date: b}) =>
 	compareDesc(new Date(a), new Date(b)),
 )
@@ -67,6 +76,13 @@ const {Content} = await render(entry)
 		</div>
 
 		<StarDivider />
+
+		<p class="zj-colophon">
+			You can{' '}
+			<a href={shareUrl} target="_blank" rel="noreferrer noopener">share this post</a>{' '}
+			or reach me on{' '}
+			<a href={twitter.url} target="_blank" rel="noreferrer noopener">{twitter.display}</a>.
+		</p>
 
 		<nav class="zj-article-nav" aria-label="More posts">
 			{older ? (
