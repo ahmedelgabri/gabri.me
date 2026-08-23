@@ -67,7 +67,7 @@ pnpm lint
 pnpm type-check
 
 # Format code (oxfmt)
-npx format
+pnpm format
 ```
 
 ### Git Commands
@@ -84,9 +84,9 @@ Content is managed through **Astro's MDX integration** with custom processing:
 - Content organized in folder structure:
   `src/_content/{collection}/{slug}/post.mdx`
 - Processed using @astrojs/mdx with Astro's Sätteri Markdown/MDX pipeline
-- Metadata extracted via export statement in each MDX file
+- Metadata carried as YAML frontmatter in each MDX file, validated by the Zod
+  schema in `src/content.config.ts`
 - Content helper functions in `src/lib/content.ts` for querying posts
-- Uses git timestamps for `updated` field via `git log -1 --format=%cd`
 - Supports two content collections:
   - **Posts**: `src/_content/blog/{slug}/post.mdx`
   - **Weekly Links**: `src/_content/weekly-links/{slug}/post.mdx`
@@ -103,41 +103,49 @@ Heading IDs are provided by the Sätteri/Astro pipeline.
 
 ### Astro Structure
 
-Using Astro with TypeScript and React for interactive components:
+Using Astro with TypeScript, plus React for the few `.tsx` components rendered
+inside MDX:
 
 - **Pages** (src/pages/):
   - `/` - Homepage (index.astro)
   - `/blog/[slug]` - Dynamic blog post pages
+  - `/404` - Custom 404 page
   - `/feed.xml` - RSS feed generation
   - `/sitemap.xml` - Sitemap generation
+  - `/og/[slug].png` - Per-post OpenGraph card generation (satori + resvg)
   - `/card` - Terminal card endpoint
   - `/llms.txt` - LLM manifest endpoint
   - `/robots.txt` - Robots file
-  - `/404` - Custom 404 page
 
-- **Layouts** (src/layouts/):
-  - `BaseLayout.astro` - Main layout with theme script and metadata
+- **Layout**: `src/designs/zellij/Layout.astro` is the site's only layout. It
+  carries the whole `<head>` (metadata, fonts, pre-paint theme script, GA4), the
+  page frame and every one of the design's CSS rules. See `DESIGNS.md`.
+
+- **Design components** (src/designs/zellij/): the layout's partials — geometry
+  ornaments (`Star`, `StarDivider`, `GirihFrieze`, `Arch`), the three.js layers
+  (`NightSky`, `Pencil`, `Observatory`, `Astrolabe`) and `ProseLink`, which
+  marks external links in rendered MDX so the design can flag them.
 
 - **Components** (src/components/):
-  - Astro components for static content
-  - React components (with client:load) for interactive elements
-  - Tweet component for embedding tweets via react-tweet
-  - Settings popover for theme/color/font switching
+  - `YouTube` - React component passed to MDX as a component override
+
+  Tweets are embedded by importing `astro-tweet` directly in the MDX file.
 
 - **Configuration** (src/config/):
   - `siteMeta.ts` - Site metadata, social links, author info
 
 ### Styling
 
-Uses **UnoCSS** (atomic CSS framework):
+The design owns its own CSS: every rule lives in the `<style is:global>` block
+of `src/designs/zellij/Layout.astro`, keyed off `.design-zellij` and themed
+through custom properties. There is no global stylesheet.
+
+**UnoCSS** (atomic CSS framework) is still in the build:
 
 - Configuration: `uno.config.ts`
-- PostCSS integration: `postcss.config.mjs`
-- Custom font stacks for serif, sans, and monospace
-- Dark mode via class strategy (`dark:` prefix)
-- Custom utilities like `w-content` (70ch max-width)
-- Base styles in `src/style/style.css`
-- Icons via @iconify-json/tabler and @iconify-json/logos
+- Provides the preflight reset the design's CSS is written against
+- Dark mode via class strategy (`dark:` prefix); post bodies use `dark:hidden` /
+  `light:hidden` for paired light/dark images
 
 ### TypeScript Configuration
 
@@ -149,18 +157,20 @@ Uses **UnoCSS** (atomic CSS framework):
 
 ### Theme System
 
-Client-side theme switching implemented via:
+One axis only: light / dark / system.
 
-- Inline script in BaseLayout.astro (prevents flash of unstyled content)
-- Reads from localStorage and respects `prefers-color-scheme`
-- Custom hooks: `src/hooks/useTheme.tsx`
-- Theme classes applied to `<html>` element
-- Three customizable aspects: theme (light/dark/system), color
-  (blue/amber/teal/purple), font (mono/serif/sans)
+- Inline pre-paint script in the layout's `<head>` (prevents a flash of the
+  wrong ground)
+- Reads the `theme` key from localStorage, defaulting to `system`, and resolves
+  it against `prefers-color-scheme`
+- Applies `light` or `dark` to the `<html>` element and dispatches `zj:theme` so
+  the three.js layers can follow
+- `window.__zjSetTheme` is the setter; the observatory control in the page
+  corner is the only UI that calls it, wrapping it in a view transition
 
 ### Metadata & SEO
 
-Comprehensive metadata configured in BaseLayout.astro:
+Comprehensive metadata configured in the layout's `<head>`:
 
 - OpenGraph tags
 - Twitter Card metadata
@@ -174,13 +184,16 @@ All blog posts are statically generated at build time:
 
 - `getStaticPaths()` creates paths for all posts
 - Content sourced from MDX files via `src/lib/content.ts` helper functions
-- Output is a fully static site (no server required)
+- Output is prerendered static HTML; the single exception is `/card`
+  (`prerender = false`), which runs as a Netlify function — hence the adapter
 
 ## Important Files
 
 - `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
   integrations
 - `markdown.config.ts` - Shared Markdown/Shiki configuration
+- `src/designs/zellij/Layout.astro` - The site's layout, head and CSS
+- `DESIGNS.md` - The design's own documentation
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration
 - `uno.config.ts` - Styling configuration
@@ -194,11 +207,9 @@ To add new blog posts:
 
 1. Create folder in `src/_content/blog/{slug}/`
 2. Create `post.mdx` inside the folder
-3. Export metadata object:
-   `export const metadata = { title, date, published, tags, excerpt }`
+3. Add YAML frontmatter: `title`, `date`, optional `published` (default true),
+   `tags` (default []), `excerpt` (falls back to a generated one)
 4. Write content in MDX format (supports JSX/React components)
-5. Git commit date automatically used for `updated` field via
-   `src/lib/content.ts`
 
 ## Deployment
 

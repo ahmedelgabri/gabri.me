@@ -1,10 +1,9 @@
-# Zellij — design exploration
+# Zellij — the site design
 
-One full-site design exploration: a complete alternative take on gabri.me with
-its own visual identity, rendering the home page (about, social, projects, blog
-index, talks & interviews) and all blog posts. Four other explorations (Raster,
-Phosphor, Monograph, Cairo Deco) were reviewed and removed; Zellij is the one
-that stayed.
+Zellij is gabri.me. It began as one of five full-site design explorations
+(Raster, Phosphor, Monograph and Cairo Deco were the others); it is the one that
+was kept, and it is now the site itself — the home page (about, social,
+projects, blog index, talks & interviews), every blog post, and the 404.
 
 ## The design
 
@@ -69,12 +68,8 @@ saturated, so it stays gold rather than drifting brown. Every other consumer —
 the carpet frame's double rule, the corner khatams, the star dividers, the entry
 star markers and title underlines, the arch imposts, the blockquote bar, the
 corner control, the prose link hover — reads `--zj-gild` or `--zj-hairline` and
-picks the change up without its own rule.
-
-One consumer deliberately does not follow the page: the design switcher sits on
-its own dark ink chip in both themes, so it wears the Blue Quran gold, where the
-selected label holds 8.0:1 (the deepened bronze would put it at 4.2:1). Dark
-mode was already legible and its values are untouched.
+picks the change up without its own rule. Dark mode was already legible and its
+values are untouched.
 
 ### Type
 
@@ -214,8 +209,9 @@ The first pass was reviewed and reworked:
 - **"Add subtle animations, and don't respect reduce-motion."** — every
   `prefers-reduced-motion` gate was removed from the design on purpose; the
   animations always run. See the inventory below.
-- **Weekly links are hidden**, matching the real site: no index section and no
-  `/1/weekly-links/` routes.
+- **Weekly links are hidden**: no index section and no `/weekly-links/` routes.
+  The collection is still in `src/_content/` and still queryable through
+  `src/lib/content.ts`; nothing renders it.
 - **Talks & interviews moved to the end** of the home page.
 - **External links are marked.** Every `target="_blank"` link gets a small
   raised mark through `::after`: an arrow pointing north-east whose head is a
@@ -251,12 +247,12 @@ sky’s subtle pointer drift.
 
 ### Theme resolution
 
-An inline pre-render script in the layout's `<head>` reads the same `theme`
-localStorage key as the main site (`system` | `light` | `dark`), defaulting to
-`system`, resolves it against `prefers-color-scheme`, and sets `light`/`dark` on
-`<html>`. It keeps listening for system changes while the setting is `system`.
-The observatory's switch writes the key and flips the class inside a view
-transition; the control's accessible name follows the resolved theme.
+An inline pre-render script in the layout's `<head>` reads the `theme`
+localStorage key (`system` | `light` | `dark`), defaulting to `system`, resolves
+it against `prefers-color-scheme`, and sets `light`/`dark` on `<html>`. It keeps
+listening for system changes while the setting is `system`. The observatory's
+switch writes the key and flips the class inside a view transition; the
+control's accessible name follows the resolved theme.
 
 ## Typography
 
@@ -269,7 +265,7 @@ beside its naskh, so one hand sets both scripts. Spectral carries the body text,
 keeping a long column even and quiet underneath. Code is set in the mono stack,
 which starts with PragmataPro Mono Liga.
 
-The three families are the whole webfont payload: the zellij pages load Amiri
+The three families are the whole webfont payload: every page loads Amiri
 400/700, Spectral 400/600 with italics and IBM Plex Mono 400/600 from a single
 Google Fonts request.
 
@@ -277,9 +273,11 @@ Google Fonts request.
 
 Four layers, none of them a widget: the sky the dark theme is read under, the
 compass work beneath the light theme's lattice, the almanac in the corner of the
-carpet page, and the instrument in the footer. They were chosen from a
-nine-candidate comparison built as live demos and judged on the grounds they
-belong to; the losers and the page that held them are gone.
+carpet page, and the instrument in the footer. Three of them actually load
+three.js — the almanac's moon and rosette are computed SVG that only borrows the
+shared frame scheduler. They were chosen from a nine-candidate comparison built
+as live demos and judged on the grounds they belong to; the losers and the page
+that held them are gone.
 
 All four share `src/designs/zellij/webgl.ts`: `hasWebGL()`, which probes and
 immediately releases a context before anything is downloaded, so a machine that
@@ -294,10 +292,10 @@ refused chunk or a lost context always leaves the page it enhanced standing.
 ### The night sky
 
 Dark mode is the Blue Quran, so the three.js work belongs to its world rather
-than to an ornament in the masthead. Every zellij page carries a fixed,
-full-viewport, pointer-events-none canvas in the same negative-z layer as the
-mashrabiya screen — over the lattice, under the carpet page — holding a hundred
-gold stars across three depth layers of 42, 34 and 24, drawn at 1.2–3.4px.
+than to an ornament in the masthead. Every page carries a fixed, full-viewport,
+pointer-events-none canvas in the same negative-z layer as the mashrabiya screen
+— over the lattice, under the carpet page — holding a hundred gold stars across
+three depth layers of 42, 34 and 24, drawn at 1.2–3.4px.
 
 Every star carries its own tint (a hair either side of `--zj-gild`), its own
 4–9s twinkle and its own phase, so nothing pulses in step; one oscillation
@@ -426,8 +424,8 @@ still does the work; the sweep only wraps it.
 ### The astrolabe
 
 The footer keeps an instrument: a planispheric astrolabe, drawn out of its own
-projection rather than traced, sitting above the copyright line on every zellij
-page at 420px from 1024px up.
+projection rather than traced, sitting above the copyright line on every page at
+420px from 1024px up.
 
 The projection is the real one — the sphere seen from the south pole and dropped
 onto the plane of the equator, so declination becomes a radius and every circle
@@ -504,37 +502,36 @@ it says that the creep is 360× and that the rete can be turned.
 
 ## Routes
 
-| Route            | Page                      |
-| ---------------- | ------------------------- |
-| `/1`             | home                      |
-| `/1/blog/[slug]` | every published blog post |
+| Route          | Page                      |
+| -------------- | ------------------------- |
+| `/`            | home                      |
+| `/blog/[slug]` | every published blog post |
+| `/404`         | page not found            |
 
-All design pages carry `noindex, nofollow` and are excluded from the sitemap.
+The endpoints beside them — `/feed.xml`, `/sitemap.xml`, `/robots.txt`,
+`/llms.txt`, `/card` and the `/og/[slug].png` cards — are data, not pages, and
+the design does not touch them.
 
-## Shared infrastructure
+## Where it lives
 
-- `src/lib/designs.ts` — the design registry plus pure path-mapping functions
-  (`activeDesignId`, `designPath`, `mainSitePath`), unit-tested in
-  `src/lib/__tests__/designs.test.ts`. Blog posts are the only sub-path a design
-  and the main site share; anything else maps back to `/`.
-- `src/components/DesignSwitcher.astro` — the fixed switcher bar shown on every
-  page including the main site. Neutral glass by default; the design rethemes it
-  through CSS custom properties (`--ds-bg`, `--ds-accent`, …), with a separate
-  set under `.design-zellij.dark`.
-- `src/components/DesignHead.astro` — shared meta partial (charset, viewport,
-  noindex, favicon, theme-color, Google Fonts link).
-- `src/lib/content.ts` — `getBlogStaticPaths()` and friends, used by the
-  design's route files.
-- `src/designs/zellij/` owns the layout and partials; `src/pages/1/` holds thin
-  route files. The main site's `style.css` is not loaded on design pages — the
-  design carries 100% of its own styling, including MDX prose and Shiki code
-  blocks. Shiki runs dual-theme: light mode keeps the inline light colours, dark
-  mode flips to `var(--shiki-dark)` and lifts the comment grey, which would
-  otherwise sit at 1.8:1 on the indigo panel.
+- `src/designs/zellij/Layout.astro` — the site's only layout. It carries the
+  whole `<head>` (title, description, canonical, OpenGraph and Twitter cards,
+  authorship and `rel="me"` links, the RSS alternate, the two media-scoped
+  `theme-color` metas, the Google Fonts request, the pre-paint theme script and
+  the GA4 snippet), the carpet-page frame with its masthead, frieze, footer and
+  astrolabe, and all of the design's CSS in one `<style is:global>` block.
+- `src/designs/zellij/` also owns the partials: `Arch`, `Star`, `StarDivider`,
+  `GirihFrieze`, `Astrolabe`, `Observatory`, `NightSky`, `Pencil`, `ProseLink`,
+  and the `geometry`, `arches`, `moon` and `webgl` modules behind them.
+- `src/pages/index.astro`, `src/pages/blog/[slug].astro` and
+  `src/pages/404.astro` are thin route files over that layout.
+- `src/lib/content.ts` — `getBlogStaticPaths()` and friends, used by the route
+  files.
 
-## Adopting or removing
-
-The design is self-contained: deleting `src/pages/1/` and `src/designs/zellij/`
-removes it completely. To adopt it as the real site, its layout and pages
-replace `BaseLayout.astro` and the root pages, and the switcher, `DesignHead`'s
-noindex and the registry entry all go away.
+The design carries 100% of its own styling, including MDX prose and Shiki code
+blocks. UnoCSS is still in the build for its preflight reset — the design's CSS
+is written against it — and for the handful of utilities post bodies use
+directly (`dark:hidden` / `light:hidden` on paired light/dark images). Shiki
+runs dual-theme: light mode keeps the inline light colours, dark mode flips to
+`var(--shiki-dark)` and lifts the comment grey, which would otherwise sit at
+1.8:1 on the indigo panel.
