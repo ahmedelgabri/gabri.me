@@ -1183,6 +1183,11 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			control.setAttribute('aria-expanded', 'true')
 			plate.showModal()
+			/* Every visit starts at the head of the plate, however far the last one read */
+			const sheet = plate.querySelector<HTMLElement>('.zj-obs-sheet')
+			if (sheet) {
+				sheet.scrollTop = 0
+			}
 			showing = true
 			life.settle()
 		}
@@ -1233,11 +1238,23 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		/* ————— Dusk and dawn ————— */
 
 		switcher?.addEventListener('click', () => {
-			const next: ThemeSetting = window.__zjTheme === 'dark' ? 'light' : 'dark'
+			const target: ResolvedTheme =
+				window.__zjTheme === 'dark' ? 'light' : 'dark'
+			const system: ResolvedTheme = window.matchMedia(
+				'(prefers-color-scheme: dark)',
+			).matches
+				? 'dark'
+				: 'light'
+			/*
+			 * Choosing the theme the computer already prefers is a return, not
+			 * an override: stored as system, the site follows the machine again
+			 * from here on.
+			 */
+			const next: ThemeSetting = target === system ? 'system' : target
 			/* The change was asked for here, so it is worth announcing */
 			speak = true
 			plate.close()
-			sweep(next)
+			sweep(next, target)
 		})
 
 		window.addEventListener('zj:theme', () => {
@@ -1270,7 +1287,7 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	 * changes, and the 300ms colour transitions already on body and page carry
 	 * it across as a cross-fade.
 	 */
-	function sweep(next: ThemeSetting) {
+	function sweep(next: ThemeSetting, direction: ResolvedTheme) {
 		const start = document.startViewTransition as
 			| typeof document.startViewTransition
 			| undefined
@@ -1281,7 +1298,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 		}
 
 		const root = document.documentElement
-		root.dataset.zjSweep = next
+		/* The wipe runs toward the theme being revealed, whatever gets stored */
+		root.dataset.zjSweep = direction
 
 		const done = () => {
 			delete root.dataset.zjSweep

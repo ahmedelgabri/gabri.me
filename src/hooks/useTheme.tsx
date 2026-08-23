@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export function useTheme() {
-	const [themeSetting, setThemeSetting] = React.useState<ThemeSetting>('dark')
+	const [themeSetting, setThemeSetting] = React.useState<ThemeSetting>('system')
 	const [resolvedTheme, setResolvedTheme] =
 		React.useState<ResolvedTheme>('dark')
 
