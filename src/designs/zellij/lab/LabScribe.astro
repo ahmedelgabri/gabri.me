@@ -1,0 +1,399 @@
+---
+/*
+ * C — the margin scribe. Three abstract reed-pen swashes, each cut into
+ * separately-weighted pieces so one pass of the pen can swell and thin.
+ * Nothing here is a letterform, in any script.
+ */
+
+type Anchor = [number, number]
+
+interface Flourish {
+	id: string
+	anchors: Anchor[]
+}
+
+interface Stroke {
+	d: string
+	width: number
+	/* Both as fractions of the whole flourish, so the script needs no geometry */
+	at: number
+	span: number
+}
+
+const WIDTH = 600
+const HEIGHT = 400
+/* The pen at its thinnest and at the belly of the stroke, in user units */
+const HAIRLINE = 0.9
+const BELLY = 4.2
+const SAMPLES = 16
+
+const flourishes: Flourish[] = [
+	{
+		id: 'sweep',
+		anchors: [
+			[64, 286],
+			[128, 314],
+			[198, 316],
+			[262, 292],
+			[318, 250],
+			[364, 198],
+			[406, 148],
+			[452, 112],
+			[500, 96],
+			[538, 104],
+			[556, 130],
+		],
+	},
+	{
+		id: 'bowl',
+		anchors: [
+			[96, 120],
+			[110, 176],
+			[140, 236],
+			[192, 282],
+			[256, 300],
+			[322, 288],
+			[376, 252],
+			[416, 202],
+			[444, 150],
+			[462, 108],
+			[452, 78],
+			[416, 76],
+			[388, 100],
+		],
+	},
+	{
+		id: 'wave',
+		anchors: [
+			[60, 214],
+			[112, 170],
+			[176, 158],
+			[232, 190],
+			[276, 238],
+			[326, 270],
+			[388, 264],
+			[436, 226],
+			[486, 178],
+			[534, 146],
+			[566, 134],
+		],
+	},
+]
+
+function round(n: number): number {
+	return Math.round(n * 100) / 100
+}
+
+/* Timing fractions need more places than coordinates, or the ends drift off 1 */
+function share(n: number): number {
+	return Math.round(n * 10000) / 10000
+}
+
+function bezier(a: Anchor, b: Anchor, c: Anchor, d: Anchor, t: number): Anchor {
+	const u = 1 - t
+	const w = [u ** 3, 3 * u * u * t, 3 * u * t * t, t ** 3]
+	return [
+		a[0] * w[0] + b[0] * w[1] + c[0] * w[2] + d[0] * w[3],
+		a[1] * w[0] + b[1] * w[1] + c[1] * w[2] + d[1] * w[3],
+	]
+}
+
+function measure(a: Anchor, b: Anchor, c: Anchor, d: Anchor): number {
+	let total = 0
+	let last = a
+
+	for (let i = 1; i <= SAMPLES; i++) {
+		const next = bezier(a, b, c, d, i / SAMPLES)
+		total += Math.hypot(next[0] - last[0], next[1] - last[1])
+		last = next
+	}
+
+	return total
+}
+
+/*
+ * Hairline in, belly through the turn, hairline out — one pass of the pen.
+ * The pressure builds a little faster than it releases, which is what a hand
+ * does; the exponents only shape that curve.
+ */
+function weight(s: number): number {
+	return HAIRLINE + BELLY * Math.sin(Math.PI * s ** 0.8) ** 1.6
+}
+
+/*
+ * Catmull-Rom through the anchors, converted to cubics. Every anchor shares
+ * one tangent with the segments either side of it, so a stroke cut into
+ * pieces still reads as a single unbroken line.
+ */
+function ink(anchors: Anchor[]): Stroke[] {
+	const pieces = anchors.slice(0, -1).map((_, i) => {
+		const p0 = anchors[Math.max(i - 1, 0)]
+		const p1 = anchors[i]
+		const p2 = anchors[i + 1]
+		const p3 = anchors[Math.min(i + 2, anchors.length - 1)]
+		const c1: Anchor = [
+			p1[0] + (p2[0] - p0[0]) / 6,
+			p1[1] + (p2[1] - p0[1]) / 6,
+		]
+		const c2: Anchor = [
+			p2[0] - (p3[0] - p1[0]) / 6,
+			p2[1] - (p3[1] - p1[1]) / 6,
+		]
+
+		return {p1, c1, c2, p2, length: measure(p1, c1, c2, p2)}
+	})
+
+	const total = pieces.reduce((sum, piece) => sum + piece.length, 0)
+	let travelled = 0
+
+	return pieces.map((piece) => {
+		const span = piece.length / total
+		const start = travelled / total
+		travelled += piece.length
+
+		return {
+			d: `M${round(piece.p1[0])} ${round(piece.p1[1])}C${round(piece.c1[0])} ${round(piece.c1[1])} ${round(piece.c2[0])} ${round(piece.c2[1])} ${round(piece.p2[0])} ${round(piece.p2[1])}`,
+			width: round(weight(start + span / 2)),
+			at: share(start),
+			span: share(span),
+		}
+	})
+}
+
+const drawn = flourishes.map((flourish) => ({
+	id: flourish.id,
+	strokes: ink(flourish.anchors),
+}))
+---
+
+<div class="lab-demo" data-lab="c" data-ground="ivory">
+	<svg
+		class="lab-c-sheet"
+		viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+		aria-hidden="true"
+	>
+		{
+			drawn.map((flourish) => (
+				<g class="lab-c-flourish" data-flourish={flourish.id}>
+					{/* The ink spreading into the paper, under the stroke itself */}
+					<g class="lab-c-bleed">
+						{flourish.strokes.map((stroke) => (
+							<path
+								d={stroke.d}
+								pathLength="1"
+								stroke-width={round(stroke.width * 2.6)}
+								data-at={stroke.at}
+								data-span={stroke.span}
+							/>
+						))}
+					</g>
+					<g class="lab-c-ink">
+						{flourish.strokes.map((stroke) => (
+							<path
+								d={stroke.d}
+								pathLength="1"
+								stroke-width={stroke.width}
+								data-at={stroke.at}
+								data-span={stroke.span}
+							/>
+						))}
+					</g>
+				</g>
+			))
+		}
+	</svg>
+	<button class="lab-c-trigger" type="button">Draw one</button>
+</div>
+
+<style>
+	/*
+	 * Always the qishani ivory, so the box pins the light theme's chrome
+	 * tokens too: the page around it may be running the indigo theme.
+	 */
+	.lab-demo {
+		--zj-text-muted: #5a5142;
+		--zj-hairline: rgba(169, 124, 20, 0.72);
+		--zj-gild: #a97c14;
+		position: relative;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		overflow: hidden;
+		border-radius: 2px;
+		background: #f5eedf;
+	}
+
+	.lab-c-sheet {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.lab-c-flourish {
+		opacity: 0;
+	}
+
+	.lab-c-flourish path {
+		fill: none;
+		stroke: #1d3a6e;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+	}
+
+	.lab-c-ink {
+		opacity: 0.5;
+	}
+
+	.lab-c-bleed {
+		opacity: 0.09;
+		filter: blur(2.5px);
+	}
+
+	.lab-c-trigger {
+		position: absolute;
+		right: 0.55rem;
+		bottom: 0.5rem;
+		padding: 0.2rem 0.6rem;
+		border: 1px solid var(--zj-hairline);
+		border-radius: 2px;
+		background: transparent;
+		color: var(--zj-text-muted);
+		font-family: inherit;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition:
+			color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.lab-c-trigger:hover {
+		color: var(--zj-gild);
+		border-color: var(--zj-gild);
+	}
+</style>
+
+<script>
+	const DRAW = 950
+	const HOLD = 1700
+	/* The ink is absorbed rather than switched off */
+	const SOAK = 1500
+	const LIFE = DRAW + HOLD + SOAK
+	const WAIT = [14000, 20000]
+	/* The stroke accelerates the whole way: a careful entry, a fast flick out */
+	const RUSH = 1.7
+	const TURN = 2.5
+
+	function pick(range: number[]): number {
+		return range[0] + Math.random() * (range[1] - range[0])
+	}
+
+	/* Time at which the pen has laid down this fraction of the stroke */
+	function pace(fraction: number): number {
+		/* Rounded fractions can overshoot 1, and a negative base would go imaginary */
+		return 1 - Math.max(1 - fraction, 0) ** RUSH
+	}
+
+	const box = document.querySelector<HTMLElement>('[data-lab="c"]')
+	const trigger = box?.querySelector<HTMLButtonElement>('.lab-c-trigger')
+	const flourishes = box
+		? Array.from(box.querySelectorAll<SVGGElement>('.lab-c-flourish'))
+		: []
+
+	if (box && trigger && flourishes.length > 0) {
+		const timers: number[] = []
+		const playing: Animation[] = []
+		let showing = false
+
+		const after = (delay: number, run: () => void) => {
+			timers.push(window.setTimeout(run, delay))
+		}
+
+		const clear = () => {
+			for (const timer of timers) {
+				window.clearTimeout(timer)
+			}
+
+			timers.length = 0
+
+			/* Cancelling hands every path back to the stylesheet: undrawn, unseen */
+			for (const animation of playing) {
+				animation.cancel()
+			}
+
+			playing.length = 0
+		}
+
+		const play = () => {
+			clear()
+
+			const flourish = flourishes[Math.floor(Math.random() * flourishes.length)]
+			const flipped = Math.random() < 0.5
+			const turn = (Math.random() - 0.5) * 2 * TURN
+
+			/* A little variety in the hand, so the same swash is never quite repeated */
+			flourish.setAttribute(
+				'transform',
+				`rotate(${turn.toFixed(2)} 300 200)${flipped ? ' translate(600 0) scale(-1 1)' : ''}`,
+			)
+
+			playing.push(
+				flourish.animate(
+					[
+						{opacity: 1, offset: 0},
+						{opacity: 1, offset: (DRAW + HOLD) / LIFE, easing: 'ease-in'},
+						{opacity: 0, offset: 1},
+					],
+					{duration: LIFE, fill: 'forwards'},
+				),
+			)
+
+			for (const path of flourish.querySelectorAll<SVGPathElement>('path')) {
+				const start = Number(path.dataset.at)
+				const span = Number(path.dataset.span)
+				const from = pace(start)
+
+				playing.push(
+					path.animate([{strokeDashoffset: 1}, {strokeDashoffset: 0}], {
+						delay: from * DRAW,
+						duration: Math.max(pace(start + span) - from, 0) * DRAW,
+						easing: 'linear',
+						fill: 'forwards',
+					}),
+				)
+			}
+
+			after(LIFE, () => {
+				clear()
+				after(pick(WAIT), play)
+			})
+		}
+
+		const settle = () => {
+			if (showing && document.visibilityState === 'visible') {
+				/* The first one comes soon, or the card looks like an empty box */
+				if (timers.length === 0 && playing.length === 0) {
+					after(1200, play)
+				}
+			} else {
+				clear()
+			}
+		}
+
+		trigger.addEventListener('click', play)
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				showing = entries[entries.length - 1].isIntersecting
+				settle()
+			},
+			{threshold: 0.25},
+		)
+
+		observer.observe(box)
+		document.addEventListener('visibilitychange', settle)
+	}
+</script>

@@ -1,0 +1,444 @@
+<div class="lab-demo" data-lab="f" data-ground="follow">
+	<p class="lab-stage" data-lab-stage></p>
+</div>
+
+<style>
+	.lab-demo {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		overflow: hidden;
+		border-radius: 2px;
+		background: var(--zj-ground);
+	}
+
+	.lab-demo :global(canvas) {
+		position: absolute;
+		inset: 0;
+		display: block;
+	}
+
+	.lab-stage {
+		position: absolute;
+		left: 0.7rem;
+		bottom: 0.55rem;
+		margin: 0;
+		font-family: var(--z-font-mono);
+		font-size: 0.625rem;
+		letter-spacing: 0.05em;
+		color: var(--zj-text-muted);
+		pointer-events: none;
+		transition: opacity 160ms ease;
+	}
+
+	.lab-stage.is-out {
+		opacity: 0;
+	}
+</style>
+
+<script>
+	import {INNER_RATIO} from '../geometry'
+
+	/*
+	 * The figure this demonstration builds is the one tiling the page ground:
+	 * sixteen points stepped round a circle of radius R and joined as the
+	 * {16/6} star polygon. Both radii below are that polygon's own crossings —
+	 * the petals' valleys where consecutive chords meet, and the deep ring where
+	 * the chords cross closest to the centre — not numbers chosen by eye.
+	 */
+	const VALLEY = Math.cos((6 * Math.PI) / 16) / Math.cos((5 * Math.PI) / 16)
+	const DEEP = Math.cos((6 * Math.PI) / 16) / Math.cos(Math.PI / 16)
+	/* One sixteenth of the circle: the step the whole figure is built on */
+	const STEP = Math.PI / 8
+
+	/* When each layer starts drawing itself in, and how long it takes */
+	const CIRCLE = [0, 1.4]
+	const POINTS = [0.9, 1.2]
+	const CHORDS = [2.2, 3.4]
+	const MARKS = [5.7, 0.9]
+	const PETALS = [6.8, 2.2]
+	const INNER = [9.1, 2.1]
+	const KHATAM = [10.2, 1.4]
+	/* The scaffolding dies away and leaves the figure it generated standing */
+	const ERASE = [11.4, 1]
+	/* Then the figure goes too, and the compass starts again */
+	const CLEAR = [13.6, 0.8]
+	const LOOP = 14.8
+
+	const LABELS: Array<[number, string]> = [
+		[0, 'the compass circle · sixteen points'],
+		[CHORDS[0], 'joined as the {16/6} star polygon'],
+		[MARKS[0], 'where its chords cross'],
+		[PETALS[0], 'sixteen petals · tips at R, valleys at 0.689 R'],
+		[INNER[0], 'the inner ring at 0.390 R · a khatam inscribed in it'],
+		[ERASE[0], 'the tile behind this page'],
+	]
+
+	interface Handle {
+		resume(): void
+		pause(): void
+	}
+
+	interface Layer {
+		reveal: {value: number}
+		opacity: {value: number}
+		from: number
+		span: number
+		/* The weights of the tile: structure strokes at 1, infill at 0.55 */
+		weight: number
+		/* Scaffolding is wiped once the figure stands; the figure itself is not */
+		scaffold: boolean
+	}
+
+	function polar(angle: number, radius: number): [number, number] {
+		return [Math.cos(angle) * radius, Math.sin(angle) * radius]
+	}
+
+	function push(out: number[], ax: number, ay: number, bx: number, by: number) {
+		out.push(ax, ay, 0, bx, by, 0)
+	}
+
+	/* A closed ring of alternating radii — the shape of every layer here */
+	function ring(
+		steps: number,
+		radii: (k: number) => number,
+	): Array<[number, number]> {
+		const points: Array<[number, number]> = []
+
+		for (let k = 0; k <= steps; k++) {
+			points.push(polar((k * Math.PI * 2) / steps, radii(k % steps)))
+		}
+
+		return points
+	}
+
+	function clamp(value: number): number {
+		return value < 0 ? 0 : value > 1 ? 1 : value
+	}
+
+	/* Asked before three.js is fetched, so a machine without WebGL downloads nothing */
+	function hasWebGL(): boolean {
+		try {
+			const probe = document.createElement('canvas')
+			const context = probe.getContext('webgl2') ?? probe.getContext('webgl')
+			/* Hand the context back rather than sitting on one of the browser's few */
+			context?.getExtension('WEBGL_lose_context')?.loseContext()
+			return Boolean(context)
+		} catch {
+			return false
+		}
+	}
+
+	async function enhance(box: HTMLElement): Promise<Handle> {
+		const {
+			BufferGeometry,
+			Color,
+			Float32BufferAttribute,
+			Group,
+			LineSegments,
+			OrthographicCamera,
+			Scene,
+			ShaderMaterial,
+			WebGLRenderer,
+		} = await import('three')
+
+		const renderer = new WebGLRenderer({alpha: true, antialias: true})
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+		renderer.domElement.setAttribute('aria-hidden', 'true')
+
+		const scene = new Scene()
+		/* Pixel space; the figure is built at radius 1 and scaled to the box */
+		const camera = new OrthographicCamera(0, 1, 0, 1, -1, 1)
+		const figure = new Group()
+		scene.add(figure)
+
+		const label = box.querySelector<HTMLElement>('[data-lab-stage]')
+		const colour = new Color()
+		const layers: Layer[] = []
+
+		/* The lattice this comes from is kohl on the ivory ground and gold on the indigo */
+		function paint() {
+			const token = window.__zjTheme === 'dark' ? '--zj-gild' : '--zj-text'
+			colour.set(getComputedStyle(box).getPropertyValue(token).trim() || '#26221a')
+		}
+
+		paint()
+
+		/*
+		 * Every layer draws itself in the order its own segments were laid down,
+		 * so a ring closes the way a compass closes it rather than appearing whole.
+		 */
+		function add(
+			values: number[],
+			orders: number[],
+			schedule: number[],
+			weight: number,
+			scaffold: boolean,
+		) {
+			const reveal = {value: 0}
+			const opacity = {value: 0}
+			const geometry = new BufferGeometry()
+			geometry.setAttribute('position', new Float32BufferAttribute(values, 3))
+			geometry.setAttribute('aOrder', new Float32BufferAttribute(orders, 1))
+
+			const material = new ShaderMaterial({
+				transparent: true,
+				uniforms: {uColour: {value: colour}, uReveal: reveal, uOpacity: opacity},
+				vertexShader: `
+					attribute float aOrder;
+
+					uniform float uReveal;
+
+					varying float vAlpha;
+
+					void main() {
+						/* Each segment lights as the drawing hand reaches its place */
+						vAlpha = clamp((uReveal - aOrder) * 22.0, 0.0, 1.0);
+						gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+					}
+				`,
+				fragmentShader: `
+					uniform vec3 uColour;
+					uniform float uOpacity;
+
+					varying float vAlpha;
+
+					void main() {
+						gl_FragColor = vec4(uColour, vAlpha * uOpacity);
+						#include <colorspace_fragment>
+					}
+				`,
+			})
+
+			figure.add(new LineSegments(geometry, material))
+			layers.push({
+				reveal,
+				opacity,
+				from: schedule[0],
+				span: schedule[1],
+				weight,
+				scaffold,
+			})
+		}
+
+		/* Segments of a path, ordered from its start to its end */
+		function trace(
+			points: Array<[number, number]>,
+			schedule: number[],
+			weight: number,
+			scaffold: boolean,
+		) {
+			const values: number[] = []
+			const orders: number[] = []
+
+			for (let i = 1; i < points.length; i++) {
+				const from = points[i - 1]
+				const to = points[i]
+				push(values, from[0], from[1], to[0], to[1])
+				const order = (i - 1) / (points.length - 1)
+				orders.push(order, order)
+			}
+
+			add(values, orders, schedule, weight, scaffold)
+		}
+
+		/* ————— 1. The compass circle, and the sixteen points stepped round it ————— */
+
+		trace(ring(192, () => 1), CIRCLE, 0.42, true)
+
+		const dots: number[] = []
+		const dotOrders: number[] = []
+
+		for (let k = 0; k < 16; k++) {
+			const [x, y] = polar(k * STEP, 1)
+			const order = k / 16
+			push(dots, x - 0.022, y, x + 0.022, y)
+			push(dots, x, y - 0.022, x, y + 0.022)
+			dotOrders.push(order, order, order, order)
+		}
+
+		add(dots, dotOrders, POINTS, 0.5, true)
+
+		/* ————— 2. The {16/6} chords ————— */
+
+		const chords: number[] = []
+		const chordOrders: number[] = []
+		const CUTS = 8
+
+		for (let k = 0; k < 16; k++) {
+			const [ax, ay] = polar(k * STEP, 1)
+			const [bx, by] = polar(((k + 6) % 16) * STEP, 1)
+
+			for (let s = 0; s < CUTS; s++) {
+				const t = s / CUTS
+				const u = (s + 1) / CUTS
+				push(
+					chords,
+					ax + (bx - ax) * t,
+					ay + (by - ay) * t,
+					ax + (bx - ax) * u,
+					ay + (by - ay) * u,
+				)
+				const order = (k + t) / 16
+				chordOrders.push(order, order)
+			}
+		}
+
+		add(chords, chordOrders, CHORDS, 0.42, true)
+
+		/* ————— 3. The crossings the rest of the figure is measured from ————— */
+
+		const marks: number[] = []
+		const markOrders: number[] = []
+
+		for (let k = 0; k < 32; k++) {
+			const [x, y] = polar((k * STEP) / 2, k % 2 === 0 ? DEEP : VALLEY)
+			const order = k / 32
+			push(marks, x - 0.016, y - 0.016, x + 0.016, y + 0.016)
+			push(marks, x - 0.016, y + 0.016, x + 0.016, y - 0.016)
+			markOrders.push(order, order, order, order)
+		}
+
+		add(marks, markOrders, MARKS, 0.55, true)
+
+		/* ————— 4. Petals, 5. the nested ring and its circle, and the khatam ————— */
+
+		trace(ring(32, (k) => (k % 2 === 0 ? 1 : VALLEY)), PETALS, 1, false)
+		trace(ring(32, (k) => (k % 2 === 0 ? DEEP : VALLEY)), INNER, 0.55, false)
+		trace(ring(128, () => DEEP), INNER, 0.55, false)
+		const khatam = ring(16, (k) => (k % 2 === 0 ? DEEP : DEEP * INNER_RATIO))
+		trace(khatam, KHATAM, 1, false)
+
+		let elapsed = 0
+		let spoken = -1
+		let last = 0
+		let request = 0
+		let running = false
+
+		function say(index: number) {
+			if (index === spoken || !label) {
+				return
+			}
+
+			spoken = index
+			label.classList.add('is-out')
+			window.setTimeout(() => {
+				label.textContent = LABELS[index][1]
+				label.classList.remove('is-out')
+			}, 160)
+		}
+
+		function frame(now: number) {
+			/* A backgrounded tab can hand back a huge delta on the first frame */
+			const delta = Math.min((now - last) / 1000, 0.1)
+			last = now
+			elapsed = (elapsed + delta) % LOOP
+
+			const erased = 1 - clamp((elapsed - ERASE[0]) / ERASE[1])
+			const cleared = 1 - clamp((elapsed - CLEAR[0]) / CLEAR[1])
+
+			for (const layer of layers) {
+				layer.reveal.value = clamp((elapsed - layer.from) / layer.span)
+				layer.opacity.value =
+					layer.weight * cleared * (layer.scaffold ? erased : 1)
+			}
+
+			let index = 0
+
+			for (let i = 0; i < LABELS.length; i++) {
+				if (elapsed >= LABELS[i][0]) {
+					index = i
+				}
+			}
+
+			say(index)
+			renderer.render(scene, camera)
+			request = requestAnimationFrame(frame)
+		}
+
+		function resize() {
+			const width = box.clientWidth
+			const height = box.clientHeight
+
+			if (width === 0 || height === 0) {
+				return
+			}
+
+			camera.right = width
+			camera.bottom = height
+			camera.updateProjectionMatrix()
+			/* The ratio can change under the window, not only the size */
+			renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+			renderer.setSize(width, height)
+			figure.position.set(width / 2, height / 2, 0)
+			figure.scale.setScalar(Math.min(width, height) * 0.42)
+		}
+
+		window.addEventListener('zj:theme', paint)
+		new ResizeObserver(resize).observe(box)
+		resize()
+		box.appendChild(renderer.domElement)
+
+		return {
+			resume() {
+				if (running) {
+					return
+				}
+
+				running = true
+				last = performance.now()
+				request = requestAnimationFrame(frame)
+			},
+			pause() {
+				running = false
+				cancelAnimationFrame(request)
+			},
+		}
+	}
+
+	function gate(box: HTMLElement) {
+		let handle: Handle | null = null
+		let pending = false
+		let onscreen = false
+
+		function settle() {
+			if (!onscreen || document.visibilityState !== 'visible') {
+				handle?.pause()
+				return
+			}
+
+			if (handle) {
+				handle.resume()
+				return
+			}
+
+			if (pending || !hasWebGL()) {
+				return
+			}
+
+			pending = true
+			/* A refused chunk or context leaves the plain ground, which is no loss */
+			enhance(box)
+				.then((ready) => {
+					handle = ready
+					settle()
+				})
+				.catch(() => undefined)
+		}
+
+		/* Nothing is fetched, and nothing runs, until the card is actually on screen */
+		new IntersectionObserver(
+			(entries) => {
+				onscreen = entries[entries.length - 1].isIntersecting
+				settle()
+			},
+			{threshold: 0.25},
+		).observe(box)
+
+		document.addEventListener('visibilitychange', settle)
+	}
+
+	for (const box of document.querySelectorAll<HTMLElement>('[data-lab="f"]')) {
+		gate(box)
+	}
+</script>

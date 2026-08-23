@@ -253,12 +253,50 @@ also stops while the tab is hidden, and the device pixel ratio is capped at 2.
 All of it lives in `src/designs/zellij/NightSky.astro` so Vite code-splits it
 out of the page bundle.
 
+## three.js lab
+
+`/1/three-js` is a temporary comparison page, in the same spirit as the
+typography specimen that settled Amiri + Spectral: every candidate for where
+three.js could live in this design, built as a live demo and shown on the ground
+it belongs to, so a daylight idea and a night one can be judged side by side on
+one page. Each demo is one self-contained component in
+`src/designs/zellij/lab/`, lazy-imports three.js the first time it intersects
+the viewport, and stops its loop when it scrolls out or the tab is hidden.
+Nothing on the page is integrated into the design.
+
+- **S — Night sky (current), thinned.** The incumbent at card size, with the
+  shooting star moved onto a button. The baseline the rest are judged against.
+- **A — The draftsman's pencil.** The page's own rosette lattice drawn as
+  line-work, with its real construction — the compass circle, the sixteen
+  points, the `{16/6}` chords, the circle they are all tangent to and the circle
+  their innermost crossings describe — revealed under a soft lens that follows
+  the pointer.
+- **B — Sun through the mashrabiya.** Pools of warm patterned light gliding
+  across the ivory, the star-and-cross tiling used as a gobo. The light-theme
+  answer.
+- **C — The margin scribe.** An abstract reed-pen swash that draws itself every
+  14–20s, holds, and is absorbed. SVG and the animation API, no three.js.
+- **D — Dusk and dawn.** The theme switch as a diagonal wash with star-points
+  kindling behind the front, played on a miniature carpet page.
+- **G — The true moon.** Tonight's real phase, computed from a new-moon epoch
+  and the synodic month, with a slider over the cycle.
+- **E — The astrolabe.** A line-drawn planispheric astrolabe whose rete creeps
+  at a sped-up sidereal rate and takes a drag with inertia. Proposed for the
+  footer.
+- **F — How this page is drawn.** The rosette's construction as a captioned
+  staged loop.
+- **H — Misbaha.** A strand of beads on a thread, run on verlet physics.
+
+The page, `src/designs/zellij/lab/` and the footer's `lab` link all go away once
+the winners are chosen.
+
 ## Routes
 
-| Route            | Page                      |
-| ---------------- | ------------------------- |
-| `/1`             | home                      |
-| `/1/blog/[slug]` | every published blog post |
+| Route            | Page                         |
+| ---------------- | ---------------------------- |
+| `/1`             | home                         |
+| `/1/blog/[slug]` | every published blog post    |
+| `/1/three-js`    | the three.js lab (temporary) |
 
 All design pages carry `noindex, nofollow` and are excluded from the sitemap.
 

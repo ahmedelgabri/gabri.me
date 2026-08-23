@@ -1,0 +1,565 @@
+<div class="lab-demo" data-lab="e" data-ground="indigo">
+	<p class="lab-caption">star places approximate · plate cut for 52.4°N</p>
+</div>
+
+<style>
+	/*
+	 * An astrolabe is read at night, so this card keeps its indigo ground in
+	 * both page themes and pins the dark theme's inks rather than taking the
+	 * tokens, which would turn kohl the moment the page goes ivory.
+	 */
+	.lab-demo {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		overflow: hidden;
+		border-radius: 2px;
+		background: #132347;
+		/* The whole box is the handle: the rete turns wherever you take hold of it */
+		cursor: grab;
+		touch-action: none;
+	}
+
+	.lab-demo[data-held] {
+		cursor: grabbing;
+	}
+
+	.lab-demo :global(canvas) {
+		position: absolute;
+		inset: 0;
+		display: block;
+	}
+
+	.lab-caption {
+		position: absolute;
+		left: 0.7rem;
+		bottom: 0.55rem;
+		margin: 0;
+		font-family: var(--z-font-mono);
+		font-size: 0.625rem;
+		letter-spacing: 0.05em;
+		color: #a99e85;
+		pointer-events: none;
+	}
+</style>
+
+<script>
+	import type {LineBasicMaterial as LineMaterial} from 'three'
+	import {INNER_RATIO} from '../geometry'
+
+	/* --zj-gild on the indigo ground */
+	const GOLD = 0xd9b44a
+	const RAD = Math.PI / 180
+	/* A plate is cut for one latitude and one only; this one is Amsterdam's */
+	const LATITUDE = 52.37 * RAD
+	const LONGITUDE = 4.9
+	const OBLIQUITY = 23.4393 * RAD
+	/*
+	 * Everything is built in unit space, where 1 is the outer edge of the limb,
+	 * and scaled to the box on resize. The plate inside the degree ring is the
+	 * tropic of Capricorn, and in the stereographic projection that one radius
+	 * fixes every other: the equator and the tropic of Cancer follow from it.
+	 */
+	const LIMB = 1
+	const PLATE = 0.9
+	const EQUATOR = PLATE / Math.tan(Math.PI / 4 + OBLIQUITY / 2)
+	const CANCER = EQUATOR * Math.tan(Math.PI / 4 - OBLIQUITY / 2)
+	/* Altitudes to carve into the plate; the horizon carries structure weight */
+	const ALMUCANTARS = [0, 20, 40, 60]
+	/* The sky's own rate is one turn a day — this is the same motion at 360× */
+	const SIDEREAL = (Math.PI * 2) / 240
+	/* Per second: how quickly a spun rete gives its speed up and takes the creep back */
+	const SETTLE = 0.55
+	/* A rete under a finger lags it by a hair. The plate is brass, not a cursor */
+	const FOLLOW = 18
+	/* The rule is a separate limb of the instrument and swings after the sun mark */
+	const RULE_FOLLOW = 1.6
+	/* Fast enough to feel thrown, slow enough that the ring never strobes */
+	const MAX_SPIN = 14
+
+	/*
+	 * J2000 places, rounded to the arcminute — a real rete carries its own list
+	 * and this is a short one. All ten lie north of the tropic of Capricorn,
+	 * which is the southern limit of what any rete can reach: Fomalhaut and
+	 * Antares fall off the edge of the instrument, not off this list.
+	 */
+	const STARS: Array<[string, number, number]> = [
+		['Sirius', 6.752, -16.72],
+		['Rigel', 5.242, -8.2],
+		['Betelgeuse', 5.919, 7.41],
+		['Altair', 19.846, 8.87],
+		['Regulus', 10.14, 11.97],
+		['Aldebaran', 4.599, 16.51],
+		['Arcturus', 14.261, 19.18],
+		['Vega', 18.616, 38.78],
+		['Deneb', 20.69, 45.28],
+		['Capella', 5.278, 46.0],
+	]
+
+	interface Handle {
+		resume(): void
+		pause(): void
+	}
+
+	/* Days since J2000.0, the epoch every term below is written against */
+	function epochDays(date: Date): number {
+		return date.getTime() / 86400000 - 10957.5
+	}
+
+	/* Sun's apparent longitude, good to about a minute of arc */
+	function sunLongitude(days: number): number {
+		const anomaly = (357.5291 + 0.98560028 * days) * RAD
+
+		return (
+			(280.4665 +
+				0.98564736 * days +
+				1.915 * Math.sin(anomaly) +
+				0.02 * Math.sin(2 * anomaly)) *
+			RAD
+		)
+	}
+
+	/* Which star sits on the meridian right now, in radians of right ascension */
+	function siderealTime(days: number): number {
+		const turned = (280.46061837 + 360.98564736629 * days + LONGITUDE) % 360
+
+		return (turned < 0 ? turned + 360 : turned) * RAD
+	}
+
+	/* Clockwise from the top, in the renderer's y-down pixel space */
+	function at(angle: number, radius: number): [number, number] {
+		return [Math.sin(angle) * radius, -Math.cos(angle) * radius]
+	}
+
+	/*
+	 * The projection the whole instrument is built on: the sphere seen from the
+	 * south pole, dropped onto the plane of the equator. Declination becomes a
+	 * radius, right ascension becomes an angle, and every circle in the sky
+	 * stays a circle on the brass.
+	 */
+	function decRadius(dec: number): number {
+		return EQUATOR * Math.tan((Math.PI / 2 - dec) / 2)
+	}
+
+	function push(out: number[], ax: number, ay: number, bx: number, by: number) {
+		out.push(ax, ay, 0, bx, by, 0)
+	}
+
+	function chain(out: number[], points: Array<[number, number]>) {
+		for (let i = 1; i < points.length; i++) {
+			push(out, points[i - 1][0], points[i - 1][1], points[i][0], points[i][1])
+		}
+	}
+
+	/* A circle as segments, cut where it runs off the plate as it is on brass */
+	function arc(
+		out: number[],
+		cx: number,
+		cy: number,
+		r: number,
+		clip = Infinity,
+		steps = 160,
+	) {
+		let px = 0
+		let py = 0
+		let was = false
+
+		for (let i = 0; i <= steps; i++) {
+			const t = (i / steps) * Math.PI * 2
+			const x = cx + Math.cos(t) * r
+			const y = cy + Math.sin(t) * r
+			const inside = Math.hypot(x, y) <= clip
+
+			if (i > 0 && inside && was) {
+				push(out, px, py, x, y)
+			}
+
+			px = x
+			py = y
+			was = inside
+		}
+	}
+
+	/* The design's eight-point star, used here as the mark at a pointer's tip */
+	function khatam(out: number[], cx: number, cy: number, r: number) {
+		const points: Array<[number, number]> = []
+
+		for (let k = 0; k <= 16; k++) {
+			const angle = (k * Math.PI) / 8
+			const radius = k % 2 === 0 ? r : r * INNER_RATIO
+			points.push([cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius])
+		}
+
+		chain(out, points)
+	}
+
+	/*
+	 * An almucantar — the circle of one altitude — is where the plate stops
+	 * being a diagram of the sky and starts being a diagram of a place.
+	 */
+	function almucantar(out: number[], altitude: number) {
+		const denominator = Math.sin(LATITUDE) + Math.sin(altitude)
+
+		arc(
+			out,
+			0,
+			(-EQUATOR * Math.cos(LATITUDE)) / denominator,
+			(EQUATOR * Math.cos(altitude)) / denominator,
+			PLATE,
+		)
+	}
+
+	/* Asked before three.js is fetched, so a machine without WebGL downloads nothing */
+	function hasWebGL(): boolean {
+		try {
+			const probe = document.createElement('canvas')
+			const context = probe.getContext('webgl2') ?? probe.getContext('webgl')
+			/* Hand the context back rather than sitting on one of the browser's few */
+			context?.getExtension('WEBGL_lose_context')?.loseContext()
+			return Boolean(context)
+		} catch {
+			return false
+		}
+	}
+
+	async function enhance(box: HTMLElement): Promise<Handle> {
+		const {
+			BufferGeometry,
+			Float32BufferAttribute,
+			Group,
+			LineBasicMaterial,
+			LineSegments,
+			OrthographicCamera,
+			Scene,
+			WebGLRenderer,
+		} = await import('three')
+
+		const renderer = new WebGLRenderer({alpha: true, antialias: true})
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+		renderer.domElement.setAttribute('aria-hidden', 'true')
+
+		const scene = new Scene()
+		/* Pixel space with y running down, so a screen angle is a clockwise one */
+		const camera = new OrthographicCamera(0, 1, 0, 1, -1, 1)
+		const instrument = new Group()
+		scene.add(instrument)
+
+		const structure = new LineBasicMaterial({
+			color: GOLD,
+			transparent: true,
+			opacity: 0.82,
+		})
+		const engraved = new LineBasicMaterial({
+			color: GOLD,
+			transparent: true,
+			opacity: 0.3,
+		})
+
+		function draw(values: number[], material: LineMaterial) {
+			const geometry = new BufferGeometry()
+			geometry.setAttribute('position', new Float32BufferAttribute(values, 3))
+			return new LineSegments(geometry, material)
+		}
+
+		/* ————— The mater: the limb, its degree ring, and the plate inside it ————— */
+
+		const heavy: number[] = []
+		const light: number[] = []
+
+		arc(heavy, 0, 0, LIMB)
+		arc(heavy, 0, 0, PLATE)
+		arc(light, 0, 0, 0.955)
+
+		for (let degree = 0; degree < 360; degree += 5) {
+			const long = degree % 30 === 0
+			const [ox, oy] = at(degree * RAD, LIMB)
+			const [ix, iy] = at(degree * RAD, long ? 0.925 : 0.955)
+			push(long ? heavy : light, ox, oy, ix, iy)
+		}
+
+		arc(light, 0, 0, EQUATOR)
+		arc(light, 0, 0, CANCER)
+		/* The meridian, and the zenith of the latitude this plate was cut for */
+		push(light, 0, -PLATE, 0, PLATE)
+		khatam(
+			light,
+			0,
+			(-EQUATOR * Math.cos(LATITUDE)) / (1 + Math.sin(LATITUDE)),
+			0.016,
+		)
+
+		for (const altitude of ALMUCANTARS) {
+			almucantar(altitude === 0 ? heavy : light, altitude * RAD)
+		}
+
+		instrument.add(draw(heavy, structure))
+		instrument.add(draw(light, engraved))
+
+		/* ————— The rete: the ecliptic band and its pierced star pointers ————— */
+
+		const rete = new Group()
+		instrument.add(rete)
+
+		const rim: number[] = []
+		const web: number[] = []
+		/* The ecliptic touches Cancer at one solstice and Capricorn at the other */
+		const eclipticRadius = (PLATE + CANCER) / 2
+		const [ecx, ecy] = at(-18 * 15 * RAD, (PLATE - CANCER) / 2)
+		const band = 0.06
+
+		arc(rim, 0, 0, PLATE)
+		arc(rim, ecx, ecy, eclipticRadius)
+		arc(web, ecx, ecy, eclipticRadius - band)
+
+		/*
+		 * The twelve signs are equal along the ecliptic and unequal on the brass:
+		 * each division is carried through declination and right ascension first,
+		 * so the projection spaces them the way it really does.
+		 */
+		for (let sign = 0; sign < 12; sign++) {
+			const longitude = sign * 30 * RAD
+			const dec = Math.asin(Math.sin(OBLIQUITY) * Math.sin(longitude))
+			const ra = Math.atan2(
+				Math.cos(OBLIQUITY) * Math.sin(longitude),
+				Math.cos(longitude),
+			)
+			const [px, py] = at(-ra, decRadius(dec))
+			const dx = px - ecx
+			const dy = py - ecy
+			const length = Math.hypot(dx, dy) || 1
+			push(web, px, py, px - (dx / length) * band, py - (dy / length) * band)
+		}
+
+		for (const [, hours, degrees] of STARS) {
+			const [px, py] = at(-hours * 15 * RAD, decRadius(degrees * RAD))
+			/* Every pointer sprouts off the ecliptic band, as it must to be one piece */
+			const dx = px - ecx
+			const dy = py - ecy
+			const span = Math.hypot(dx, dy) || 1
+			const ax = ecx + (dx / span) * eclipticRadius
+			const ay = ecy + (dy / span) * eclipticRadius
+			const reach = Math.hypot(px - ax, py - ay) || 1
+			const flame = Math.min(reach, 0.15)
+			const ux = (px - ax) / reach
+			const uy = (py - ay) / reach
+			const bx = px - ux * flame
+			const by = py - uy * flame
+			/* Half-width at the root, tapering to nothing at the star it names */
+			const wide = 0.028
+			const mx = bx + ux * flame * 0.5
+			const my = by + uy * flame * 0.5
+
+			push(web, ax, ay, bx, by)
+			chain(rim, [
+				[bx - uy * wide, by + ux * wide],
+				[mx - uy * wide * 0.5, my + ux * wide * 0.5],
+				[px, py],
+				[mx + uy * wide * 0.5, my - ux * wide * 0.5],
+				[bx + uy * wide, by - ux * wide],
+			])
+			khatam(rim, px, py, 0.017)
+		}
+
+		/* Where the sun stands on the ecliptic today, which is what the rule reads */
+		const today = epochDays(new Date())
+		const solar = sunLongitude(today)
+		const sunDec = Math.asin(Math.sin(OBLIQUITY) * Math.sin(solar))
+		const sunRa = Math.atan2(
+			Math.cos(OBLIQUITY) * Math.sin(solar),
+			Math.cos(solar),
+		)
+		const [sx, sy] = at(-sunRa, decRadius(sunDec))
+		khatam(rim, sx, sy, 0.03)
+
+		rete.add(draw(rim, structure))
+		rete.add(draw(web, engraved))
+
+		/* ————— The rule, laid over everything and pointing at the sun ————— */
+
+		const bar: number[] = []
+		push(bar, 0, -LIMB, 0, LIMB)
+
+		for (let i = 1; i < 6; i++) {
+			const y = (i / 6) * EQUATOR
+			push(bar, -0.018, -y, 0.018, -y)
+			push(bar, -0.018, y, 0.018, y)
+		}
+
+		const rule = draw(bar, structure)
+		instrument.add(rule)
+
+		/* The rete starts where the sky actually stands over Amsterdam right now */
+		const sunAngle = -sunRa
+		let angle = siderealTime(today)
+		let ruleAngle = angle + sunAngle
+		let spin = SIDEREAL
+		let grab: {pointer: number; raw: number; target: number} | null = null
+		let width = 0
+		let height = 0
+		let last = 0
+		let request = 0
+		let running = false
+
+		function pointerAngle(event: PointerEvent): number {
+			const bounds = box.getBoundingClientRect()
+			/* Clockwise from the top, to match the angles the rete is built on */
+			return Math.atan2(
+				event.clientX - (bounds.left + bounds.width / 2),
+				bounds.top + bounds.height / 2 - event.clientY,
+			)
+		}
+
+		function frame(now: number) {
+			/* A backgrounded tab can hand back a huge delta on the first frame */
+			const delta = Math.min((now - last) / 1000, 0.1)
+			last = now
+
+			if (grab === null) {
+				/* A spun rete gives its speed up slowly and finds the creep again */
+				spin += (SIDEREAL - spin) * (1 - Math.exp(-SETTLE * delta))
+				angle += spin * delta
+			} else {
+				const previous = angle
+				angle += (grab.target - angle) * (1 - Math.exp(-FOLLOW * delta))
+				/*
+				 * The release carries the rete's own speed rather than the
+				 * pointer's, so a flicked cursor cannot throw the brass faster
+				 * than it was ever actually turning.
+				 */
+				const rate = delta > 0 ? (angle - previous) / delta : spin
+				spin = Math.max(-MAX_SPIN, Math.min(MAX_SPIN, rate))
+			}
+
+			rete.rotation.z = angle
+			ruleAngle +=
+				(angle + sunAngle - ruleAngle) * (1 - Math.exp(-RULE_FOLLOW * delta))
+			rule.rotation.z = ruleAngle
+
+			renderer.render(scene, camera)
+			request = requestAnimationFrame(frame)
+		}
+
+		function resize() {
+			width = box.clientWidth
+			height = box.clientHeight
+
+			if (width === 0 || height === 0) {
+				return
+			}
+
+			camera.right = width
+			camera.bottom = height
+			camera.updateProjectionMatrix()
+			/* The ratio can change under the window, not only the size */
+			renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+			renderer.setSize(width, height)
+			instrument.position.set(width / 2, height / 2, 0)
+			instrument.scale.setScalar(Math.min(width, height) * 0.45)
+		}
+
+		box.addEventListener('pointerdown', (event) => {
+			box.setPointerCapture(event.pointerId)
+			box.setAttribute('data-held', '')
+			grab = {pointer: event.pointerId, raw: pointerAngle(event), target: angle}
+		})
+
+		box.addEventListener('pointermove', (event) => {
+			if (grab === null || event.pointerId !== grab.pointer) {
+				return
+			}
+
+			/* Accumulated rather than absolute, so crossing the top is not a jump */
+			const raw = pointerAngle(event)
+			let step = raw - grab.raw
+
+			while (step > Math.PI) {
+				step -= Math.PI * 2
+			}
+
+			while (step < -Math.PI) {
+				step += Math.PI * 2
+			}
+
+			grab.raw = raw
+			grab.target += step
+		})
+
+		function release(event: PointerEvent) {
+			if (grab === null || event.pointerId !== grab.pointer) {
+				return
+			}
+
+			grab = null
+			box.removeAttribute('data-held')
+		}
+
+		box.addEventListener('pointerup', release)
+		box.addEventListener('pointercancel', release)
+
+		new ResizeObserver(resize).observe(box)
+		resize()
+		box.appendChild(renderer.domElement)
+
+		return {
+			resume() {
+				if (running) {
+					return
+				}
+
+				running = true
+				last = performance.now()
+				request = requestAnimationFrame(frame)
+			},
+			pause() {
+				running = false
+				cancelAnimationFrame(request)
+			},
+		}
+	}
+
+	function gate(box: HTMLElement) {
+		let handle: Handle | null = null
+		let pending = false
+		let onscreen = false
+
+		function settle() {
+			if (!onscreen || document.visibilityState !== 'visible') {
+				handle?.pause()
+				return
+			}
+
+			if (handle) {
+				handle.resume()
+				return
+			}
+
+			if (pending || !hasWebGL()) {
+				return
+			}
+
+			pending = true
+			/* A refused chunk or context leaves the plain indigo box, which is no loss */
+			enhance(box)
+				.then((ready) => {
+					handle = ready
+					settle()
+				})
+				.catch(() => undefined)
+		}
+
+		/* Nothing is fetched, and nothing runs, until the card is actually on screen */
+		new IntersectionObserver(
+			(entries) => {
+				onscreen = entries[entries.length - 1].isIntersecting
+				settle()
+			},
+			{threshold: 0.25},
+		).observe(box)
+
+		document.addEventListener('visibilitychange', settle)
+	}
+
+	for (const box of document.querySelectorAll<HTMLElement>('[data-lab="e"]')) {
+		gate(box)
+	}
+</script>

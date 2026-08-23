@@ -1,0 +1,359 @@
+---
+import Star from '../Star.astro'
+
+/*
+ * D — dusk and dawn, played on a miniature carpet page. Two stacked skins of
+ * the same mockup; the night one is revealed by a diagonal mask, so the wash
+ * and the star-points it kindles are one movement. The real page theme is
+ * never touched.
+ */
+
+const skins = ['day', 'night'] as const
+
+/* Text-suggesting rules: a ragged right edge, like a set column */
+const lines = [0.94, 0.8, 0.9, 0.66, 0.86, 0.92, 0.74, 0.88, 0.6, 0.9, 0.82, 0.7]
+
+const corners = ['tl', 'tr', 'bl', 'br']
+
+/*
+ * The wash runs corner to corner, so how far along it a star-point sits is
+ * near enough the mean of its two fractions — the mask's own axis is the
+ * box diagonal.
+ */
+const marks = [
+	{x: 0.94, y: 0.12},
+	{x: 0.06, y: 0.2},
+	{x: 0.06, y: 0.46},
+	{x: 0.94, y: 0.3},
+	{x: 0.06, y: 0.72},
+	{x: 0.94, y: 0.58},
+	{x: 0.06, y: 0.9},
+	{x: 0.94, y: 0.84},
+].map((mark) => ({...mark, pos: (mark.x + mark.y) / 2}))
+---
+
+<div class="lab-demo" data-lab="d" data-ground="follow">
+	<div class="lab-d-stage">
+		{
+			skins.map((skin) => (
+				<div class:list={['lab-d-layer', `lab-d-${skin}`]}>
+					<div class="lab-d-sheet">
+						{corners.map((corner) => (
+							<span class:list={['lab-d-corner', `lab-d-corner-${corner}`]}>
+								<Star size={9} />
+							</span>
+						))}
+						<div class="lab-d-masthead">
+							<span class="lab-d-title"></span>
+							<span class="lab-d-sub"></span>
+						</div>
+						<div class="lab-d-frieze"></div>
+						<div class="lab-d-body">
+							{lines.map((width) => (
+								<span class="lab-d-line" style={`width:${width * 100}%`}></span>
+							))}
+						</div>
+						{skin === 'night' &&
+							marks.map((mark) => (
+								<span
+									class="lab-d-mark"
+									data-pos={mark.pos}
+									style={`left:${mark.x * 100}%;top:${mark.y * 100}%`}
+								>
+									<Star size={8} />
+								</span>
+							))}
+					</div>
+				</div>
+			))
+		}
+	</div>
+
+	<div class="lab-d-controls">
+		<button class="lab-d-button" type="button" data-way="dusk">Dusk</button>
+		<button class="lab-d-button" type="button" data-way="dawn">Dawn</button>
+	</div>
+</div>
+
+<style>
+	.lab-demo {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 3 / 2;
+		overflow: hidden;
+		border-radius: 2px;
+		background: var(--zj-ground);
+		transition: background-color 300ms ease;
+	}
+
+	/* A page stands taller than it is wide, whatever the box does */
+	.lab-d-stage {
+		position: absolute;
+		top: 8%;
+		left: 50%;
+		height: 84%;
+		aspect-ratio: 0.7;
+		transform: translateX(-50%);
+	}
+
+	.lab-d-layer {
+		position: absolute;
+		inset: 0;
+		background: var(--lab-ground);
+	}
+
+	.lab-d-day {
+		--lab-ground: #f5eedf;
+		--lab-gild: #a97c14;
+		--lab-hairline: rgba(169, 124, 20, 0.72);
+		--lab-rule: rgba(90, 81, 66, 0.5);
+		--lab-ink: rgba(38, 34, 26, 0.72);
+	}
+
+	.lab-d-night {
+		--lab-ground: #132347;
+		--lab-gild: #d9b44a;
+		--lab-hairline: rgba(217, 180, 74, 0.4);
+		--lab-rule: rgba(237, 227, 203, 0.3);
+		--lab-ink: rgba(237, 227, 203, 0.62);
+		/*
+		 * The wash: night behind the front, day ahead of it, on the box's own
+		 * diagonal. Running --sweep up carries night down from the top-left
+		 * corner; running it back down lets day in from the opposite one.
+		 * It passes 100 so the trailing corner is covered before the run ends.
+		 */
+		-webkit-mask-image: linear-gradient(
+			135deg,
+			#000 calc(var(--sweep, 0) * 1% - 14%),
+			transparent calc(var(--sweep, 0) * 1%)
+		);
+		mask-image: linear-gradient(
+			135deg,
+			#000 calc(var(--sweep, 0) * 1% - 14%),
+			transparent calc(var(--sweep, 0) * 1%)
+		);
+	}
+
+	.lab-d-sheet {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 9% 13%;
+		border: 1px solid var(--lab-gild);
+		outline: 1px solid var(--lab-hairline);
+		outline-offset: -4px;
+	}
+
+	.lab-d-corner {
+		position: absolute;
+		display: block;
+		line-height: 0;
+		color: var(--lab-gild);
+	}
+
+	.lab-d-corner-tl {
+		top: 0;
+		left: 0;
+		transform: translate(-50%, -50%);
+	}
+
+	.lab-d-corner-tr {
+		top: 0;
+		right: 0;
+		transform: translate(50%, -50%);
+	}
+
+	.lab-d-corner-bl {
+		bottom: 0;
+		left: 0;
+		transform: translate(-50%, 50%);
+	}
+
+	.lab-d-corner-br {
+		bottom: 0;
+		right: 0;
+		transform: translate(50%, 50%);
+	}
+
+	.lab-d-masthead {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
+	}
+
+	.lab-d-title {
+		width: 62%;
+		height: 7px;
+		background: var(--lab-ink);
+	}
+
+	.lab-d-sub {
+		width: 34%;
+		height: 3px;
+		background: var(--lab-gild);
+	}
+
+	/* The frieze band under the masthead, reduced to its two rules */
+	.lab-d-frieze {
+		height: 7px;
+		margin: 9% -13% 0;
+		border-block: 1px solid var(--lab-hairline);
+	}
+
+	.lab-d-body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-evenly;
+		padding-block: 6%;
+	}
+
+	.lab-d-line {
+		height: 2px;
+		background: var(--lab-rule);
+	}
+
+	.lab-d-mark {
+		position: absolute;
+		display: block;
+		line-height: 0;
+		color: var(--lab-gild);
+		opacity: 0;
+		transform: translate(-50%, -50%);
+	}
+
+	.lab-d-controls {
+		position: absolute;
+		right: 0.55rem;
+		bottom: 0.5rem;
+		display: flex;
+		gap: 0.35rem;
+	}
+
+	.lab-d-button {
+		padding: 0.2rem 0.6rem;
+		border: 1px solid var(--zj-hairline);
+		border-radius: 2px;
+		background: transparent;
+		color: var(--zj-text-muted);
+		font-family: inherit;
+		font-size: 0.7rem;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		cursor: pointer;
+		transition:
+			color 150ms ease,
+			border-color 150ms ease;
+	}
+
+	.lab-d-button:hover {
+		color: var(--zj-gild);
+		border-color: var(--zj-gild);
+	}
+</style>
+
+<script>
+	/* Far enough past 100 that the trailing corner is covered at the end */
+	const FULL = 115
+	const SWEEP = 1200
+	/* A beat to reset the stage when the same direction is replayed */
+	const BEAT = 160
+	/* How much of the run a star-point takes to catch */
+	const CATCH = 0.16
+
+	function ease(t: number): number {
+		return t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2
+	}
+
+	const box = document.querySelector<HTMLElement>('[data-lab="d"]')
+	const night = box?.querySelector<HTMLElement>('.lab-d-night')
+
+	if (box && night) {
+		const marks = Array.from(box.querySelectorAll<HTMLElement>('.lab-d-mark'))
+		const buttons = Array.from(
+			box.querySelectorAll<HTMLButtonElement>('.lab-d-button'),
+		)
+
+		let request = 0
+		let timer = 0
+		let value = 0
+		let showing = false
+		let played = false
+
+		const apply = (next: number) => {
+			value = next
+			night.style.setProperty('--sweep', String(next))
+
+			const front = next / FULL
+
+			for (const mark of marks) {
+				const passed = (front - Number(mark.dataset.pos)) / CATCH
+				const lit = Math.min(Math.max(passed, 0), 1)
+				/* Brightest and biggest just as the front clears it, then it settles */
+				const spark = Math.max(0, 1 - Math.abs(passed - 1) * 2)
+				mark.style.opacity = String(lit * (0.72 + 0.28 * spark))
+				mark.style.transform = `translate(-50%, -50%) scale(${1 + spark * 0.45})`
+			}
+		}
+
+		const run = (way: string) => {
+			played = true
+			cancelAnimationFrame(request)
+			window.clearTimeout(timer)
+
+			const dusk = way === 'dusk'
+			/* Whichever way it runs, it starts from the other end of the wash */
+			apply(dusk ? 0 : FULL)
+
+			timer = window.setTimeout(() => {
+				const from = value
+				const to = dusk ? FULL : 0
+				const started = performance.now()
+
+				const step = (now: number) => {
+					const t = Math.min((now - started) / SWEEP, 1)
+					apply(from + (to - from) * ease(t))
+
+					if (t < 1) {
+						request = requestAnimationFrame(step)
+					}
+				}
+
+				request = requestAnimationFrame(step)
+			}, BEAT)
+		}
+
+		for (const button of buttons) {
+			button.addEventListener('click', () => run(button.dataset.way ?? 'dusk'))
+		}
+
+		const settle = () => {
+			if (showing && document.visibilityState === 'visible') {
+				/* Play it once unprompted, so the card is never a still frame */
+				if (!played) {
+					window.clearTimeout(timer)
+					timer = window.setTimeout(() => run('dusk'), 900)
+				}
+			} else {
+				cancelAnimationFrame(request)
+				window.clearTimeout(timer)
+			}
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				showing = entries[entries.length - 1].isIntersecting
+				settle()
+			},
+			{threshold: 0.25},
+		)
+
+		apply(0)
+		observer.observe(box)
+		document.addEventListener('visibilitychange', settle)
+	}
+</script>
