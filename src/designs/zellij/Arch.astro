@@ -1,63 +1,79 @@
 ---
-import {arches, ARCH_HEIGHT, ARCH_WIDTH, IMPOST_Y} from './arches'
+import {
+	ARCH_HEIGHT,
+	ARCH_WIDTH,
+	IMPOST_Y,
+	archVariants,
+	defaultArch,
+} from './arches'
 
 /*
- * All six arches are rendered; the script below chooses one before they are
- * parsed, and CSS shows only that one. With no script the drop arch — the
- * design's own, from Ibn Tulun — stands.
+ * The page is served the drop arch — the design's own, from Ibn Tulun — and
+ * the script below may put one of the other five in its place. With no script
+ * the drop arch stands.
  */
 const viewBox = `0 0 ${ARCH_WIDTH} ${ARCH_HEIGHT}`
-const ids = arches.map(({id}) => id)
+const {caption, paths} = defaultArch
 ---
 
 <span class="zj-arch-frame">
-	<script is:inline define:vars={{ids}}>
+	<svg class="zj-arch" viewBox={viewBox} aria-hidden="true">
+		<line
+			class="zj-arch-impost"
+			x1="0"
+			y1={IMPOST_Y}
+			x2={paths.impostX}
+			y2={IMPOST_Y}
+			pathLength="1"
+		/>
+		<line
+			class="zj-arch-impost"
+			x1={ARCH_WIDTH - paths.impostX}
+			y1={IMPOST_Y}
+			x2={ARCH_WIDTH}
+			y2={IMPOST_Y}
+			pathLength="1"
+		/>
+		<path class="zj-arch-inner" d={paths.inner} pathLength="1" />
+		<path class="zj-arch-outer" d={paths.outer} pathLength="1" />
+	</svg>
+	<span class="zj-arch-caption">
+		{caption.pre}<a
+			href={caption.href}
+			target="_blank"
+			rel="noreferrer noopener"
+		>{caption.linkText}</a>{caption.post}
+	</span>
+	<script is:inline define:vars={{archVariants, ARCH_WIDTH}}>
 		/*
-		 * Runs where it stands, before the arches after it are parsed, so the one
-		 * that is drawn is the only one that ever paints: no swap, no restart of
-		 * the draw-in, nothing to reflow.
+		 * Runs where it stands, a tick after the arch above it was parsed and
+		 * far ahead of the first paint, so the arch the reader is shown is the
+		 * only one that is ever drawn: nothing swaps under them, the draw-in
+		 * never restarts, and all six share the one frame, so nothing moves.
 		 */
 		;(function () {
+			/* The drop arch is already here, which makes standing pat the sixth outcome */
+			var arch =
+				archVariants[Math.floor(Math.random() * (archVariants.length + 1))]
+
+			if (!arch) {
+				return
+			}
+
 			var frame = document.currentScript.parentNode
-			frame.setAttribute(
-				'data-zj-arch',
-				ids[Math.floor(Math.random() * ids.length)],
-			)
+			var imposts = frame.querySelectorAll('.zj-arch-impost')
+			imposts[0].setAttribute('x2', arch.impostX)
+			imposts[1].setAttribute('x1', ARCH_WIDTH - arch.impostX)
+			frame.querySelector('.zj-arch-inner').setAttribute('d', arch.inner)
+			frame.querySelector('.zj-arch-outer').setAttribute('d', arch.outer)
+
+			var caption = frame.querySelector('.zj-arch-caption')
+			var link = caption.querySelector('a')
+			link.href = arch.caption.href
+			link.textContent = arch.caption.linkText
+			caption.replaceChildren(arch.caption.pre, link, arch.caption.post)
 		})()
 	</script>
-	{
-		arches.map((arch) => (
-			<span class="zj-arch-item" data-arch={arch.id}>
-				<svg class="zj-arch" viewBox={viewBox} aria-hidden="true">
-					<line
-						class="zj-arch-impost"
-						x1="0"
-						y1={IMPOST_Y}
-						x2={arch.paths.impostX}
-						y2={IMPOST_Y}
-						pathLength="1"
-					/>
-					<line
-						class="zj-arch-impost"
-						x1={ARCH_WIDTH - arch.paths.impostX}
-						y1={IMPOST_Y}
-						x2={ARCH_WIDTH}
-						y2={IMPOST_Y}
-						pathLength="1"
-					/>
-					<path class="zj-arch-inner" d={arch.paths.inner} pathLength="1" />
-					<path class="zj-arch-outer" d={arch.paths.outer} pathLength="1" />
-				</svg>
-				<span class="zj-arch-caption">
-					{arch.caption.pre}<a
-						href={arch.caption.href}
-						target="_blank"
-						rel="noreferrer noopener"
-					>{arch.caption.linkText}</a>{arch.caption.post}
-				</span>
-			</span>
-		))
-	}
 </span>
 
 <style is:global>
@@ -65,20 +81,38 @@ const ids = arches.map(({id}) => id)
 		display: block;
 	}
 
-	/* All six are in the page; the chosen one is the only one drawn */
-	.design-zellij .zj-arch-frame > .zj-arch-item {
-		display: none;
+	.design-zellij .zj-arch {
+		display: block;
+		width: min(100%, 26rem);
+		height: auto;
+		margin: 0 auto 1.1rem;
 	}
 
-	/* Nothing chose — no script — and the drop arch stands */
-	.design-zellij .zj-arch-frame:not([data-zj-arch]) > [data-arch='drop'],
-	.design-zellij [data-zj-arch='drop'] > [data-arch='drop'],
-	.design-zellij [data-zj-arch='horseshoe'] > [data-arch='horseshoe'],
-	.design-zellij [data-zj-arch='fourCentred'] > [data-arch='fourCentred'],
-	.design-zellij [data-zj-arch='ogee'] > [data-arch='ogee'],
-	.design-zellij [data-zj-arch='keel'] > [data-arch='keel'],
-	.design-zellij [data-zj-arch='multifoil'] > [data-arch='multifoil'] {
-		display: block;
+	.design-zellij .zj-arch path {
+		fill: none;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 0;
+		animation: zj-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+	}
+
+	.design-zellij .zj-arch-outer {
+		stroke: var(--zj-geo);
+		stroke-width: 2.25;
+	}
+
+	.design-zellij .zj-arch-inner {
+		stroke: var(--zj-geo);
+		stroke-width: 1;
+		opacity: 0.5;
+	}
+
+	/* The imposts ground the arcs, so they land once the curve has been drawn */
+	.design-zellij .zj-arch-impost {
+		stroke: var(--zj-gild);
+		stroke-width: 1.25;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 0;
+		animation: zj-draw 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.6s backwards;
 	}
 
 	/* A plate label, shown only while the reader is with the arch. Its line

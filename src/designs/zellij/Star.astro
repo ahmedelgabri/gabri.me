@@ -3,11 +3,10 @@ import {starPoints} from './geometry'
 
 interface Props {
 	size?: number
-	fill?: string
 	class?: string
 }
 
-const {size = 12, fill = 'none', class: className} = Astro.props
+const {size = 12, class: className} = Astro.props
 
 const points = starPoints(12, 12, 10)
 ---
@@ -21,7 +20,7 @@ const points = starPoints(12, 12, 10)
 >
 	<polygon
 		points={points}
-		fill={fill}
+		fill="none"
 		stroke="currentColor"
 		stroke-width="1"
 		vector-effect="non-scaling-stroke"

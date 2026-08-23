@@ -14,17 +14,13 @@ const r = unit / 2
 const count = 26
 const width = count * unit
 
-const stars = Array.from({length: count}, (_, i) => {
-	const cx = i * unit + r
-	return {
-		cx,
-		outline: starPoints(cx, r, r),
-		square: {x: cx - a, y: r - a, size: 2 * a},
-	}
-})
-
+/* Every star sits on the lattice; every cross on the half-lattice between them */
+const centres = Array.from({length: count}, (_, i) => i * unit + r)
 const crosses = Array.from({length: count + 1}, (_, i) => i * unit).flatMap(
-	(cx) => [crossPoints(cx, 0, r), crossPoints(cx, unit, r)],
+	(x) => [
+		{x, y: 0},
+		{x, y: unit},
+	],
 )
 ---
 
@@ -34,29 +30,38 @@ const crosses = Array.from({length: count + 1}, (_, i) => i * unit).flatMap(
 	preserveAspectRatio="xMidYMid slice"
 	aria-hidden="true"
 >
-	{crosses.map((points) => (
-		<polygon class="zj-frieze-cross" points={points} pathLength="1" />
+	{/*
+	 * One tile of each kind, drawn about the origin and placed by every
+	 * instance's own x/y. The ink rides on the instances rather than on these:
+	 * a stylesheet cannot reach inside a use's shadow tree, but stroke and its
+	 * dash properties are inherited, so what the <use> carries the shape draws.
+	 */}
+	<defs>
+		<polygon id="zj-tile-star" points={starPoints(0, 0, r)} pathLength="1" />
+		<polygon id="zj-tile-cross" points={crossPoints(0, 0, r)} pathLength="1" />
+		<rect
+			id="zj-tile-square"
+			x={-a}
+			y={-a}
+			width={2 * a}
+			height={2 * a}
+			pathLength="1"
+		/>
+	</defs>
+	{crosses.map(({x, y}) => (
+		<use class="zj-frieze-cross" href="#zj-tile-cross" x={x} y={y} />
 	))}
-	{stars.map((star) => (
-		<g>
-			<rect
+	{centres.map((cx) => (
+		<Fragment>
+			<use class="zj-frieze-square" href="#zj-tile-square" x={cx} y={r} />
+			<use
 				class="zj-frieze-square"
-				x={star.square.x}
-				y={star.square.y}
-				width={star.square.size}
-				height={star.square.size}
-				pathLength="1"
+				href="#zj-tile-square"
+				x={cx}
+				y={r}
+				transform={`rotate(45 ${cx} ${r})`}
 			/>
-			<rect
-				class="zj-frieze-square"
-				x={star.square.x}
-				y={star.square.y}
-				width={star.square.size}
-				height={star.square.size}
-				transform={`rotate(45 ${star.cx} ${r})`}
-				pathLength="1"
-			/>
-			<polygon class="zj-frieze-star" points={star.outline} pathLength="1" />
-		</g>
+			<use class="zj-frieze-star" href="#zj-tile-star" x={cx} y={r} />
+		</Fragment>
 	))}
 </svg>

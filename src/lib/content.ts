@@ -1,5 +1,5 @@
 import {getCollection, getEntry, type CollectionEntry} from 'astro:content'
-import {format} from 'date-fns'
+import {compareDesc, format} from 'date-fns'
 import {generateExcerpt} from './excerpt'
 
 export {generateExcerpt}
@@ -49,6 +49,11 @@ function entryToPostMetadata(
 
 function isPublished(entry: {data: {published: boolean}}): boolean {
 	return entry.data.published
+}
+
+/* Newest first — the order every page that lists posts reads them in */
+export function byDateDesc(a: {date: string}, b: {date: string}): number {
+	return compareDesc(new Date(a.date), new Date(b.date))
 }
 
 export async function getAllPosts(): Promise<PostMetadata[]> {

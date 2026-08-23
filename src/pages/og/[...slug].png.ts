@@ -1,13 +1,8 @@
-import type {APIRoute, GetStaticPaths} from 'astro'
-import {getAllBlogEntries, getBlogEntry} from '../../lib/content'
+import type {APIRoute} from 'astro'
+import {getBlogEntry, getBlogStaticPaths} from '../../lib/content'
 import {renderPostCard} from './_card'
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	const entries = await getAllBlogEntries()
-	return entries.map((entry) => ({
-		params: {slug: entry.id.replace(/\/post$/, '')},
-	}))
-}
+export const getStaticPaths = getBlogStaticPaths
 
 export const GET: APIRoute = async ({params}) => {
 	const slug = params.slug

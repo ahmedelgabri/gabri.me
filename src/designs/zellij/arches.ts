@@ -433,7 +433,9 @@ function multifoilArch(): ArchPaths {
 	}
 }
 
-export const arches: Arch[] = [
+/* The drop arch leads: it is the one the page is served, and the five behind
+ * it are what the script may put in its place. */
+const arches: Arch[] = [
 	{
 		id: 'drop',
 		name: 'Two-centred drop arch',
@@ -501,3 +503,17 @@ export const arches: Arch[] = [
 		paths: multifoilArch(),
 	},
 ]
+
+/* Everything one arch needs to stand in for another, and nothing else: the two
+ * lines, where the imposts meet the outer one, and the plate label. */
+export interface ArchVariant extends ArchPaths {
+	caption: ArchCaption
+}
+
+const [served, ...rest] = arches
+
+export const defaultArch: Arch = served
+export const archVariants: ArchVariant[] = rest.map(({paths, caption}) => ({
+	...paths,
+	caption,
+}))

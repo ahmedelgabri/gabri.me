@@ -1,7 +1,8 @@
 ---
 import {render} from 'astro:content'
-import {compareDesc, format} from 'date-fns'
+import {format} from 'date-fns'
 import {
+	byDateDesc,
 	getAllPosts,
 	getBlogEntry,
 	getBlogStaticPaths,
@@ -37,9 +38,7 @@ const shareParams = new URLSearchParams({
 })
 const shareUrl = `https://twitter.com/share?${shareParams.toString()}`
 
-const posts = (await getAllPosts()).sort(({date: a}, {date: b}) =>
-	compareDesc(new Date(a), new Date(b)),
-)
+const posts = (await getAllPosts()).sort(byDateDesc)
 const index = posts.findIndex((post) => post.slug === slug)
 const newer = index > 0 ? posts[index - 1] : null
 const older =
@@ -86,7 +85,7 @@ const {Content} = await render(entry)
 
 		<nav class="zj-article-nav" aria-label="More posts">
 			{older ? (
-				<a class="zj-nav-older" href={`/blog/${older.slug}`}>
+				<a href={`/blog/${older.slug}`}>
 					<span class="zj-nav-label">Older</span>
 					{older.title}
 				</a>

@@ -301,6 +301,20 @@ export function renderPostCard(title: string, date: Date): Promise<Buffer> {
  * is where public/img/fb-image.jpg — the card every page but a post shares —
  * comes from; it is rendered from here and committed rather than built, since
  * nothing about it changes between builds.
+ *
+ * Nothing in the project can run a TypeScript file on its own, so rendering it
+ * again means bundling this module first, with the esbuild that comes along
+ * with vite. From the project root:
+ *
+ *   node_modules/.bin/esbuild src/pages/og/_card.ts --bundle --platform=node \
+ *     --format=esm --outfile=/tmp/card.mjs --external:@resvg/resvg-js \
+ *     --external:satori --external:sharp --external:date-fns
+ *   node --input-type=module -e "
+ *     import {renderHomeCard} from '/tmp/card.mjs'
+ *     import sharp from 'sharp'
+ *     const png = await renderHomeCard()
+ *     await sharp(png).jpeg({quality: 96}).toFile('public/img/fb-image.jpg')
+ *   "
  */
 export function renderHomeCard(): Promise<Buffer> {
 	return toPng(

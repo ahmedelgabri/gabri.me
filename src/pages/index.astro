@@ -1,15 +1,11 @@
 ---
-import {compareDesc} from 'date-fns'
-import {getAllPosts} from '../lib/content'
+import {byDateDesc, getAllPosts} from '../lib/content'
 import siteMeta from '../config/siteMeta'
 import Layout from '../designs/zellij/Layout.astro'
 import Star from '../designs/zellij/Star.astro'
 import StarDivider from '../designs/zellij/StarDivider.astro'
 
 const {social, talks, interviews, projects} = siteMeta
-
-const byDateDesc = ({date: a}: {date: string}, {date: b}: {date: string}) =>
-	compareDesc(new Date(a), new Date(b))
 
 const posts = (await getAllPosts()).sort(byDateDesc)
 

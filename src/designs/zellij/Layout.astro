@@ -225,7 +225,6 @@ const year = new Date().getFullYear()
 			<Observatory />
 
 			<header class:list={['zj-masthead', {'zj-masthead-compact': !hero}]}>
-				<slot name="ornament" />
 				{
 					hero ? (
 						<h1 class="zj-name">Ahmed El Gabri</h1>
@@ -266,6 +265,28 @@ const year = new Date().getFullYear()
 		--z-font-mono: 'PragmataPro Mono Liga', 'PragmataPro Liga', 'PragmataPro',
 			'Iosevka', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 		--zj-page-pad-x: clamp(1.1rem, 4.5vw, 3.25rem);
+		/* How far the corner stars stand outside the frame they are pinned through */
+		--zj-corner-inset: -3px;
+		/* Ivory to indigo and back, wherever a surface has to cross with the ground */
+		--zj-swap: 300ms ease;
+		/*
+		 * The lattice dies away before it reaches the reading column: full
+		 * strength out to --zj-lattice-from of the centre line, gone by
+		 * --zj-lattice-clear. Everything drawn in the margins is masked with it,
+		 * and the canvas that replaces the lattice measures itself against the
+		 * same two figures.
+		 */
+		--zj-lattice-from: 31rem;
+		--zj-lattice-clear: 25rem;
+		--zj-lattice-mask: linear-gradient(
+			to right,
+			#000 0,
+			#000 calc(50% - var(--zj-lattice-from)),
+			transparent calc(50% - var(--zj-lattice-clear)),
+			transparent calc(50% + var(--zj-lattice-clear)),
+			#000 calc(50% + var(--zj-lattice-from)),
+			#000 100%
+		);
 		/*
 		 * The external-link mark: an arrow pointing north-east whose head is a
 		 * four-point diamond star — the khatam's four-fold cousin — on a thin
@@ -304,6 +325,8 @@ const year = new Date().getFullYear()
 		--zj-panel-edge-soft: rgba(38, 34, 26, 0.1);
 		--zj-underline-rest: rgba(29, 58, 110, 0.35);
 		--zj-selection: rgba(169, 124, 20, 0.32);
+		/* What a plate darkens the page to while it holds the reader */
+		--zj-backdrop: rgba(38, 34, 26, 0.6);
 		--zj-screen-opacity: 0.06;
 		--zj-medallion-opacity: 0.035;
 		/*
@@ -343,6 +366,7 @@ const year = new Date().getFullYear()
 		--zj-panel-edge-soft: rgba(217, 180, 74, 0.28);
 		--zj-underline-rest: rgba(217, 180, 74, 0.4);
 		--zj-selection: rgba(217, 180, 74, 0.28);
+		--zj-backdrop: rgba(7, 14, 32, 0.72);
 		--zj-screen-opacity: 0.08;
 		--zj-medallion-opacity: 0.05;
 		--zj-screen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cdefs%3E%3Cg id='r'%3E%3Cpath d='M84.85 0L57.32 11.4L78.39 32.47L48.6 32.47L60 60L32.47 48.6L32.47 78.39L11.4 57.32L0 84.85L-11.4 57.32L-32.47 78.39L-32.47 48.6L-60 60L-48.6 32.47L-78.39 32.47L-57.32 11.4L-84.85 0L-57.32 -11.4L-78.39 -32.47L-48.6 -32.47L-60 -60L-32.47 -48.6L-32.47 -78.39L-11.4 -57.32L0 -84.85L11.4 -57.32L32.47 -78.39L32.47 -48.6L60 -60L48.6 -32.47L78.39 -32.47L57.32 -11.4Z'/%3E%3Cpath d='M33.11 0L23.41 9.7L23.41 23.41L9.7 23.41L0 33.11L-9.7 23.41L-23.41 23.41L-23.41 9.7L-33.11 0L-23.41 -9.7L-23.41 -23.41L-9.7 -23.41L0 -33.11L9.7 -23.41L23.41 -23.41L23.41 -9.7Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M57.32 11.4L30.59 12.67L48.6 32.47L23.41 23.41L32.47 48.6L12.67 30.59L11.4 57.32L0 33.11L-11.4 57.32L-12.67 30.59L-32.47 48.6L-23.41 23.41L-48.6 32.47L-30.59 12.67L-57.32 11.4L-33.11 0L-57.32 -11.4L-30.59 -12.67L-48.6 -32.47L-23.41 -23.41L-32.47 -48.6L-12.67 -30.59L-11.4 -57.32L0 -33.11L11.4 -57.32L12.67 -30.59L32.47 -48.6L23.41 -23.41L48.6 -32.47L30.59 -12.67L57.32 -11.4L33.11 0Z'/%3E%3Ccircle r='33.11'/%3E%3C/g%3E%3C/g%3E%3Cg id='x'%3E%3Cpath d='M35.15 0L17.57 7.28L24.85 24.85L7.28 17.57L0 35.15L-7.28 17.57L-24.85 24.85L-17.57 7.28L-35.15 0L-17.57 -7.28L-24.85 -24.85L-7.28 -17.57L0 -35.15L7.28 -17.57L24.85 -24.85L17.57 -7.28Z'/%3E%3Cg stroke-width='.55'%3E%3Cpath d='M24.85 24.85L38.18 46.67L60 60L46.67 38.18ZM-24.85 24.85L-46.67 38.18L-60 60L-38.18 46.67ZM-24.85 -24.85L-38.18 -46.67L-60 -60L-46.67 -38.18ZM24.85 -24.85L46.67 -38.18L60 -60L38.18 -46.67Z'/%3E%3Ccircle r='19.02'/%3E%3C/g%3E%3C/g%3E%3C/defs%3E%3Cg fill='none' stroke='%23D9B44A' stroke-width='1'%3E%3Cuse href='%23r' x='0' y='0'/%3E%3Cuse href='%23r' x='240' y='0'/%3E%3Cuse href='%23r' x='0' y='240'/%3E%3Cuse href='%23r' x='240' y='240'/%3E%3Cuse href='%23r' x='120' y='120'/%3E%3Cuse href='%23x' x='120' y='0'/%3E%3Cuse href='%23x' x='120' y='240'/%3E%3Cuse href='%23x' x='0' y='120'/%3E%3Cuse href='%23x' x='240' y='120'/%3E%3C/g%3E%3C/svg%3E");
@@ -360,8 +384,8 @@ const year = new Date().getFullYear()
 		padding: clamp(0.875rem, 3vw, 2.5rem) clamp(0.875rem, 3vw, 2rem);
 		-webkit-font-smoothing: antialiased;
 		transition:
-			background-color 300ms ease,
-			color 300ms ease;
+			background-color var(--zj-swap),
+			color var(--zj-swap);
 	}
 
 	.design-zellij ::selection {
@@ -393,25 +417,8 @@ const year = new Date().getFullYear()
 			background-size: 240px 240px;
 			background-position: 0 0;
 			opacity: var(--zj-screen-opacity);
-			/* The lattice dies away before it reaches the reading column */
-			-webkit-mask-image: linear-gradient(
-				to right,
-				#000 0,
-				#000 calc(50% - 31rem),
-				transparent calc(50% - 25rem),
-				transparent calc(50% + 25rem),
-				#000 calc(50% + 31rem),
-				#000 100%
-			);
-			mask-image: linear-gradient(
-				to right,
-				#000 0,
-				#000 calc(50% - 31rem),
-				transparent calc(50% - 25rem),
-				transparent calc(50% + 25rem),
-				#000 calc(50% + 31rem),
-				#000 100%
-			);
+			-webkit-mask-image: var(--zj-lattice-mask);
+			mask-image: var(--zj-lattice-mask);
 		}
 	}
 
@@ -423,7 +430,7 @@ const year = new Date().getFullYear()
 		.design-zellij body::after {
 			display: block;
 			top: 50%;
-			right: calc(50% + 25rem);
+			right: calc(50% + var(--zj-lattice-clear));
 			width: 20rem;
 			height: 20rem;
 			transform: translateY(-50%);
@@ -447,8 +454,8 @@ const year = new Date().getFullYear()
 		padding: clamp(2.85rem, 4vw, 3.25rem) var(--zj-page-pad-x) 2.25rem;
 		background: var(--zj-ground);
 		transition:
-			background-color 300ms ease,
-			border-color 300ms ease;
+			background-color var(--zj-swap),
+			border-color var(--zj-swap);
 	}
 
 	.design-zellij .zj-corner {
@@ -462,26 +469,26 @@ const year = new Date().getFullYear()
 	}
 
 	.design-zellij .zj-corner-tl {
-		top: -3px;
-		left: -3px;
+		top: var(--zj-corner-inset);
+		left: var(--zj-corner-inset);
 		transform: translate(-50%, -50%);
 	}
 
 	.design-zellij .zj-corner-tr {
-		top: -3px;
-		right: -3px;
+		top: var(--zj-corner-inset);
+		right: var(--zj-corner-inset);
 		transform: translate(50%, -50%);
 	}
 
 	.design-zellij .zj-corner-bl {
-		bottom: -3px;
-		left: -3px;
+		bottom: var(--zj-corner-inset);
+		left: var(--zj-corner-inset);
 		transform: translate(-50%, 50%);
 	}
 
 	.design-zellij .zj-corner-br {
-		bottom: -3px;
-		right: -3px;
+		bottom: var(--zj-corner-inset);
+		right: var(--zj-corner-inset);
 		transform: translate(50%, 50%);
 	}
 
@@ -652,8 +659,12 @@ const year = new Date().getFullYear()
 		opacity: 0.35;
 	}
 
-	.design-zellij .zj-frieze polygon,
-	.design-zellij .zj-frieze rect {
+	/*
+	 * The band is one tile of each kind placed again and again, so the draw-in
+	 * is set on the instances: the dash properties are inherited, which is the
+	 * only way into the shape a <use> carries.
+	 */
+	.design-zellij .zj-frieze use {
 		stroke-dasharray: 1;
 		stroke-dashoffset: 0;
 		animation: zj-draw 1.2s cubic-bezier(0.4, 0, 0.2, 1) backwards;
@@ -876,40 +887,6 @@ const year = new Date().getFullYear()
 	.design-zellij .zj-article-header {
 		text-align: center;
 		margin-bottom: 2.5rem;
-	}
-
-	.design-zellij .zj-arch {
-		display: block;
-		width: min(100%, 26rem);
-		height: auto;
-		margin: 0 auto 1.1rem;
-	}
-
-	.design-zellij .zj-arch path {
-		fill: none;
-		stroke-dasharray: 1;
-		stroke-dashoffset: 0;
-		animation: zj-draw 0.9s cubic-bezier(0.4, 0, 0.2, 1) backwards;
-	}
-
-	.design-zellij .zj-arch-outer {
-		stroke: var(--zj-geo);
-		stroke-width: 2.25;
-	}
-
-	.design-zellij .zj-arch-inner {
-		stroke: var(--zj-geo);
-		stroke-width: 1;
-		opacity: 0.5;
-	}
-
-	/* The imposts ground the arcs, so they land once the curve has been drawn */
-	.design-zellij .zj-arch-impost {
-		stroke: var(--zj-gild);
-		stroke-width: 1.25;
-		stroke-dasharray: 1;
-		stroke-dashoffset: 0;
-		animation: zj-draw 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.6s backwards;
 	}
 
 	.design-zellij .zj-article-kicker {
@@ -1209,8 +1186,8 @@ const year = new Date().getFullYear()
 		border-radius: 2px;
 		padding: 0.08em 0.32em;
 		transition:
-			background-color 300ms ease,
-			border-color 300ms ease;
+			background-color var(--zj-swap),
+			border-color var(--zj-swap);
 	}
 
 	/* ————— Shiki code blocks ————— */
@@ -1231,8 +1208,8 @@ const year = new Date().getFullYear()
 	.design-zellij .astro-code-themes {
 		background-color: var(--zj-panel) !important;
 		transition:
-			background-color 300ms ease,
-			border-color 300ms ease;
+			background-color var(--zj-swap),
+			border-color var(--zj-swap);
 	}
 
 	.design-zellij .astro-code code {
@@ -1254,11 +1231,6 @@ const year = new Date().getFullYear()
 		color: var(--shiki-dark) !important;
 	}
 
-	/* plain-dark's comment grey lands at 1.8:1 on the indigo panel */
-	.design-zellij.dark .astro-code span[style*='--shiki-dark:#555'] {
-		color: #8f9bb5 !important;
-	}
-
 	.design-zellij .code-title {
 		padding: 0.45rem 1.3rem;
 		font-family: var(--z-font-mono);
@@ -1269,9 +1241,9 @@ const year = new Date().getFullYear()
 		border: 1px solid var(--zj-panel-edge);
 		border-bottom: none;
 		transition:
-			background-color 300ms ease,
-			border-color 300ms ease,
-			color 300ms ease;
+			background-color var(--zj-swap),
+			border-color var(--zj-swap),
+			color var(--zj-swap);
 	}
 
 	.design-zellij .code-title + pre {
