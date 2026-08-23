@@ -19,19 +19,10 @@ declare module '*.jpg'
 
 declare type ThemeSetting = 'system' | 'light' | 'dark'
 declare type ResolvedTheme = 'light' | 'dark'
-declare type ColorTheme = 'blue' | 'amber' | 'teal' | 'purple'
-declare type FontTheme = 'mono' | 'serif' | 'sans'
 
 interface Window {
 	gtag: any
 	twttr: any
-	__theme: ResolvedTheme
-	__themeSetting: ThemeSetting
-	__colorTheme: ColorTheme
-	__fontTheme: FontTheme
-	__setTheme(setting: ThemeSetting): void
-	__setColorTheme(color: ColorTheme): void
-	__setFontTheme(font: FontTheme): void
 	__zjTheme: ResolvedTheme
 	__zjThemeSetting: ThemeSetting
 	__zjSetTheme(setting: ThemeSetting): void
