@@ -21,8 +21,7 @@ RTL-on-the-web writing. Three specific references do the work:
   khatam, the eight-point star that is the union of two squares rotated 45°
   against each other, plus the cross tile that fills the gaps when khatams are
   laid on a square lattice.
-- **Alhambra-lineage Andalusian rosettes** for the background lattice and the
-  marginal shamsa — the breath-of-the-compass figure, described below.
+- **Alhambra-lineage Andalusian rosettes** for the background lattice — the breath-of-the-compass figure, described below.
 - **The Blue Quran** (9th–10th century, gold Kufic on indigo-dyed vellum) for
   dark mode. Dark mode is not an inverted light theme; it is a different
   manuscript.
@@ -188,9 +187,6 @@ drawn, including the copies centred outside it, and the SVG clips at the viewBox
 rendering the shipped data URI as a 3×3 tiling with the tile boundaries drawn
 in, at full strength and at working opacity.
 
-The marginal shamsa (`--zj-medallion`) is the same rosette at R = 96, rimmed by
-two circles and a ring of sixteen cells.
-
 ## Feedback-driven changes (v2)
 
 The first pass was reviewed and reworked:
@@ -198,14 +194,7 @@ The first pass was reviewed and reworked:
 - **"Why Aga Khan and not mosque/Islamic history?"** — the design is now
   anchored in named Cairo references (above) instead of a contemporary museum
   register, and dark mode became the Blue Quran.
-- **"The background seems empty and dull on large screens."** — from 1200px up,
-  a faint Andalusian rosette lattice tiles the page ground outside the carpet
-  frame like a mashrabiya screen (240px tile, kohl at 6% in light, gold at 8% in
-  dark), masked so it fades out well before the reading column and drifting one
-  tile every 360s. From 1536px up, a single shamsa in the same language sits in
-  the left margin at 3.5–5%, right where the lattice has already faded. The
-  construction is described under
-  [The background lattice](#the-background-lattice).
+- **"The background seems empty and dull on large screens."** — from 1200px up, a faint Andalusian rosette lattice tiles the page ground outside the carpet frame like a mashrabiya screen (240px tile, kohl at 6% in light, gold at 8% in dark), masked so it fades out before the 120ch carpet frame and drifting one tile every 360s. The construction is described under [The background lattice](#the-background-lattice).
 - **"Add subtle animations, and don't respect reduce-motion."** — every
   `prefers-reduced-motion` gate was removed from the design on purpose; the
   animations always run. See the inventory below.
