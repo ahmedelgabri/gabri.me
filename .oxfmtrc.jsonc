@@ -9,5 +9,5 @@
 	"proseWrap": "always",
 	"endOfLine": "lf",
 	"printWidth": 80,
-	"ignorePatterns": [],
+	"ignorePatterns": ["**/*.md"],
 }
