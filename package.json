@@ -8,7 +8,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build",
+		"build": "astro build && node scripts/wrap-cloudflare-entry.mjs",
 		"preview": "astro preview",
 		"lint": "oxlint --quiet --type-aware --type-check",
 		"format": "oxfmt",

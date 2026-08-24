@@ -18,6 +18,8 @@
 		// Mirrors `trailingSlash: 'never'`: /blog/slug serves
 		// dist/client/blog/slug/index.html and /blog/slug/ redirects to /blog/slug.
 		"html_handling": "drop-trailing-slash",
+		// Markdown negotiation has to run before the prerendered HTML assets.
+		"run_worker_first": ["/", "/index.md", "/blog/*"],
 	},
 	// Per-branch previews are uploaded with `wrangler versions upload`.
 	"preview_urls": true,

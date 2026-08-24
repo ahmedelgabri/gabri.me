@@ -4,54 +4,19 @@ import siteMeta from '../config/siteMeta'
 import Layout from '../layouts/Layout.astro'
 import Star from '../components/Star.astro'
 import StarDivider from '../components/StarDivider.astro'
+import {role, summary, talkItems} from '../lib/homepage'
 
-const {social, talks, interviews, projects} = siteMeta
+const {social, projects} = siteMeta
 
 const posts = (await getAllPosts()).sort(byDateDesc)
-
-interface TalkItem {
-	date: string
-	title: string
-	url: string
-	slides?: string
-}
-
-const talkItems: TalkItem[] = [
-	{
-		date: '2024-03-03',
-		title: 'Staff Engineering path (Arabic)',
-		url: interviews.ahmedelemam[1],
-	},
-	{
-		date: '2021-01-23',
-		title: 'Null++ Podcast (Arabic)',
-		url: interviews.nullplusplus[1],
-	},
-	{
-		date: '2018-12-17',
-		title: 'DevToManager Interview',
-		url: interviews.devtomanager[1],
-	},
-	{
-		date: '2017-06-08',
-		title: 'Automating front-end refactoring',
-		url: `https://www.youtube.com/watch?v=${talks.AmsterdamJS[1]}`,
-		slides: talks.AmsterdamJS[0],
-	},
-]
 ---
 
-<Layout hero>
+<Layout hero markdownUrl="/index.md">
 	<section class="zj-section" aria-label="About">
+		<p class="zj-lead">{summary}</p>
 		<p class="zj-lead">
-			Software engineer with 15+ years of experience across Product,
-			Platform, and Developer Experience. I focus on clarity,
-			maintainability, and helping teams and individuals grow steadily over
-			time.
-		</p>
-		<p class="zj-lead">
-			Principal Engineer at{' '}
-			<a target="_blank" rel="noreferrer noopener" href="https://miro.com">Miro</a>, Amsterdam.
+			{role.title} at{' '}
+			<a target="_blank" rel="noreferrer noopener" href={role.companyUrl}>{role.company}</a>, {role.location}.
 		</p>
 		<ul class="zj-social">
 			{Object.entries(social).map(([site, entry]) => (
