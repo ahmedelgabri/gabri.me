@@ -334,6 +334,24 @@ const wiki = 'https://en.wikipedia.org/wiki'
 	.zj-obs-glyph {
 		display: block;
 		line-height: 0;
+		position: relative;
+	}
+
+	/*
+	 * A full moon carries its own halo. Set from the computed phase, so it
+	 * appears for the hours either side of full and at no other time.
+	 */
+	.zj-obs-glyph.zj-obs-full::before {
+		content: '';
+		position: absolute;
+		inset: -45%;
+		border-radius: 50%;
+		background: radial-gradient(
+			closest-side,
+			color-mix(in oklab, var(--zj-accent) 26%, transparent),
+			transparent
+		);
+		pointer-events: none;
 	}
 
 	.zj-obs-glyph svg {
@@ -976,6 +994,8 @@ const wiki = 'https://en.wikipedia.org/wiki'
 
 			glyphLit.setAttribute('d', moonShape(psi, 12, 12, MOON_R).path)
 			glyph.classList.add('zj-obs-computed')
+			/* Lit rounds to 100 for the few hours the moon reads as full */
+			glyph.parentElement?.classList.toggle('zj-obs-full', lit >= 100)
 			phrase.textContent = `${phaseName(psi)}, ${lit}% — tonight’s moon`
 		}
 
