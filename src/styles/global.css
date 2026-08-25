@@ -110,8 +110,8 @@
 /* ————— Dark: the Blue Quran — gold on indigo-dyed vellum ————— */
 
 .dark {
-	--zj-ground: #132347;
-	--zj-panel: #1a2c55;
+	--zj-ground: #141d30;
+	--zj-panel: #1d2842;
 	--zj-text: #ede3cb;
 	--zj-text-muted: #a99e85;
 	--zj-accent: #d9b44a;
@@ -990,6 +990,20 @@ a[target='_blank']::after {
 
 .code-title + pre {
 	margin-top: 0;
+}
+
+/*
+ * Wide screens sit further from the eye and give the column more room, so the
+ * reading size steps up where the lattice already appears.
+ */
+@media (min-width: 75em) {
+	body {
+		font-size: 1.1875rem;
+	}
+
+	.zj-prose {
+		font-size: 1.25rem;
+	}
 }
 
 /* ————— Footer ————— */
