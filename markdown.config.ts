@@ -1,7 +1,14 @@
 import plainLight from './src/lib/plain-light.json'
 import plainDark from './src/lib/plain-dark.json'
 
-type ShikiRoot = {children: unknown[]}
+type ShikiNode = {
+	type: string
+	tagName?: string
+	properties?: Record<string, unknown>
+	children?: unknown[]
+	value?: string
+}
+type ShikiRoot = {children: ShikiNode[]}
 type ShikiMetaContext = {options: {meta?: {__raw?: string}}}
 
 function getCodeBlockTitle(meta?: string): string | undefined {
@@ -20,12 +27,27 @@ const codeBlockTitleTransformer = {
 			return
 		}
 
-		root.children.unshift({
-			type: 'element',
-			tagName: 'div',
-			properties: {className: ['code-title']},
-			children: [{type: 'text', value: title}],
-		})
+		/*
+		 * Wrapped rather than prepended: the pipeline downstream keeps only the
+		 * root's first child, so a title added as the <pre>'s sibling replaces
+		 * the code instead of sitting above it.
+		 */
+		root.children = [
+			{
+				type: 'element',
+				tagName: 'div',
+				properties: {className: ['code-block']},
+				children: [
+					{
+						type: 'element',
+						tagName: 'div',
+						properties: {className: ['code-title']},
+						children: [{type: 'text', value: title}],
+					},
+					...root.children,
+				],
+			},
+		]
 	},
 }
 
