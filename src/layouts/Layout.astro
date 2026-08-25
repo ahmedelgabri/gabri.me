@@ -5,6 +5,7 @@ import GirihFrieze from '../components/GirihFrieze.astro'
 import NightSky from '../components/NightSky.astro'
 import Observatory from '../components/Observatory.astro'
 import Pencil from '../components/Pencil.astro'
+import TuneSwitch from '../components/TuneSwitch.astro'
 import Star from '../components/Star.astro'
 /* Astro emits a component's own <style> after its imports, so the base sheet
  * keeps its place at the end of the cascade only by being imported last */
@@ -261,5 +262,7 @@ const year = new Date().getFullYear()
 		{/* The lattice first, then the sky over it, as the CSS layers stack */}
 		<Pencil />
 		<NightSky />
+		{/* Temporary: remove with TuneSwitch.astro once ground and size are settled */}
+		<TuneSwitch />
 	</body>
 </html>

@@ -1,0 +1,133 @@
+---
+/*
+ * Temporary decision tooling: the gold that carries links and the Arabic
+ * masthead is the most saturated warm on the indigo ground, which is where the
+ * eye struggles to hold focus. These swap it on real pages. Delete this
+ * component and its mount once the choice is made.
+ */
+const accents = [
+	['a', '#d9b44a', 'current gold'],
+	['b', '#dcc07a', 'softened'],
+	['c', '#ddc9a0', 'pale'],
+	['d', '#e0d6bd', 'near-parchment'],
+] as const
+---
+
+<div class="tune" role="group" aria-label="Link gold">
+	<span class="tune-label">link gold</span>
+	{
+		accents.map(([key, hex, note]) => (
+			<button
+				class="tune-key"
+				type="button"
+				data-tune-accent-key={key}
+				aria-pressed={key === 'a' ? 'true' : 'false'}
+				title={`${hex} — ${note}`}
+			>
+				{key}
+			</button>
+		))
+	}
+</div>
+
+<script is:inline>
+	;(function () {
+		var KEY = 'tune-accent'
+		var root = document.documentElement
+		var accent
+
+		try {
+			accent = localStorage.getItem(KEY)
+		} catch (e) {}
+
+		function apply(next) {
+			root.dataset.tuneAccent = next
+
+			document.querySelectorAll('[data-tune-accent-key]').forEach(function (b) {
+				b.setAttribute(
+					'aria-pressed',
+					b.dataset.tuneAccentKey === next ? 'true' : 'false',
+				)
+			})
+		}
+
+		apply(accent || 'a')
+
+		document.addEventListener('click', function (event) {
+			var button = event.target.closest('[data-tune-accent-key]')
+
+			if (!button) {
+				return
+			}
+
+			accent = button.dataset.tuneAccentKey
+
+			try {
+				localStorage.setItem(KEY, accent)
+			} catch (e) {}
+
+			apply(accent)
+		})
+	})()
+</script>
+
+<style is:global>
+	/* Two classes so these beat the .dark token block whatever the sheet order */
+	.dark[data-tune-accent='b'] {
+		--zj-accent: #dcc07a;
+	}
+
+	.dark[data-tune-accent='c'] {
+		--zj-accent: #ddc9a0;
+	}
+
+	.dark[data-tune-accent='d'] {
+		--zj-accent: #e0d6bd;
+	}
+
+	.tune {
+		display: none;
+		position: fixed;
+		bottom: 0.75rem;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 200;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.4rem 0.6rem;
+		font-family: var(--z-font-mono);
+		font-size: 0.7rem;
+		color: var(--zj-text-muted);
+		background: var(--zj-panel);
+		border: 1px solid var(--zj-gild);
+		backdrop-filter: blur(8px);
+	}
+
+	.zj-js .tune {
+		display: flex;
+	}
+
+	.tune-label {
+		letter-spacing: 0.08em;
+		opacity: 0.7;
+	}
+
+	.tune-key {
+		min-width: 1.6rem;
+		padding: 0.2rem 0.3rem;
+		font: inherit;
+		color: inherit;
+		background: none;
+		border: 1px solid transparent;
+		cursor: pointer;
+	}
+
+	.tune-key:hover {
+		border-color: var(--zj-hairline);
+	}
+
+	.tune-key[aria-pressed='true'] {
+		color: var(--zj-ground);
+		background: var(--zj-accent);
+	}
+</style>
