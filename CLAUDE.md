@@ -140,14 +140,12 @@ selectors and themed through custom properties on `:root`. The base stylesheet
 is `src/styles/global.css`, imported by `src/layouts/Layout.astro`; rules that
 belong to a single component stay in that component's own `<style is:global>`
 block. Nothing is inside a cascade layer, which is what lets it outrank the
-UnoCSS preflight.
+reset.
 
-**UnoCSS** (atomic CSS framework) is still in the build:
-
-- Configuration: `uno.config.ts`
-- Provides the preflight reset the design's CSS is written against
-- Dark mode via class strategy (`dark:` prefix); post bodies use `dark:hidden` /
-  `light:hidden` for paired light/dark images
+`src/styles/reset.css` is the preflight the design's CSS is written against,
+imported by the layout just before the base stylesheet. It is the only thing in
+a cascade layer. Post bodies use `zj-only-light` / `zj-only-dark` for paired
+light/dark images.
 
 ### TypeScript Configuration
 
@@ -191,16 +189,15 @@ All blog posts are statically generated at build time:
 
 ## Important Files
 
-- `astro.config.ts` - Astro configuration with MDX, UnoCSS, and React
-  integrations
+- `astro.config.ts` - Astro configuration with MDX and React integrations
 - `markdown.config.ts` - Shared Markdown/Shiki configuration
 - `wrangler.jsonc` - Cloudflare Worker configuration
 - `src/layouts/Layout.astro` - The site's layout and head
 - `src/styles/global.css` - The design's base stylesheet
+- `src/styles/reset.css` - The preflight reset the design is written against
 - `DESIGNS.md` - The design's own documentation
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration
-- `uno.config.ts` - Styling configuration
 - `flake.nix` - Development environment (flake-parts based)
 - `src/config/siteMeta.ts` - Site-wide metadata
 - `globals.d.ts` - Global TypeScript declarations

@@ -22,8 +22,8 @@ and the observatory behind the theme switch — is in [DESIGNS.md](./DESIGNS.md)
 - **Framework**: Astro 7, with React 19 for the components used inside MDX
 - **Content**: MDX through Astro content collections
 - **Styling**: the design carries its own CSS in `src/styles/global.css`, with
-  each component's rules kept beside it; UnoCSS supplies the preflight reset it
-  is written against, plus the handful of utilities used in post bodies
+  each component's rules kept beside it, over the reset in
+  `src/styles/reset.css`
 - **Graphics**: computed SVG throughout, and three.js for the night sky, the
   lattice pencil and the footer astrolabe
 - **Language**: TypeScript (strict mode)

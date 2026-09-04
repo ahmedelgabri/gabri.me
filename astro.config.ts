@@ -1,7 +1,6 @@
 import {defineConfig} from 'astro/config'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
-import UnoCSS from '@unocss/astro'
 import cloudflare from '@astrojs/cloudflare'
 import {shikiOptions} from './markdown.config'
 
@@ -44,13 +43,7 @@ function cardData() {
 export default defineConfig({
 	site: 'https://gabri.me',
 	trailingSlash: 'never',
-	integrations: [
-		UnoCSS(),
-		react(),
-		mdx(),
-		compressor(),
-		frontendistahtmlMinify(),
-	],
+	integrations: [react(), mdx(), compressor(), frontendistahtmlMinify()],
 
 	markdown: {
 		shikiConfig: shikiOptions,

@@ -8,6 +8,7 @@ import Pencil from '../components/Pencil.astro'
 import Star from '../components/Star.astro'
 /* Astro emits a component's own <style> after its imports, so the base sheet
  * keeps its place at the end of the cascade only by being imported last */
+import '../styles/reset.css'
 import '../styles/global.css'
 
 interface Props {

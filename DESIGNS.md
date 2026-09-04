@@ -517,8 +517,11 @@ the design does not touch them.
   the GA4 snippet) and the carpet-page frame with its masthead, frieze, footer
   and astrolabe.
 - `src/styles/global.css` — the design's base stylesheet, imported by the
-  layout. It is unlayered, which is what lets it outrank the UnoCSS preflight
-  whatever the specificity either side.
+  layout. It is unlayered, which is what lets it outrank the reset whatever the
+  specificity either side.
+- `src/styles/reset.css` — the preflight the design is written against, the
+  base layer of the Tailwind v4 preflight trimmed of the form controls the site
+  never renders. It is the only stylesheet inside a cascade layer.
 - `src/components/` holds the partials: `Arch`, `Star`, `StarDivider`,
   `GirihFrieze`, `Astrolabe`, `Observatory`, `NightSky`, `Pencil` and
   `ProseLink`. Each one keeps its own rules in its own `<style is:global>`
@@ -530,9 +533,8 @@ the design does not touch them.
   files.
 
 The design carries 100% of its own styling, including MDX prose and Shiki code
-blocks. UnoCSS is still in the build for its preflight reset — the design's CSS
-is written against it — and for the handful of utilities post bodies use
-directly (`dark:hidden` / `light:hidden` on paired light/dark images). Shiki
+blocks. Paired light/dark images in post bodies carry `zj-only-light` /
+`zj-only-dark`, and the YouTube embed is dressed by `.zj-youtube`. Shiki
 runs dual-theme: light mode keeps the inline light colours, dark mode flips to
 `var(--shiki-dark)` and lifts the comment grey, which would otherwise sit at
 1.8:1 on the indigo panel.

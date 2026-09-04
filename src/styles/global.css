@@ -4,8 +4,8 @@
  * code blocks. Rules that belong to a single component are kept in that
  * component instead, alongside the markup they dress.
  *
- * Unlayered on purpose. UnoCSS writes its preflight into cascade layers, so
- * everything here outranks the reset whatever the specificity either side.
+ * Unlayered on purpose. The reset in reset.css sits inside a cascade layer, so
+ * everything here outranks it whatever the specificity either side.
  */
 
 :root {
@@ -797,7 +797,7 @@ a[target='_blank']::after {
 	padding-left: 1.5rem;
 }
 
-/* The global preflight strips list styling; restore it for prose */
+/* The reset strips list styling; restore it for prose */
 .zj-prose ul {
 	list-style: disc outside;
 }
@@ -872,6 +872,12 @@ a[target='_blank']::after {
 	height: auto;
 }
 
+/* A post can carry one image per palette and show only the current one */
+.dark .zj-only-light,
+.light .zj-only-dark {
+	display: none;
+}
+
 /* An anchor wrapping only an image would drag a link underline across the artwork */
 .zj-prose a:has(> img) {
 	background-image: none;
@@ -897,6 +903,18 @@ a[target='_blank']::after {
 .zj-prose iframe {
 	max-width: 100%;
 	border: 0;
+}
+
+.zj-youtube {
+	position: relative;
+	height: 0;
+}
+
+.zj-youtube iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .zj-prose [class*='tweet'] {

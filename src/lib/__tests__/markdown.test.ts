@@ -38,8 +38,8 @@ import thing from 'package'
 
 	it('uses the light-theme image and removes its MDX wrapper', () => {
 		const body = `<center>
-	<Image class="dark:hidden" src={light} alt="Logo" />
-	<Image class="light:hidden" src={dark} alt="Logo" />
+	<Image class="zj-only-light" src={light} alt="Logo" />
+	<Image class="zj-only-dark" src={dark} alt="Logo" />
 </center>`
 
 		expect(

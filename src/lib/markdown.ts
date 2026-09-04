@@ -63,7 +63,7 @@ export function mdxBodyToMarkdown(
 		const image = line.match(/^\s*<Image\s+(.+?)\s*\/>\s*$/)
 		if (image) {
 			const attributes = image[1]
-			if (/class=["'][^"']*light:hidden/.test(attributes)) {
+			if (/class=["'][^"']*zj-only-dark/.test(attributes)) {
 				continue
 			}
 

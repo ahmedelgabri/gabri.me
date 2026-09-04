@@ -10,14 +10,13 @@ export default function YouTube(props: Props) {
 
 	return (
 		<div
-			className="relative h-0"
+			className="zj-youtube"
 			style={{
 				paddingBottom: '56.25%', // 16:9
 				paddingTop: '1.5625rem',
 			}}
 		>
 			<iframe
-				className="absolute left-0 top-0 h-full w-full border-0"
 				width="560"
 				height="315"
 				title={title || id}
