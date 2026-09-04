@@ -60,6 +60,12 @@ export default defineConfig({
 
 	vite: {
 		plugins: [cardData()],
+		// The adapter prebundles its own image service for workerd but not the
+		// passthrough one; discovering it mid-run reloads the optimizer under the
+		// running Worker, which then fails to find its renamed chunks.
+		optimizeDeps: {
+			include: ['astro/assets/services/noop'],
+		},
 		server: {
 			watch: {
 				ignored: ['**/.claude/**'],
@@ -69,7 +75,10 @@ export default defineConfig({
 
 	// Prerender in Node, not workerd: /og/[...slug].png renders through
 	// @resvg/resvg-js, a native Node addon workerd cannot load.
+	// The only images that go through astro:assets are SVGs, which no service
+	// transforms; the default Images-binding service rejects them in dev.
 	adapter: cloudflare({
+		imageService: 'passthrough',
 		prerenderEnvironment: 'node',
 	}),
 
