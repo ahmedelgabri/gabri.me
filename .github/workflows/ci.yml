@@ -80,6 +80,10 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: pnpm exec wrangler deploy
 
+      - name: Submit sitemap to IndexNow
+        if: steps.context.outputs.is-production == 'true'
+        run: pnpm test:indexnow:live
+
       # Aliases become a DNS label of the form <alias>-<worker>.<subdomain>.workers.dev,
       # so they must be lowercase alphanumerics and dashes, start with a letter and
       # fit in 63 characters alongside the worker name. The pr-<number> prefix

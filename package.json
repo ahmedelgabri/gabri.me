@@ -15,7 +15,9 @@
 		"type-check": "astro check && tsc --noEmit",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
-		"test:run": "vitest run"
+		"test:run": "vitest run",
+		"indexnow": "node scripts/indexnow.mjs",
+		"test:indexnow:live": "INDEXNOW_LIVE_TEST=1 vitest run scripts/__tests__/indexnow-live.test.mjs"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.9",
@@ -50,6 +52,7 @@
 		"@testing-library/react": "^16.3.2",
 		"@types/three": "^0.185.4",
 		"@vitest/ui": "^4.1.9",
+		"fast-xml-parser": "^5.11.1",
 		"happy-dom": "^20.10.3",
 		"oxfmt": "^0.55.0",
 		"oxlint": "^1.70.0",
