@@ -24,6 +24,6 @@ The custom CSS is the design. StyleX exists to do for React apps what the design
 - `.zj-only-light` / `.zj-only-dark` replace `dark:hidden` / `light:hidden`. The rule lives beside the prose image rules in `global.css`. The Markdown representation of a post drops the `zj-only-dark` image, as it dropped the `light:hidden` one.
 - `.zj-youtube` replaces the utility classes in the YouTube embed. The inline 16:9 padding stays where it was.
 - `@unocss/astro`, `unocss`, `uno.config.ts` and the `UnoCSS()` integration are gone.
-- `CLAUDE.md`, `DESIGNS.md` and `README.md` describe the reset instead of UnoCSS.
+- `CLAUDE.md`, `docs/DESIGNS.md` and `README.md` describe the reset instead of UnoCSS.
 
 The built stylesheet carries no `--un-*` properties and no UnoCSS layers. Tests, lint, format, type check and build pass.

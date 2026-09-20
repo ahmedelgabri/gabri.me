@@ -14,8 +14,7 @@ rosette lattice drifting in the margins. Light mode is a qishani ivory
 manuscript page; dark mode is the Blue Quran — gold on indigo, not an inverted
 light theme.
 
-The full account — the six arches, the lattice construction, the three.js layers
-and the observatory behind the theme switch — is in [DESIGNS.md](./DESIGNS.md).
+The arches, lattice construction, three.js layers, and theme observatory are documented in [docs/DESIGNS.md](./docs/DESIGNS.md).
 
 ## Tech Stack
 
@@ -171,6 +170,15 @@ previews carry no analytics at all.
 
 The custom domain is not in `wrangler.jsonc` yet; it goes in once gabri.me's DNS
 moves to Cloudflare.
+
+## Documentation
+
+Supporting documentation lives in `docs/`. The README and agent instructions stay at the repository root.
+
+- [Site design](./docs/DESIGNS.md)
+- [Content collections migration](./docs/MIGRATION-CONTENT-COLLECTIONS.md)
+- [UnoCSS removal](./docs/MIGRATION-UNOCSS.md)
+- [IndexNow setup and submission](./docs/INDEXNOW.md)
 
 ## License
 

@@ -119,7 +119,7 @@ inside MDX:
 
 - **Layout**: `src/layouts/Layout.astro` is the site's only layout. It carries
   the whole `<head>` (metadata, fonts, pre-paint theme script, GA4) and the page
-  frame, and imports the design's base stylesheet. See `DESIGNS.md`.
+  frame, and imports the design's base stylesheet. See `docs/DESIGNS.md`.
 
 - **Components** (src/components/):
   - The layout's partials — geometry ornaments (`Star`, `StarDivider`,
@@ -195,7 +195,7 @@ All blog posts are statically generated at build time:
 - `src/layouts/Layout.astro` - The site's layout and head
 - `src/styles/global.css` - The design's base stylesheet
 - `src/styles/reset.css` - The preflight reset the design is written against
-- `DESIGNS.md` - The design's own documentation
+- `docs/DESIGNS.md` - The design's own documentation
 - `src/lib/content.ts` - Content querying helper functions
 - `vitest.config.ts` - Vitest test configuration
 - `flake.nix` - Development environment (flake-parts based)
