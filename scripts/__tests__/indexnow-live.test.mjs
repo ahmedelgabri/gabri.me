@@ -5,7 +5,7 @@ import {expect, it} from 'vitest'
 
 // Live submissions must follow a production deployment, not a preview or local test run.
 it.skipIf(process.env.INDEXNOW_LIVE_TEST !== '1')(
-	'submits the production sitemap through the CLI to the real IndexNow API',
+	'submits the built production sitemap through the CLI to the real IndexNow API',
 	async () => {
 		const {stdout, stderr} = await promisify(execFile)(
 			process.execPath,

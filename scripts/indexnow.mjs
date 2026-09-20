@@ -1,3 +1,4 @@
+import {readFile} from 'node:fs/promises'
 import {pathToFileURL} from 'node:url'
 import {XMLParser, XMLValidator} from 'fast-xml-parser'
 
@@ -26,20 +27,19 @@ export function sitemapUrls(xml) {
 	return [...new Set(urls)]
 }
 
-async function fetchText(url) {
-	const response = await fetch(url, {signal: AbortSignal.timeout(30_000)})
-	if (!response.ok) {
-		throw new Error(`HTTP ${response.status} fetching ${url}`)
-	}
-	return response.text()
-}
-
-export async function submitSitemap() {
+export async function submitSitemap(
+	buildDirectory = new URL('../dist/client/', import.meta.url),
+) {
 	const keyLocation = `${siteUrl}/${key}.txt`
-	if ((await fetchText(keyLocation)).trim() !== key) {
-		throw new Error('Deployed IndexNow key does not match')
+	if (
+		(await readFile(new URL(`${key}.txt`, buildDirectory), 'utf8')).trim() !==
+		key
+	) {
+		throw new Error('Built IndexNow key does not match')
 	}
-	const urls = sitemapUrls(await fetchText(`${siteUrl}/sitemap.xml`))
+	const urls = sitemapUrls(
+		await readFile(new URL('sitemap.xml', buildDirectory), 'utf8'),
+	)
 	const statuses = []
 	for (let start = 0; start < urls.length; start += 10_000) {
 		const response = await fetch('https://api.indexnow.org/indexnow', {

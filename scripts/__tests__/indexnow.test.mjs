@@ -1,6 +1,9 @@
 // @vitest-environment node
-import {readFile} from 'node:fs/promises'
-import {afterEach, describe, expect, it, vi} from 'vitest'
+import {mkdtemp, readFile, rm, writeFile} from 'node:fs/promises'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
+import {pathToFileURL} from 'node:url'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {key, siteUrl, sitemapUrls, submitSitemap} from '../indexnow.mjs'
 import config from '../../src/config/siteMeta.ts'
 import {generateSitemapXml} from '../../src/lib/sitemap.ts'
@@ -33,6 +36,20 @@ describe('sitemapUrls', () => {
 })
 
 describe('IndexNow integration', () => {
+	let buildDirectory
+
+	beforeEach(async () => {
+		buildDirectory = pathToFileURL(
+			`${await mkdtemp(join(tmpdir(), 'indexnow-'))}/`,
+		)
+		await writeFile(new URL(`${key}.txt`, buildDirectory), `${key}\n`)
+		await writeFile(new URL('sitemap.xml', buildDirectory), sitemap([siteUrl]))
+	})
+
+	afterEach(async () => {
+		await rm(buildDirectory, {recursive: true, force: true})
+	})
+
 	it('reads the site generator output using the canonical production origin', () => {
 		expect(siteUrl).toBe(config.siteUrl)
 		const urls = [config.siteUrl, `${config.siteUrl}/blog/example`]
@@ -56,11 +73,10 @@ describe('IndexNow integration', () => {
 		).toBe(`${key}\n`)
 	})
 
-	function mockFetch(urls = [siteUrl], status = 200) {
+	async function prepareSubmission(urls = [siteUrl], status = 200) {
+		await writeFile(new URL('sitemap.xml', buildDirectory), sitemap(urls))
 		const request = vi
 			.fn()
-			.mockResolvedValueOnce(new Response(key))
-			.mockResolvedValueOnce(new Response(sitemap(urls)))
 			.mockImplementation(async () => new Response('', {status}))
 		vi.stubGlobal('fetch', request)
 		return request
@@ -70,11 +86,13 @@ describe('IndexNow integration', () => {
 		'submits the deployed sitemap and accepts HTTP %s',
 		async (status) => {
 			const urls = [siteUrl, `${siteUrl}/blog/example`]
-			const request = mockFetch(urls, status)
-			expect(await submitSitemap()).toEqual({count: 2, statuses: [status]})
-			expect(request.mock.calls[0][0]).toBe(`${siteUrl}/${key}.txt`)
-			expect(request.mock.calls[1][0]).toBe(`${siteUrl}/sitemap.xml`)
-			const [endpoint, options] = request.mock.calls[2]
+			const request = await prepareSubmission(urls, status)
+			expect(await submitSitemap(buildDirectory)).toEqual({
+				count: 2,
+				statuses: [status],
+			})
+			expect(request).toHaveBeenCalledTimes(1)
+			const [endpoint, options] = request.mock.calls[0]
 			expect(endpoint).toBe('https://api.indexnow.org/indexnow')
 			expect(options.method).toBe('POST')
 			expect(options.headers['Content-Type']).toBe(
@@ -91,59 +109,65 @@ describe('IndexNow integration', () => {
 
 	it('batches at the 10,000 URL protocol limit', async () => {
 		const urls = Array.from({length: 10_001}, (_, i) => `${siteUrl}/blog/${i}`)
-		const request = mockFetch(urls)
-		expect(await submitSitemap()).toEqual({count: 10_001, statuses: [200, 200]})
-		expect(JSON.parse(request.mock.calls[2][1].body).urlList).toEqual(
+		const request = await prepareSubmission(urls)
+		expect(await submitSitemap(buildDirectory)).toEqual({
+			count: 10_001,
+			statuses: [200, 200],
+		})
+		expect(request).toHaveBeenCalledTimes(2)
+		expect(JSON.parse(request.mock.calls[0][1].body).urlList).toEqual(
 			urls.slice(0, 10_000),
 		)
-		expect(JSON.parse(request.mock.calls[3][1].body).urlList).toEqual(
+		expect(JSON.parse(request.mock.calls[1][1].body).urlList).toEqual(
 			urls.slice(10_000),
 		)
 	})
 
-	it('does not submit if the deployed key is different', async () => {
-		const request = vi.fn().mockResolvedValue(new Response('wrong key'))
-		vi.stubGlobal('fetch', request)
-		await expect(submitSitemap()).rejects.toThrow(
-			'Deployed IndexNow key does not match',
+	it('does not submit if the built key is different', async () => {
+		const request = await prepareSubmission()
+		await writeFile(new URL(`${key}.txt`, buildDirectory), 'wrong key')
+		await expect(submitSitemap(buildDirectory)).rejects.toThrow(
+			'Built IndexNow key does not match',
 		)
-		expect(request).toHaveBeenCalledTimes(1)
+		expect(request).not.toHaveBeenCalled()
 	})
 
-	it.each([403, 404, 500])(
-		'reports key fetch failure HTTP %s',
-		async (status) => {
-			const request = vi.fn().mockResolvedValue(new Response('', {status}))
-			vi.stubGlobal('fetch', request)
-			await expect(submitSitemap()).rejects.toThrow(`HTTP ${status}`)
-			expect(request).toHaveBeenCalledTimes(1)
+	it.each([`${key}.txt`, 'sitemap.xml'])(
+		'refuses a missing build file without submitting: %s',
+		async (file) => {
+			const request = await prepareSubmission()
+			await rm(new URL(file, buildDirectory))
+			await expect(submitSitemap(buildDirectory)).rejects.toThrow('ENOENT')
+			expect(request).not.toHaveBeenCalled()
 		},
 	)
 
-	it('reports a failed sitemap fetch without submitting', async () => {
-		const request = vi
-			.fn()
-			.mockResolvedValueOnce(new Response(key))
-			.mockResolvedValueOnce(new Response('', {status: 503}))
-		vi.stubGlobal('fetch', request)
-		await expect(submitSitemap()).rejects.toThrow('HTTP 503')
-		expect(request).toHaveBeenCalledTimes(2)
+	it('rejects malformed sitemap XML before submitting', async () => {
+		const request = await prepareSubmission()
+		await writeFile(new URL('sitemap.xml', buildDirectory), '<urlset>')
+		await expect(submitSitemap(buildDirectory)).rejects.toThrow(
+			'Invalid sitemap XML',
+		)
+		expect(request).not.toHaveBeenCalled()
 	})
 
 	it('validates the entire sitemap before submitting any batch', async () => {
-		const request = mockFetch([siteUrl, 'https://example.com/page'])
-		await expect(submitSitemap()).rejects.toThrow()
-		expect(request).toHaveBeenCalledTimes(2)
+		const request = await prepareSubmission([
+			siteUrl,
+			'https://example.com/page',
+		])
+		await expect(submitSitemap(buildDirectory)).rejects.toThrow()
+		expect(request).not.toHaveBeenCalled()
 	})
 
 	it.each([400, 403, 422, 429, 500])(
 		'reports IndexNow HTTP %s and its response body',
 		async (status) => {
-			const request = mockFetch()
+			const request = await prepareSubmission()
 			request.mockImplementation(
 				async () => new Response('API error', {status}),
 			)
-			await expect(submitSitemap()).rejects.toThrow(
+			await expect(submitSitemap(buildDirectory)).rejects.toThrow(
 				`IndexNow HTTP ${status}: API error`,
 			)
 		},
@@ -154,6 +178,8 @@ describe('IndexNow integration', () => {
 			'fetch',
 			vi.fn().mockRejectedValue(new Error('Network unavailable')),
 		)
-		await expect(submitSitemap()).rejects.toThrow('Network unavailable')
+		await expect(submitSitemap(buildDirectory)).rejects.toThrow(
+			'Network unavailable',
+		)
 	})
 })
