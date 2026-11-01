@@ -51,6 +51,12 @@ export default {
 			description:
 				'tap — agent-aware tmux pane picker with live Claude Code/Codex/pi status.',
 		},
+		{
+			name: 'pele-cli',
+			url: 'https://github.com/ahmedelgabri/pele-cli',
+			description:
+				'Command-line interface for Pele: validate Mermaid diagrams and render them to themeable SVG.',
+		},
 	],
 	twitterId: '1512909779',
 	talks: {
