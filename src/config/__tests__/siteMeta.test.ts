@@ -17,7 +17,7 @@ describe('siteMeta', () => {
 
 		it('has description', () => {
 			expect(siteMeta.description).toContain('Ahmed El Gabri')
-			expect(siteMeta.description).toContain('Software engineer')
+			expect(siteMeta.description).toContain('software engineer')
 		})
 
 		it('has twitterId', () => {
@@ -40,7 +40,7 @@ describe('siteMeta', () => {
 
 		it('has twitter with valid URL', () => {
 			expect(siteMeta.social.twitter.display).toBe('@ahmedelgabri')
-			expect(siteMeta.social.twitter.url).toMatch(/twitter\.com\//)
+			expect(siteMeta.social.twitter.url).toMatch(/^https:\/\/x\.com\//)
 		})
 
 		it('has email with mailto URL', () => {

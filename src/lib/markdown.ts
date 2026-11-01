@@ -20,6 +20,7 @@ const contactLabels: Record<string, string> = {
 	github: 'GitHub',
 	linkedin: 'LinkedIn',
 	twitter: 'Twitter',
+	resume: 'Resume',
 	email: 'Email',
 }
 
