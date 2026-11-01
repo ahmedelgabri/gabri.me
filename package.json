@@ -31,7 +31,7 @@
 		"@types/react": "19.2.17",
 		"@types/react-dom": "19.2.3",
 		"@types/rss": "0.0.32",
-		"ahmedelgabri": "9.0.0",
+		"ahmedelgabri": "9.1.0",
 		"astro": "^7.2.4",
 		"astro-compressor": "^1.3.0",
 		"astro-tweet": "^0.0.6",

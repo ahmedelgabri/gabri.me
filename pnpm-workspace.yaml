@@ -1,5 +1,8 @@
 packages: []
 
+minimumReleaseAgeExclude:
+  - ahmedelgabri
+
 onlyBuiltDependencies:
   - esbuild
   - sharp

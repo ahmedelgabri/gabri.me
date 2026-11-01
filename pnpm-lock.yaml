@@ -47,8 +47,8 @@ importers:
         specifier: 0.0.32
         version: 0.0.32
       ahmedelgabri:
-        specifier: 9.0.0
-        version: 9.0.0
+        specifier: 9.1.0
+        version: 9.1.0
       astro:
         specifier: ^7.2.4
         version: 7.2.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@netlify/blobs@10.7.9)(@types/node@25.9.3)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)
@@ -2039,8 +2039,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  ahmedelgabri@9.0.0:
-    resolution: {integrity: sha512-FTLTOSsvnzMJE0PKFC2IgB649BiJgSdjBjJidqPSbxGfGjSBnNlM+FmDxOuB3fyOXuh8k2jpN3H50Z+7ovveJQ==}
+  ahmedelgabri@9.1.0:
+    resolution: {integrity: sha512-W4YRUyNWwDV1ZlOOtTdfhvFnkw6HuLmJvgXkeYjJr+V0TXVZeREJbzr2Km4YZYlly7zLiW8MLn3Oiryh5n4j6w==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -5961,7 +5961,7 @@ snapshots:
 
   acorn@8.17.0: {}
 
-  ahmedelgabri@9.0.0: {}
+  ahmedelgabri@9.1.0: {}
 
   ajv-draft-04@1.0.0(ajv@8.20.0):
     optionalDependencies:
