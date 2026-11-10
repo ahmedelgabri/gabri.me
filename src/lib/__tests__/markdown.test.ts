@@ -73,23 +73,26 @@ describe('generateBlogPostMarkdown', () => {
 
 describe('generateHomepageMarkdown', () => {
 	it('links own posts on the site and external posts to their source', () => {
-		const markdown = generateHomepageMarkdown([
-			{
-				title: 'Own post',
-				date: '2026-11-09T00:00:00.000Z',
-				formattedDate: '2026-11-09',
-				url: '/blog/own-post',
-				excerpt: '',
-			},
-			{
-				title: 'External post',
-				date: '2026-11-08T00:00:00.000Z',
-				formattedDate: '2026-11-08',
-				url: 'https://example.com/external-post',
-				excerpt: '',
-				source: 'Example',
-			},
-		])
+		const markdown = generateHomepageMarkdown(
+			[
+				{
+					title: 'Own post',
+					date: '2026-11-09T00:00:00.000Z',
+					formattedDate: '2026-11-09',
+					url: '/blog/own-post',
+					excerpt: '',
+				},
+				{
+					title: 'External post',
+					date: '2026-11-08T00:00:00.000Z',
+					formattedDate: '2026-11-08',
+					url: 'https://example.com/external-post',
+					excerpt: '',
+					source: 'Example',
+				},
+			],
+			[],
+		)
 
 		expect(markdown).toContain(
 			[

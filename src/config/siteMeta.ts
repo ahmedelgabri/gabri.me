@@ -59,21 +59,4 @@ export default {
 		},
 	],
 	twitterId: '1512909779',
-	talks: {
-		AmsterdamJS: ['https://amsterdamjs-codemods.surge.sh', 'xGjSMbks9vA'],
-	},
-	interviews: {
-		ahmedelemam: [
-			'Staff Engineering path',
-			'https://www.youtube.com/live/jOW1bj9_HFA?feature=shared',
-		],
-		devtomanager: [
-			'Developer to manager blog interview',
-			'https://web.archive.org/web/20250316193655/https://devtomanager.com/interviews/ahmed-el-gabri/',
-		],
-		nullplusplus: [
-			'Technical Leadership',
-			'https://podcasts.apple.com/eg/podcast/episode-45-technical-leadership-with-ahmed-el-gabri/id1493463874?i=1000506332698',
-		],
-	},
 }

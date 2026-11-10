@@ -29,6 +29,15 @@ export interface BlogIndexItem {
 type BlogEntry = CollectionEntry<'blog'>
 type WeeklyLinksEntry = CollectionEntry<'weeklyLinks'>
 type ExternalPostEntry = CollectionEntry<'externalPosts'>
+type TalkEntry = CollectionEntry<'talks'>
+
+export interface TalkItem {
+	title: string
+	date: string
+	formattedDate: string
+	url: string
+	slides?: string
+}
 
 function getSlugFromId(id: string): string {
 	return id.replace(/\/post$/, '')
@@ -85,6 +94,17 @@ export async function getBlogIndex(): Promise<BlogIndexItem[]> {
 		formattedDate: formatPostDate(data.date),
 	}))
 	return [...posts, ...external].sort(byDateDesc)
+}
+
+export async function getTalks(): Promise<TalkItem[]> {
+	const entries = await getCollection('talks')
+	return entries
+		.map(({data}: TalkEntry) => ({
+			...data,
+			date: data.date.toISOString(),
+			formattedDate: formatPostDate(data.date),
+		}))
+		.sort(byDateDesc)
 }
 
 export async function getAllWeeklyLinks(): Promise<PostMetadata[]> {

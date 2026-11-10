@@ -1,7 +1,7 @@
 import {format} from 'date-fns'
 import siteMeta from '../config/siteMeta'
-import {role, summary, talkItems} from './homepage'
-import type {BlogIndexItem} from './content'
+import {role, summary} from './homepage'
+import type {BlogIndexItem, TalkItem} from './content'
 
 interface MarkdownPost {
 	title: string
@@ -105,7 +105,10 @@ export function generateBlogPostMarkdown(
 	return [...metadata, '', mdxBodyToMarkdown(post.body, options), ''].join('\n')
 }
 
-export function generateHomepageMarkdown(posts: BlogIndexItem[]): string {
+export function generateHomepageMarkdown(
+	posts: BlogIndexItem[],
+	talks: TalkItem[],
+): string {
 	const {author, siteUrl, social, projects} = siteMeta
 	const lines = [
 		`# ${author}`,
@@ -141,9 +144,9 @@ export function generateHomepageMarkdown(posts: BlogIndexItem[]): string {
 		'',
 		'## Talks & Interviews',
 		'',
-		...talkItems.map(
+		...talks.map(
 			(item) =>
-				`- ${item.date}: [${item.title}](${item.url})${item.slides ? ` ([slides](${item.slides}))` : ''}`,
+				`- ${item.formattedDate}: [${item.title}](${item.url})${item.slides ? ` ([slides](${item.slides}))` : ''}`,
 		),
 		'',
 	]

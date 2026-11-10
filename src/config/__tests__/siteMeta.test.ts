@@ -48,27 +48,4 @@ describe('siteMeta', () => {
 			expect(siteMeta.social.email.url).toMatch(/^mailto:/)
 		})
 	})
-
-	describe('talks', () => {
-		it('has AmsterdamJS talk with URL and video ID', () => {
-			expect(siteMeta.talks.AmsterdamJS).toHaveLength(2)
-			expect(siteMeta.talks.AmsterdamJS[0]).toMatch(/^https?:\/\//)
-			expect(siteMeta.talks.AmsterdamJS[1]).toBeTruthy()
-		})
-	})
-
-	describe('interviews', () => {
-		it('has interview entries with title and URL', () => {
-			const interviewKeys = Object.keys(siteMeta.interviews)
-			expect(interviewKeys.length).toBeGreaterThan(0)
-
-			for (const key of interviewKeys) {
-				const interview =
-					siteMeta.interviews[key as keyof typeof siteMeta.interviews]
-				expect(interview).toHaveLength(2)
-				expect(typeof interview[0]).toBe('string') // title
-				expect(interview[1]).toMatch(/^https?:\/\//) // URL
-			}
-		})
-	})
 })

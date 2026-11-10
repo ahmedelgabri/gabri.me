@@ -32,4 +32,14 @@ const externalPosts = defineCollection({
 	}),
 })
 
-export const collections = {blog, weeklyLinks, externalPosts}
+const talks = defineCollection({
+	loader: file('src/_content/talks.yaml'),
+	schema: z.object({
+		title: z.string(),
+		date: z.coerce.date(),
+		url: z.url(),
+		slides: z.url().optional(),
+	}),
+})
+
+export const collections = {blog, weeklyLinks, externalPosts, talks}

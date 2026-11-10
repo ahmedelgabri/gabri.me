@@ -1,14 +1,15 @@
 ---
-import {getBlogIndex} from '../lib/content'
+import {getBlogIndex, getTalks} from '../lib/content'
 import siteMeta from '../config/siteMeta'
 import Layout from '../layouts/Layout.astro'
 import Star from '../components/Star.astro'
 import StarDivider from '../components/StarDivider.astro'
-import {role, summary, talkItems} from '../lib/homepage'
+import {role, summary} from '../lib/homepage'
 
 const {social, projects} = siteMeta
 
 const posts = await getBlogIndex()
+const talks = await getTalks()
 ---
 
 <Layout hero markdownUrl="/index.md">
@@ -75,10 +76,10 @@ const posts = await getBlogIndex()
 	<section class="zj-section" aria-labelledby="talks">
 		<h2 class="zj-section-title" id="talks">Talks &amp; Interviews</h2>
 		<ul class="zj-entries">
-			{talkItems.map((item) => (
+			{talks.map((item) => (
 				<li class="zj-entry zj-entry-dated">
 					<span class="zj-entry-star" aria-hidden="true"><Star size={10} /></span>
-					<time class="zj-entry-date" datetime={item.date}>{item.date}</time>
+					<time class="zj-entry-date" datetime={item.date}>{item.formattedDate}</time>
 					<span class="zj-entry-title">
 						<a href={item.url} target="_blank" rel="noreferrer noopener">{item.title}</a>
 						{item.slides && (
