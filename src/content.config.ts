@@ -1,5 +1,5 @@
 import {defineCollection} from 'astro:content'
-import {glob} from 'astro/loaders'
+import {file, glob} from 'astro/loaders'
 import {z} from 'astro/zod'
 
 const postSchema = z.object({
@@ -20,4 +20,16 @@ const weeklyLinks = defineCollection({
 	schema: postSchema,
 })
 
-export const collections = {blog, weeklyLinks}
+/* Articles written for other publications, listed with the blog's own posts */
+const externalPosts = defineCollection({
+	loader: file('src/_content/external-posts.yaml'),
+	schema: z.object({
+		title: z.string(),
+		date: z.coerce.date(),
+		url: z.url(),
+		source: z.string(),
+		excerpt: z.string(),
+	}),
+})
+
+export const collections = {blog, weeklyLinks, externalPosts}

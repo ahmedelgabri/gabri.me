@@ -1,0 +1,8 @@
+pr-radar:
+  title: 'PR Radar: three lessons from building AI-assisted code review'
+  date: 2026-11-08
+  url: https://miro.com/articles/engineering/pr-radar-three-lessons-from-building-ai-assisted-code-review/
+  source: Miro Engineering
+  excerpt:
+    AI made writing code faster. Trusting that code still takes as long as it
+    always did.

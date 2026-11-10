@@ -1,5 +1,9 @@
 import {describe, expect, it} from 'vitest'
-import {generateBlogPostMarkdown, mdxBodyToMarkdown} from '../markdown'
+import {
+	generateBlogPostMarkdown,
+	generateHomepageMarkdown,
+	mdxBodyToMarkdown,
+} from '../markdown'
 
 describe('mdxBodyToMarkdown', () => {
 	it('removes MDX imports without changing imports inside code fences', () => {
@@ -64,5 +68,34 @@ describe('generateBlogPostMarkdown', () => {
 		expect(markdown).toContain('Canonical: https://gabri.me/blog/a-post')
 		expect(markdown).toContain('Tags: astro, markdown')
 		expect(markdown).toContain('\n\nPost body.\n')
+	})
+})
+
+describe('generateHomepageMarkdown', () => {
+	it('links own posts on the site and external posts to their source', () => {
+		const markdown = generateHomepageMarkdown([
+			{
+				title: 'Own post',
+				date: '2026-11-09T00:00:00.000Z',
+				formattedDate: '2026-11-09',
+				url: '/blog/own-post',
+				excerpt: '',
+			},
+			{
+				title: 'External post',
+				date: '2026-11-08T00:00:00.000Z',
+				formattedDate: '2026-11-08',
+				url: 'https://example.com/external-post',
+				excerpt: '',
+				source: 'Example',
+			},
+		])
+
+		expect(markdown).toContain(
+			[
+				'- 2026-11-09: [Own post](https://gabri.me/blog/own-post)',
+				'- 2026-11-08: [External post](https://example.com/external-post) (Example)',
+			].join('\n'),
+		)
 	})
 })

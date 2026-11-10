@@ -15,8 +15,20 @@ export interface PostMetadata {
 	formattedDate: string
 }
 
+export interface BlogIndexItem {
+	title: string
+	date: string
+	formattedDate: string
+	/** Site-relative for the blog's own posts, absolute for external ones */
+	url: string
+	excerpt: string
+	/** Set only on external posts, which link out instead of to /blog */
+	source?: string
+}
+
 type BlogEntry = CollectionEntry<'blog'>
 type WeeklyLinksEntry = CollectionEntry<'weeklyLinks'>
+type ExternalPostEntry = CollectionEntry<'externalPosts'>
 
 function getSlugFromId(id: string): string {
 	return id.replace(/\/post$/, '')
@@ -59,6 +71,20 @@ export function byDateDesc(a: {date: string}, b: {date: string}): number {
 export async function getAllPosts(): Promise<PostMetadata[]> {
 	const entries = await getCollection('blog', isPublished)
 	return entries.map((entry: BlogEntry) => entryToPostMetadata(entry, 'blog'))
+}
+
+/* Newest first, own and external posts interleaved by date */
+export async function getBlogIndex(): Promise<BlogIndexItem[]> {
+	const [posts, externalPosts] = await Promise.all([
+		getAllPosts(),
+		getCollection('externalPosts'),
+	])
+	const external = externalPosts.map(({data}: ExternalPostEntry) => ({
+		...data,
+		date: data.date.toISOString(),
+		formattedDate: formatPostDate(data.date),
+	}))
+	return [...posts, ...external].sort(byDateDesc)
 }
 
 export async function getAllWeeklyLinks(): Promise<PostMetadata[]> {

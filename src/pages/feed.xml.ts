@@ -1,17 +1,13 @@
 import type {APIRoute} from 'astro'
 import RSS from 'rss'
 import truncate from 'lodash.truncate'
-import {compareDesc} from 'date-fns'
-import {getAllPosts} from '../lib/content'
+import {getBlogIndex} from '../lib/content'
 import siteMeta from '../config/siteMeta'
 
 export const GET: APIRoute = async () => {
 	const {author, title, siteUrl, description} = siteMeta
 
-	const allPosts = await getAllPosts()
-	const sortedAllPosts = allPosts.sort(({date: a}, {date: b}) =>
-		compareDesc(new Date(a), new Date(b)),
-	)
+	const posts = await getBlogIndex()
 
 	const feed = new RSS({
 		title: `${author} | ${title}`,
@@ -29,9 +25,9 @@ export const GET: APIRoute = async () => {
 		],
 	})
 
-	sortedAllPosts.forEach((post) => {
-		const {title, formattedDate, slug, excerpt} = post
-		const url = `${siteUrl}/blog/${slug}`
+	posts.forEach((post) => {
+		const {title, formattedDate, excerpt} = post
+		const url = new URL(post.url, siteUrl).href
 
 		feed.item({
 			title,
