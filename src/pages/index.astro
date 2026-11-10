@@ -1,15 +1,16 @@
 ---
-import {getBlogIndex, getTalks} from '../lib/content'
+import {getBlogIndex, getProjects, getTalks} from '../lib/content'
 import siteMeta from '../config/siteMeta'
 import Layout from '../layouts/Layout.astro'
 import Star from '../components/Star.astro'
 import StarDivider from '../components/StarDivider.astro'
 import {role, summary} from '../lib/homepage'
 
-const {social, projects} = siteMeta
+const {social} = siteMeta
 
 const posts = await getBlogIndex()
 const talks = await getTalks()
+const projects = await getProjects()
 ---
 
 <Layout hero markdownUrl="/index.md">

@@ -1,7 +1,7 @@
 import {format} from 'date-fns'
 import siteMeta from '../config/siteMeta'
 import {role, summary} from './homepage'
-import type {BlogIndexItem, TalkItem} from './content'
+import type {BlogIndexItem, Project, TalkItem} from './content'
 
 interface MarkdownPost {
 	title: string
@@ -108,8 +108,9 @@ export function generateBlogPostMarkdown(
 export function generateHomepageMarkdown(
 	posts: BlogIndexItem[],
 	talks: TalkItem[],
+	projects: Project[],
 ): string {
-	const {author, siteUrl, social, projects} = siteMeta
+	const {author, siteUrl, social} = siteMeta
 	const lines = [
 		`# ${author}`,
 		'',

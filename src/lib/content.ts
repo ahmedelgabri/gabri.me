@@ -30,6 +30,13 @@ type BlogEntry = CollectionEntry<'blog'>
 type WeeklyLinksEntry = CollectionEntry<'weeklyLinks'>
 type ExternalPostEntry = CollectionEntry<'externalPosts'>
 type TalkEntry = CollectionEntry<'talks'>
+type ProjectEntry = CollectionEntry<'projects'>
+
+export interface Project {
+	name: string
+	url: string
+	description: string
+}
 
 export interface TalkItem {
 	title: string
@@ -105,6 +112,18 @@ export async function getTalks(): Promise<TalkItem[]> {
 			formattedDate: formatPostDate(data.date),
 		}))
 		.sort(byDateDesc)
+}
+
+/* Astro returns entries sorted by id, so the hand-picked order lives in `order` */
+export async function getProjects(): Promise<Project[]> {
+	const entries = await getCollection('projects')
+	return [...entries]
+		.sort((a: ProjectEntry, b: ProjectEntry) => a.data.order - b.data.order)
+		.map(({id, data: {url, description}}: ProjectEntry) => ({
+			name: id,
+			url,
+			description,
+		}))
 }
 
 export async function getAllWeeklyLinks(): Promise<PostMetadata[]> {

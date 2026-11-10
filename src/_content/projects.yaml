@@ -1,0 +1,22 @@
+# The key is the project name; `order` sets the homepage order, since Astro sorts entries by key
+git-wt:
+  order: 1
+  url: https://github.com/ahmedelgabri/git-wt
+  description:
+    A git custom command that enhances Git's native worktree functionality with
+    interactive features, automation, and repository migration capabilities.
+ccpeek:
+  order: 2
+  url: https://github.com/ahmedelgabri/ccpeek
+  description: Explore your Claude Code history, locally.
+tmux-agent-panel:
+  order: 3
+  url: https://github.com/ahmedelgabri/tmux-agent-panel
+  description:
+    tap — agent-aware tmux pane picker with live Claude Code/Codex/pi status.
+pele-cli:
+  order: 4
+  url: https://github.com/ahmedelgabri/pele-cli
+  description:
+    'Command-line interface for Pele: validate Mermaid diagrams and render them
+    to themeable SVG.'

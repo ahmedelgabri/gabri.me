@@ -42,4 +42,13 @@ const talks = defineCollection({
 	}),
 })
 
-export const collections = {blog, weeklyLinks, externalPosts, talks}
+const projects = defineCollection({
+	loader: file('src/_content/projects.yaml'),
+	schema: z.object({
+		order: z.number().int(),
+		url: z.url(),
+		description: z.string(),
+	}),
+})
+
+export const collections = {blog, weeklyLinks, externalPosts, talks, projects}

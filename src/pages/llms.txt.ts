@@ -1,11 +1,12 @@
 import type {APIRoute} from 'astro'
-import {getBlogIndex, getTalks} from '../lib/content'
+import {getBlogIndex, getProjects, getTalks} from '../lib/content'
 import {generateHomepageMarkdown} from '../lib/markdown'
 
 export const GET: APIRoute = async () => {
 	const markdown = generateHomepageMarkdown(
 		await getBlogIndex(),
 		await getTalks(),
+		await getProjects(),
 	)
 
 	return new Response(markdown, {

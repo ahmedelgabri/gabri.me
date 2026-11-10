@@ -92,6 +92,7 @@ describe('generateHomepageMarkdown', () => {
 				},
 			],
 			[],
+			[],
 		)
 
 		expect(markdown).toContain(
