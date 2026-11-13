@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   astro-tweet@0.0.6:
-    hash: bafded0b440de3ffb63a0bae3d47956a896bc8f92a23e56bedc40330061fbe59
+    hash: 6f802ccc6f343a32ce72346fe9de8932b0abf325f5ae2a58b3c27a0e3e046c60
     path: patches/astro-tweet@0.0.6.patch
 
 importers:
@@ -57,7 +57,7 @@ importers:
         version: 1.3.0
       astro-tweet:
         specifier: ^0.0.6
-        version: 0.0.6(patch_hash=bafded0b440de3ffb63a0bae3d47956a896bc8f92a23e56bedc40330061fbe59)(astro@7.2.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@netlify/blobs@10.7.9)(@types/node@25.9.3)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))(prettier@3.8.4)
+        version: 0.0.6(patch_hash=6f802ccc6f343a32ce72346fe9de8932b0abf325f5ae2a58b3c27a0e3e046c60)(astro@7.2.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@netlify/blobs@10.7.9)(@types/node@25.9.3)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))(prettier@3.8.4)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -6016,7 +6016,7 @@ snapshots:
 
   astro-compressor@1.3.0: {}
 
-  astro-tweet@0.0.6(patch_hash=bafded0b440de3ffb63a0bae3d47956a896bc8f92a23e56bedc40330061fbe59)(astro@7.2.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@netlify/blobs@10.7.9)(@types/node@25.9.3)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))(prettier@3.8.4):
+  astro-tweet@0.0.6(patch_hash=6f802ccc6f343a32ce72346fe9de8932b0abf325f5ae2a58b3c27a0e3e046c60)(astro@7.2.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@netlify/blobs@10.7.9)(@types/node@25.9.3)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0))(prettier@3.8.4):
     dependencies:
       '@astrojs/check': 0.2.1(prettier@3.8.4)(typescript@5.9.3)
       astro: 7.2.4(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@netlify/blobs@10.7.9)(@types/node@25.9.3)(jiti@2.7.0)(terser@5.44.1)(yaml@2.9.0)

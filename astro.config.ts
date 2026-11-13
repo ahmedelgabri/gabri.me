@@ -64,7 +64,11 @@ export default defineConfig({
 		// passthrough one; discovering it mid-run reloads the optimizer under the
 		// running Worker, which then fails to find its renamed chunks.
 		optimizeDeps: {
-			include: ['astro/assets/services/noop'],
+			include: [
+				'astro/assets/services/noop',
+				// astro-tweet imports date-fns v2's CommonJS entry from an Astro file.
+				'astro-tweet > date-fns/format/index.js',
+			],
 		},
 		server: {
 			watch: {
