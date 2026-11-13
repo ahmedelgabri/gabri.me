@@ -1,0 +1,173 @@
+---
+title:
+  Software Engineering teams in the Agentic era, everything changes, but nothing
+  changes.
+date: 2026-11-18
+published: true
+excerpt:
+  Small teams, light process, pushing to master. The patterns people credit to
+  agents were already there in the best teams I worked with. Agents only widened
+  the gap.
+tags: [ai, agents, teams, engineering culture, productivity]
+---
+
+Last month [Thorsten Ball](https://x.com/thorstenball) tweeted this
+
+And a couple of days ago [Mitchell Hashimoto](https://x.com/mitchellh) shared
+how his team works at Superlogical
+
+There is also how
+[Claude Code team does reviews](https://claude.dev/blog/solving-code-review-at-anthropic/),
+[Satya Nadella talking about how team sizes will change](https://x.com/Vvikramai/status/2122362551568843218),
+[Clare Liguori, talking about pilots in Amazon](https://youtu.be/pqlWNihgdjI?si=32644fcxJTss2NkH)
+and more examples [^1].
+
+And it's not only them. Everyone is talking about software engineering in the
+agentic era, how teams should ship code and how the whole software development
+lifecycle is changing. Some patterns keep showing up, like pushing to master, no
+code reviews and very light processes. [^2]
+
+I've been thinking about this for a while, and every time I read one of these I
+have the same reaction. I've seen this before.
+
+## None of this is actually new
+
+Most of these patterns were already there in the best teams I worked with, years
+before anyone had an agent writing code for them. Here is what these teams
+looked like:
+
+- Small. Coincidentally _or not_ they were always around four or five people
+  max.
+- **Very** low on processes and very high on automation. CI, linting and
+  automations did the boring checks so people didn't have to.
+- PR reviews were just another pair of eyes. It was not about nitpicking, and it
+  was not about "knowledge sharing" either. We still did reviews, so "no code
+  reviews" is the one pattern from that list we didn't have. But a review was
+  never a gate, and that's why dropping it is a small step for teams like these.
+- Ownership was shared. Nobody cared about who owns what, we cared about what we
+  were building as a whole. If you saw something broken, you fixed it.
+- High trust and high agency. Most of the time we didn't need a PM or an EM to
+  tell us what to do next.
+- High impact. These were always among the most productive teams in the
+  organization, and everyone else could see it.
+
+About that last point, I remember one engineering manager we had in one of these
+teams. He just came and said "You handle the work, I'll handle all the
+processes. No one needs to touch Jira and stuff, I'll fill all of this for you.
+Just focus on the work."
+
+## So where did all the process come from?
+
+I also worked in teams where PRs were meant for "knowledge sharing", and where
+every change needed an approval from the team that "owns" the code. When I think
+about it, this only happened in two cases:
+
+1. The team grew too much, which multiplied the communication paths between
+   people and made it hard to keep the context shared.
+2. The organization overhired and had too many teams owning tiny pieces, so code
+   ownership became a problem and then a gatekeeping mechanism.
+
+In both cases the review stopped being another pair of eyes and became a gate.
+Instead of "did I miss something?" it became "am I allowed to change this?"
+
+Of course there are other cases too, where the organization is stuck in the 80s
+or something and just wants to micromanage everyone.
+
+## What did agents change then?
+
+Agents are multipliers, they multiply whatever you give them. So give them to a
+small, high trust team and that team ships a lot more than before. And vice
+versa, give them to a team where every change waits for an approval or a
+process, and you will only see the gap between these two teams getting bigger.
+
+And I think this is the actual change. These well functioning teams always had
+the right balance between process, trust, agency and action. Everyone could see
+the results, but not how the team got them, because that part often meant
+quietly ignoring the rules. Funny enough, everyone used to ask them "how can you
+ship so fast?" or "your team is one of the most productive teams, how?"
+
+There was no secret. _Well_, the secret was that the team optimized everything,
+every single detail, to work for them and not against them. And they were all
+aligned on that.
+
+The funny part was if you got an EM or PM who was not aligned, it quickly showed
+in the team output and that EM or PM automatically had to adapt to the team.
+
+Organizations always optimize for the average case, they don't take the outliers
+into consideration. But here is the thing, most of them don't care if you break
+the rules as long as you are shipping and helping the business.
+
+Now with agents these teams don't need to hide how they work anymore. They can
+prove that this actually works, and everyone is starting to move in that
+direction.
+
+## The future
+
+The future looks a lot like the past. Small teams of four or five people max,
+high trust, high agency and shared ownership. Low on process, high on automation
+and guardrails.
+
+Organizations and teams that don't act on this now will be left behind. No,
+actually, they will be out of business.
+
+Just look at the amount of large scale rewrites/migrations/work happening around
+you, these were not even a topic for discussion two years ago.
+
+- [Amazon Prime: 90 weeks project down to 24 weeks (6 engineers)](https://youtu.be/pqlWNihgdjI?si=SJxeaph3naB6GlQe&t=246)
+- [Amazon Bedrock: 18-month project in 76 days (6 engineers)](https://youtu.be/pqlWNihgdjI?si=w-uvSzyDNMDPcwKh&t=144)
+- [Bun: Zig -> Rust](https://bun.com/blog/bun-in-rust)
+- [Uber: JUnit migration](https://www.uber.com/us/en/blog/junit-migration/)
+- [Max Schwenk porting TypeScript Go to Rust (tsrs)](https://blog.cloudflare.com/typescript-rust-port/)
+- [Airbnb: 3.5K tests from Enzyme to React Testing Library](https://airbnb.tech/infrastructure/accelerating-large-scale-test-migration-with-llms/)
+- [Asana: Enzyme to React Testing Library](https://asana.com/inside-asana/migrating-off-enzyme-2-weeks)
+
+People are being cynical about these and labeling these types of migrations as
+"slop" or "we need to rewrite everything in Rust now", but they are not looking
+at the bigger picture. What was not possible two years ago, and used to take
+months or years to be done, is now VERY possible and takes only weeks, with much
+smaller teams or even single individuals. Which changes the game completely!
+
+> What was not possible two years ago, and used to take months or years to be
+> done, is now VERY possible and takes only weeks, with much smaller teams or
+> even single individuals. Which changes the game completely!
+
+These migrations didn't succeed because of agents, they succeeded because of the
+guardrails and automation around them. Agents just made them possible. Each one
+had a test suite to tell the agent when it was wrong, the same kind of
+automation the teams above always relied on.
+
+## So should everyone just push to master?
+
+No! And that's what most people miss.
+
+Pushing to master works for these teams because of everything else they have.
+They trust each other, and their automation catches what a reviewer would have
+caught. If you only copy the "no reviews" part, you will ship bugs faster and
+that's it.
+
+So there are steps you have to do before that. Fix your CI/CD, automate your
+guardrails, improve your processes, encode your steps into skills and improve
+your context.
+[Amazon has a list of how to become a frontier team](https://aws.amazon.com/blogs/machine-learning/how-frontier-teams-are-reinventing-ai-native-development/).
+
+Evaluate your situation, understand the risk and the cost for you, and then
+decide. Either you do it now and fix things while you are moving, or you fix
+first and do it later.
+
+Agents don't fix taste either. If an agent can write a thousand lines in ten
+minutes, someone still needs to know which thousand lines are worth writing.
+That was always the hard part, it's only more visible now. Ben Kuhn has a
+[great post](https://www.benkuhn.net/impact/) on agency and taste.
+
+So yes, everything changes. The tools, the speed, how much code one person can
+ship. But what makes a team good didn't change at all. Small teams, high trust,
+high agency, low process and great taste in what they are building.
+
+For me this doesn't feel like a new way of working. It feels like going back to
+the best teams I've worked with.
+
+[^1]:
+    [Next Token Ep 08: "Nobody's Going to Write the Next React" with Armin Ronacher and Mario Zechner](https://www.youtube.com/watch?v=kODgReWwrWM)
+
+[^2]:
+    [Gergely Orosz: The state of the software engineering industry, LDX3 New York 2026](https://www.youtube.com/watch?v=uErdlVHb8ow)
